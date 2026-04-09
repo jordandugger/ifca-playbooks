@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFCA — Ad Creative Process Workshop 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#1E3A5F; --navy-dark:#142845; --navy-light:#2A4F7F;
+    --orange:#E87722; --orange-light:#F09040; --orange-pale:#FDF3E8;
+    --blue-light:#D6E4F0; --blue-mid:#A8C8E0;
+    --white:#FFFFFF; --off-white:#F8FAFC;
+    --gray-100:#F1F5F9; --gray-200:#E2E8F0; --gray-400:#94A3B8; --gray-600:#475569; --gray-800:#1E293B;
+    --text:#1A2840; --text-muted:#4A6080;
+    --green:#22C55E; --green-dark:#16A34A; --red:#DC2626;
+    --slide-w:1100px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',sans-serif;background:#0D1B2E;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:20px;gap:16px;}
+
+  #nav{width:var(--slide-w);max-width:100%;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:rgba(255,255,255,0.05);border-radius:10px;border:1px solid rgba(255,255,255,0.1);}
+  #nav .logo{font-family:'Bebas Neue';font-size:20px;color:var(--orange);letter-spacing:2px;}
+  #nav .subtitle{font-family:'DM Mono';font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:1px;}
+  #nav .controls{display:flex;align-items:center;gap:12px;}
+  #nav button{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:white;width:36px;height:36px;border-radius:8px;font-size:16px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;}
+  #nav button:hover{background:rgba(255,255,255,0.15);}
+  #nav button:disabled{opacity:0.3;cursor:default;}
+  #slide-counter{font-family:'DM Mono';font-size:13px;color:rgba(255,255,255,0.5);min-width:60px;text-align:center;}
+
+  #toc-bar{width:var(--slide-w);max-width:100%;display:flex;gap:3px;flex-wrap:wrap;}
+  .toc-dot{height:4px;flex:1;border-radius:2px;background:rgba(255,255,255,0.12);cursor:pointer;transition:background 0.2s;min-width:14px;}
+  .toc-dot.active{background:var(--orange);}
+  .toc-dot:hover{background:rgba(255,255,255,0.35);}
+
+  #progress{width:var(--slide-w);max-width:100%;height:2px;background:rgba(255,255,255,0.08);border-radius:2px;}
+  #progress-fill{height:100%;background:var(--orange);border-radius:2px;transition:width 0.3s ease;}
+
+  #stage{width:var(--slide-w);max-width:100%;aspect-ratio:16/9;position:relative;border-radius:14px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.6);}
+
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;}
+  .slide.active{display:flex;}
+
+  /* COVER */
+  .cover{background:linear-gradient(135deg,var(--navy-dark) 0%,#1a3558 50%,#0f2040 100%);padding:50px 60px;justify-content:space-between;position:relative;overflow:hidden;}
+  .cover::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(232,119,34,0.12) 0%,transparent 70%);border-radius:50%;}
+  .cover-eyebrow{font-family:'DM Mono';font-size:11px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;position:relative;z-index:1;}
+  .cover-title{font-family:'Bebas Neue';font-size:80px;line-height:0.9;color:white;position:relative;z-index:1;}
+  .cover-title span{color:var(--orange);}
+  .cover-subtitle{font-size:15px;color:var(--blue-light);line-height:1.6;max-width:540px;margin-top:16px;position:relative;z-index:1;opacity:0.85;}
+  .cover-top{flex:1;display:flex;flex-direction:column;justify-content:center;}
+  .cover-bottom{display:flex;justify-content:space-between;align-items:flex-end;position:relative;z-index:1;}
+  .host{font-size:13px;color:rgba(255,255,255,0.45);}
+
+  /* SECTION DIVIDER */
+  .section-divider{background:var(--navy-dark);justify-content:center;align-items:flex-start;padding:60px 70px;position:relative;overflow:hidden;}
+  .section-divider::before{content:'';position:absolute;right:0;top:0;bottom:0;width:40%;background:linear-gradient(135deg,transparent,rgba(232,119,34,0.06));}
+  .sec-num{font-family:'Bebas Neue';font-size:160px;color:rgba(255,255,255,0.04);position:absolute;right:60px;top:50%;transform:translateY(-50%);line-height:1;}
+  .sec-label{font-family:'DM Mono';font-size:11px;color:var(--orange);letter-spacing:2px;margin-bottom:16px;}
+  .sec-heading{font-family:'Bebas Neue';font-size:68px;color:white;line-height:0.95;margin-bottom:18px;}
+  .sec-desc{font-size:15px;color:var(--blue-light);line-height:1.65;max-width:480px;opacity:0.8;}
+
+  /* CONTENT SLIDE */
+  .cs{background:var(--off-white);flex-direction:column;}
+  .sh{background:var(--navy);padding:16px 34px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+  .sh h2{font-family:'Bebas Neue';font-size:26px;color:white;letter-spacing:1px;}
+  .st{font-family:'DM Mono';font-size:10px;color:var(--orange);letter-spacing:1.5px;text-transform:uppercase;}
+  .sb{flex:1;padding:18px 34px;display:flex;flex-direction:column;gap:11px;overflow:hidden;}
+  .sf{background:var(--gray-100);padding:7px 34px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;border-top:1px solid var(--gray-200);}
+  .sf span{font-family:'DM Mono';font-size:10px;color:var(--gray-400);}
+  .snum{color:var(--orange) !important;}
+
+  /* CALLOUT */
+  .callout{background:var(--navy);border-radius:10px;padding:12px 18px;border-left:4px solid var(--orange);flex-shrink:0;}
+  .callout p{font-size:13px;color:var(--blue-light);line-height:1.5;}
+  .callout p strong{color:white;}
+  .callout.orange{background:var(--orange-pale);border-left-color:var(--orange);}
+  .callout.orange p{color:var(--text);}
+  .callout.green{background:#f0fdf4;border-left-color:var(--green);}
+  .callout.green p{color:#166534;}
+  .callout.red{background:#fef2f2;border-left-color:var(--red);}
+  .callout.red p{color:#991b1b;}
+
+  /* GRIDS */
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+  .g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;}
+
+  /* CARDS */
+  .card{background:white;border-radius:10px;padding:14px 16px;border:1px solid var(--gray-200);}
+  .card.ot{border-top:3px solid var(--orange);}
+  .card.nt{border-top:3px solid var(--navy);}
+  .card.gt{border-top:3px solid var(--green);}
+  .card.rt{border-top:3px solid var(--red);}
+  .card-label{font-family:'DM Mono';font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;}
+  .card-title{font-family:'Bebas Neue';font-size:18px;color:var(--navy);letter-spacing:0.3px;}
+  .card-body{font-size:12px;color:var(--text-muted);line-height:1.5;margin-top:4px;}
+
+  /* METRIC CARDS */
+  .metric{background:var(--navy);border-radius:10px;padding:14px 18px;text-align:center;}
+  .metric.orange{background:var(--orange);}
+  .metric.green{background:var(--green-dark);}
+  .metric.red{background:var(--red);}
+  .m-label{font-family:'DM Mono';font-size:10px;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;}
+  .m-val{font-family:'Bebas Neue';font-size:42px;color:white;line-height:1;}
+  .m-desc{font-size:11px;color:rgba(255,255,255,0.65);line-height:1.4;margin-top:4px;}
+
+  /* TABLE */
+  .dt{width:100%;border-collapse:collapse;font-size:12px;}
+  .dt th{background:var(--navy);color:white;padding:8px 12px;text-align:left;font-size:11px;font-weight:600;letter-spacing:0.5px;}
+  .dt td{padding:7px 12px;border-bottom:1px solid var(--gray-200);color:var(--text);vertical-align:top;line-height:1.4;}
+  .dt tr:last-child td{border-bottom:none;}
+  .dt tr:nth-child(even) td{background:var(--gray-100);}
+  .dt td strong{color:var(--navy);}
+  .chk{color:var(--green);font-weight:700;}
+  .mut{color:var(--gray-400);font-style:italic;}
+
+  /* STEP LIST */
+  .steps{display:flex;flex-direction:column;gap:8px;}
+  .step{display:flex;gap:12px;align-items:flex-start;}
+  .step-n{width:26px;height:26px;border-radius:50%;background:var(--navy);color:white;font-family:'Bebas Neue';font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+  .step-n.o{background:var(--orange);}
+  .step-c strong{font-size:13px;color:var(--navy);display:block;margin-bottom:2px;}
+  .step-c span{font-size:12px;color:var(--text-muted);line-height:1.4;}
+
+  /* BADGE */
+  .badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:10px;font-weight:600;}
+  .bn{background:var(--navy);color:white;}
+  .bo{background:var(--orange);color:white;}
+  .bg{background:#dcfce7;color:var(--green-dark);}
+  .br{background:#fee2e2;color:var(--red);}
+
+  /* HOOK BOX */
+  .hook-box{background:#0f172a;border-radius:10px;padding:14px 18px;border:1px solid rgba(255,255,255,0.1);}
+  .hook-label{font-family:'DM Mono';font-size:10px;color:var(--orange);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;}
+  .hook-text{font-size:13px;color:#fbbf24;line-height:1.55;font-style:italic;}
+  .hook-meta{font-size:11px;color:rgba(255,255,255,0.4);margin-top:6px;font-family:'DM Mono';}
+
+  /* DARK SLIDE */
+  .ds{background:#0f172a;flex-direction:column;}
+  .ds .sh{background:#1e293b;border-bottom:1px solid rgba(255,255,255,0.08);}
+  .ds .sb{background:#0f172a;}
+  .ds .sf{background:#1e293b;border-top:1px solid rgba(255,255,255,0.08);}
+
+  /* STAT ROW */
+  .stat-row{display:flex;gap:8px;flex-shrink:0;}
+  .stat{flex:1;background:white;border-radius:8px;padding:10px 14px;text-align:center;border:1px solid var(--gray-200);}
+  .stat-val{font-family:'Bebas Neue';font-size:28px;color:var(--navy);}
+  .stat-val.orange{color:var(--orange);}
+  .stat-val.green{color:var(--green-dark);}
+  .stat-val.red{color:var(--red);}
+  .stat-label{font-size:10px;color:var(--text-muted);margin-top:2px;}
+
+  /* FORMULA BOX */
+  .formula{background:var(--navy);border-radius:10px;padding:14px 20px;display:flex;align-items:center;gap:16px;flex-shrink:0;}
+  .f-part{text-align:center;flex:1;}
+  .f-val{font-family:'Bebas Neue';font-size:32px;color:var(--orange);}
+  .f-label{font-size:11px;color:var(--blue-light);}
+  .f-op{font-family:'Bebas Neue';font-size:28px;color:rgba(255,255,255,0.3);}
+
+  /* STUDENT CARD */
+  .student-card{background:white;border-radius:10px;padding:12px 14px;border:1px solid var(--gray-200);border-left:4px solid var(--orange);}
+  .sc-name{font-family:'Bebas Neue';font-size:16px;color:var(--navy);}
+  .sc-stat{font-family:'DM Mono';font-size:10px;color:var(--orange);margin-bottom:4px;}
+  .sc-body{font-size:11px;color:var(--text-muted);line-height:1.45;}
+  .sc-rec{font-size:11px;color:var(--navy);font-weight:600;margin-top:5px;}
+
+  #hint{font-family:'DM Mono';font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:1px;}
+</style>
+</head>
+<body>
+
+<div id="nav">
+  <div class="logo">IFCA</div>
+  <div class="subtitle">AD CREATIVE PROCESS WORKSHOP &bull; SEVEN-FIGURE RETREAT &bull; APRIL 2026</div>
+  <div class="controls">
+    <button id="btn-prev" onclick="navigate(-1)" disabled>&#8592;</button>
+    <span id="slide-counter">1 / 28</span>
+    <button id="btn-next" onclick="navigate(1)">&#8594;</button>
+  </div>
+</div>
+<div id="toc-bar"></div>
+<div id="progress"><div id="progress-fill"></div></div>
+<div id="stage">
+
+<!-- ═══ S1 COVER ═══ -->
+<div class="slide active cover" id="s1">
+  <div class="cover-top">
+    <div class="cover-eyebrow">Seven-Figure Client Retreat &bull; April 2026 &bull; Confidential</div>
+    <div class="cover-title">AD <span>CREATIVE</span><br>PROCESS<br>WORKSHOP</div>
+    <div class="cover-subtitle">How to build a systematic, data-driven ad creative machine that wins on Meta's Andromeda algorithm — consistently. Built from your real data, your real competitors, and the white space nobody else is touching.</div>
+  </div>
+  <div class="cover-bottom">
+    <div class="host">Jordan Dugger — Co-Founder, IFCA &nbsp;·&nbsp; Impact Fitness Coaching Academy</div>
+    <div style="font-family:'Bebas Neue';font-size:14px;color:var(--orange);letter-spacing:2px;background:rgba(232,119,34,0.15);padding:6px 14px;border-radius:6px;border:1px solid rgba(232,119,34,0.3);">SEVEN-FIGURE WORKSHOP</div>
+  </div>
+</div>
+
+<!-- ═══ S2 AGENDA ═══ -->
+<div class="slide cs" id="s2">
+  <div class="sh"><h2>What We're Covering — And Why It Matters For This Room</h2><span class="st">Agenda</span></div>
+  <div class="sb">
+    <div class="callout">
+      <p><strong>The diagnosis before we start:</strong> We pulled your ad libraries. We pulled your data. The #1 issue across everyone here isn't budget, offer, or even creative quality. It's <strong>low true entity diversity</strong> — you have more ads than you think but fewer real entities than you need.</p>
+    </div>
+    <div class="g3" style="flex:1;">
+      <div class="card ot"><div class="card-label">Section 01</div><div class="card-title">The Andromeda Era</div><div class="card-body">Why Meta's algorithm changed everything — and what it means for your creative strategy right now.</div></div>
+      <div class="card nt"><div class="card-label">Section 02</div><div class="card-title">KPIs That Matter</div><div class="card-body">Hook rate, hold rate, cost per qualified call. The only numbers you need to make decisions.</div></div>
+      <div class="card ot"><div class="card-label">Section 03</div><div class="card-title">Competitor Intelligence</div><div class="card-body">What your competitors are running right now — verbatim. The white space they're leaving open.</div></div>
+      <div class="card nt"><div class="card-label">Section 04</div><div class="card-title">Winning Variations</div><div class="card-body">Hook Swap, Format Shift, Angle Shift, Presenter Swap. The Ashton "Launch 50, Run 10" method.</div></div>
+      <div class="card ot"><div class="card-label">Section 05</div><div class="card-title">Creative Cadence</div><div class="card-body">Daily/weekly/monthly production rhythm. The 70/30 rule. Budget-based testing plan.</div></div>
+      <div class="card nt"><div class="card-label">Section 06</div><div class="card-title">TOF / MOF / BOF System</div><div class="card-body">The three-stage funnel. Campaign structure. Production non-negotiables.</div></div>
+    </div>
+    <div class="callout orange"><p><strong>The goal:</strong> Leave today with a specific creative brief for your next 2 entities, your real KPI baseline, and a weekly cadence you can hand to your team on Monday.</p></div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">2</span></div>
+</div>
+
+<!-- ═══ S3 STATE OF THE ROOM ═══ -->
+<div class="slide cs" id="s3">
+  <div class="sh"><h2>State of This Room — Your Real Numbers</h2><span class="st">Pre-Workshop Intelligence</span></div>
+  <div class="sb">
+    <div class="callout"><p><strong>We ran your data before today.</strong> Here's what it actually shows. The numbers don't lie — and most of you will recognize your constraint immediately.</p></div>
+    <div style="flex:1;overflow:hidden;">
+      <table class="dt">
+        <thead><tr><th>Student</th><th>2025 Revenue</th><th>Q1 Ad Spend</th><th>CPL</th><th>Cost/Call</th><th>Primary Constraint</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Alycia Israel</strong></td><td>$956K (+57%)</td><td>$28.9K</td><td>$4.20</td><td>$129</td><td>Hit DM ceiling — needs TOF/BOF diversification</td></tr>
+          <tr><td><strong>Vanessa &amp; Omar</strong></td><td>$2.35M (+210%)</td><td>$29K</td><td>$76.77</td><td>N/A</td><td>Almost entirely organic — barely running ads</td></tr>
+          <tr><td><strong>Lindsey Mathews</strong></td><td>~$85K/mo</td><td>$38.4K</td><td>$4.11</td><td>$128</td><td>30 ads, ~3 real entities — entity diversity problem</td></tr>
+          <tr><td><strong>April &amp; Arthur</strong></td><td>~$93K/mo</td><td>$8.3K</td><td>$0.94</td><td>N/A</td><td>Best CPL in room — massively under-spending</td></tr>
+          <tr><td><strong>Lacey &amp; Zach</strong></td><td>Rebuild year</td><td>$12.6K</td><td>$3.53</td><td>$35</td><td>Show rate 57% — creative solid, funnel broke</td></tr>
+          <tr><td><strong>Emily &amp; Etni</strong></td><td>TBD</td><td>$26.2K</td><td>$10.68</td><td>N/A</td><td>CPL above $10 target — hook/creative quality issue</td></tr>
+          <tr><td><strong>Amy Jo</strong></td><td>TBD</td><td>$4.9K</td><td>$1.36</td><td>N/A</td><td>Strong CPL, lowest spend — needs cadence system</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="g3" style="flex-shrink:0;">
+      <div style="background:#f0fdf4;border-radius:8px;padding:8px 12px;text-align:center;border:1px solid #86efac;"><div style="font-family:'Bebas Neue';font-size:20px;color:var(--green-dark);">April: $0.94</div><div style="font-size:10px;color:var(--green-dark);">Best CPL in the room</div></div>
+      <div style="background:#fef2f2;border-radius:8px;padding:8px 12px;text-align:center;border:1px solid #fca5a5;"><div style="font-family:'Bebas Neue';font-size:20px;color:var(--red);">Vanessa: $76.77</div><div style="font-size:10px;color:var(--red);">Highest CPL — most untapped leverage</div></div>
+      <div style="background:var(--orange-pale);border-radius:8px;padding:8px 12px;text-align:center;border:1px solid #fed7aa;"><div style="font-family:'Bebas Neue';font-size:20px;color:var(--orange);">Lindsey: 30 ads</div><div style="font-size:10px;color:var(--orange);">~3 real entities — today's case study</div></div>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">3</span></div>
+</div>
+
+<!-- ═══ S4 SECTION DIVIDER: ANDROMEDA ═══ -->
+<div class="slide section-divider" id="s4">
+  <div class="sec-num">01</div>
+  <div class="sec-label">Section 01</div>
+  <div class="sec-heading">The<br>Andromeda<br>Era</div>
+  <div class="sec-desc">Meta's AI backbone rewrote how ads are matched, ranked, and delivered. Creative diversity is now the only targeting lever that matters — and most coaches don't know this yet.</div>
+</div>
+
+<!-- ═══ S5 ANDROMEDA CORE ═══ -->
+<div class="slide cs" id="s5">
+  <div class="sh"><h2>The Core Shift: Creative IS Your Targeting</h2><span class="st">Section 01 — Andromeda</span></div>
+  <div class="sb">
+    <div class="g2" style="flex:1;">
+      <div style="background:#fef2f2;border-radius:12px;padding:16px 18px;border:1px solid #fca5a5;">
+        <div style="font-family:'Bebas Neue';font-size:15px;color:var(--red);letter-spacing:1px;margin-bottom:10px;">✗ BEFORE ANDROMEDA — The Matchmaker</div>
+        <div class="steps">
+          <div class="step"><div class="step-n" style="background:var(--red);font-size:11px;">✗</div><div class="step-c"><strong>You told Meta WHO to target</strong><span>Stacked interest audiences, lookalike audiences, narrow targeting by demographic</span></div></div>
+          <div class="step"><div class="step-n" style="background:var(--red);font-size:11px;">✗</div><div class="step-c"><strong>Multiple ad sets for each audience</strong><span>Split budgets across audiences to test who converts</span></div></div>
+          <div class="step"><div class="step-n" style="background:var(--red);font-size:11px;">✗</div><div class="step-c"><strong>Tweaked targeting weekly</strong><span>Turned off audiences, tested new ones, chased metrics</span></div></div>
+        </div>
+      </div>
+      <div style="background:#f0fdf4;border-radius:12px;padding:16px 18px;border:1px solid #86efac;">
+        <div style="font-family:'Bebas Neue';font-size:15px;color:var(--green-dark);letter-spacing:1px;margin-bottom:10px;">✓ AFTER ANDROMEDA — The Mind Reader</div>
+        <div class="steps">
+          <div class="step"><div class="step-n o">✓</div><div class="step-c"><strong>Your CREATIVE finds the right people</strong><span>Andromeda reads your ad, clusters it by content, and finds who will respond. Feed it diverse creative.</span></div></div>
+          <div class="step"><div class="step-n o">✓</div><div class="step-c"><strong>Broad audiences, fewer ad sets</strong><span>1 campaign, 1 broad ad set, 8–10 genuinely diverse ads. Let the algorithm distribute.</span></div></div>
+          <div class="step"><div class="step-n o">✓</div><div class="step-c"><strong>Never touch audience settings</strong><span>Andromeda is smarter than any manual targeting you can set. Your only lever is creative.</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;flex-shrink:0;">
+      <div style="background:var(--navy);border-radius:8px;padding:10px 12px;text-align:center;"><div style="font-family:'Bebas Neue';font-size:13px;color:var(--orange);">Meta Andromeda</div><div style="font-size:10px;color:var(--blue-light);margin-top:3px;">+8% ad quality. Your hook gets you into the 1,000-ad shortlist — or you're invisible.</div></div>
+      <div style="background:var(--navy);border-radius:8px;padding:10px 12px;text-align:center;"><div style="font-family:'Bebas Neue';font-size:13px;color:var(--orange);">Meta Lattice</div><div style="font-size:10px;color:var(--blue-light);margin-top:3px;">+12% ad quality, +6% conversions. Rewards creative variety and clean signals.</div></div>
+      <div style="background:var(--navy);border-radius:8px;padding:10px 12px;text-align:center;"><div style="font-family:'Bebas Neue';font-size:13px;color:var(--orange);">Sequence Learning</div><div style="font-size:10px;color:var(--blue-light);margin-top:3px;">Meta models real-world behavior patterns to predict next likely action before conversion.</div></div>
+      <div style="background:var(--navy);border-radius:8px;padding:10px 12px;text-align:center;"><div style="font-family:'Bebas Neue';font-size:13px;color:var(--orange);">MTIA Hardware</div><div style="font-size:10px;color:var(--blue-light);margin-top:3px;">10,000x model complexity. The algorithm is smarter than any manual targeting you set.</div></div>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">5</span></div>
+</div>
+
+<!-- ═══ S6 ENTITY ID ═══ -->
+<div class="slide cs" id="s6">
+  <div class="sh"><h2>The Entity ID Principle — Your Lottery Ticket System</h2><span class="st">Section 01 — Andromeda</span></div>
+  <div class="sb">
+    <div class="callout"><p><strong>Andromeda groups ads with similar content into clusters called Entity IDs.</strong> Each unique cluster gets ONE chance to win an auction. 12 ads with the same angle = 1 lottery ticket. 8 genuinely different formats/angles = 8 lottery tickets.</p></div>
+    <div class="g2" style="flex:1;">
+      <div style="background:#fef2f2;border-radius:12px;padding:16px 18px;border:1px solid #fca5a5;">
+        <div style="font-family:'Bebas Neue';font-size:14px;color:var(--red);margin-bottom:10px;">✗ WHAT LINDSEY HAS RIGHT NOW</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;font-style:italic;">~30 active ads in her library</div>
+        <div class="steps">
+          <div class="step"><div class="step-n" style="background:var(--red);font-size:10px;">12</div><div class="step-c"><strong>Perimenopause talking head — frustration</strong><span>Same format, same angle, different words = 1 entity, not 12</span></div></div>
+          <div class="step"><div class="step-n" style="background:var(--red);font-size:10px;">10</div><div class="step-c"><strong>Hormone/metabolism reframes — contrarian</strong><span>Slightly different hooks, same emotional driver = still 1 entity</span></div></div>
+          <div class="step"><div class="step-n" style="background:var(--red);font-size:10px;">8</div><div class="step-c"><strong>DM keyword CTAs — same funnel stage</strong><span>Same CTA, same format family = clustered together by Andromeda</span></div></div>
+        </div>
+        <div style="margin-top:10px;background:#fee2e2;border-radius:6px;padding:8px 10px;font-family:'DM Mono';font-size:11px;color:var(--red);">Result: 30 ads → ~3 real entities → 3 lottery tickets</div>
+      </div>
+      <div style="background:#f0fdf4;border-radius:12px;padding:16px 18px;border:1px solid #86efac;">
+        <div style="font-family:'Bebas Neue';font-size:14px;color:var(--green-dark);margin-bottom:10px;">✓ WHAT A 7-FIGURE ACCOUNT LOOKS LIKE</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;font-style:italic;">10–15 active ads</div>
+        <div class="steps">
+          <div class="step"><div class="step-n o">1</div><div class="step-c"><strong>Talking head — frustration angle</strong><span>Direct to camera, pain callout, DM CTA</span></div></div>
+          <div class="step"><div class="step-n o">1</div><div class="step-c"><strong>B-roll + text overlay — desire angle</strong><span>Different format, different emotion = new entity</span></div></div>
+          <div class="step"><div class="step-n o">1</div><div class="step-c"><strong>Skit / acted-out pain — humor angle</strong><span>Completely different format bucket = new entity</span></div></div>
+          <div class="step"><div class="step-n o">1</div><div class="step-c"><strong>Client testimonial — social proof</strong><span>Different presenter + emotion = new entity</span></div></div>
+          <div class="step"><div class="step-n o">1</div><div class="step-c"><strong>Interview / podcast clip — authority</strong><span>Native format, lowest ad resistance = new entity</span></div></div>
+        </div>
+        <div style="margin-top:10px;background:#dcfce7;border-radius:6px;padding:8px 10px;font-family:'DM Mono';font-size:11px;color:var(--green-dark);">Result: 10–15 ads → 10–15 real entities → 10–15 lottery tickets</div>
+      </div>
+    </div>
+    <div class="callout red"><p><strong>We found this mistake in our own account last month.</strong> Most new creative we launched were variations — same format, same face, slightly different words. Meta treated them as the same creative. Spent on one. Ignored the rest. If it can happen to us, it's happening to you.</p></div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">6</span></div>
+</div>
+
+<!-- ═══ S7 SECTION DIVIDER: KPIS ═══ -->
+<div class="slide section-divider" id="s7">
+  <div class="sec-num">02</div>
+  <div class="sec-label">Section 02</div>
+  <div class="sec-heading">KPIs That<br>Actually<br>Matter</div>
+  <div class="sec-desc">Hook rate, hold rate, cost per qualified call. The only numbers you can make fast decisions from. Everything else is a lagging indicator.</div>
+</div>
+
+<!-- ═══ S8 KPI FRAMEWORK ═══ -->
+<div class="slide cs" id="s8">
+  <div class="sh"><h2>The KPI Framework — Four Numbers, One Decision Tree</h2><span class="st">Section 02 — KPIs</span></div>
+  <div class="sb">
+    <div class="g4" style="flex-shrink:0;">
+      <div class="metric"><div class="m-label">Hook Rate Target</div><div class="m-val">25%+</div><div class="m-desc">3-sec views ÷ impressions. Below 15% = Andromeda deprioritizes before auction.</div></div>
+      <div class="metric orange"><div class="m-label">Hold Rate Target</div><div class="m-val">20%+</div><div class="m-desc">30-sec views ÷ impressions. Below 10% = script/body problem, not hook.</div></div>
+      <div class="metric green"><div class="m-label">Cost Per Qualified Call</div><div class="m-val">⅓ CAC</div><div class="m-desc">$4,500 offer → $1,125 max CAC → $375 max per qualified call</div></div>
+      <div class="metric"><div class="m-label">CAC Maximum</div><div class="m-val">25%</div><div class="m-desc">Of offer price. $4,500 offer = $1,125 max. Gives you 4x ROAS floor.</div></div>
+    </div>
+    <div style="flex:1;overflow:hidden;">
+      <table class="dt">
+        <thead><tr><th>KPI</th><th>Target</th><th>What It Diagnoses</th><th>When to Act</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Hook Rate</strong></td><td><span class="badge bo">25%+</span></td><td>Does your first 3 seconds stop the scroll? Andromeda's #1 gatekeeper signal.</td><td>Below 15%: kill or swap hook only. Body may be fine.</td></tr>
+          <tr><td><strong>Hold Rate (30s)</strong></td><td><span class="badge bo">20%+</span></td><td>Does your message hold attention after the hook? Script/pacing problem.</td><td>Below 10%: add re-hook at 10-12s. Move CTA to 30-45s.</td></tr>
+          <tr><td><strong>Cost/Qualified Call</strong></td><td><span class="badge bg">⅓ of CAC</span></td><td>Is your funnel converting traffic to calls? Fastest decision signal available.</td><td>2x target: audit funnel + creative before adding budget.</td></tr>
+          <tr><td><strong>CAC</strong></td><td><span class="badge bg">Max 25% offer</span></td><td>Is your ad system profitable? Slowest to confirm — takes weeks.</td><td>Above 30%: structural problem, not just creative.</td></tr>
+          <tr><td><strong>Lead to Book Rate</strong></td><td><span class="badge bn">3–5% DM</span></td><td>Are DM leads converting to calls? Below 3% = messaging or follow-up problem.</td><td>Below 3%: DM script or qualification issue, not the ad.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><p><strong>Jordan's rule:</strong> Cost per qualified call is the only KPI you can make fast decisions from as a coach. ROAS takes weeks to confirm. Hook rate and qualified call cost tell you within 48 hours whether an ad is worth keeping.</p></div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">8</span></div>
+</div>
+
+<!-- ═══ S9 KILL RULES ═══ -->
+<div class="slide cs" id="s9">
+  <div class="sh"><h2>Kill Rules + The Ashton "Launch 50, Run 10" Hack</h2><span class="st">Section 02 — KPIs &amp; Testing</span></div>
+  <div class="sb">
+    <div class="g2" style="flex-shrink:0;">
+      <div class="metric red" style="text-align:left;padding:14px 18px;"><div class="m-label">New Ad Kill Threshold</div><div class="m-val">2× KPI</div><div class="m-desc">Spend 2x cost per KPI before killing. Target $375/call? Spend $750 first. Not $50. Not $2,000.</div></div>
+      <div class="metric orange" style="text-align:left;padding:14px 18px;"><div class="m-label">Existing Winner Kill Threshold</div><div class="m-val">3× KPI</div><div class="m-desc">Give proven winners more room. Bad week ≠ dead ad. 3x threshold protects winners from premature cuts.</div></div>
+    </div>
+    <div style="flex:1;overflow:hidden;">
+      <table class="dt">
+        <thead><tr><th>Scenario</th><th>Action</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Hook rate under 15%</strong></td><td><span class="badge br">Kill or Fix Hook Only</span></td><td>Body may be fine. Swap first 3 seconds only. Keep the same script body. Don't rebuild the whole ad.</td></tr>
+          <tr><td><strong>Good hook, low hold rate</strong></td><td><span class="badge bn">Fix — Don't Kill</span></td><td>Add re-hook at 10-12s. Move CTA to 30-45s mark. These are different problems with different solutions.</td></tr>
+          <tr><td><strong>New ad, 2× KPI, no result</strong></td><td><span class="badge br">Kill It</span></td><td>It had its chance. Make a new entity — don't edit this one. Editing resets the ad ID learning.</td></tr>
+          <tr><td><strong>Winner struggling</strong></td><td><span class="badge bo">Wait for 3× KPI</span></td><td>One bad week proves nothing. Give it more room before pulling the plug on something that's worked.</td></tr>
+          <tr><td><strong>NEVER edit a live winning ad</strong></td><td><span class="badge br">Duplicate Instead</span></td><td>Edit the ad ID = reset all micro-learning. Duplicate winner → edit the copy → launch as new ad.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="background:#0f172a;border-radius:10px;padding:14px 20px;flex-shrink:0;">
+      <div style="font-family:'DM Mono';font-size:10px;color:var(--orange);margin-bottom:8px;letter-spacing:1px;">ASHTON PRO HACK — LAUNCH 50, RUN 10</div>
+      <div style="font-size:12px;color:var(--blue-light);line-height:1.55;">Launch all test ads at once (up to 50). Turn 40 off immediately. Run 10 active. When a loser dies → turn one of the 40 on → <strong style="color:white;">no learning phase reset.</strong> This is the most underused tactical hack in this room. Plan ahead and you never have to restart learning.</div>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">9</span></div>
+</div>
+
+<!-- ═══ S10 ACTIVITY 1 ═══ -->
+<div class="slide cs" id="s10">
+  <div class="sh" style="background:var(--orange);"><h2>🔴 Live Activity 1 — KPI Baseline Audit (20 min)</h2><span class="st" style="color:rgba(255,255,255,0.7);">Section 02 — Hands On</span></div>
+  <div class="sb">
+    <div class="callout orange"><p><strong>Goal:</strong> Every person leaves this activity with their actual numbers — hook rate, hold rate, cost per qualified call, and CAC. Most will discover they've been killing ads too early or keeping dead ones too long.</p></div>
+    <div class="g3" style="flex:1;">
+      <div class="card ot">
+        <div class="card-label">Step 1 — Pull Your Data</div>
+        <div class="card-title">Open Ads Manager</div>
+        <div class="card-body">Filter last 30–90 days of active ads. Pull: hook rate, 30-sec hold rate, cost per qualified call, CAC. Write them down — not in your head.</div>
+      </div>
+      <div class="card nt">
+        <div class="card-label">Step 2 — Apply Kill Rules</div>
+        <div class="card-title">Find Dead Ads</div>
+        <div class="card-body">Which ads have spent 2x your KPI target with no result? Circle them. These should already be off. Count how much budget is bleeding on dead creative.</div>
+      </div>
+      <div class="card ot">
+        <div class="card-label">Step 3 — Find Your Winners</div>
+        <div class="card-title">Identify Top 1–2</div>
+        <div class="card-body">What format bucket and emotion did each use? Write it down. These become your control — the baseline every new entity gets measured against.</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;flex-shrink:0;">
+      <div style="background:white;border-radius:10px;padding:12px 14px;border:1px solid var(--gray-200);">
+        <div style="font-family:'Bebas Neue';font-size:14px;color:var(--navy);margin-bottom:8px;">YOUR KPI BASELINE WORKSHEET</div>
+        <div class="dt" style="font-size:11px;"><table style="width:100%;border-collapse:collapse;"><tbody>
+          <tr style="border-bottom:1px solid var(--gray-200);"><td style="padding:5px 8px;color:var(--text-muted);">Hook Rate (25%+ target)</td><td style="padding:5px 8px;color:var(--gray-400);font-style:italic;">_______%</td></tr>
+          <tr style="border-bottom:1px solid var(--gray-200);"><td style="padding:5px 8px;color:var(--text-muted);">Hold Rate (20%+ target)</td><td style="padding:5px 8px;color:var(--gray-400);font-style:italic;">_______%</td></tr>
+          <tr style="border-bottom:1px solid var(--gray-200);"><td style="padding:5px 8px;color:var(--text-muted);">Offer Price</td><td style="padding:5px 8px;color:var(--gray-400);font-style:italic;">$_______</td></tr>
+          <tr style="border-bottom:1px solid var(--gray-200);"><td style="padding:5px 8px;color:var(--text-muted);">Max CAC (25% of offer)</td><td style="padding:5px 8px;color:var(--gray-400);font-style:italic;">$_______</td></tr>
+          <tr><td style="padding:5px 8px;color:var(--text-muted);">Max Cost/Call (⅓ of CAC)</td><td style="padding:5px 8px;color:var(--gray-400);font-style:italic;">$_______</td></tr>
+        </tbody></table></div>
+      </div>
+      <div class="callout" style="flex-shrink:0;align-self:start;">
+        <p><strong>If you can't find hook rate in Ads Manager:</strong> Go to Columns → Customize Columns → search "3-second" → add "3-Second Video Views." Divide by Impressions. That's your hook rate. You can also create a custom metric.</p>
+      </div>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">10</span></div>
+</div>
+
+<!-- ═══ S11 SECTION DIVIDER: COMPETITOR INTEL ═══ -->
+<div class="slide section-divider" id="s11">
+  <div class="sec-num">03</div>
+  <div class="sec-label">Section 03</div>
+  <div class="sec-heading">Competitor<br>Intelligence</div>
+  <div class="sec-desc">We pulled your competitors before today. Here's what Jon Goodman is actually running right now — and the three white spaces nobody in this niche is touching.</div>
+</div>
+
+<!-- ═══ S12 COMPETITOR INTEL LIVE ═══ -->
+<div class="slide cs" id="s12">
+  <div class="sh"><h2>What Your Competitors Are Actually Running — Right Now</h2><span class="st">Section 03 — Live Intelligence (From Manus Research)</span></div>
+  <div class="sb">
+    <div class="callout"><p><strong>We ran this room's competitors through Manus + Claude before today.</strong> Jon Goodman was the strongest active benchmark. Here's what the audit found — verbatim.</p></div>
+    <div class="g2" style="flex:1; gap:10px;">
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="font-family:'Bebas Neue';font-size:14px;color:var(--navy);letter-spacing:0.5px;">JON GOODMAN — TOP ACTIVE HOOKS</div>
+        <div class="hook-box">
+          <div class="hook-label">Hook #1 — Contrarian / Frustration</div>
+          <div class="hook-text">"Business coaching for fitness is an absolute mess these days."</div>
+          <div class="hook-meta">Format: Talking head · Emotion: Frustration · Running: 60+ days</div>
+        </div>
+        <div class="hook-box">
+          <div class="hook-label">Hook #2 — Systems / Identity</div>
+          <div class="hook-text">"Most fitness coaches are working way too hard for way too little."</div>
+          <div class="hook-meta">Format: Talking head · Emotion: Identity challenge · Running: 45+ days</div>
+        </div>
+        <div class="hook-box">
+          <div class="hook-label">Hook #3 — Social Proof / Result Lead</div>
+          <div class="hook-text">"$0 to $250,000 in her coaching business..."</div>
+          <div class="hook-meta">Format: Case study / testimonial · Emotion: Desire · Running: 30+ days</div>
+        </div>
+        <div style="background:var(--orange-pale);border-radius:8px;padding:8px 12px;border:1px solid #fed7aa;"><div style="font-family:'DM Mono';font-size:10px;color:var(--orange);margin-bottom:4px;">FINDING</div><div style="font-size:11px;color:var(--text);">Jon Goodman's entire library is concentrated in ONE hook family — contrarian systems-based frustration. Strong signal. Also means: entirely predictable to out-flank.</div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="font-family:'Bebas Neue';font-size:14px;color:var(--navy);letter-spacing:0.5px;">NICHE-WIDE DOMINANT PATTERNS (Crowded)</div>
+        <table class="dt" style="font-size:11px;">
+          <thead><tr><th>Pattern</th><th>Verbatim Example</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Founder frustration call-out</strong></td><td><em>"Women in perimenopause who feel dismissed by their doctor—this is for you."</em></td><td><span class="badge br">Crowded</span></td></tr>
+            <tr><td><strong>Contrarian hormone reframe</strong></td><td><em>"Eat less, move more is the WORST advice for your body right now."</em></td><td><span class="badge br">Crowded</span></td></tr>
+            <tr><td><strong>DM keyword CTA</strong></td><td><em>"DM me GROCERY for my Hashimoto's guide"</em></td><td><span class="badge bo">Saturated</span></td></tr>
+            <tr><td><strong>Identity label in copy</strong></td><td><em>"Fitness coaches..." as opener</em></td><td><span class="badge br">Over-used</span></td></tr>
+            <tr><td><strong>Personal origin story</strong></td><td><em>"Six years ago I was diagnosed with..."</em></td><td><span class="badge bo">Common</span></td></tr>
+          </tbody>
+        </table>
+        <div class="callout red"><p><strong>If you're running any of these patterns:</strong> You're splitting the same audience with the same message. Andromeda treats your ad as the same Entity ID as your competitor. You need the same reach, but a different angle.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">12</span></div>
+</div>
+
+<!-- ═══ S13 WHITE SPACE ═══ -->
+<div class="slide cs" id="s13">
+  <div class="sh"><h2>The White Space — What Nobody in This Niche Is Running</h2><span class="st">Section 03 — Competitive Gaps (Your Opportunity)</span></div>
+  <div class="sb">
+    <div class="callout green"><p><strong>From our pre-workshop Manus audit:</strong> Three creative gaps that are open right now across this entire market. These aren't theories — they're confirmed absences in the visible active ad libraries of your top competitors.</p></div>
+    <div class="g3" style="flex:1;">
+      <div class="card gt">
+        <div class="card-label">White Space #1 — Most Valuable</div>
+        <div class="card-title">BOF Proof Ads</div>
+        <div class="card-body">The visible market is overwhelmingly top-of-funnel and DM-oriented. Almost nobody is running testimonial compilations, objection-crushing content, or bottom-of-funnel proof. <strong>Most applicable to: Alycia, Lindsey, April, Vanessa.</strong></div>
+      </div>
+      <div class="card gt">
+        <div class="card-label">White Space #2 — Format Gap</div>
+        <div class="card-title">Skit / Acted-Out Pain</div>
+        <div class="card-body">Almost zero competitors are running skit-style or acted-out pain point ads. It's talking head everywhere. A 15-second dramatic scene of the problem your avatar lives every day is an entirely uncrowded format in this niche. <strong>Zero competition on this entity type.</strong></div>
+      </div>
+      <div class="card gt">
+        <div class="card-label">White Space #3 — Copy Strategy</div>
+        <div class="card-title">Pain-Led Without Identity Label</div>
+        <div class="card-body">Leading with "fitness coaches" in the ad is oversaturated. Leading with the pain or aspiration <em>without</em> the identity label performs better right now. Let the creative find the audience. Stop doing Meta's job for it. <strong>Immediately actionable for everyone in this room.</strong></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;flex-shrink:0;">
+      <div style="background:white;border-radius:10px;padding:12px 16px;border:1px solid var(--gray-200);">
+        <div style="font-family:'Bebas Neue';font-size:14px;color:var(--navy);margin-bottom:8px;">STUDENT-SPECIFIC FINDINGS</div>
+        <div class="steps" style="gap:6px;">
+          <div class="step"><div class="step-n o" style="width:22px;height:22px;font-size:11px;">A</div><div class="step-c"><strong style="font-size:12px;">Alycia</strong><span>Paid library looks narrower than brand equity. Strong organic but paid is authority-heavy podcast promos. Needs diversified conversion stack.</span></div></div>
+          <div class="step"><div class="step-n o" style="width:22px;height:22px;font-size:11px;">L</div><div class="step-c"><strong style="font-size:12px;">Lindsey</strong><span>Best live case study for Entity ID principle. Many ads, few entities. Perimenopause talking-head families dominating the library.</span></div></div>
+          <div class="step"><div class="step-n o" style="width:22px;height:22px;font-size:11px;">AA</div><div class="step-c"><strong style="font-size:12px;">April &amp; Arthur</strong><span>Small, coherent, tightly aligned Hashimoto's library. Not a message problem — an under-scaling problem. Specificity is winning.</span></div></div>
+        </div>
+      </div>
+      <div class="callout"><p><strong>"Same angle as competitors = same audience, split between you. Different angle = yours alone."</strong><br><br>The Andromeda algorithm treats your ad and your competitor's ad as the same Entity ID if they share format + hook type + emotional driver. White space means uncrowded Entity IDs — more impressions, lower CPMs, better results.</p></div>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">13</span></div>
+</div>
+
+<!-- ═══ S14 SWIPE FILE PROCESS ═══ -->
+<div class="slide cs" id="s14">
+  <div class="sh"><h2>Building Your Creative Intelligence Swipe File</h2><span class="st">Section 03 — Ongoing Process</span></div>
+  <div class="sb">
+    <div class="g2" style="flex:1;">
+      <div>
+        <div style="font-family:'Bebas Neue';font-size:15px;color:var(--navy);margin-bottom:10px;letter-spacing:0.5px;">THE THREE RESEARCH SOURCES</div>
+        <div class="steps">
+          <div class="step"><div class="step-n o">1</div><div class="step-c"><strong>Meta Ad Library — Direct competitors</strong><span>Filter to active ads only. For every ad running 30+ days: hook verbatim, format bucket, emotional driver, CTA keyword, run duration. 30+ days = spending money = working.</span></div></div>
+          <div class="step"><div class="step-n o">2</div><div class="step-c"><strong>Organic swipe — Their Instagram profile</strong><span>Top posts last 60 days by engagement. Note: hook/topic, why it performed, what emotional territory they own. Most engaged posts reveal what the algorithm rewards in their account.</span></div></div>
+          <div class="step"><div class="step-n o">3</div><div class="step-c"><strong>Adjacent industries — Non-competing brands</strong><span>Business coaches, real estate coaches, high-ticket SaaS targeting the same avatar. Hook structures from industries your avatar follows that fitness hasn't tested.</span></div></div>
+        </div>
+        <div class="callout" style="margin-top:8px;"><p><strong>The Ashton Isolation Test:</strong> Traffic campaign, $25/day, 10 variants, ONE variable changed. Sort by Unique Outbound CTR. "Consistently Distracted?" hook → cost per call dropped from $180–$200 to under $60. This is a $250 test that can 3x your results.</p></div>
+      </div>
+      <div>
+        <div style="font-family:'Bebas Neue';font-size:15px;color:var(--navy);margin-bottom:10px;letter-spacing:0.5px;">WHAT TO RECORD FOR EACH AD</div>
+        <table class="dt">
+          <thead><tr><th>Data Point</th><th>Why It Matters</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Hook (verbatim)</strong></td><td>First 3 seconds exact words. Highest-leverage element. Catalog them all.</td></tr>
+            <tr><td><strong>Format bucket</strong></td><td>Format = Entity ID. Know which buckets they use and which they ignore.</td></tr>
+            <tr><td><strong>Emotional driver</strong></td><td>Fear / frustration / desire / hope. This is their angle.</td></tr>
+            <tr><td><strong>Duration</strong></td><td>Duration patterns reveal what's converting vs. what's just getting views.</td></tr>
+            <tr><td><strong>CTA keyword</strong></td><td>What action are they driving? What word triggers their automation?</td></tr>
+            <tr><td><strong>Run duration</strong></td><td>30+ days = testing win. 60+ days = scaling. 90+ days = cash cow concept.</td></tr>
+          </tbody>
+        </table>
+        <div class="callout orange" style="margin-top:8px;"><p><strong>The AI version:</strong> Paste this table prompt into Manus with the competitor's Ad Library URL. It pulls every active 30+ day ad and fills this table for you in 20 minutes. One session = your entire competitive intelligence for the quarter.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">14</span></div>
+</div>
+
+<!-- ═══ S15 ACTIVITY 2 ═══ -->
+<div class="slide cs" id="s15">
+  <div class="sh" style="background:var(--orange);"><h2>🔴 Live Activity 2 — Competitor Intelligence Pull (20 min)</h2><span class="st" style="color:rgba(255,255,255,0.7);">Section 03 — Hands On</span></div>
+  <div class="sb">
+    <div class="callout orange"><p><strong>Goal:</strong> Identify 1–2 winning competitor concepts you can adapt for your first new entity post-workshop. Walk out with a real hook — not a placeholder.</p></div>
+    <div class="g3" style="flex:1;">
+      <div class="card ot">
+        <div class="card-label">Step 1 — Open Ad Library</div>
+        <div class="card-title">Go to the Source</div>
+        <div class="card-body">facebook.com/ads/library — search your 2 main competitors by name. Filter to active ads only. For everyone in this room: also search Jon Goodman as a benchmark.</div>
+      </div>
+      <div class="card nt">
+        <div class="card-label">Step 2 — Identify 30+ Day Ads</div>
+        <div class="card-title">Find What's Working</div>
+        <div class="card-body">Only focus on ads running 30+ days. They're spending money. Pick the ad that looks MOST different from what you're currently running. That's your biggest opportunity.</div>
+      </div>
+      <div class="card ot">
+        <div class="card-label">Step 3 — Write Your Adaptation</div>
+        <div class="card-title">Make It Yours</div>
+        <div class="card-body">Write: hook, format bucket, emotion, CTA. Ask: "What's the structure that's working? How would I say this in my voice with my story?" Write ONE hook variation adapted for your avatar.</div>
+      </div>
+    </div>
+    <div style="background:white;border-radius:10px;padding:14px 16px;border:1px solid var(--gray-200);flex-shrink:0;">
+      <div style="font-family:'Bebas Neue';font-size:14px;color:var(--navy);margin-bottom:10px;">YOUR COMPETITOR INTELLIGENCE WORKSHEET</div>
+      <table class="dt" style="font-size:11px;">
+        <thead><tr><th>Competitor Name</th><th>Hook (Verbatim)</th><th>Format Bucket</th><th>Emotion</th><th>My Adaptation</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--gray-400);font-style:italic;">_______________</td><td style="color:var(--gray-400);font-style:italic;">Write it word for word</td><td style="color:var(--gray-400);font-style:italic;">Talking head / B-roll / etc.</td><td style="color:var(--gray-400);font-style:italic;">Frustration / Desire / etc.</td><td style="color:var(--gray-400);font-style:italic;">Your version in your voice</td></tr>
+          <tr><td style="color:var(--gray-400);font-style:italic;">_______________</td><td style="color:var(--gray-400);font-style:italic;">Write it word for word</td><td style="color:var(--gray-400);font-style:italic;">Talking head / B-roll / etc.</td><td style="color:var(--gray-400);font-style:italic;">Frustration / Desire / etc.</td><td style="color:var(--gray-400);font-style:italic;">Your version in your voice</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">15</span></div>
+</div>
+
+<!-- ═══ S16 SECTION DIVIDER: VARIATIONS ═══ -->
+<div class="slide section-divider" id="s16">
+  <div class="sec-num">04</div>
+  <div class="sec-label">Section 04</div>
+  <div class="sec-heading">Winning<br>Variations</div>
+  <div class="sec-desc">The right way to iterate on what's working. Four variation types that either create new entities or improve existing ones — and the critical difference between them.</div>
+</div>
+
+<!-- ═══ S17 VARIATION FRAMEWORK ═══ -->
+<div class="slide cs" id="s17">
+  <div class="sh"><h2>The Four Variation Types — What Creates a New Entity vs. What Doesn't</h2><span class="st">Section 04 — Winning Variations</span></div>
+  <div class="sb">
+    <div style="flex:1;overflow:hidden;">
+      <table class="dt">
+        <thead><tr><th>Type</th><th>What You Change</th><th>What You Keep</th><th>Entity Result</th><th>Use When</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Hook Swap</strong></td><td>First 3 seconds only — new hook type or opening visual</td><td>Exact same body, proof, CTA</td><td><span class="badge bo">Same entity</span> — hook rate test only</td><td>Good hook rate but want to test variations. Don't expect Andromeda to treat this differently.</td></tr>
+          <tr><td><strong>Format Shift</strong></td><td>Entire format (talking head → skit → B-roll + text)</td><td>Core message, angle, proof point</td><td><span class="badge bg">NEW entity</span> — this is what you want</td><td>You have a concept that's working and want more lottery tickets from it.</td></tr>
+          <tr><td><strong>Angle Shift</strong></td><td>Core emotion AND avatar problem being addressed</td><td>General topic may stay the same</td><td><span class="badge bg">NEW entity</span> — different driver</td><td>You've exhausted the frustration angle — try desire, or identity, or social proof.</td></tr>
+          <tr><td><strong>Presenter Swap</strong></td><td>Who delivers the ad (you → partner → client)</td><td>Same message structure</td><td><span class="badge bg">NEW entity</span> — different face</td><td>Scale your best script. Different person = different creative signal to Andromeda.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="g2" style="flex-shrink:0;">
+      <div style="background:#0f172a;border-radius:10px;padding:14px 18px;border:1px solid rgba(255,255,255,0.1);">
+        <div style="font-family:'DM Mono';font-size:10px;color:var(--orange);margin-bottom:8px;">IMPORTANT: ANDROMEDA CAN SEE THIS</div>
+        <div style="font-size:12px;color:var(--blue-light);line-height:1.55;">Andromeda can see when you've swapped a hook on the same video. It knows it's the same creative. Hook Swap is useful for hook rate testing in a traffic campaign — it is NOT a strategy for building entity diversity. If you can't articulate a different buying reason, it's not a new entity.</div>
+      </div>
+      <div class="callout"><p><strong>The 4-hook types (Aaron Martinez):</strong> Every ad has four hook layers — Banner Text (text at top), Verbal Hook (what you say), Caption Hook (first line of copy), and Visual "What's Happening" Hook (what they see first frame). Each can be varied independently. Ads with banner text universally outperform ads without it.</p></div>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">17</span></div>
+</div>
+
+<!-- ═══ S18 CONCEPT TO ENTITIES ═══ -->
+<div class="slide cs" id="s18">
+  <div class="sh"><h2>Concepts vs. Entities — One Concept Should Birth 3–5 Real Entities</h2><span class="st">Section 04 — Creative Architecture</span></div>
+  <div class="sb">
+    <div class="callout"><p><strong>A concept is a buying reason.</strong> An entity is the unique combination of format + hook + emotion + presenter. One strong concept should produce at least 3–5 genuinely different entities. If you can only think of one — you haven't mapped it far enough.</p></div>
+    <div style="flex:1;overflow:hidden;">
+      <div style="background:var(--navy);border-radius:8px;padding:8px 16px;margin-bottom:8px;display:flex;align-items:center;gap:8px;"><span style="font-family:'DM Mono';font-size:10px;color:var(--orange);">CONCEPT:</span><span style="font-size:13px;color:white;font-weight:600;">"Coaches can hit $10K/month without burning out or grinding 60-hour weeks"</span></div>
+      <div class="g2" style="gap:8px;">
+        <div class="card ot" style="padding:10px 14px;"><div class="card-label">Entity A — Talking Head</div><div class="card-title">Direct, frustration angle</div><div class="card-body">Hook: "If you're still waiting for referrals as a fitness coach, you have a system problem." Emotion: Frustration. Presenter: Jordan. CTA: 35s.</div></div>
+        <div class="card nt" style="padding:10px 14px;"><div class="card-label">Entity B — Skit</div><div class="card-title">Character, humor angle</div><div class="card-body">Hook: [In gym clothes, staring at phone] "Day 47 of posting for free... still nothing." Emotion: Humor + recognition. CTA: 40s.</div></div>
+        <div class="card ot" style="padding:10px 14px;"><div class="card-label">Entity C — B-Roll + Text</div><div class="card-title">Lifestyle, desire angle</div><div class="card-body">Hook: "She went from $2K to $18K/month in 90 days." Text overlay + b-roll. Emotion: Desire. No talking head needed. CTA: 30s.</div></div>
+        <div class="card nt" style="padding:10px 14px;"><div class="card-label">Entity D — Partner/Client</div><div class="card-title">Different presenter, empathy angle</div><div class="card-body">Same concept, Erin or a client delivers it. Hook: vulnerability → hope. Emotion: Hope. Different face = different Andromeda signal. CTA: 40s.</div></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px;flex-shrink:0;">
+      <div style="background:var(--navy);border-radius:6px;padding:8px;text-align:center;"><div style="font-size:10px;color:var(--orange);font-weight:600;">Talking Head</div><div style="font-size:9px;color:var(--blue-light);margin-top:2px;">2–3 min</div></div>
+      <div style="background:var(--navy);border-radius:6px;padding:8px;text-align:center;"><div style="font-size:10px;color:var(--orange);font-weight:600;">Skit / Pattern Int.</div><div style="font-size:9px;color:var(--blue-light);margin-top:2px;">2–3 min</div></div>
+      <div style="background:var(--navy);border-radius:6px;padding:8px;text-align:center;"><div style="font-size:10px;color:var(--orange);font-weight:600;">B-Roll + Text</div><div style="font-size:9px;color:var(--blue-light);margin-top:2px;">2–3 min</div></div>
+      <div style="background:var(--navy);border-radius:6px;padding:8px;text-align:center;"><div style="font-size:10px;color:var(--orange);font-weight:600;">VSL / Story</div><div style="font-size:9px;color:var(--blue-light);margin-top:2px;">1–2 min</div></div>
+      <div style="background:var(--navy);border-radius:6px;padding:8px;text-align:center;"><div style="font-size:10px;color:var(--orange);font-weight:600;">Interview Clip</div><div style="font-size:9px;color:var(--blue-light);margin-top:2px;">1–2 min</div></div>
+      <div style="background:var(--navy);border-radius:6px;padding:8px;text-align:center;"><div style="font-size:10px;color:var(--orange);font-weight:600;">Client Testimonial</div><div style="font-size:9px;color:var(--blue-light);margin-top:2px;">1–2 min</div></div>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">18</span></div>
+</div>
+
+<!-- ═══ S19 SECTION DIVIDER: CADENCE ═══ -->
+<div class="slide section-divider" id="s19">
+  <div class="sec-num">05</div>
+  <div class="sec-label">Section 05</div>
+  <div class="sec-heading">Creative<br>Cadence</div>
+  <div class="sec-desc">The coaches who win with ads long-term don't just make great ads. They build a machine that consistently produces diverse, tested creative every single week. Frequency of good ideas compounds.</div>
+</div>
+
+<!-- ═══ S20 BUDGET CADENCE ═══ -->
+<div class="slide cs" id="s20">
+  <div class="sh"><h2>Your Testing Plan by Budget — Scaled to Where You Are</h2><span class="st">Section 05 — Creative Cadence</span></div>
+  <div class="sb">
+    <div class="callout"><p><strong>Andromeda needs data to learn.</strong> Here's how to feed it based on what you're spending. The structure changes at each tier — but the principle stays the same: diverse entities, stable learning, weekly cadence.</p></div>
+    <div class="g3" style="flex:1;">
+      <div style="background:white;border-radius:12px;padding:16px 18px;border:1px solid var(--gray-200);border-top:3px solid var(--navy);">
+        <div style="font-family:'Bebas Neue';font-size:22px;color:var(--navy);">$500–$2K/mo</div>
+        <div style="font-family:'DM Mono';font-size:10px;color:var(--gray-400);margin-bottom:10px;">$20–65/day budget</div>
+        <div class="steps" style="gap:6px;">
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:9px;">S</div><div class="step-c"><strong style="font-size:12px;">Structure</strong><span>1 Campaign · 1 Ad Set · 8–10 ads</span></div></div>
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:9px;">C</div><div class="step-c"><strong style="font-size:12px;">New Creatives</strong><span>2–3 new ads/week</span></div></div>
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:9px;">F</div><div class="step-c"><strong style="font-size:12px;">Focus</strong><span>Test hooks &amp; formats. Prove 1 concept works before adding more.</span></div></div>
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:9px;">R</div><div class="step-c"><strong style="font-size:12px;">Rotation</strong><span>Every 7–10 days, rotate in 2 new concepts</span></div></div>
+        </div>
+        <div style="background:var(--blue-light);border-radius:6px;padding:6px 10px;margin-top:8px;text-align:center;font-family:'DM Mono';font-size:10px;color:var(--navy);">Amy Jo · Emily — this is your tier</div>
+      </div>
+      <div style="background:white;border-radius:12px;padding:16px 18px;border:1px solid var(--gray-200);border-top:3px solid var(--orange);">
+        <div style="font-family:'Bebas Neue';font-size:22px;color:var(--orange);">$2K–$5K/mo</div>
+        <div style="font-family:'DM Mono';font-size:10px;color:var(--gray-400);margin-bottom:10px;">$65–170/day budget</div>
+        <div class="steps" style="gap:6px;">
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:9px;">S</div><div class="step-c"><strong style="font-size:12px;">Structure</strong><span>1–2 Campaigns · 1 Ad Set each · 12–15 ads</span></div></div>
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:9px;">C</div><div class="step-c"><strong style="font-size:12px;">New Creatives</strong><span>4–5 new ads/week</span></div></div>
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:9px;">F</div><div class="step-c"><strong style="font-size:12px;">Focus</strong><span>1 test campaign + 1 scaling campaign with proven winners</span></div></div>
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:9px;">R</div><div class="step-c"><strong style="font-size:12px;">Rotation</strong><span>Every 5–7 days, retire bottom performers</span></div></div>
+        </div>
+        <div style="background:var(--orange-pale);border-radius:6px;padding:6px 10px;margin-top:8px;text-align:center;font-family:'DM Mono';font-size:10px;color:var(--orange);">Lacey/Zach · Alycia — this tier</div>
+      </div>
+      <div style="background:white;border-radius:12px;padding:16px 18px;border:1px solid var(--gray-200);border-top:3px solid var(--green-dark);">
+        <div style="font-family:'Bebas Neue';font-size:22px;color:var(--green-dark);">$5K–$15K/mo</div>
+        <div style="font-family:'DM Mono';font-size:10px;color:var(--gray-400);margin-bottom:10px;">$170–500/day budget</div>
+        <div class="steps" style="gap:6px;">
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:9px;">S</div><div class="step-c"><strong style="font-size:12px;">Structure</strong><span>2–3 Campaigns · 1 Ad Set each · 15–25 ads</span></div></div>
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:9px;">C</div><div class="step-c"><strong style="font-size:12px;">New Creatives</strong><span>8–12 new ads/week</span></div></div>
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:9px;">F</div><div class="step-c"><strong style="font-size:12px;">Focus</strong><span>Test + Scale + Retarget running simultaneously. Creative is a full-time role.</span></div></div>
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:9px;">R</div><div class="step-c"><strong style="font-size:12px;">Rotation</strong><span>Every 5 days. Library of 30+ proven hooks.</span></div></div>
+        </div>
+        <div style="background:#dcfce7;border-radius:6px;padding:6px 10px;margin-top:8px;text-align:center;font-family:'DM Mono';font-size:10px;color:var(--green-dark);">Lindsey · Vanessa — this tier</div>
+      </div>
+    </div>
+    <div class="callout red" style="flex-shrink:0;"><p><strong>Critical rule:</strong> Never test 2 similar ads against each other. Each creative must differ in hook, format, OR angle. Same entity = wasted budget no matter how different the wording is.</p></div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">20</span></div>
+</div>
+
+<!-- ═══ S21 DAILY/WEEKLY/MONTHLY ═══ -->
+<div class="slide cs" id="s21">
+  <div class="sh"><h2>Daily / Weekly / Monthly — The Production Rhythm</h2><span class="st">Section 05 — Creative Cadence</span></div>
+  <div class="sb">
+    <div style="flex:1;overflow:hidden;">
+      <table class="dt">
+        <thead><tr><th>Frequency</th><th>Action</th><th>Goal</th><th>Time</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge br">Daily</span></td><td>Check hook rate + hold rate. Kill ads at 2× KPI. <strong>DO NOT touch winners.</strong></td><td>Stop bleeding on dead ads. Protect winners from interference.</td><td style="font-family:'DM Mono';font-size:11px;">10–15 min</td></tr>
+          <tr><td><span class="badge bo">Weekly</span></td><td>Drop 2–3 genuinely new entities. Pull 1–2 hooks from competitor research. Review comments on top performers.</td><td>Sustain entity diversity. Feed Andromeda fresh creative every week.</td><td style="font-family:'DM Mono';font-size:11px;">2–3 hrs</td></tr>
+          <tr><td><span class="badge bg">Monthly</span></td><td>Drop 10–20 new creative concepts. Full entity audit of your ad library. Review competitor swipe file.</td><td>Reset fatigue safely. Identify format and angle gaps before they hurt performance.</td><td style="font-family:'DM Mono';font-size:11px;">Half day</td></tr>
+          <tr><td><span class="badge bn">Quarterly</span></td><td>Full creative strategy reset. New angles based on offer evolution, testimonials, and market feedback.</td><td>Stay ahead of algorithm fatigue. Evolve with the market before you plateau.</td><td style="font-family:'DM Mono';font-size:11px;">Full day</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="formula">
+      <div class="f-part"><div class="f-val">70%</div><div class="f-label">Budget on proven winners</div></div>
+      <div class="f-op">+</div>
+      <div class="f-part"><div class="f-val">30%</div><div class="f-label">Budget on new entity tests</div></div>
+      <div class="f-op">=</div>
+      <div class="f-part"><div class="f-val" style="color:#4ADE80;">Scale</div><div class="f-label">Compound creative learning</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;flex-shrink:0;">
+      <div class="callout"><p><strong>Batch rule:</strong> Launch new tests in weekly batches — not daily drips. Meta's algorithm prefers stable learning periods over constant micro-changes. One drop per week, not one ad per day.</p></div>
+      <div class="callout orange"><p><strong>The Hook-First Production Method:</strong> Write 5–7 hook variations BEFORE scripting the body. Select 2–3 hooks most likely to be genuinely new entities. Write the body last: Agitate → Solution → Proof → CTA at 30–45s (not the end). Re-hook at 10–12s.</p></div>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">21</span></div>
+</div>
+
+<!-- ═══ S22 SECTION DIVIDER: TOF/MOF/BOF ═══ -->
+<div class="slide section-divider" id="s22">
+  <div class="sec-num">06</div>
+  <div class="sec-label">Section 06</div>
+  <div class="sec-heading">TOF / MOF<br>/ BOF<br>System</div>
+  <div class="sec-desc">The three-stage ad funnel. Campaign structure. Production non-negotiables. And the one setting you need to turn off in Ads Manager right now.</div>
+</div>
+
+<!-- ═══ S23 THREE STAGE FUNNEL ═══ -->
+<div class="slide cs" id="s23">
+  <div class="sh"><h2>The Three-Stage Ad Funnel — Build In This Order</h2><span class="st">Section 06 — Funnel Architecture</span></div>
+  <div class="sb">
+    <div class="callout red"><p><strong>The biggest mistake in this room:</strong> Almost everyone is running all TOF DM Lead Magnet and nothing else. Alycia, Vanessa, Emily — all hit or approaching ceiling with one funnel type. The ceiling isn't your creative. It's your funnel architecture.</p></div>
+    <div class="g3" style="flex:1;">
+      <div style="background:white;border-radius:12px;padding:14px 16px;border:1px solid var(--gray-200);border-top:4px solid var(--navy);">
+        <div style="font-family:'Bebas Neue';font-size:20px;color:var(--navy);">TOF — Top of Funnel</div>
+        <div style="font-family:'DM Mono';font-size:10px;color:var(--gray-400);margin-bottom:8px;">$0–$15K/mo · 20% of budget</div>
+        <div class="steps" style="gap:5px;">
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:10px;">→</div><div class="step-c"><strong style="font-size:12px;">Goal: Build warm audience</strong><span>$1–$2 cost per follower target</span></div></div>
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:10px;">→</div><div class="step-c"><strong style="font-size:12px;">Creative: Boosted organic posts</strong><span>Identity content, pain content. NOT an offer. Only ask is the follow.</span></div></div>
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:10px;">→</div><div class="step-c"><strong style="font-size:12px;">Why it matters</strong><span>Trains Andromeda on who your person is. Warm audience leads cost 3–5x less.</span></div></div>
+        </div>
+        <div style="background:var(--blue-light);border-radius:6px;padding:6px 10px;margin-top:8px;font-size:11px;color:var(--navy);">Most coaches skip this. That's why their DM ads cost $30/lead.</div>
+      </div>
+      <div style="background:white;border-radius:12px;padding:14px 16px;border:1px solid var(--gray-200);border-top:4px solid var(--orange);">
+        <div style="font-family:'Bebas Neue';font-size:20px;color:var(--orange);">MOF — Mid Funnel</div>
+        <div style="font-family:'DM Mono';font-size:10px;color:var(--gray-400);margin-bottom:8px;">$10K–$50K/mo · 60–70% of budget</div>
+        <div class="steps" style="gap:5px;">
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:10px;">→</div><div class="step-c"><strong style="font-size:12px;">Goal: Inbound DM conversations</strong><span>$5–$10 per DM conversation target</span></div></div>
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:10px;">→</div><div class="step-c"><strong style="font-size:12px;">Creative: Free training, lead magnets</strong><span>CTA is always DM-based. 50/50 cold + warm retarget.</span></div></div>
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:10px;">→</div><div class="step-c"><strong style="font-size:12px;">Where creative diversity pays most</strong><span>Same lead magnet across 8 entities = more reach, cheaper leads.</span></div></div>
+        </div>
+        <div style="background:var(--orange-pale);border-radius:6px;padding:6px 10px;margin-top:8px;font-size:11px;color:var(--orange);">You're selling the DM. The conversation does the selling.</div>
+      </div>
+      <div style="background:white;border-radius:12px;padding:14px 16px;border:1px solid var(--gray-200);border-top:4px solid var(--green-dark);">
+        <div style="font-family:'Bebas Neue';font-size:20px;color:var(--green-dark);">BOF — Bottom of Funnel</div>
+        <div style="font-family:'DM Mono';font-size:10px;color:var(--gray-400);margin-bottom:8px;">$30K+/mo · 15–20% of budget</div>
+        <div class="steps" style="gap:5px;">
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:10px;">→</div><div class="step-c"><strong style="font-size:12px;">Goal: Automated lead gen at volume</strong><span>Opt-in → VSL → call OR DM → automation → setter closes</span></div></div>
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:10px;">→</div><div class="step-c"><strong style="font-size:12px;">Structure: 1–2 campaigns max</strong><span>1 broad ad set each · 15–25 diverse creatives · weekly refresh</span></div></div>
+          <div class="step"><div class="step-n o" style="width:20px;height:20px;font-size:10px;">→</div><div class="step-c"><strong style="font-size:12px;">The biggest gap in this room</strong><span>Nobody is running testimonial compilations, case studies, or objection-crushing BOF creative.</span></div></div>
+        </div>
+        <div style="background:#dcfce7;border-radius:6px;padding:6px 10px;margin-top:8px;font-size:11px;color:var(--green-dark);">This is the white space the whole market is leaving open.</div>
+      </div>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">23</span></div>
+</div>
+
+<!-- ═══ S24 PRODUCTION NON-NEGOTIABLES ═══ -->
+<div class="slide cs" id="s24">
+  <div class="sh"><h2>Production Non-Negotiables + The Setting to Turn Off Now</h2><span class="st">Section 06 — Production Standards</span></div>
+  <div class="sb">
+    <div class="g2" style="flex:1; gap:12px;">
+      <div>
+        <div style="font-family:'Bebas Neue';font-size:15px;color:var(--navy);margin-bottom:10px;letter-spacing:0.5px;">5 PRODUCTION NON-NEGOTIABLES</div>
+        <div class="steps">
+          <div class="step"><div class="step-n o">1</div><div class="step-c"><strong>Banner Text — Always</strong><span>Text at the very top of every ad. Calls out problem, solution, case study, or guarantee. Ads with banner text universally outperform ads without it.</span></div></div>
+          <div class="step"><div class="step-n o">2</div><div class="step-c"><strong>Captions — On Every Ad</strong><span>80%+ watch muted. Non-negotiable. Use auto-transcribed captions. No captions = invisible to most of your audience.</span></div></div>
+          <div class="step"><div class="step-n o">3</div><div class="step-c"><strong>Face in First 2–4 Seconds</strong><span>Humans connect with humans. B-roll-first openers almost always underperform. Show a face immediately.</span></div></div>
+          <div class="step"><div class="step-n o">4</div><div class="step-c"><strong>4×5 Aspect Ratio (1080×1350)</strong><span>Protects your banner text from being cropped. Fits all feed placements. Don't use 16:9 vertical.</span></div></div>
+          <div class="step"><div class="step-n o">5</div><div class="step-c"><strong>Audio Optimization</strong><span>Bad audio = instant scroll. Adobe Podcast for cleanup. Music at -30 to -40dB. Test with AND without headphones.</span></div></div>
+        </div>
+        <div class="callout red" style="margin-top:8px;"><p><strong>Software:</strong> Premiere Pro, DaVinci Resolve, or Final Cut. <strong>Never CapCut</strong> — compresses quality, bad captions, limits placements, makes your ads look cheap.</p></div>
+      </div>
+      <div>
+        <div style="font-family:'Bebas Neue';font-size:15px;color:var(--navy);margin-bottom:10px;letter-spacing:0.5px;">THE SETTING TO TURN OFF RIGHT NOW</div>
+        <div style="background:#fef2f2;border-radius:12px;padding:16px 18px;border:1px solid #fca5a5;margin-bottom:10px;">
+          <div style="font-family:'Bebas Neue';font-size:15px;color:var(--red);margin-bottom:8px;">✗ AUDIENCE NETWORK + MARKETPLACE</div>
+          <div class="steps" style="gap:6px;">
+            <div class="step"><div class="step-n" style="background:var(--red);font-size:10px;">1</div><div class="step-c"><span style="font-size:12px;">Go to Audience Settings → Placement Controls</span></div></div>
+            <div class="step"><div class="step-n" style="background:var(--red);font-size:10px;">2</div><div class="step-c"><span style="font-size:12px;">Click "My business can only advertise in specific placements"</span></div></div>
+            <div class="step"><div class="step-n" style="background:var(--red);font-size:10px;">3</div><div class="step-c"><span style="font-size:12px;">Uncheck ALL Audience Network placements + Facebook Marketplace</span></div></div>
+          </div>
+          <div style="background:#fee2e2;border-radius:6px;padding:8px 10px;margin-top:8px;font-size:12px;color:var(--red);">Audience Network = apps like Candy Crush. People aren't there to buy high-ticket coaching. You're paying for junk traffic. Turn it off once in account settings and it applies to every future campaign automatically.</div>
+        </div>
+        <div class="callout green"><p><strong>The Organic + Ads Flywheel:</strong> Ads drive the first impression. Organic closes the deal. Ask yourself: if someone saw your ad and visited your profile, would they buy from you? If not — fix that first. Your organic is what converts the warm audience your ads are building.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">24</span></div>
+</div>
+
+<!-- ═══ S25 ENTITY AUDIT ACTIVITY ═══ -->
+<div class="slide cs" id="s25">
+  <div class="sh" style="background:var(--orange);"><h2>🔴 Live Activity 3 — Entity Diversity Audit (15 min)</h2><span class="st" style="color:rgba(255,255,255,0.7);">Section 06 — Hands On</span></div>
+  <div class="sb">
+    <div class="callout orange"><p><strong>Goal:</strong> See how many REAL entities you have vs. how many ads you think you have. Almost everyone discovers they have 20 ads but 3 entities. Lindsey: this exercise is for you most visibly — but everyone in this room will find the same thing.</p></div>
+    <div style="flex:1;overflow:hidden;">
+      <table class="dt">
+        <thead><tr><th>Ad Name / ID</th><th>Format Bucket</th><th>Hook Type</th><th>Core Emotion</th><th>Presenter</th><th>Hook Rate</th><th>Entity Status</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--gray-400);font-style:italic;">Your Ad #1</td><td style="color:var(--gray-400);font-style:italic;">e.g. Talking head</td><td style="color:var(--gray-400);font-style:italic;">e.g. Pain callout</td><td style="color:var(--gray-400);font-style:italic;">Frustration</td><td style="color:var(--gray-400);font-style:italic;">You</td><td style="color:var(--gray-400);font-style:italic;">_____%</td><td style="color:var(--gray-400);font-style:italic;">LIVE / PAUSED</td></tr>
+          <tr><td style="color:var(--gray-400);font-style:italic;">Your Ad #2</td><td style="color:var(--gray-400);font-style:italic;">e.g. B-roll + text</td><td style="color:var(--gray-400);font-style:italic;">e.g. Result lead</td><td style="color:var(--gray-400);font-style:italic;">Desire</td><td style="color:var(--gray-400);font-style:italic;">Client</td><td style="color:var(--gray-400);font-style:italic;">_____%</td><td style="color:var(--gray-400);font-style:italic;">LIVE / PAUSED</td></tr>
+          <tr><td style="color:var(--gray-400);font-style:italic;">Your Ad #3</td><td style="color:var(--gray-400);font-style:italic;">e.g. Skit</td><td style="color:var(--gray-400);font-style:italic;">e.g. Identity</td><td style="color:var(--gray-400);font-style:italic;">Humor</td><td style="color:var(--gray-400);font-style:italic;">You</td><td style="color:var(--gray-400);font-style:italic;">_____%</td><td style="color:var(--gray-400);font-style:italic;">LIVE / PAUSED</td></tr>
+          <tr><td style="color:var(--gray-400);font-style:italic;">Your Ad #4</td><td style="color:var(--gray-400);font-style:italic;">...</td><td style="color:var(--gray-400);font-style:italic;">...</td><td style="color:var(--gray-400);font-style:italic;">...</td><td style="color:var(--gray-400);font-style:italic;">...</td><td style="color:var(--gray-400);font-style:italic;">_____%</td><td style="color:var(--gray-400);font-style:italic;">LIVE / PAUSED</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="g3" style="flex-shrink:0;">
+      <div class="card nt">
+        <div class="card-label">The Test</div>
+        <div class="card-title">Circle Duplicate Entities</div>
+        <div class="card-body">Circle any two ads that share the same: format bucket + emotion + hook type. Those are one entity, not two. Count how many unique entities you actually have.</div>
+      </div>
+      <div class="card ot">
+        <div class="card-label">The Find</div>
+        <div class="card-title">Identify Empty Buckets</div>
+        <div class="card-body">Which two format buckets have zero coverage in your current library? Those become your next two creative briefs. Most common gaps: Skit and Interview/Podcast clip.</div>
+      </div>
+      <div class="card nt">
+        <div class="card-label">The Target</div>
+        <div class="card-title">10–15 Live Entities</div>
+        <div class="card-body">A healthy 7-figure ad account has 10–15 genuinely distinct entities active at all times. If you have 20 ads but 3 entities — you're not running 20 ads. You're running 3.</div>
+      </div>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">25</span></div>
+</div>
+
+<!-- ═══ S26 CREATIVE BRIEF ACTIVITY ═══ -->
+<div class="slide cs" id="s26">
+  <div class="sh" style="background:var(--orange);"><h2>🔴 Live Activity 4 — Build Your Next Week's Creative Brief (15 min)</h2><span class="st" style="color:rgba(255,255,255,0.7);">Final Activity</span></div>
+  <div class="sb">
+    <div class="callout orange"><p><strong>The deliverable:</strong> Leave today with a specific, actionable brief for your first 2 new entities of next week. Not "I should make some new ads." A real brief with real specs that you can hand to your team or use in your own shoot session.</p></div>
+    <div style="flex:1;overflow:hidden;">
+      <table class="dt">
+        <thead><tr><th>Field</th><th>Entity A (fill in)</th><th>Entity B (fill in)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Format Bucket</strong></td><td style="color:var(--gray-400);font-style:italic;">Talking head / B-roll / Skit / Testimonial / VSL / Interview</td><td style="color:var(--gray-400);font-style:italic;">Must be different from Entity A</td></tr>
+          <tr><td><strong>Core Emotion / Angle</strong></td><td style="color:var(--gray-400);font-style:italic;">Frustration / Desire / Fear / Hope / Humor / Identity</td><td style="color:var(--gray-400);font-style:italic;">Must be different from Entity A</td></tr>
+          <tr><td><strong>Opening Hook (exact words)</strong></td><td style="color:var(--gray-400);font-style:italic;">Write the first 3 seconds verbatim</td><td style="color:var(--gray-400);font-style:italic;">Write the first 3 seconds verbatim</td></tr>
+          <tr><td><strong>Re-hook at 10–12 seconds</strong></td><td style="color:var(--gray-400);font-style:italic;">What brings them back after 10s?</td><td style="color:var(--gray-400);font-style:italic;">What brings them back after 10s?</td></tr>
+          <tr><td><strong>Proof Point</strong></td><td style="color:var(--gray-400);font-style:italic;">Name + number + timeframe</td><td style="color:var(--gray-400);font-style:italic;">Name + number + timeframe</td></tr>
+          <tr><td><strong>CTA Keyword</strong></td><td style="color:var(--gray-400);font-style:italic;">Comment / DM trigger word</td><td style="color:var(--gray-400);font-style:italic;">Comment / DM trigger word</td></tr>
+          <tr><td><strong>Why this is a new entity</strong></td><td style="color:var(--gray-400);font-style:italic;">How does it differ from your current ads?</td><td style="color:var(--gray-400);font-style:italic;">How does it differ from your current ads?</td></tr>
+          <tr><td><strong>Funnel Stage</strong></td><td style="color:var(--gray-400);font-style:italic;">TOF / MOF / BOF</td><td style="color:var(--gray-400);font-style:italic;">TOF / MOF / BOF</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout green" style="flex-shrink:0;"><p><strong>Bonus challenge:</strong> Make one of these two entities something from the white space section — a skit-style ad, a BOF proof ad, or a pain-led hook without the "fitness coaches" identity label. That's your most differentiated shot at a new audience segment.</p></div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">26</span></div>
+</div>
+
+<!-- ═══ S27 KEY TAKEAWAYS ═══ -->
+<div class="slide cs" id="s27">
+  <div class="sh"><h2>Key Takeaways — What You're Walking Out With</h2><span class="st">Workshop Summary</span></div>
+  <div class="sb">
+    <div class="g2" style="flex:1;">
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="background:var(--navy);border-radius:10px;padding:14px 16px;border-left:4px solid var(--orange);">
+          <div style="font-family:'Bebas Neue';font-size:16px;color:var(--orange);">01 — Entity First, Always</div>
+          <div style="font-size:12px;color:var(--blue-light);margin-top:4px;line-height:1.5;">Creative diversity is the only targeting lever. Format + emotion + hook type = entity. If two ads share all three, they're one entity. Stop counting ads and start counting real entities.</div>
+        </div>
+        <div style="background:var(--navy);border-radius:10px;padding:14px 16px;border-left:4px solid var(--orange);">
+          <div style="font-family:'Bebas Neue';font-size:16px;color:var(--orange);">02 — Hook Rate is Your North Star</div>
+          <div style="font-size:12px;color:var(--blue-light);margin-top:4px;line-height:1.5;">25%+ target. Below 15% = Andromeda deprioritizes before you even compete. Your first 3 seconds either get you in the auction or they don't. Nothing else matters until this is solved.</div>
+        </div>
+        <div style="background:var(--navy);border-radius:10px;padding:14px 16px;border-left:4px solid var(--orange);">
+          <div style="font-family:'Bebas Neue';font-size:16px;color:var(--orange);">03 — The White Space Is Open Right Now</div>
+          <div style="font-size:12px;color:var(--blue-light);margin-top:4px;line-height:1.5;">BOF proof ads. Skit-style creative. Pain-led hooks without the identity label. Nobody in your niche is running these. That's your 12–18 month creative advantage if you move now.</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="background:var(--navy);border-radius:10px;padding:14px 16px;border-left:4px solid var(--orange);">
+          <div style="font-family:'Bebas Neue';font-size:16px;color:var(--orange);">04 — Kill Rules Protect Your Budget</div>
+          <div style="font-size:12px;color:var(--blue-light);margin-top:4px;line-height:1.5;">New ad: 2× KPI before killing. Existing winner: 3× KPI. Never edit a live winner — duplicate it. Launch 50, run 10. These rules prevent the two most expensive mistakes in ads: killing too early and keeping dead ads too long.</div>
+        </div>
+        <div style="background:var(--navy);border-radius:10px;padding:14px 16px;border-left:4px solid var(--orange);">
+          <div style="font-family:'Bebas Neue';font-size:16px;color:var(--orange);">05 — Build the Funnel, Not Just Ads</div>
+          <div style="font-size:12px;color:var(--blue-light);margin-top:4px;line-height:1.5;">TOF followers (20%) → MOF lead magnet (60–70%) → BOF VSL/proof (15–20%). Every person in this room is over-indexed on MOF. The ceiling you're hitting isn't creative fatigue — it's missing funnel stages.</div>
+        </div>
+        <div style="background:var(--navy);border-radius:10px;padding:14px 16px;border-left:4px solid var(--orange);">
+          <div style="font-family:'Bebas Neue';font-size:16px;color:var(--orange);">06 — Organic Closes What Ads Open</div>
+          <div style="font-size:12px;color:var(--blue-light);margin-top:4px;line-height:1.5;">You cannot scale with ads alone in 2026. People come in through ads — then they binge your organic before they buy. Ask: if someone saw my ad and visited my profile, would they buy from me? If not — go fix that first.</div>
+        </div>
+      </div>
+    </div>
+    <div class="formula" style="flex-shrink:0;">
+      <div class="f-part"><div class="f-val">10–15</div><div class="f-label">Real entities, not total ads</div></div>
+      <div class="f-op">+</div>
+      <div class="f-part"><div class="f-val">25%+</div><div class="f-label">Hook rate target</div></div>
+      <div class="f-op">+</div>
+      <div class="f-part"><div class="f-val">2–3</div><div class="f-label">New entities per week</div></div>
+      <div class="f-op">=</div>
+      <div class="f-part"><div class="f-val" style="color:#4ADE80;">Machine</div><div class="f-label">That compounds every month</div></div>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · Ad Creative Process Workshop · April 2026</span><span class="snum">27</span></div>
+</div>
+
+<!-- ═══ S28 CLOSE ═══ -->
+<div class="slide cover" id="s28" style="flex-direction:column;justify-content:center;">
+  <div style="position:relative;z-index:1;">
+    <div class="cover-eyebrow">Workshop Complete — Now Execute</div>
+    <div style="font-family:'Bebas Neue';font-size:60px;color:white;line-height:0.95;margin-bottom:20px;">Your <span style="color:var(--orange);">Next</span><br>30 Days</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px;">
+      <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:14px 16px;border:1px solid rgba(255,255,255,0.1);">
+        <div style="font-family:'DM Mono';font-size:10px;color:var(--orange);margin-bottom:6px;">THIS WEEK</div>
+        <div style="font-size:12px;color:var(--blue-light);line-height:1.5;">Turn off Audience Network. Film your 2 new entity briefs from today. Pull your real KPI baseline. Launch 50, run 10.</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:14px 16px;border:1px solid rgba(255,255,255,0.1);">
+        <div style="font-family:'DM Mono';font-size:10px;color:var(--orange);margin-bottom:6px;">WEEK 2–3</div>
+        <div style="font-size:12px;color:var(--blue-light);line-height:1.5;">Run Manus competitor research. Build your Foreplay swipe file. Drop 2–3 new entities from white space opportunities. Set up the weekly cadence with your team.</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:14px 16px;border:1px solid rgba(255,255,255,0.1);">
+        <div style="font-family:'DM Mono';font-size:10px;color:var(--orange);margin-bottom:6px;">WEEK 4</div>
+        <div style="font-size:12px;color:var(--blue-light);line-height:1.5;">Full entity audit. Add one BOF proof entity. Review hook rates across all active ads. Kill everything below 2× KPI threshold. Batch-create Month 2 brief.</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4);">Impact Fitness Coaching Academy &nbsp;·&nbsp; Ad Creative Process Workshop</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:4px;">Seven-Figure Client Retreat &nbsp;·&nbsp; April 2026 &nbsp;·&nbsp; Confidential</div>
+      </div>
+      <div style="font-family:'Bebas Neue';font-size:40px;color:var(--orange);letter-spacing:3px;">IFCA</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end #stage -->
+<div id="hint">← → ARROW KEYS TO NAVIGATE &nbsp;·&nbsp; CLICK DOTS TO JUMP</div>
+
+<script>
+  const TOTAL = 28;
+  let cur = 0;
+  const slides = document.querySelectorAll('.slide');
+  const counter = document.getElementById('slide-counter');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+  const fill = document.getElementById('progress-fill');
+  const tocBar = document.getElementById('toc-bar');
+
+  for (let i = 0; i < TOTAL; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'toc-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goTo(i);
+    tocBar.appendChild(dot);
+  }
+
+  function goTo(n) {
+    slides[cur].classList.remove('active');
+    tocBar.children[cur].classList.remove('active');
+    cur = n;
+    slides[cur].classList.add('active');
+    tocBar.children[cur].classList.add('active');
+    counter.textContent = (cur + 1) + ' / ' + TOTAL;
+    btnPrev.disabled = cur === 0;
+    btnNext.disabled = cur === TOTAL - 1;
+    fill.style.width = ((cur + 1) / TOTAL * 100) + '%';
+  }
+
+  function navigate(dir) {
+    const n = cur + dir;
+    if (n >= 0 && n < TOTAL) goTo(n);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+  });
+
+  goTo(0);
+</script>
+</body>
+</html>

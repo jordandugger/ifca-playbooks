@@ -1,8 +1,1103 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>Coming Soon — IFCA Playbooks</title>
-<style>body{font-family:sans-serif;background:#0D1F35;color:white;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;flex-direction:column;gap:12px;}
-.label{font-family:monospace;font-size:11px;letter-spacing:2px;color:#E87722;text-transform:uppercase;}
-h1{font-size:32px;font-weight:700;}p{color:rgba(255,255,255,0.4);font-size:13px;}
-a{color:#E87722;font-size:12px;margin-top:8px;}
-</style></head>
-<body><div class="label">IFCA Playbooks</div><h1>Coming Soon</h1><p>This resource is in development.</p><a href="../index.html">← Back to Hub</a></body></html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFCA — MOF & BOF Ad Strategy Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1E3A5F;
+    --navy-dark: #142845;
+    --navy-light: #2A4F7F;
+    --orange: #E87722;
+    --orange-light: #F09040;
+    --orange-pale: #FDF3E8;
+    --blue-light: #D6E4F0;
+    --blue-mid: #A8C8E0;
+    --white: #FFFFFF;
+    --off-white: #F8FAFC;
+    --gray-100: #F1F5F9;
+    --gray-200: #E2E8F0;
+    --gray-400: #94A3B8;
+    --gray-600: #475569;
+    --gray-800: #1E293B;
+    --text: #1A2840;
+    --text-muted: #4A6080;
+    --slide-w: 1100px;
+    --slide-h: 620px;
+    --tof: #3B82F6;
+    --mof: #8B5CF6;
+    --bof: #E87722;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #0D1B2E;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  /* NAV BAR */
+  #nav {
+    width: var(--slide-w);
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  #nav .logo { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--orange); letter-spacing: 2px; }
+  #nav .module-label { font-size: 12px; color: rgba(255,255,255,0.4); letter-spacing: 1px; text-transform: uppercase; }
+  #nav .controls { display: flex; align-items: center; gap: 12px; }
+  #nav button {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white; width: 36px; height: 36px; border-radius: 8px;
+    font-size: 16px; cursor: pointer; transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #nav button:hover { background: rgba(255,255,255,0.15); }
+  #nav button:disabled { opacity: 0.3; cursor: default; }
+  #slide-counter { font-family: 'DM Mono', monospace; font-size: 13px; color: rgba(255,255,255,0.5); min-width: 60px; text-align: center; }
+
+  /* TOC DOTS */
+  #toc-bar { width: var(--slide-w); max-width: 100%; display: flex; gap: 4px; flex-wrap: wrap; }
+  .toc-dot { height: 4px; flex: 1; border-radius: 2px; background: rgba(255,255,255,0.15); cursor: pointer; transition: background 0.2s; min-width: 20px; }
+  .toc-dot.active { background: var(--orange); }
+  .toc-dot:hover { background: rgba(255,255,255,0.4); }
+
+  /* SLIDE STAGE */
+  #stage {
+    width: var(--slide-w);
+    max-width: 100%;
+    aspect-ratio: 16/9;
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+  }
+
+  .slide {
+    position: absolute; inset: 0;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s ease;
+    overflow: hidden;
+  }
+  .slide.active { opacity: 1; pointer-events: all; }
+
+  /* SPEAKER NOTES */
+  #notes-bar {
+    width: var(--slide-w);
+    max-width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 14px 20px;
+    display: none;
+  }
+  #notes-bar.visible { display: block; }
+  #notes-bar .notes-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+  #notes-bar .notes-text { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+
+  /* KEYBOARD HINT */
+  .kb-hint { font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 0.5px; }
+
+  /* ══════════════════════════════════════════
+     SLIDE DESIGN HELPERS
+  ══════════════════════════════════════════ */
+
+  /* Base bg */
+  .bg-navy { background: var(--navy-dark); }
+  .bg-dark { background: #0A1520; }
+  .bg-light { background: var(--off-white); }
+
+  .slide-inner {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    padding: 48px 56px;
+  }
+
+  .tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 4px;
+    margin-bottom: 20px; width: fit-content;
+  }
+  .tag-orange { background: rgba(232,119,34,0.18); color: var(--orange); border: 1px solid rgba(232,119,34,0.3); }
+  .tag-blue { background: rgba(59,130,246,0.15); color: #7EC8E3; border: 1px solid rgba(59,130,246,0.25); }
+  .tag-purple { background: rgba(139,92,246,0.15); color: #C4B5FD; border: 1px solid rgba(139,92,246,0.25); }
+  .tag-white { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.12); }
+
+  .slide-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 4.2vw, 52px);
+    letter-spacing: 1px;
+    line-height: 1.05;
+    color: var(--white);
+  }
+  .slide-title .orange { color: var(--orange); }
+  .slide-title .blue { color: var(--blue-mid); }
+
+  .slide-subtitle {
+    font-size: 15px; color: rgba(255,255,255,0.5);
+    margin-top: 10px; line-height: 1.5;
+  }
+
+  .divider {
+    height: 2px; background: var(--orange);
+    width: 48px; margin: 16px 0; border-radius: 2px;
+  }
+
+  /* COLUMNS */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; flex: 1; align-items: start; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; flex: 1; align-items: start; }
+
+  /* CARD */
+  .card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+  .card-navy { background: rgba(30,58,95,0.6); border-color: rgba(30,58,95,0.8); }
+  .card-orange { background: rgba(232,119,34,0.1); border-color: rgba(232,119,34,0.3); }
+  .card-dark { background: rgba(0,0,0,0.3); border-color: rgba(255,255,255,0.08); }
+
+  .card-label {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .card-label.orange { color: var(--orange); }
+  .card-label.blue { color: var(--blue-mid); }
+  .card-label.purple { color: #C4B5FD; }
+  .card-label.green { color: #6EE7B7; }
+  .card-label.white { color: rgba(255,255,255,0.4); }
+
+  .card-title { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
+  .card-body { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; }
+  .data-table th {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(255,255,255,0.4); padding: 8px 14px; text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .data-table td {
+    font-size: 13px; color: rgba(255,255,255,0.75); padding: 11px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.06); vertical-align: top;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .td-highlight { color: var(--white); font-weight: 600; }
+  .td-orange { color: var(--orange); font-weight: 600; }
+  .td-blue { color: #7EC8E3; font-weight: 600; }
+  .td-purple { color: #C4B5FD; font-weight: 600; }
+  .td-green { color: #6EE7B7; font-weight: 600; }
+
+  /* PILL / BADGE */
+  .pill {
+    display: inline-block; padding: 3px 10px; border-radius: 20px;
+    font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.5px;
+  }
+  .pill-tof { background: rgba(59,130,246,0.2); color: #93C5FD; }
+  .pill-mof { background: rgba(139,92,246,0.2); color: #C4B5FD; }
+  .pill-bof { background: rgba(232,119,34,0.2); color: var(--orange-light); }
+
+  /* STAT BOX */
+  .stat-box {
+    background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px; padding: 18px 20px; text-align: center;
+  }
+  .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 44px; color: var(--orange); letter-spacing: 1px; line-height: 1; }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; line-height: 1.4; }
+
+  /* FUNNEL VISUAL */
+  .funnel-stage {
+    padding: 14px 20px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .funnel-tof { background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.3); }
+  .funnel-mof { background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.3); }
+  .funnel-bof { background: rgba(232,119,34,0.12); border: 1px solid rgba(232,119,34,0.35); }
+
+  .funnel-icon { font-size: 22px; width: 32px; text-align: center; flex-shrink: 0; }
+  .funnel-name { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 2px; }
+  .funnel-name.tof-color { color: #93C5FD; }
+  .funnel-name.mof-color { color: #C4B5FD; }
+  .funnel-name.bof-color { color: var(--orange-light); }
+  .funnel-desc { font-size: 13px; color: rgba(255,255,255,0.65); }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.5; }
+  .check-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    background: rgba(232,119,34,0.1); border-left: 3px solid var(--orange);
+    border-radius: 0 8px 8px 0; padding: 12px 16px;
+    font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.6;
+  }
+  .highlight-box strong { color: var(--white); }
+
+  .insight-box {
+    background: rgba(110,231,183,0.08); border-left: 3px solid #6EE7B7;
+    border-radius: 0 8px 8px 0; padding: 12px 16px;
+    font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.6;
+  }
+  .insight-box strong { color: #6EE7B7; }
+
+  /* STEP ROW */
+  .step-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--orange); color: var(--white);
+    font-family: 'Bebas Neue', sans-serif; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .step-content { flex: 1; }
+  .step-title { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+  .step-body { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+
+  /* ORANGE ACCENT LINE */
+  .accent-line { height: 1px; background: linear-gradient(to right, var(--orange), transparent); margin: 14px 0; }
+
+  /* FLOW ARROW */
+  .flow-arrow { text-align: center; font-size: 20px; color: rgba(255,255,255,0.25); margin: 4px 0; }
+
+  /* ROAS callout */
+  .roas-callout {
+    background: linear-gradient(135deg, rgba(110,231,183,0.12), rgba(16,185,129,0.06));
+    border: 1px solid rgba(110,231,183,0.3);
+    border-radius: 10px; padding: 16px 20px;
+  }
+  .roas-number { font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: #6EE7B7; line-height: 1; }
+  .roas-label { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+  /* EXERCISE SLIDE */
+  .exercise-bg { background: linear-gradient(135deg, #0A1520 0%, #1a2a0a 100%); }
+  .exercise-header {
+    background: rgba(110,231,183,0.1); border: 1px solid rgba(110,231,183,0.25);
+    border-radius: 8px; padding: 10px 16px; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .exercise-header .ex-icon { font-size: 18px; }
+  .exercise-header .ex-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6EE7B7; }
+
+  /* SECTION DIVIDER SLIDE */
+  .section-divider-bg {
+    background: linear-gradient(135deg, #102236 0%, #1E3A5F 60%, #142845 100%);
+  }
+  .big-section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 140px; line-height: 1;
+    color: rgba(232,119,34,0.12);
+    position: absolute; bottom: -10px; right: 40px;
+  }
+
+  /* KEYWORD highlight */
+  em { font-style: normal; color: var(--orange); font-weight: 600; }
+  em.blue { color: var(--blue-mid); }
+  em.green { color: #6EE7B7; }
+  em.purple { color: #C4B5FD; }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="header-logo" style="display:flex;gap:12px;align-items:center;">
+    <span class="logo">IFCA</span>
+    <span style="width:1px;height:20px;background:rgba(255,255,255,0.15);"></span>
+    <span class="module-label">7-Figure Retreat · MOF & BOF Ad Strategy</span>
+  </div>
+  <div class="controls">
+    <button id="btn-notes" title="Toggle speaker notes" style="width:auto;padding:0 12px;font-size:12px;letter-spacing:1px;">NOTES</button>
+    <button id="btn-prev" disabled>←</button>
+    <span id="slide-counter">1 / 14</span>
+    <button id="btn-next">→</button>
+  </div>
+</nav>
+
+<!-- TOC DOTS -->
+<div id="toc-bar"></div>
+
+<!-- STAGE -->
+<div id="stage"></div>
+
+<!-- SPEAKER NOTES -->
+<div id="notes-bar">
+  <div class="notes-label">Speaker Notes</div>
+  <div id="notes-text" class="notes-text"></div>
+</div>
+
+<p class="kb-hint">← → arrow keys to navigate &nbsp;·&nbsp; N to toggle notes</p>
+
+<script>
+const slides = [
+
+  // ─── SLIDE 1 — TITLE ─────────────────────────────────────────────────────
+  {
+    notes: "Set the frame before diving in. Most people in this room have been running TOF-only. That's how you get to $100K/year. It's not how you get to $250K+ or $500K+. This module is about the other 30-40% of your ad budget that you're currently leaving on the table.",
+    html: `
+    <div class="slide-inner section-divider-bg" style="justify-content:center;">
+      <div class="tag tag-orange">Module — Ad Funnel Strategy</div>
+      <div class="slide-title" style="font-size:clamp(38px,5vw,64px);">Middle &amp; Bottom<br><span class="orange">of Funnel Ads</span></div>
+      <div class="divider"></div>
+      <div class="slide-subtitle" style="max-width:580px;font-size:16px;">How to build the full acquisition funnel — so you're not just generating leads, you're closing the ones you already have.</div>
+      <div style="margin-top:auto;display:flex;gap:12px;align-items:center;">
+        <span class="pill pill-tof">TOF · Cold</span>
+        <span style="color:rgba(255,255,255,0.2);font-size:18px;">→</span>
+        <span class="pill pill-mof">MOF · Warm</span>
+        <span style="color:rgba(255,255,255,0.2);font-size:18px;">→</span>
+        <span class="pill pill-bof">BOF · Ready to Buy</span>
+      </div>
+      <div class="big-section-num">MOF<br>BOF</div>
+    </div>`
+  },
+
+  // ─── SLIDE 2 — THE PROBLEM ────────────────────────────────────────────────
+  {
+    notes: "This is the pattern I see repeatedly across the retreat group. You've been TOF-only because it works early. But at a certain point you've extracted most of the addressable cold traffic that will respond to your lead magnet format. More budget on a saturated TOF just produces diminishing returns. The pipeline breaks downstream — not at the ad level.",
+    html: `
+    <div class="slide-inner bg-dark">
+      <div class="tag tag-white">The Problem</div>
+      <div class="slide-title">Why Your <span class="orange">TOF-Only</span> Strategy<br>Has a Ceiling</div>
+      <div class="divider"></div>
+      <div class="two-col" style="margin-top:4px;">
+        <div>
+          <div class="card card-dark" style="border-color:rgba(239,68,68,0.25);background:rgba(239,68,68,0.07);">
+            <div class="card-label" style="color:#FCA5A5;">What Most People Are Running</div>
+            <div class="card-title" style="color:#FCA5A5;">TOF Only — DM Lead Magnet</div>
+            <div class="card-body" style="margin-top:8px;">
+              <div style="display:flex;flex-direction:column;gap:7px;margin-top:8px;">
+                <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.6);">
+                  <span style="color:#FCA5A5;">✕</span> Cold traffic → DM → Manual follow-up → Call
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.6);">
+                  <span style="color:#FCA5A5;">✕</span> 100% of budget on one funnel format
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.6);">
+                  <span style="color:#FCA5A5;">✕</span> Warm followers leaking — no retargeting
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.6);">
+                  <span style="color:#FCA5A5;">✕</span> Leads from last 6 months: never followed up on with ads
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.6);">
+                  <span style="color:#FCA5A5;">✕</span> Call-ready prospects seeing same cold-traffic ad as strangers
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box" style="margin-top:14px;">
+            <strong>The Ceiling:</strong> Once you've extracted most addressable cold traffic with one format, more spend ≠ more calls. The answer isn't louder TOF — it's layering MOF and BOF.
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="stat-box">
+            <div class="stat-number">60–70<span style="font-size:28px;">%</span></div>
+            <div class="stat-label">Budget allocation you're currently spending on TOF<br>when you should be splitting it across all 3 layers</div>
+          </div>
+          <div class="card card-dark">
+            <div class="card-label orange">What You're Missing</div>
+            <ul class="checklist" style="margin-top:4px;">
+              <li><span class="check-icon">💜</span>Warm followers who never became leads</li>
+              <li><span class="check-icon">📋</span>Leads who opted in but never booked a call</li>
+              <li><span class="check-icon">🎯</span>Call-ready prospects who need one direct CTA</li>
+              <li><span class="check-icon">🔁</span>Past inquiries who need re-engagement</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>`
+  },
+
+  // ─── SLIDE 3 — 3-LAYER FUNNEL OVERVIEW ────────────────────────────────────
+  {
+    notes: "This is the full framework. Think of your ad account as three separate jobs running simultaneously. TOF fills the pipeline. MOF moves people from aware to interested. BOF converts the already-interested into booked calls and signed clients. Each layer talks to a different temperature of prospect — different message, different CTA, different success metric.",
+    html: `
+    <div class="slide-inner bg-navy">
+      <div class="tag tag-orange">Framework</div>
+      <div class="slide-title">The <span class="orange">3-Layer</span> Acquisition Funnel</div>
+      <div class="divider"></div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:0;justify-content:center;">
+
+        <div class="funnel-stage funnel-tof">
+          <div class="funnel-icon">🌊</div>
+          <div style="flex:1;">
+            <div class="funnel-name tof-color">TOF — Cold Traffic &nbsp;<span class="pill pill-tof">60–70% of Budget</span></div>
+            <div class="funnel-desc">Goal: New followers + DM leads &nbsp;·&nbsp; Ads: DM automation, follower campaign, educational content &nbsp;·&nbsp; Audience: Broad cold / interest-stacked</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="funnel-stage funnel-mof">
+          <div class="funnel-icon">🔥</div>
+          <div style="flex:1;">
+            <div class="funnel-name mof-color">MOF — Warm Retargeting &nbsp;<span class="pill pill-mof">15–20% of Budget</span></div>
+            <div class="funnel-desc">Goal: Move warm prospects onto email/SMS list + closer to call &nbsp;·&nbsp; Ads: Lead magnet (50/50 cold + retarget), social proof, value content &nbsp;·&nbsp; Audience: Followers, video viewers, website visitors</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="funnel-stage funnel-bof">
+          <div class="funnel-icon">💰</div>
+          <div style="flex:1;">
+            <div class="funnel-name bof-color">BOF — Ready to Buy &nbsp;<span class="pill pill-bof">15–20% of Budget</span></div>
+            <div class="funnel-desc">Goal: Convert call-ready prospects &nbsp;·&nbsp; Ads: Short-form VSL, IG DM keyword CTA, direct application CTA &nbsp;·&nbsp; Audience: Past leads, engaged followers, email list, past inquiries</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="insight-box" style="margin-top:12px;">
+        <strong>Key Principle:</strong> Each layer speaks to a different level of awareness. TOF educates. MOF nurtures. BOF converts. Running the same ad to all three is leaving money on the table every single day.
+      </div>
+    </div>`
+  },
+
+  // ─── SLIDE 4 — SECTION BREAK: MOF ────────────────────────────────────────
+  {
+    notes: "Transition slide. Use this to signal we're going deeper on MOF first before moving to BOF.",
+    html: `
+    <div class="slide-inner section-divider-bg" style="justify-content:center;align-items:flex-start;">
+      <div class="tag tag-purple">Part 1 of 2</div>
+      <div class="slide-title" style="font-size:clamp(36px,5.5vw,68px);">Middle of Funnel<br><span style="color:#C4B5FD;">MOF Strategy</span></div>
+      <div class="divider" style="background:#8B5CF6;"></div>
+      <div class="slide-subtitle" style="max-width:520px;font-size:15px;">
+        Your warm audience is the most underutilized asset in your ad account. These are people who already know you — they just haven't been given the right next step.
+      </div>
+      <div style="margin-top:auto;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.3);text-transform:uppercase;">What We'll Cover</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.6);">→ Who is your MOF audience &nbsp;·&nbsp; What MOF ads look like &nbsp;·&nbsp; How to structure + budget</div>
+      </div>
+      <div class="big-section-num" style="color:rgba(139,92,246,0.1);">MOF</div>
+    </div>`
+  },
+
+  // ─── SLIDE 5 — MOF AUDIENCE ───────────────────────────────────────────────
+  {
+    notes: "The biggest unlock here is that you're not targeting strangers. You're targeting people who have already raised their hand in some way. They followed you. They watched 50% of your video. They clicked your landing page. They opted in for your lead magnet and never booked. These are the warmest, cheapest-to-convert leads you have — and most of you are showing them the exact same cold traffic ad.",
+    html: `
+    <div class="slide-inner bg-dark">
+      <div class="tag tag-purple">MOF — Audience</div>
+      <div class="slide-title">Who Is Your <span style="color:#C4B5FD;">Warm Audience?</span></div>
+      <div class="divider" style="background:#8B5CF6;"></div>
+      <div class="two-col">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="card" style="background:rgba(139,92,246,0.08);border-color:rgba(139,92,246,0.25);">
+            <div class="card-label purple">Custom Audience Sources</div>
+            <table class="data-table" style="margin-top:8px;">
+              <tr>
+                <td class="td-highlight">IG/FB Followers</td>
+                <td class="card-body">Followed you but never opted in</td>
+              </tr>
+              <tr>
+                <td class="td-highlight">Video Viewers</td>
+                <td class="card-body">Watched 25–75% of your content</td>
+              </tr>
+              <tr>
+                <td class="td-highlight">Website Visitors</td>
+                <td class="card-body">Visited your landing page or application</td>
+              </tr>
+              <tr>
+                <td class="td-highlight">Lead Magnet Optins</td>
+                <td class="card-body">Downloaded but never booked a call</td>
+              </tr>
+              <tr>
+                <td class="td-highlight">Email/SMS List</td>
+                <td class="card-body">Upload your list as a custom audience</td>
+              </tr>
+              <tr style="border-top:1px solid rgba(255,255,255,0.08);">
+                <td class="td-highlight">Past Inquiries</td>
+                <td class="card-body">Leads from 3–6 months ago who went cold</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="card card-dark">
+            <div class="card-label purple">The MOF Mindset Shift</div>
+            <div class="card-body" style="margin-top:8px;">
+              <p style="margin-bottom:10px;">These people already <em class="purple">know you exist</em>. They've seen your content, your offer, your face. The friction is much lower. Your job in MOF is not to educate — it's to give them a clear, specific reason to take the <strong style="color:var(--white);">next step</strong>.</p>
+              <p>MOF is also your most efficient spend. CPL from retargeting is typically <em class="green">3–5x cheaper</em> than cold traffic CPL — but the lead quality is often higher.</p>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <strong>The 50/50 Rule:</strong> Run your lead magnet to 50% cold traffic (TOF pool) and 50% warm retargeting. You get both lead volume AND efficiency in a single campaign.
+          </div>
+          <div class="card card-dark">
+            <div class="card-label white">Budget Guideline</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:#C4B5FD;line-height:1.1;">15–20%</div>
+            <div class="card-body">of total monthly ad spend → MOF retargeting</div>
+          </div>
+        </div>
+      </div>
+    </div>`
+  },
+
+  // ─── SLIDE 6 — MOF AD TYPES ───────────────────────────────────────────────
+  {
+    notes: "MOF ad messaging is completely different from TOF. You're not explaining what you do — they already know. You're handling objections, reinforcing belief, showing proof, and creating urgency to take the next step. Think: 'You've been following me for a while. Here's why NOW is the time to book a call.'",
+    html: `
+    <div class="slide-inner bg-navy">
+      <div class="tag tag-purple">MOF — Ad Creative</div>
+      <div class="slide-title">What <span style="color:#C4B5FD;">MOF Ads</span> Look Like</div>
+      <div class="divider" style="background:#8B5CF6;"></div>
+      <div class="three-col" style="flex:1;">
+
+        <div class="card" style="background:rgba(139,92,246,0.08);border-color:rgba(139,92,246,0.25);">
+          <div class="card-label purple">1 — Social Proof &amp; Case Studies</div>
+          <div class="card-body">
+            <p style="margin-bottom:10px;">Client transformation stories told in first person. The reader sees themselves in the client. Best format: UGC-style or direct-to-camera talking head.</p>
+            <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:10px;font-style:italic;">Hook example:<br>"I was exactly where you are 90 days ago…"</div>
+          </div>
+        </div>
+
+        <div class="card" style="background:rgba(139,92,246,0.08);border-color:rgba(139,92,246,0.25);">
+          <div class="card-label purple">2 — Objection-Crushing Content</div>
+          <div class="card-body">
+            <p style="margin-bottom:10px;">Directly addresses the specific objection standing between them and booking. Price, time, "I can do this on my own," past failures. Hit one objection per ad.</p>
+            <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:10px;font-style:italic;">Hook example:<br>"If you've tried everything and nothing's worked…"</div>
+          </div>
+        </div>
+
+        <div class="card" style="background:rgba(139,92,246,0.08);border-color:rgba(139,92,246,0.25);">
+          <div class="card-label purple">3 — Lead Magnet Retarget</div>
+          <div class="card-body">
+            <p style="margin-bottom:10px;">Run your lead magnet offer at 50/50 cold + warm. For warm traffic, the ad copy references the context: "You've seen what's possible — here's the guide to start."</p>
+            <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:10px;font-style:italic;">CTA: DM keyword or landing page opt-in</div>
+          </div>
+        </div>
+
+      </div>
+      <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div class="insight-box">
+          <strong>MOF KPI:</strong> Cost per qualified lead (from retargeting). Expect 3–5x efficiency vs. cold. If your cold CPL is $30, warm should be $6–$12.
+        </div>
+        <div class="highlight-box">
+          <strong>Key Rule:</strong> MOF ads don't need high hook rates. The audience already trusts you. Prioritize message clarity and CTA specificity over scroll-stopping hooks.
+        </div>
+      </div>
+    </div>`
+  },
+
+  // ─── SLIDE 7 — SECTION BREAK: BOF ────────────────────────────────────────
+  {
+    notes: "Pivot to BOF. The mindset shift here is important: BOF is where you stop educating and start selling. These are people who are ready — or close to ready — to buy. Most coaches are still talking to them like they're cold strangers.",
+    html: `
+    <div class="slide-inner section-divider-bg" style="justify-content:center;align-items:flex-start;">
+      <div class="tag tag-orange">Part 2 of 2</div>
+      <div class="slide-title" style="font-size:clamp(36px,5.5vw,68px);">Bottom of Funnel<br><span class="orange">BOF Strategy</span></div>
+      <div class="divider"></div>
+      <div class="slide-subtitle" style="max-width:520px;font-size:15px;">
+        BOF is where you stop nurturing and start closing. The ad does the selling. The page collects the application. The call closes the deal.
+      </div>
+      <div style="margin-top:auto;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.3);text-transform:uppercase;">What We'll Cover</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.6);">→ Short-form VSL strategy &nbsp;·&nbsp; AI UGC execution &nbsp;·&nbsp; BOF KPIs (what actually matters)</div>
+      </div>
+      <div class="big-section-num">BOF</div>
+    </div>`
+  },
+
+  // ─── SLIDE 8 — BOF OVERVIEW ───────────────────────────────────────────────
+  {
+    notes: "The core BOF principle: the ad IS the VSL. Instead of sending someone from an ad to a VSL page to an application to a call booking page — you compress it. The ad sells. The application qualifies. The calendar page books. This is faster, requires less production, and in most cases converts just as well — or better — because you're reducing drop-off at every step.",
+    html: `
+    <div class="slide-inner bg-dark">
+      <div class="tag tag-orange">BOF — Core Strategy</div>
+      <div class="slide-title">The <span class="orange">Short-Form VSL</span> Funnel</div>
+      <div class="divider"></div>
+      <div class="two-col">
+        <div>
+          <div class="card card-dark" style="margin-bottom:14px;">
+            <div class="card-label orange">The Traditional VSL Funnel (Long)</div>
+            <div style="display:flex;flex-direction:column;gap:4px;margin-top:10px;">
+              <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:6px;padding:8px 12px;font-size:13px;color:rgba(255,255,255,0.6);">Ad (cold/warm)</div>
+              <div class="flow-arrow" style="font-size:14px;">↓</div>
+              <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:6px;padding:8px 12px;font-size:13px;color:rgba(255,255,255,0.6);">VSL Landing Page (20–40 min video)</div>
+              <div class="flow-arrow" style="font-size:14px;">↓</div>
+              <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:6px;padding:8px 12px;font-size:13px;color:rgba(255,255,255,0.6);">Application Form</div>
+              <div class="flow-arrow" style="font-size:14px;">↓</div>
+              <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:6px;padding:8px 12px;font-size:13px;color:rgba(255,255,255,0.6);">Calendar / Call Booking</div>
+            </div>
+            <div style="font-size:12px;color:rgba(239,68,68,0.7);margin-top:10px;">⚠ High drop-off at each step · Production-heavy · Hard to test</div>
+          </div>
+        </div>
+        <div>
+          <div class="card card-orange" style="margin-bottom:14px;">
+            <div class="card-label orange">The Short-Form VSL Funnel (2026)</div>
+            <div style="display:flex;flex-direction:column;gap:4px;margin-top:10px;">
+              <div style="background:rgba(232,119,34,0.15);border:1px solid rgba(232,119,34,0.35);border-radius:6px;padding:8px 12px;font-size:13px;color:var(--white);font-weight:600;">Ad acts as the VSL (60–90 sec)</div>
+              <div class="flow-arrow" style="font-size:14px;color:var(--orange);">↓</div>
+              <div style="background:rgba(232,119,34,0.15);border:1px solid rgba(232,119,34,0.35);border-radius:6px;padding:8px 12px;font-size:13px;color:var(--white);font-weight:600;">Application Page (direct)</div>
+              <div class="flow-arrow" style="font-size:14px;color:var(--orange);">↓</div>
+              <div style="background:rgba(232,119,34,0.15);border:1px solid rgba(232,119,34,0.35);border-radius:6px;padding:8px 12px;font-size:13px;color:var(--white);font-weight:600;">Calendar / Call Booking</div>
+            </div>
+            <div style="font-size:12px;color:#6EE7B7;margin-top:10px;">✓ Less production · Higher intent · Easier to test · More qualified leads</div>
+          </div>
+          <div class="highlight-box">
+            <strong>Jordan's Take:</strong> "I'd rather have a slightly higher cost per lead and more qualified applicants than a cheap lead who just clicked a VSL page and dropped off. The short-form VSL ad gets them to self-select. They watch the whole thing and then apply. That's a different kind of prospect."
+          </div>
+        </div>
+      </div>
+    </div>`
+  },
+
+  // ─── SLIDE 9 — BOF AD TYPES ───────────────────────────────────────────────
+  {
+    notes: "Give them a clear menu of what BOF ads actually look like in practice. Three main formats: IG DM keyword (lowest friction, keeps them in-app), short-form VSL direct (the workhorse), and the Loom-style screen recording. The Loom format is particularly powerful because it feels organic and native — not like an ad. We'll go deeper on the AI UGC version of this in the next slide.",
+    html: `
+    <div class="slide-inner bg-navy">
+      <div class="tag tag-orange">BOF — Ad Creative</div>
+      <div class="slide-title">3 BOF Ad Formats <span class="orange">That Convert</span></div>
+      <div class="divider"></div>
+      <div class="three-col" style="flex:1;">
+
+        <div class="card card-orange">
+          <div class="card-label orange">Format 1 — IG DM Keyword</div>
+          <div class="card-title">Direct DM CTA</div>
+          <div class="card-body">
+            <p style="margin-bottom:8px;">Ad drives people to comment/DM a keyword. Automation takes them through a short qualifier and books the call.</p>
+            <div class="accent-line"></div>
+            <ul class="checklist" style="margin-top:6px;">
+              <li><span class="check-icon">✓</span>Keeps prospect inside Instagram</li>
+              <li><span class="check-icon">✓</span>High intent — they raise their hand</li>
+              <li><span class="check-icon">✓</span>Best for warm audience (followers)</li>
+            </ul>
+            <div style="margin-top:10px;font-size:12px;color:rgba(255,255,255,0.4);">KPI: Cost per booked call</div>
+          </div>
+        </div>
+
+        <div class="card card-orange">
+          <div class="card-label orange">Format 2 — Short-Form VSL</div>
+          <div class="card-title">Ad → Application → Calendar</div>
+          <div class="card-body">
+            <p style="margin-bottom:8px;">60–90 second direct-to-camera video that sells the outcome, handles objections, and closes with a hard CTA to apply. The ad IS the VSL.</p>
+            <div class="accent-line"></div>
+            <ul class="checklist" style="margin-top:6px;">
+              <li><span class="check-icon">✓</span>Highest-quality leads (they watched)</li>
+              <li><span class="check-icon">✓</span>Easy to test variations</li>
+              <li><span class="check-icon">✓</span>Works for cold + warm audiences</li>
+            </ul>
+            <div style="margin-top:10px;font-size:12px;color:rgba(255,255,255,0.4);">KPI: Cost per qualified application</div>
+          </div>
+        </div>
+
+        <div class="card card-orange">
+          <div class="card-label orange">Format 3 — Loom / Screen Recording</div>
+          <div class="card-title">Native-Feeling Content Ad</div>
+          <div class="card-body">
+            <p style="margin-bottom:8px;">Screen recording style — presenter in small corner bubble walking through a result, framework, or proof document. Feels organic. Doesn't look like an ad.</p>
+            <div class="accent-line"></div>
+            <ul class="checklist" style="margin-top:6px;">
+              <li><span class="check-icon">✓</span>Lower CPM (native feel)</li>
+              <li><span class="check-icon">✓</span>Excellent for UGC/AI variation</li>
+              <li><span class="check-icon">✓</span>Best for showing proof + process</li>
+            </ul>
+            <div style="margin-top:10px;font-size:12px;color:rgba(255,255,255,0.4);">KPI: ROAS / Cost per signed client</div>
+          </div>
+        </div>
+
+      </div>
+    </div>`
+  },
+
+  // ─── SLIDE 10 — AI UGC for BOF ────────────────────────────────────────────
+  {
+    notes: "This is the 'what if I told you' moment. Walk through the actual case study: a Loom-style ad that ran for 59 days, 3.4x lifetime ROAS, then they cloned it with AI (Arcads) into different presenter types. The AI version ran 10.3x ROAS in the first 6 days. The CPL was the HIGHEST in the account — but it generated $30K from $2,979 in spend. That's the paradigm shift: for BOF, stop looking at cost per lead and start looking at cost per signed client.",
+    html: `
+    <div class="slide-inner bg-dark">
+      <div class="tag tag-orange">BOF — AI Creative Scaling</div>
+      <div class="slide-title">AI UGC: <span class="orange">Clone Your Winners</span><br>Without Hiring Actors</div>
+      <div class="divider"></div>
+      <div class="two-col">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="card card-dark">
+            <div class="card-label orange">The Strategy (Arcads)</div>
+            <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px;">
+              <div class="step-row">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <div class="step-title">Find a proven winner</div>
+                  <div class="step-body">Only clone ads that have run 45+ days with 3x+ ROAS. Never test new concepts with AI UGC.</div>
+                </div>
+              </div>
+              <div class="step-row">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <div class="step-title">Format the script for AI</div>
+                  <div class="step-body">Write numbers as words — "over twenty-five hundred dollars" not "$2,500." Adjust pacing with speed/stability sliders.</div>
+                </div>
+              </div>
+              <div class="step-row">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  <div class="step-title">Match actor to avatar</div>
+                  <div class="step-body">Target stay-at-home moms? Choose the AI actor with the dog. Targeting older professionals? Pick someone older. The presenter does the targeting.</div>
+                </div>
+              </div>
+              <div class="step-row">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  <div class="step-title">Use the "Organic Loom" Hack</div>
+                  <div class="step-body">Don't run the AI video full-screen. Open Loom, share your screen with the lead magnet/deck, and play the AI actor in the corner bubble. Feels completely native.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="roas-callout">
+            <div style="display:flex;align-items:flex-end;gap:12px;">
+              <div>
+                <div class="roas-number">10.3x</div>
+                <div class="roas-label">ROAS in first 6 days</div>
+              </div>
+              <div style="flex:1;font-size:13px;color:rgba(255,255,255,0.6);padding-bottom:4px;">
+                $30,000 in sales from $2,979 in spend — using an AI UGC version of a proven Loom-style ad
+              </div>
+            </div>
+          </div>
+          <div class="card card-dark">
+            <div class="card-label" style="color:#FCA5A5;">⚠ Counterintuitive BOF Rule</div>
+            <div class="card-body" style="margin-top:6px;">
+              <p style="margin-bottom:8px;">This AI ad had the <strong style="color:#FCA5A5;">highest cost per lead in the entire account</strong> — and also generated the most revenue.</p>
+              <p>For BOF: <em>never kill an ad because CPL looks high</em>. The only metric that matters is cost per signed client and ROAS. Front-end metrics will lie to you at BOF.</p>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <strong>Time Investment:</strong> ~1 hour total to create. Compare that to hiring a UGC creator, briefing them, waiting 2 weeks, and paying $200–$500 per video.
+          </div>
+        </div>
+      </div>
+    </div>`
+  },
+
+  // ─── SLIDE 11 — BOF KPIS ─────────────────────────────────────────────────
+  {
+    notes: "This is where most people get tripped up. They apply the same KPI framework from TOF to BOF and kill ads that are actually making them money. At BOF, the funnel is shorter and the intent is higher — so the cost per 'action' looks more expensive at every front-end metric. The only KPI that matters at BOF is cost per signed client and ROAS. If your BOF is profitable, you run it until it stops working.",
+    html: `
+    <div class="slide-inner bg-navy">
+      <div class="tag tag-orange">BOF — Measurement</div>
+      <div class="slide-title">BOF KPIs: <span class="orange">What Actually Matters</span></div>
+      <div class="divider"></div>
+      <div class="two-col">
+        <div>
+          <div class="card" style="background:rgba(239,68,68,0.07);border-color:rgba(239,68,68,0.25);margin-bottom:14px;">
+            <div class="card-label" style="color:#FCA5A5;">❌ What Most People Optimize For (Wrong)</div>
+            <table class="data-table" style="margin-top:8px;">
+              <tr>
+                <td style="color:#FCA5A5;">Hook Rate</td>
+                <td class="card-body">Irrelevant at BOF — they already know you</td>
+              </tr>
+              <tr>
+                <td style="color:#FCA5A5;">Cost Per Lead</td>
+                <td class="card-body">BOF CPL will always be higher — don't kill for this</td>
+              </tr>
+              <tr>
+                <td style="color:#FCA5A5;">Cost Per Booked Call</td>
+                <td class="card-body">Better, but still a proxy — warm leads book slower</td>
+              </tr>
+            </table>
+          </div>
+          <div class="card card-orange">
+            <div class="card-label orange">✓ What Actually Matters at BOF</div>
+            <table class="data-table" style="margin-top:8px;">
+              <tr>
+                <td class="td-green">ROAS</td>
+                <td class="card-body">Revenue ÷ Ad Spend. Target: 3x+ to start</td>
+              </tr>
+              <tr>
+                <td class="td-green">Cost Per Signed Client</td>
+                <td class="card-body">Max = 25% of offer price (same CAC rule)</td>
+              </tr>
+              <tr>
+                <td class="td-green">Application Quality</td>
+                <td class="card-body">Are applicants qualified? Show rate 65%+?</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div class="stat-box">
+              <div class="stat-number">3x+</div>
+              <div class="stat-label">Minimum ROAS target<br>before scaling BOF</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-number">25<span style="font-size:24px;">%</span></div>
+              <div class="stat-label">Max CAC as % of<br>offer price</div>
+            </div>
+          </div>
+          <div class="insight-box">
+            <strong>Case Study Rule:</strong> If your AI UGC BOF ad has a $497 CPL but 10.3x ROAS — you leave it on. Period. The metric that matters is what hits your bank account, not what hits the Ads Manager dashboard.
+          </div>
+          <div class="card card-dark">
+            <div class="card-label white">The Kill Rule for BOF</div>
+            <div class="card-body" style="margin-top:6px;">
+              Kill a BOF ad only when: ROAS drops below 2x for 14+ consecutive days, or CAC exceeds 25% of your offer price consistently over 21+ days. Not because the CPL looks high.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`
+  },
+
+  // ─── SLIDE 12 — FULL FUNNEL BUDGET ALLOCATION ─────────────────────────────
+  {
+    notes: "This is the most practical slide in the module. Give them a concrete starting point they can implement immediately. The numbers aren't gospel — but they're a framework to work from. If you're at $3K/month in ads, you're putting $400–$500 into MOF and BOF each. That's enough to test both layers. As you scale, the MOF and BOF percentages might shift — but you always want at least 15% in each.",
+    html: `
+    <div class="slide-inner bg-dark">
+      <div class="tag tag-orange">Full Funnel — Budget Model</div>
+      <div class="slide-title">Budget Allocation <span class="orange">by Funnel Stage</span></div>
+      <div class="divider"></div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:12px;">
+        <div class="card" style="background:rgba(255,255,255,0.03);border-color:rgba(255,255,255,0.08);">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Stage</th>
+                <th>Budget %</th>
+                <th>$3K/mo Example</th>
+                <th>$10K/mo Example</th>
+                <th>Primary Goal</th>
+                <th>Kill Rule</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="pill pill-tof">TOF — Cold</span></td>
+                <td class="td-blue">60–70%</td>
+                <td class="td-highlight">$1,800–$2,100</td>
+                <td class="td-highlight">$6,000–$7,000</td>
+                <td class="card-body">New followers + DM leads</td>
+                <td class="card-body">2x KPI after $100 spend (new ads)</td>
+              </tr>
+              <tr>
+                <td><span class="pill pill-mof">MOF — Warm</span></td>
+                <td class="td-purple">15–20%</td>
+                <td class="td-highlight">$450–$600</td>
+                <td class="td-highlight">$1,500–$2,000</td>
+                <td class="card-body">Leads from warm retargeting</td>
+                <td class="card-body">No qualified leads after 21 days</td>
+              </tr>
+              <tr>
+                <td><span class="pill pill-bof">BOF — Convert</span></td>
+                <td class="td-orange">15–20%</td>
+                <td class="td-highlight">$450–$600</td>
+                <td class="td-highlight">$1,500–$2,000</td>
+                <td class="card-body">Signed clients / booked calls</td>
+                <td class="card-body">ROAS &lt;2x for 14+ days consistently</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+          <div class="highlight-box">
+            <strong>Starting Point:</strong> If you've never run MOF/BOF, start at 10% each. Validate the format works before scaling the budget.
+          </div>
+          <div class="insight-box">
+            <strong>As You Scale:</strong> At $20K+/month, you may shift to 50% TOF / 25% MOF / 25% BOF as your warm audience grows.
+          </div>
+          <div class="card card-dark" style="padding:12px 16px;">
+            <div class="card-label white">Remember</div>
+            <div class="card-body">These aren't three separate campaigns. Start with 1 campaign per stage, confirm it works, then optimize allocation.</div>
+          </div>
+        </div>
+      </div>
+    </div>`
+  },
+
+  // ─── SLIDE 13 — LIVE EXERCISE ─────────────────────────────────────────────
+  {
+    notes: "Give them 8–10 minutes to actually complete this. The goal is to leave the room with (1) their current funnel stage breakdown on paper, (2) a clear identification of which layer they're missing, and (3) the specific ad format they're going to test first. Don't let them leave without a commitment to a specific action.",
+    html: `
+    <div class="slide-inner exercise-bg">
+      <div class="exercise-header">
+        <span class="ex-icon">✏️</span>
+        <span class="ex-label">Live Exercise — 10 Minutes</span>
+      </div>
+      <div class="slide-title">Audit Your <span class="orange">Funnel Coverage</span></div>
+      <div class="divider"></div>
+      <div class="two-col">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="card" style="background:rgba(110,231,183,0.06);border-color:rgba(110,231,183,0.2);">
+            <div class="card-label green">Part 1 — Current State (3 min)</div>
+            <ul class="checklist" style="margin-top:8px;">
+              <li><span class="check-icon">□</span>What % of your current budget is TOF?</li>
+              <li><span class="check-icon">□</span>Are you running ANY MOF retargeting campaigns?</li>
+              <li><span class="check-icon">□</span>Are you running ANY BOF direct-CTA campaigns?</li>
+              <li><span class="check-icon">□</span>What warm audiences do you have built in Ads Manager right now? (followers, video viewers, email list)</li>
+              <li><span class="check-icon">□</span>Do you have a warm audience of 1,000+ people that you could retarget today?</li>
+            </ul>
+          </div>
+          <div class="card" style="background:rgba(110,231,183,0.06);border-color:rgba(110,231,183,0.2);">
+            <div class="card-label green">Part 2 — Biggest Gap (2 min)</div>
+            <div class="card-body">Circle which layer you are <em class="green">NOT</em> currently running:<br><br>
+              <span style="display:inline-block;margin:4px;padding:6px 14px;border-radius:6px;background:rgba(59,130,246,0.15);color:#93C5FD;font-weight:600;">TOF</span>
+              <span style="display:inline-block;margin:4px;padding:6px 14px;border-radius:6px;background:rgba(139,92,246,0.15);color:#C4B5FD;font-weight:600;">MOF</span>
+              <span style="display:inline-block;margin:4px;padding:6px 14px;border-radius:6px;background:rgba(232,119,34,0.2);color:var(--orange-light);font-weight:600;">BOF</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="card" style="background:rgba(110,231,183,0.06);border-color:rgba(110,231,183,0.2);">
+            <div class="card-label green">Part 3 — Your First Move (5 min)</div>
+            <ul class="checklist" style="margin-top:8px;">
+              <li><span class="check-icon">□</span>Which missing layer will you build first?</li>
+              <li><span class="check-icon">□</span>What specific ad format will you start with? (IG DM keyword / Short-form VSL / Loom-style)</li>
+              <li><span class="check-icon">□</span>What is your starting budget allocation? ($___ to MOF, $___ to BOF)</li>
+              <li><span class="check-icon">□</span>If adding BOF: what is your one proven, existing winning ad you could clone with AI UGC?</li>
+              <li><span class="check-icon">□</span>What is your 30-day success metric for this new layer?</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <strong>Share Out:</strong> What's your biggest missing layer and what's the one ad you're going to build first?
+          </div>
+        </div>
+      </div>
+    </div>`
+  },
+
+  // ─── SLIDE 14 — KEY TAKEAWAYS ─────────────────────────────────────────────
+  {
+    notes: "Land the plane. The summary is: you've been TOF-only, and that works up to a point. The ceiling exists. The unlock is building the other two layers. MOF is your most efficient spend per lead. BOF is where you actually print money if the front-end funnel is healthy. Start small, validate, then scale. The AI UGC Loom hack is a cheat code for BOF creative scaling with minimal production overhead.",
+    html: `
+    <div class="slide-inner bg-navy">
+      <div class="tag tag-orange">Module Summary</div>
+      <div class="slide-title">Your <span class="orange">MOF + BOF</span> Playbook</div>
+      <div class="divider"></div>
+      <div class="two-col" style="flex:1;">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="card card-dark">
+            <div class="card-label purple">MOF — Key Takeaways</div>
+            <ul class="checklist" style="margin-top:8px;">
+              <li><span class="check-icon" style="color:#C4B5FD;">→</span>Warm audience is your most efficient spend. CPL 3–5x cheaper than cold.</li>
+              <li><span class="check-icon" style="color:#C4B5FD;">→</span>Run lead magnets 50/50 cold + warm retarget.</li>
+              <li><span class="check-icon" style="color:#C4B5FD;">→</span>Use social proof, objection-crushing, and nurture content — not education.</li>
+              <li><span class="check-icon" style="color:#C4B5FD;">→</span>Build custom audiences: followers, video viewers, email list, past leads.</li>
+              <li><span class="check-icon" style="color:#C4B5FD;">→</span>Budget: 15–20% of total monthly spend.</li>
+            </ul>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="card card-dark">
+            <div class="card-label orange">BOF — Key Takeaways</div>
+            <ul class="checklist" style="margin-top:8px;">
+              <li><span class="check-icon" style="color:var(--orange);">→</span>The ad IS the VSL. Stop sending BOF traffic to long video pages.</li>
+              <li><span class="check-icon" style="color:var(--orange);">→</span>3 formats: IG DM keyword, short-form VSL, Loom-style screen recording.</li>
+              <li><span class="check-icon" style="color:var(--orange);">→</span>AI UGC (Arcads) = clone proven winners fast. Only clone winners.</li>
+              <li><span class="check-icon" style="color:var(--orange);">→</span>Ignore CPL at BOF. Judge by ROAS and cost per signed client only.</li>
+              <li><span class="check-icon" style="color:var(--orange);">→</span>Budget: 15–20% of total monthly spend.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:14px;">
+        <div class="funnel-stage funnel-tof" style="margin:0;">
+          <div style="flex:1;text-align:center;">
+            <div class="funnel-name tof-color" style="text-align:center;">TOF</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:#93C5FD;line-height:1;">60–70%</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);">Fill the pipeline</div>
+          </div>
+        </div>
+        <div class="funnel-stage funnel-mof" style="margin:0;">
+          <div style="flex:1;text-align:center;">
+            <div class="funnel-name mof-color" style="text-align:center;">MOF</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:#C4B5FD;line-height:1;">15–20%</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);">Nurture + qualify</div>
+          </div>
+        </div>
+        <div class="funnel-stage funnel-bof" style="margin:0;">
+          <div style="flex:1;text-align:center;">
+            <div class="funnel-name bof-color" style="text-align:center;">BOF</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--orange-light);line-height:1;">15–20%</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);">Close + convert</div>
+          </div>
+        </div>
+      </div>
+    </div>`
+  }
+
+];
+
+// ══════════════════════════════════════════
+// ENGINE
+// ══════════════════════════════════════════
+let current = 0;
+let notesVisible = false;
+
+const stage = document.getElementById('stage');
+const tocBar = document.getElementById('toc-bar');
+const btnPrev = document.getElementById('btn-prev');
+const btnNext = document.getElementById('btn-next');
+const counter = document.getElementById('slide-counter');
+const notesBar = document.getElementById('notes-bar');
+const notesText = document.getElementById('notes-text');
+
+// Build slides
+slides.forEach((s, i) => {
+  const el = document.createElement('div');
+  el.className = 'slide bg-navy';
+  el.innerHTML = s.html;
+  if (i === 0) el.classList.add('active');
+  stage.appendChild(el);
+});
+
+// Build TOC dots
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'toc-dot' + (i === 0 ? ' active' : '');
+  dot.addEventListener('click', () => goTo(i));
+  tocBar.appendChild(dot);
+});
+
+function goTo(n) {
+  const els = stage.querySelectorAll('.slide');
+  const dots = tocBar.querySelectorAll('.toc-dot');
+  els[current].classList.remove('active');
+  dots[current].classList.remove('active');
+  current = n;
+  els[current].classList.add('active');
+  dots[current].classList.add('active');
+  btnPrev.disabled = current === 0;
+  btnNext.disabled = current === slides.length - 1;
+  counter.textContent = `${current + 1} / ${slides.length}`;
+  if (notesVisible) notesText.textContent = slides[current].notes;
+}
+
+btnPrev.addEventListener('click', () => { if (current > 0) goTo(current - 1); });
+btnNext.addEventListener('click', () => { if (current < slides.length - 1) goTo(current + 1); });
+
+document.getElementById('btn-notes').addEventListener('click', () => {
+  notesVisible = !notesVisible;
+  notesBar.classList.toggle('visible', notesVisible);
+  if (notesVisible) notesText.textContent = slides[current].notes;
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { if (current < slides.length - 1) goTo(current + 1); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { if (current > 0) goTo(current - 1); }
+  if (e.key === 'n' || e.key === 'N') document.getElementById('btn-notes').click();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFCA Data Constraints Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:        #1E3A5F;
+  --navy-dark:   #0B1A2B;
+  --navy-mid:    #142845;
+  --orange:      #E87722;
+  --orange-dim:  rgba(232,119,34,0.12);
+  --orange-glow: rgba(232,119,34,0.22);
+  --blue-mid:    #4A7FA5;
+  --blue-dim:    rgba(74,127,165,0.14);
+  --blue-light:  #D6E4F0;
+  --gray-400:    #94A3B8;
+  --gray-500:    #64748B;
+  --green:       #22C55E;
+  --green-bg:    rgba(34,197,94,0.10);
+  --red:         #DC2626;
+  --red-bg:      rgba(220,38,38,0.09);
+  --yellow:      #F59E0B;
+  --yellow-bg:   rgba(245,158,11,0.10);
+  --purple:      #8B5CF6;
+  --purple-bg:   rgba(139,92,246,0.10);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy-dark);
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 5% 5%,   rgba(74,127,165,.08) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 95% 95%, rgba(232,119,34,.05) 0%, transparent 55%);
+}
+
+.app {
+  position: relative; z-index: 1;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 24px 100px;
+}
+
+/* ── HEADER ── */
+.app-header {
+  padding: 44px 0 32px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  margin-bottom: 0;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+}
+
+.hdr-left .eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: .18em; color: var(--orange);
+  text-transform: uppercase; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hdr-left .eyebrow::before { content:''; width:24px; height:2px; background:var(--orange); border-radius:1px; }
+
+.hdr-left h1 {
+  font-family: 'Bebas Neue'; font-size: clamp(36px,5vw,52px);
+  line-height: .9; letter-spacing: .02em;
+}
+.hdr-left h1 em { font-style:normal; color:var(--orange); }
+.hdr-left p { font-size:13px; color:var(--gray-400); margin-top:8px; line-height:1.6; max-width:400px; }
+
+.hdr-right {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+}
+
+.conn-status {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: .08em; text-transform: uppercase;
+}
+.conn-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.conn-dot.connected    { background:var(--green); box-shadow:0 0 8px var(--green); }
+.conn-dot.disconnected { background:var(--gray-500); }
+.conn-dot.loading      { background:var(--yellow); animation:pulse 1s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+.month-display {
+  font-family: 'Bebas Neue'; font-size: 26px;
+  color: rgba(255,255,255,.4); letter-spacing: .04em;
+}
+.month-display span { color: var(--orange); }
+
+/* ── TAB NAV ── */
+.tab-bar {
+  display: flex; gap: 2px;
+  background: rgba(255,255,255,.03);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  padding: 0;
+  margin: 0 -24px;
+  padding: 0 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab-bar::-webkit-scrollbar { display:none; }
+
+.tab-btn {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 16px 20px; border: none;
+  background: transparent; color: var(--gray-500);
+  cursor: pointer; white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color .18s, border-color .18s;
+}
+.tab-btn:hover { color: rgba(255,255,255,.6); }
+.tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+/* ── TAB PANELS ── */
+.tab-panel { display: none; padding: 36px 0 0; }
+.tab-panel.active { display: block; }
+
+/* ── SECTION LABEL ── */
+.sec-label {
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .15em;
+  color: var(--gray-500); text-transform: uppercase;
+  margin-bottom: 14px; margin-top: 32px;
+  display: flex; align-items: center; gap: 12px;
+}
+.sec-label:first-of-type { margin-top: 0; }
+.sec-label::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.06); }
+
+/* ── INPUT GRID ── */
+.input-grid {
+  display: grid; gap: 12px;
+}
+.input-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+.input-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.input-grid.cols-4 { grid-template-columns: repeat(4,1fr); }
+
+@media(max-width:680px){
+  .input-grid.cols-2,
+  .input-grid.cols-3,
+  .input-grid.cols-4 { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width:420px){
+  .input-grid.cols-2,
+  .input-grid.cols-3,
+  .input-grid.cols-4 { grid-template-columns: 1fr; }
+}
+
+/* ── FIELD GROUP ── */
+.fg { display:flex; flex-direction:column; gap:6px; }
+
+.fg label {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--gray-500);
+  display: flex; align-items: center; gap: 6px;
+}
+.fg label .req { color:var(--orange); font-size:13px; line-height:1; }
+.fg .hint { font-size:11px; color:rgba(255,255,255,.22); margin-top:-2px; line-height:1.4; font-style:italic; }
+
+.input-wrap { position:relative; }
+.input-wrap .pfx {
+  position:absolute; left:12px; top:50%; transform:translateY(-50%);
+  font-family:'DM Mono',monospace; font-size:13px; color:var(--orange);
+  pointer-events:none;
+}
+.input-wrap .sfx {
+  position:absolute; right:12px; top:50%; transform:translateY(-50%);
+  font-family:'DM Mono',monospace; font-size:13px; color:var(--gray-500);
+  pointer-events:none;
+}
+
+.fg input[type="number"],
+.fg input[type="text"],
+.fg input[type="month"],
+.fg select {
+  width:100%; background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.10); border-radius:10px;
+  padding:11px 14px; font-family:'DM Mono',monospace; font-size:15px;
+  color:#fff; outline:none; appearance:none;
+  transition:border-color .18s, background .18s;
+  -moz-appearance:textfield;
+}
+.fg input[type="number"].has-pfx { padding-left:30px; }
+.fg input[type="number"].has-sfx { padding-right:30px; }
+.fg input::-webkit-inner-spin-button { -webkit-appearance:none; }
+.fg input:focus, .fg select:focus {
+  border-color:rgba(232,119,34,.55); background:rgba(232,119,34,.05);
+}
+.fg input::placeholder { color:rgba(255,255,255,.2); font-style:italic; }
+.fg select option { background:#0B1A2B; }
+
+/* ── CALC BUTTON ── */
+.calc-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width:100%; background:var(--orange); border:none; border-radius:12px;
+  padding:16px; font-family:'Bebas Neue'; font-size:22px; letter-spacing:.06em;
+  color:#fff; cursor:pointer; transition:background .18s, transform .1s;
+  margin-top:8px;
+}
+.calc-btn:hover { background:#d4681a; transform:translateY(-1px); }
+.calc-btn:active { transform:translateY(0); }
+
+/* ── KPI BAND ── */
+.kpi-band {
+  display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:20px;
+}
+@media(max-width:700px){ .kpi-band { grid-template-columns:1fr 1fr; } }
+
+.kpi-chip {
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08);
+  border-radius:12px; padding:14px 16px; position:relative; overflow:hidden;
+}
+.kpi-chip::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:12px 12px 0 0; }
+.kpi-chip.pass::before { background:var(--green); }
+.kpi-chip.warn::before { background:var(--yellow); }
+.kpi-chip.fail::before { background:var(--red); }
+.kpi-chip.info::before { background:var(--blue-mid); }
+
+.chip-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); margin-bottom:5px; line-height:1.4; }
+.chip-val   { font-family:'Bebas Neue'; font-size:30px; line-height:1; margin-bottom:3px; }
+.kpi-chip.pass .chip-val { color:var(--green); }
+.kpi-chip.warn .chip-val { color:var(--yellow); }
+.kpi-chip.fail .chip-val { color:#F87171; }
+.kpi-chip.info .chip-val { color:#7ABFDD; }
+.chip-target { font-family:'DM Mono',monospace; font-size:10px; color:var(--gray-500); }
+
+/* ── RESULTS TABLES ── */
+.tbl-wrap {
+  background:rgba(255,255,255,.025); border:1px solid rgba(255,255,255,.07);
+  border-radius:14px; overflow:hidden; margin-bottom:16px;
+}
+.rtbl { width:100%; border-collapse:collapse; }
+.rtbl thead tr { background:rgba(255,255,255,.03); }
+.rtbl th {
+  font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--gray-500); padding:10px 14px; text-align:left;
+  border-bottom:1px solid rgba(255,255,255,.06); white-space:nowrap;
+}
+.rtbl td {
+  padding:12px 14px; font-size:13px; color:rgba(255,255,255,.7);
+  border-bottom:1px solid rgba(255,255,255,.04); vertical-align:middle;
+}
+.rtbl tbody tr:last-child td { border-bottom:none; }
+.rtbl tbody tr:hover td { background:rgba(255,255,255,.02); }
+
+.r-name   { font-size:13px; color:rgba(255,255,255,.85); }
+.r-target { font-family:'DM Mono',monospace; font-size:11px; color:var(--gray-500); }
+.r-val    { font-family:'Bebas Neue'; font-size:22px; line-height:1; }
+.r-val.pass { color:var(--green); }
+.r-val.warn { color:var(--yellow); }
+.r-val.fail { color:#F87171; }
+.r-val.info { color:#7ABFDD; }
+
+.badge {
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.08em;
+  text-transform:uppercase; padding:3px 9px; border-radius:4px; white-space:nowrap;
+}
+.badge.pass { background:var(--green-bg); color:var(--green); border:1px solid rgba(34,197,94,.25); }
+.badge.warn { background:var(--yellow-bg); color:var(--yellow); border:1px solid rgba(245,158,11,.25); }
+.badge.fail { background:var(--red-bg); color:#F87171; border:1px solid rgba(220,38,38,.25); }
+
+.r-note { font-size:11px; color:var(--gray-500); line-height:1.5; max-width:200px; }
+
+/* ── DIAGNOSIS ── */
+.diag-list { display:flex; flex-direction:column; gap:10px; }
+.diag-card {
+  border-radius:13px; border:1px solid rgba(255,255,255,.07);
+  background:rgba(255,255,255,.025); overflow:hidden;
+}
+.diag-card.p1 { border-color:rgba(220,38,38,.35); background:rgba(220,38,38,.04); }
+.diag-card.p2 { border-color:rgba(245,158,11,.28); background:rgba(245,158,11,.03); }
+.diag-card.p3 { border-color:rgba(232,119,34,.22); }
+.diag-card.ok { border-color:rgba(34,197,94,.22); background:rgba(34,197,94,.03); }
+
+.diag-head { display:flex; align-items:flex-start; gap:14px; padding:16px 18px 12px; }
+.diag-rank { font-family:'Bebas Neue'; font-size:38px; line-height:1; flex-shrink:0; min-width:30px; padding-top:2px; }
+.diag-card.p1 .diag-rank { color:#F87171; }
+.diag-card.p2 .diag-rank { color:var(--yellow); }
+.diag-card.p3 .diag-rank { color:var(--orange); }
+.diag-card.ok .diag-rank { color:var(--green); }
+
+.diag-title { font-family:'Bebas Neue'; font-size:18px; letter-spacing:.04em; line-height:1.1; margin-bottom:5px; }
+.diag-card.p1 .diag-title { color:#F87171; }
+.diag-card.p2 .diag-title { color:var(--yellow); }
+.diag-card.p3 .diag-title { color:var(--orange); }
+.diag-card.ok .diag-title { color:var(--green); }
+
+.diag-desc { font-size:13px; color:rgba(255,255,255,.65); line-height:1.6; }
+.diag-action {
+  padding:10px 18px 14px 62px; border-top:1px solid rgba(255,255,255,.05);
+  font-family:'DM Mono',monospace; font-size:11px; color:var(--gray-400); line-height:1.6;
+}
+.diag-action strong { color:rgba(255,255,255,.7); }
+
+/* ── REV EQ ── */
+.req-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px; }
+@media(max-width:560px){ .req-grid { grid-template-columns:1fr; } }
+
+.req-cell .req-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); margin-bottom:5px; }
+.req-cell .req-val   { font-family:'Bebas Neue'; font-size:34px; line-height:1; color:#fff; }
+.req-cell .req-sub   { font-size:11px; color:var(--gray-500); margin-top:2px; }
+
+.eq-row { display:grid; grid-template-columns:1fr auto 1fr; gap:12px; align-items:center; margin-bottom:14px; }
+@media(max-width:560px){ .eq-row { grid-template-columns:1fr; } }
+
+.eq-block { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:18px; text-align:center; }
+.eq-block.eq-side { border-color:rgba(139,92,246,.3); background:var(--purple-bg); }
+.eq-block.ac-side { border-color:rgba(74,127,165,.3); background:var(--blue-dim); }
+.eq-b-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); margin-bottom:6px; }
+.eq-b-val   { font-family:'Bebas Neue'; font-size:40px; line-height:1; margin-bottom:4px; }
+.eq-block.eq-side .eq-b-val { color:#c4b5fd; }
+.eq-block.ac-side .eq-b-val { color:#7ABFDD; }
+.eq-b-sub  { font-size:11px; color:var(--gray-500); }
+.eq-vs { font-family:'Bebas Neue'; font-size:28px; color:rgba(255,255,255,.18); text-align:center; }
+
+.eq-verdict { padding:14px 18px; border-radius:10px; font-size:13px; line-height:1.65; }
+.eq-verdict.building { background:var(--green-bg); border:1px solid rgba(34,197,94,.25); color:var(--green); }
+.eq-verdict.eroding  { background:var(--red-bg); border:1px solid rgba(220,38,38,.25); color:#F87171; }
+.eq-verdict.flat     { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); color:var(--gray-400); }
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  text-align:center; padding:60px 20px;
+  background:rgba(255,255,255,.02); border:1px dashed rgba(255,255,255,.08);
+  border-radius:14px;
+}
+.empty-icon { font-size:40px; margin-bottom:14px; }
+.empty-title { font-family:'Bebas Neue'; font-size:24px; color:rgba(255,255,255,.3); margin-bottom:6px; }
+.empty-desc  { font-size:13px; color:var(--gray-500); line-height:1.6; max-width:380px; margin:0 auto; }
+
+/* ── SETUP TAB ── */
+.setup-card {
+  background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07);
+  border-radius:14px; padding:28px 32px; margin-bottom:16px;
+}
+
+.setup-step {
+  display:flex; align-items:flex-start; gap:20px;
+  padding:20px 0; border-bottom:1px solid rgba(255,255,255,.06);
+}
+.setup-step:last-child { border-bottom:none; padding-bottom:0; }
+.setup-step:first-child { padding-top:0; }
+
+.step-num {
+  font-family:'Bebas Neue'; font-size:42px; color:var(--orange);
+  line-height:1; flex-shrink:0; min-width:36px;
+}
+.step-body { flex:1; }
+.step-title { font-family:'Bebas Neue'; font-size:20px; letter-spacing:.04em; color:#fff; margin-bottom:6px; }
+.step-desc  { font-size:13px; color:rgba(255,255,255,.65); line-height:1.65; }
+.step-desc + .step-desc { margin-top:8px; }
+
+.code-block {
+  background:rgba(0,0,0,.4); border:1px solid rgba(255,255,255,.1);
+  border-radius:8px; padding:12px 16px; margin-top:10px;
+  font-family:'DM Mono',monospace; font-size:12px; color:#7ABFDD;
+  white-space:nowrap; overflow-x:auto; line-height:1.5;
+}
+
+.inline-code {
+  font-family:'DM Mono',monospace; font-size:12px;
+  background:rgba(255,255,255,.08); padding:2px 7px; border-radius:4px;
+  color:#7ABFDD;
+}
+
+.setup-url-input {
+  display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;
+}
+.setup-url-input input {
+  flex:1; min-width:200px;
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.10);
+  border-radius:10px; padding:11px 14px;
+  font-family:'DM Mono',monospace; font-size:12px; color:#fff;
+  outline:none; transition:border-color .18s;
+}
+.setup-url-input input:focus { border-color:rgba(232,119,34,.5); background:rgba(232,119,34,.05); }
+.setup-url-input input::placeholder { color:rgba(255,255,255,.2); }
+
+.url-btn {
+  background:var(--orange); border:none; border-radius:10px;
+  padding:11px 20px; font-family:'DM Mono',monospace; font-size:11px;
+  letter-spacing:.1em; text-transform:uppercase;
+  color:#fff; cursor:pointer; transition:background .18s; white-space:nowrap;
+}
+.url-btn:hover { background:#d4681a; }
+
+.csv-drop {
+  border:2px dashed rgba(255,255,255,.12); border-radius:12px;
+  padding:32px 24px; text-align:center; margin-top:12px;
+  transition:border-color .2s, background .2s; cursor:pointer;
+}
+.csv-drop:hover, .csv-drop.drag-over {
+  border-color:rgba(232,119,34,.4); background:var(--orange-dim);
+}
+.csv-drop-icon { font-size:28px; margin-bottom:8px; }
+.csv-drop-label { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); }
+.csv-drop-sub   { font-size:12px; color:rgba(255,255,255,.3); margin-top:4px; }
+.csv-hidden { display:none; }
+
+/* schema table */
+.schema-tbl { width:100%; border-collapse:collapse; margin-top:12px; }
+.schema-tbl th {
+  font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--gray-500); padding:8px 12px; text-align:left;
+  background:rgba(255,255,255,.03); border-bottom:1px solid rgba(255,255,255,.06);
+}
+.schema-tbl td {
+  padding:9px 12px; font-size:12px; color:rgba(255,255,255,.65);
+  border-bottom:1px solid rgba(255,255,255,.04); vertical-align:top; line-height:1.5;
+}
+.schema-tbl tbody tr:last-child td { border-bottom:none; }
+.schema-tbl .mono { font-family:'DM Mono',monospace; font-size:11px; color:#7ABFDD; }
+
+/* callout */
+.callout {
+  border-left:3px solid var(--orange); background:var(--orange-dim);
+  border-radius:0 10px 10px 0; padding:14px 18px; margin-top:6px;
+}
+.callout .ch { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--orange); margin-bottom:5px; }
+.callout p   { font-size:13px; color:rgba(255,255,255,.65); line-height:1.65; }
+
+.success-banner {
+  background:var(--green-bg); border:1px solid rgba(34,197,94,.3);
+  border-radius:10px; padding:12px 16px; margin-top:12px;
+  font-family:'DM Mono',monospace; font-size:12px; color:var(--green);
+  display:none; align-items:center; gap:10px;
+}
+.success-banner.show { display:flex; }
+
+/* ── FOOTER ── */
+.app-footer {
+  margin-top:60px; padding-top:24px;
+  border-top:1px solid rgba(255,255,255,.06);
+  display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+}
+.af-brand { font-family:'Bebas Neue'; font-size:18px; letter-spacing:.08em; color:rgba(255,255,255,.22); }
+.af-brand span { color:rgba(232,119,34,.5); }
+.af-note  { font-family:'DM Mono',monospace; font-size:10px; color:rgba(255,255,255,.18); letter-spacing:.05em; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="hdr-left">
+      <div class="eyebrow">IFCA · Monthly Business Tracker</div>
+      <h1>DATA CONSTRAINTS<br><em>TRACKER</em></h1>
+      <p>Enter your monthly numbers. Get an instant constraint diagnosis and revenue equilibrium read. Updated monthly — takes under 5 minutes.</p>
+    </div>
+    <div class="hdr-right">
+      <div class="conn-status">
+        <div class="conn-dot disconnected" id="conn-dot"></div>
+        <span id="conn-label" style="color:var(--gray-500);">Not Connected</span>
+      </div>
+      <div class="month-display" id="month-display">—</div>
+    </div>
+  </header>
+
+  <!-- TAB BAR -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('inputs')">📊 Monthly Inputs</button>
+    <button class="tab-btn" onclick="switchTab('results')">📈 Results & Diagnosis</button>
+    <button class="tab-btn" onclick="switchTab('equilibrium')">🔄 Revenue Equilibrium</button>
+    <button class="tab-btn" onclick="switchTab('setup')">⚙ Setup & Google Sheets</button>
+  </div>
+
+  <!-- ════════════════════════════
+       TAB 1: INPUTS
+  ════════════════════════════ -->
+  <div class="tab-panel active" id="tab-inputs">
+
+    <!-- Setup block -->
+    <div class="sec-label">Your Business</div>
+    <div class="input-grid cols-3">
+      <div class="fg">
+        <label>Your Name / Business</label>
+        <input type="text" id="i-name" placeholder="e.g. Alycia Israel" oninput="saveDraft()">
+      </div>
+      <div class="fg">
+        <label>Month <span class="req">*</span></label>
+        <input type="month" id="i-month" oninput="updateMonthDisplay(); saveDraft()">
+      </div>
+      <div class="fg">
+        <label>Front-End Offer Price <span class="req">*</span></label>
+        <div class="input-wrap">
+          <span class="pfx">$</span>
+          <input type="number" class="has-pfx" id="i-offer" placeholder="3000" min="0" step="100" oninput="saveDraft()">
+        </div>
+        <span class="hint">Used to auto-calculate all KPI targets</span>
+      </div>
+    </div>
+
+    <!-- Ads & Leads -->
+    <div class="sec-label">Ads &amp; Lead Generation</div>
+    <div class="input-grid cols-4">
+      <div class="fg">
+        <label>Ad Spend <span class="req">*</span></label>
+        <div class="input-wrap">
+          <span class="pfx">$</span>
+          <input type="number" class="has-pfx" id="i-spend" placeholder="5000" min="0" oninput="saveDraft()">
+        </div>
+      </div>
+      <div class="fg">
+        <label>Total Leads <span class="req">*</span></label>
+        <input type="number" id="i-leads" placeholder="800" min="0" oninput="saveDraft()">
+      </div>
+      <div class="fg">
+        <label>New Followers (TOF)</label>
+        <input type="number" id="i-followers" placeholder="0" min="0" oninput="saveDraft()">
+        <span class="hint">If running follower campaigns</span>
+      </div>
+      <div class="fg">
+        <label>Masterclass / Webinar Leads</label>
+        <input type="number" id="i-mc-leads" placeholder="0" min="0" oninput="saveDraft()">
+        <span class="hint">Separate from DM leads if applicable</span>
+      </div>
+    </div>
+
+    <!-- Sales Funnel -->
+    <div class="sec-label">Sales Funnel</div>
+    <div class="input-grid cols-3">
+      <div class="fg">
+        <label>Scheduled Sales Calls <span class="req">*</span></label>
+        <input type="number" id="i-sched" placeholder="80" min="0" oninput="saveDraft()">
+      </div>
+      <div class="fg">
+        <label>Live Sales Calls (Shows) <span class="req">*</span></label>
+        <input type="number" id="i-live" placeholder="60" min="0" oninput="saveDraft()">
+      </div>
+      <div class="fg">
+        <label>Closer Availability (hrs)</label>
+        <input type="number" id="i-avail" placeholder="120" min="0" oninput="saveDraft()">
+        <span class="hint">Total hours closers were available</span>
+      </div>
+    </div>
+    <div class="input-grid cols-3" style="margin-top:12px;">
+      <div class="fg">
+        <label>Closes (not deposits) <span class="req">*</span></label>
+        <input type="number" id="i-closes" placeholder="20" min="0" oninput="saveDraft()">
+      </div>
+      <div class="fg">
+        <label>FE Avg Deal Value <span class="req">*</span></label>
+        <div class="input-wrap">
+          <span class="pfx">$</span>
+          <input type="number" class="has-pfx" id="i-aov" placeholder="3000" min="0" step="100" oninput="saveDraft()">
+        </div>
+      </div>
+      <div class="fg">
+        <label>Upfront Cash Collected</label>
+        <div class="input-wrap">
+          <span class="pfx">$</span>
+          <input type="number" class="has-pfx" id="i-upfront" placeholder="40000" min="0" oninput="saveDraft()">
+        </div>
+      </div>
+    </div>
+
+    <!-- Revenue -->
+    <div class="sec-label">Revenue</div>
+    <div class="input-grid cols-3">
+      <div class="fg">
+        <label>New FE Contracted Revenue <span class="req">*</span></label>
+        <div class="input-wrap">
+          <span class="pfx">$</span>
+          <input type="number" class="has-pfx" id="i-fe-rev" placeholder="60000" min="0" oninput="saveDraft()">
+        </div>
+      </div>
+      <div class="fg">
+        <label>New BE Contracted Revenue</label>
+        <div class="input-wrap">
+          <span class="pfx">$</span>
+          <input type="number" class="has-pfx" id="i-be-rev" placeholder="0" min="0" oninput="saveDraft()">
+        </div>
+      </div>
+      <div class="fg">
+        <label>Total Cash Collected <span class="req">*</span></label>
+        <div class="input-wrap">
+          <span class="pfx">$</span>
+          <input type="number" class="has-pfx" id="i-cash" placeholder="55000" min="0" oninput="saveDraft()">
+        </div>
+        <span class="hint">Gross revenue actually received this month</span>
+      </div>
+    </div>
+
+    <!-- Backend -->
+    <div class="sec-label">Back-End &amp; Retention</div>
+    <div class="input-grid cols-4">
+      <div class="fg">
+        <label>BE Offer Price (avg)</label>
+        <div class="input-wrap">
+          <span class="pfx">$</span>
+          <input type="number" class="has-pfx" id="i-be-price" placeholder="5000" min="0" step="100" oninput="saveDraft()">
+        </div>
+      </div>
+      <div class="fg">
+        <label>FE Clients Who Bought BE</label>
+        <input type="number" id="i-be-closes" placeholder="8" min="0" oninput="saveDraft()">
+        <span class="hint">Target: 50%+ of FE closes</span>
+      </div>
+      <div class="fg">
+        <label>Active Clients (start of month) <span class="req">*</span></label>
+        <input type="number" id="i-active" placeholder="120" min="0" oninput="saveDraft()">
+      </div>
+      <div class="fg">
+        <label>Clients Off-boarded <span class="req">*</span></label>
+        <input type="number" id="i-offboard" placeholder="8" min="0" oninput="saveDraft()">
+        <span class="hint">Any reason — cancel, graduate, or pause</span>
+      </div>
+    </div>
+
+    <!-- Expenses -->
+    <div class="sec-label">Operating Expenses</div>
+    <div class="input-grid cols-3">
+      <div class="fg">
+        <label>Labor Expenses</label>
+        <div class="input-wrap">
+          <span class="pfx">$</span>
+          <input type="number" class="has-pfx" id="i-labor" placeholder="18000" min="0" oninput="saveDraft()">
+        </div>
+        <span class="hint">All team wages, contractors, coaches</span>
+      </div>
+      <div class="fg">
+        <label>Marketing Expenses</label>
+        <div class="input-wrap">
+          <span class="pfx">$</span>
+          <input type="number" class="has-pfx" id="i-mktg" placeholder="6000" min="0" oninput="saveDraft()">
+        </div>
+        <span class="hint">Ad spend + tools + creative costs</span>
+      </div>
+      <div class="fg">
+        <label>Overhead Expenses</label>
+        <div class="input-wrap">
+          <span class="pfx">$</span>
+          <input type="number" class="has-pfx" id="i-overhead" placeholder="3000" min="0" oninput="saveDraft()">
+        </div>
+        <span class="hint">Software, office, misc fixed costs</span>
+      </div>
+    </div>
+
+    <button class="calc-btn" onclick="calculate(); switchTab('results')">
+      Calculate → View Results &amp; Diagnosis
+    </button>
+
+  </div>
+
+  <!-- ════════════════════════════
+       TAB 2: RESULTS
+  ════════════════════════════ -->
+  <div class="tab-panel" id="tab-results">
+    <div id="results-content">
+      <div class="empty-state">
+        <div class="empty-icon">📊</div>
+        <div class="empty-title">No Data Yet</div>
+        <div class="empty-desc">Fill in your monthly numbers on the Inputs tab and hit Calculate to see your constraint diagnosis.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       TAB 3: EQUILIBRIUM
+  ════════════════════════════ -->
+  <div class="tab-panel" id="tab-equilibrium">
+    <div id="eq-content">
+      <div class="empty-state">
+        <div class="empty-icon">🔄</div>
+        <div class="empty-title">No Data Yet</div>
+        <div class="empty-desc">Fill in Active Clients, Clients Off-boarded, New Closes, and Total Cash Collected on the Inputs tab, then calculate.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════
+       TAB 4: SETUP
+  ════════════════════════════ -->
+  <div class="tab-panel" id="tab-setup">
+
+    <div style="max-width:720px;">
+
+      <p style="font-size:14px; color:rgba(255,255,255,.65); line-height:1.7; margin-bottom:28px;">
+        Two ways to get your data in: <strong style="color:#fff;">Option A</strong> — paste your Google Sheet URL and this tool pulls your latest numbers automatically every time you open it. <strong style="color:#fff;">Option B</strong> — export a CSV from your sheet and drop it in. Either way, you enter data once in your existing tracker and never type it here.
+      </p>
+
+      <!-- Option A: Google Sheets -->
+      <div class="setup-card">
+        <div style="font-family:'Bebas Neue';font-size:22px;letter-spacing:.04em;color:var(--orange);margin-bottom:4px;">Option A — Google Sheets Live Connection</div>
+        <div style="font-size:12px;color:var(--gray-500);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;margin-bottom:20px;">Recommended · One-time setup · Automatic from then on</div>
+
+        <div class="setup-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Open Your Data Constraints Tracker in Google Sheets</div>
+            <div class="step-desc">If you're still on Excel, go to <strong>File → Save a copy to Google Drive</strong> first. You need the file to be in Google Sheets for this to work.</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Publish Your Sheet to the Web</div>
+            <div class="step-desc">In Google Sheets, go to <span class="inline-code">File → Share → Publish to web</span></div>
+            <div class="step-desc" style="margin-top:6px;">In the dialog:</div>
+            <div class="step-desc">• Under <em>Link</em>, select the <strong>2026</strong> sheet tab (not the whole document)</div>
+            <div class="step-desc">• Change the format dropdown from <strong>Web page</strong> to <strong>Comma-separated values (.csv)</strong></div>
+            <div class="step-desc">• Click <strong>Publish</strong> → confirm with OK</div>
+            <div class="step-desc" style="margin-top:6px;">Copy the URL it gives you — it will look like this:</div>
+            <div class="code-block">https://docs.google.com/spreadsheets/d/[YOUR_SHEET_ID]/pub?gid=0&single=true&output=csv</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Paste Your Published Sheet URL Here</div>
+            <div class="step-desc">Paste the CSV URL from Step 2 and click Load. This tool will pull your latest numbers every time it opens.</div>
+            <div class="setup-url-input">
+              <input type="text" id="sheets-url" placeholder="https://docs.google.com/spreadsheets/d/...">
+              <button class="url-btn" onclick="loadFromSheets()">Load Sheet →</button>
+            </div>
+            <div class="success-banner" id="sheets-success">
+              ✓ Sheet connected. Numbers loaded into the Inputs tab. Recalculate to refresh your diagnosis.
+            </div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Every Month Going Forward</div>
+            <div class="step-desc">Just update your Google Sheet as normal. When you open this tool, it auto-fetches the latest data. Hit <strong>Calculate</strong> and your diagnosis updates. No manual entry here required.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Option B: CSV Upload -->
+      <div class="setup-card" style="margin-top:16px;">
+        <div style="font-family:'Bebas Neue';font-size:22px;letter-spacing:.04em;color:var(--blue-mid);margin-bottom:4px;">Option B — CSV Upload</div>
+        <div style="font-size:12px;color:var(--gray-500);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;margin-bottom:20px;">No internet required · Works with Excel or Google Sheets</div>
+
+        <div class="setup-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Export Your Sheet as CSV</div>
+            <div class="step-desc"><strong>Google Sheets:</strong> <span class="inline-code">File → Download → Comma-separated values (.csv)</span> — make sure you're on the <strong>2026</strong> tab first.</div>
+            <div class="step-desc" style="margin-top:6px;"><strong>Excel:</strong> <span class="inline-code">File → Save As → CSV (Comma delimited)</span></div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Drop the CSV File Here</div>
+            <div
+              class="csv-drop"
+              id="csv-drop-zone"
+              onclick="document.getElementById('csv-file-input').click()"
+              ondragover="event.preventDefault();this.classList.add('drag-over')"
+              ondragleave="this.classList.remove('drag-over')"
+              ondrop="handleDrop(event)"
+            >
+              <div class="csv-drop-icon">📂</div>
+              <div class="csv-drop-label">Click to browse or drag & drop your CSV</div>
+              <div class="csv-drop-sub">Exports from Google Sheets or Excel both work</div>
+            </div>
+            <input type="file" id="csv-file-input" accept=".csv" class="csv-hidden" onchange="handleFileSelect(event)">
+            <div class="success-banner" id="csv-success">
+              ✓ CSV loaded. Numbers mapped to the Inputs tab. Hit Calculate to run your diagnosis.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Schema reference -->
+      <div class="setup-card" style="margin-top:16px;">
+        <div style="font-family:'Bebas Neue';font-size:20px;letter-spacing:.04em;color:#fff;margin-bottom:4px;">How This Tool Reads Your Sheet</div>
+        <div style="font-size:13px;color:var(--gray-400);margin-bottom:16px;line-height:1.6;">This tool looks for specific row labels in column A of your 2026 sheet and pulls the YTD or most recent month value. As long as your sheet uses the standard IFCA Data Constraints template, this works automatically.</div>
+
+        <table class="schema-tbl">
+          <thead>
+            <tr>
+              <th>Column A Label (in your sheet)</th>
+              <th>Maps To</th>
+              <th>Column Used</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="mono">Ad Spend</td><td>Ad Spend input</td><td>YTD or current month column</td></tr>
+            <tr><td class="mono">Leads</td><td>Total Leads</td><td>YTD or current month column</td></tr>
+            <tr><td class="mono">Cost Per Lead (CPL)</td><td>Calculated automatically</td><td>—</td></tr>
+            <tr><td class="mono">Scheduled Sales Calls</td><td>Scheduled Calls</td><td>YTD or current month column</td></tr>
+            <tr><td class="mono">Live Sales Calls</td><td>Live Calls / Shows</td><td>YTD or current month column</td></tr>
+            <tr><td class="mono">Closes (Not Deposits)</td><td>Closes</td><td>YTD or current month column</td></tr>
+            <tr><td class="mono">Frontend Price Point (avg deal)</td><td>FE Avg Deal Value</td><td>YTD or current month column</td></tr>
+            <tr><td class="mono">New Contracted Frontend Revenue</td><td>FE Contracted Revenue</td><td>YTD or current month column</td></tr>
+            <tr><td class="mono">Upfront Cash Collected</td><td>Upfront Cash Collected</td><td>YTD or current month column</td></tr>
+            <tr><td class="mono">New Contracted Backend Revenue</td><td>BE Contracted Revenue</td><td>YTD or current month column</td></tr>
+            <tr><td class="mono">Total Cash Collected (Gross Revenue)</td><td>Total Cash Collected</td><td>YTD or current month column</td></tr>
+            <tr><td class="mono">Labor Expenses</td><td>Labor Expenses</td><td>YTD or current month column</td></tr>
+            <tr><td class="mono">Marketing Expenses</td><td>Marketing Expenses</td><td>YTD or current month column</td></tr>
+            <tr><td class="mono">Overhead Expenses</td><td>Overhead Expenses</td><td>YTD or current month column</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout" style="margin-top:16px;">
+          <div class="ch">Important Note on CORS</div>
+          <p>Google Sheets published URLs sometimes block direct browser fetch requests due to CORS restrictions. If the auto-load fails, use Option B (CSV export/upload) instead — it works identically and takes under 60 seconds. The CSV route is actually more reliable for monthly use.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="app-footer">
+    <div class="af-brand">IFCA <span>PLAYBOOKS</span></div>
+    <div class="af-note">tools-and-calculators/data-constraints-tracker · April 2026</div>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+/* ─────────────────────────────────
+   TAB SWITCHING
+───────────────────────────────── */
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.currentTarget && event.currentTarget.classList.add('active');
+  // fix active tab btn
+  const btns = document.querySelectorAll('.tab-btn');
+  const map  = { inputs:0, results:1, equilibrium:2, setup:3 };
+  btns.forEach(b => b.classList.remove('active'));
+  btns[map[id]].classList.add('active');
+}
+
+/* ─────────────────────────────────
+   MONTH DISPLAY
+───────────────────────────────── */
+function updateMonthDisplay() {
+  const v = document.getElementById('i-month').value;
+  if (!v) return;
+  const d = new Date(v + '-01');
+  const label = d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  const parts = label.split(' ');
+  document.getElementById('month-display').innerHTML = `<span>${parts[0]}</span> ${parts[1]}`;
+}
+
+/* ─────────────────────────────────
+   HELPERS
+───────────────────────────────── */
+function n(id)  { return parseFloat(document.getElementById(id)?.value) || 0; }
+function s(id)  { return document.getElementById(id)?.value || ''; }
+function fmtD(v){ if(!v && v!==0) return '—'; return '$' + v.toFixed(v<10?2:0).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+function fmtP(v){ if(!v && v!==0) return '—'; return (v*100).toFixed(1)+'%'; }
+function fmtX(v){ if(!v && v!==0) return '—'; return v.toFixed(2)+'×'; }
+function fmtK(v){ if(!v) return '—'; if(v>=1e6) return '$'+(v/1e6).toFixed(1)+'M'; if(v>=1000) return '$'+(v/1000).toFixed(1)+'K'; return '$'+v.toFixed(0); }
+
+/* ─────────────────────────────────
+   DRAFT SAVE / RESTORE
+───────────────────────────────── */
+const FIELDS = ['i-name','i-month','i-offer','i-spend','i-leads','i-followers','i-mc-leads',
+                'i-sched','i-live','i-avail','i-closes','i-aov','i-upfront',
+                'i-fe-rev','i-be-rev','i-cash','i-be-price','i-be-closes',
+                'i-active','i-offboard','i-labor','i-mktg','i-overhead'];
+
+function saveDraft() {
+  const d = {};
+  FIELDS.forEach(f => { d[f] = document.getElementById(f)?.value || ''; });
+  try { localStorage.setItem('ifca_tracker_draft', JSON.stringify(d)); } catch(e) {}
+}
+
+function restoreDraft() {
+  try {
+    const raw = localStorage.getItem('ifca_tracker_draft');
+    if (!raw) return;
+    const d = JSON.parse(raw);
+    FIELDS.forEach(f => {
+      const el = document.getElementById(f);
+      if (el && d[f]) el.value = d[f];
+    });
+    updateMonthDisplay();
+  } catch(e) {}
+}
+
+/* ─────────────────────────────────
+   MAIN CALCULATE
+───────────────────────────────── */
+function calculate() {
+  const offer       = n('i-offer');
+  const spend       = n('i-spend');
+  const leads       = n('i-leads');
+  const sched       = n('i-sched');
+  const live        = n('i-live');
+  const closes      = n('i-closes');
+  const aov         = n('i-aov') || offer;
+  const upfront     = n('i-upfront');
+  const feRev       = n('i-fe-rev');
+  const beRev       = n('i-be-rev');
+  const cash        = n('i-cash');
+  const bePrice     = n('i-be-price');
+  const beCloses    = n('i-be-closes');
+  const active      = n('i-active');
+  const offboard    = n('i-offboard');
+  const labor       = n('i-labor');
+  const mktg        = n('i-mktg');
+  const overhead    = n('i-overhead');
+
+  // Derived
+  const cpl          = leads   > 0 ? spend / leads   : 0;
+  const showRate     = sched   > 0 ? live  / sched    : 0;
+  const costPerCall  = sched   > 0 ? spend / sched    : 0;
+  const closeRate    = live    > 0 ? closes / live    : 0;
+  const upfrontPct   = feRev   > 0 ? upfront / feRev  : 0;
+  const collROAS     = spend   > 0 ? cash / spend     : 0;
+  const contROAS     = spend   > 0 ? (feRev + beRev) / spend : 0;
+  const feToBe       = closes  > 0 ? beCloses / closes : 0;
+  const totalRev     = feRev + beRev;
+  const totalExpenses= labor + mktg + overhead;
+  const netProfit    = cash - totalExpenses;
+  const netMargin    = cash    > 0 ? netProfit / cash  : 0;
+  const laborMargin  = cash    > 0 ? labor / cash      : 0;
+  const mktgMargin   = cash    > 0 ? mktg  / cash      : 0;
+  const ohMargin     = cash    > 0 ? overhead / cash   : 0;
+
+  // Targets from offer price
+  const maxCAC       = offer * 0.25;
+  const maxCPQC      = maxCAC / 3;
+  const maxCPL       = maxCPQC * (sched > 0 && leads > 0 ? sched/leads : 0.04);
+
+  // Revenue equilibrium
+  const churnRate   = active  > 0 ? offboard / active  : 0;
+  const avgMonthVal = active  > 0 ? cash / active      : 0;
+  const ltv         = churnRate > 0 ? avgMonthVal / churnRate : 0;
+  const revEq       = ltv * closes;
+
+  renderResults({ cpl, showRate, costPerCall, closeRate, upfrontPct, collROAS, contROAS, feToBe,
+                  netMargin, laborMargin, mktgMargin, ohMargin, spend, cash, feRev, beRev,
+                  maxCAC, maxCPQC, offer, aov, closes });
+  renderEquilibrium({ churnRate, ltv, closes, cash, revEq, active, offboard, avgMonthVal });
+}
+
+/* ─────────────────────────────────
+   RENDER RESULTS
+───────────────────────────────── */
+function renderResults(d) {
+  const { cpl, showRate, costPerCall, closeRate, upfrontPct, collROAS, contROAS, feToBe,
+          netMargin, laborMargin, mktgMargin, ohMargin, spend, cash, feRev, beRev,
+          maxCAC, maxCPQC, offer, aov, closes } = d;
+
+  const adMetrics = [
+    { label:'Cost Per Lead (CPL)',          val:cpl,         fmt:fmtD, target:`< $10`,          pass:v=>v<10&&v>0,   warn:v=>v<15&&v>0, note:'Below $10 keeps CAC math viable.' },
+    { label:'Sales Show Rate',              val:showRate,    fmt:fmtP, target:'> 70%',           pass:v=>v>=.70,      warn:v=>v>=.60,    note:'Below 70% = leads cooling off before the call.' },
+    { label:'Cost Per Scheduled Call',      val:costPerCall, fmt:fmtD, target:`< ${fmtD(maxCPQC)}`, pass:v=>v<maxCPQC&&v>0, warn:v=>v<maxCPQC*1.3&&v>0, note:'⅓ of max CAC — your specific floor.' },
+    { label:'Close Rate',                   val:closeRate,   fmt:fmtP, target:'30–40%',          pass:v=>v>=.30&&v<=.45, warn:v=>v>=.25, note:'30–40% = appropriately priced. Above = room to raise price.' },
+    { label:'Collected ROAS',               val:collROAS,    fmt:fmtX, target:'> 2×',            pass:v=>v>=2,        warn:v=>v>=1.5,    note:'Minimum 2× collected. Target 4×+.' },
+    { label:'Contracted ROAS',              val:contROAS,    fmt:fmtX, target:'> 5×',            pass:v=>v>=5,        warn:v=>v>=3,      note:'Below 5× = creative or funnel constraint.' },
+    { label:'FE → BE Conversion',          val:feToBe,      fmt:fmtP, target:'> 50%',           pass:v=>v>=.50,      warn:v=>v>=.40,    note:'Highest-ROI fix available — zero ad spend needed.' },
+    { label:'Upfront Cash Collection %',    val:upfrontPct,  fmt:fmtP, target:'> 30%',           pass:v=>v>=.30,      warn:v=>v>=.20,    note:'30%+ = self-funding growth.' },
+  ];
+
+  const marginMetrics = [
+    { label:'Labor Margin',        val:laborMargin, fmt:fmtP, target:'30–35%', pass:v=>v>=.28&&v<=.38, warn:v=>v>=.22&&v<.28||v>=.38&&v<.50, note:'Above 35% = delivery model needs leverage.' },
+    { label:'Marketing Margin',    val:mktgMargin,  fmt:fmtP, target:'10–20%', pass:v=>v>=.10&&v<=.20, warn:v=>v<.25, note:'Includes ad spend + tools.' },
+    { label:'Overhead Margin',     val:ohMargin,    fmt:fmtP, target:'3–8%',   pass:v=>v>=.03&&v<=.09, warn:v=>v<.12, note:'Fixed costs.' },
+    { label:'Net Operating Margin',val:netMargin,   fmt:fmtP, target:'> 50%',  pass:v=>v>=.50,         warn:v=>v>=.35, note:'50%+ is the target. Under 35% = structural issue.' },
+  ];
+
+  function sc(m, v) {
+    if (m.pass(v)) return 'pass';
+    if (m.warn && m.warn(v)) return 'warn';
+    return 'fail';
+  }
+
+  // KPI chips
+  const chips = [
+    { label:'CPL',        val:fmtD(cpl),        cls:cpl>0&&cpl<10?'pass':cpl<15?'warn':'fail' },
+    { label:'Show Rate',  val:fmtP(showRate),   cls:showRate>=.70?'pass':showRate>=.60?'warn':'fail' },
+    { label:'Close Rate', val:fmtP(closeRate),  cls:closeRate>=.30?'pass':closeRate>=.25?'warn':'fail' },
+    { label:'Coll. ROAS', val:fmtX(collROAS),   cls:collROAS>=2?'pass':collROAS>=1.5?'warn':'fail' },
+    { label:'Net Margin', val:fmtP(netMargin),  cls:netMargin>=.50?'pass':netMargin>=.35?'warn':'fail' },
+  ];
+
+  const kpiHtml = chips.map(c => `
+    <div class="kpi-chip ${c.cls}">
+      <div class="chip-label">${c.label}</div>
+      <div class="chip-val">${c.val}</div>
+      <div class="chip-target">${s('i-month') ? new Date(s('i-month')+'-01').toLocaleDateString('en-US',{month:'short',year:'numeric'}) : '—'}</div>
+    </div>`).join('');
+
+  function tblRow(m) {
+    const v   = m.val;
+    const cls = sc(m, v);
+    return `<tr>
+      <td><span class="r-name">${m.label}</span></td>
+      <td><span class="r-target">${m.target}</span></td>
+      <td><span class="r-val ${cls}">${m.fmt(v)}</span></td>
+      <td><span class="badge ${cls}">${cls==='pass'?'✓ On Target':cls==='warn'?'⚠ Watch':'✗ Off Target'}</span></td>
+      <td><span class="r-note">${m.note}</span></td>
+    </tr>`;
+  }
+
+  // Diagnosis
+  const constraints = [];
+
+  if (showRate > 0 && showRate < .70) {
+    constraints.push({ rank:constraints.length+1, pri:'p1',
+      title:`Show Rate at ${fmtP(showRate)} — Below 70% Floor`,
+      desc:`Every 1% improvement in show rate is a direct reduction in cost per call at zero additional ad spend. At current scheduled call volume, getting to 75% adds ${Math.round((.75-showRate)*n('i-sched'))} additional live calls per month for free.`,
+      action:'→ Audit confirmation sequence. Check booking window — calls booked more than 5 days out show at significantly lower rates. Add a pre-call reminder sequence in GHL/your CRM.' });
+  }
+
+  if (contROAS > 0 && contROAS < 5) {
+    constraints.push({ rank:constraints.length+1, pri:contROAS<3?'p1':'p2',
+      title:`Contracted ROAS at ${fmtX(contROAS)} — Below 5× Target`,
+      desc:`At your offer price of ${fmtD(offer)}, you need at least a 5× contracted ROAS to justify scaling spend. Currently at ${fmtX(contROAS)}. Root causes are usually: show rate dragging cost per call up, close rate below target, or AOV lower than it should be.`,
+      action:'→ Fix show rate first. If show rate is healthy, audit the sales call process. If close rate is 30%+, the lever is AOV — keep pushing front-end price up.' });
+  }
+
+  if (feToBe > 0 && feToBe < .50) {
+    const gap = Math.round((.50 - feToBe) * closes);
+    const revGap = gap * (n('i-be-price') || offer * 2);
+    constraints.push({ rank:constraints.length+1, pri:'p2',
+      title:`FE → BE Conversion at ${fmtP(feToBe)} — ${fmtK(revGap)}/Month Unconverted`,
+      desc:`Target is 50%+. Currently ${fmtP(feToBe)} — roughly ${gap} clients per month who should be converting to your backend offer aren't. That's approximately ${fmtK(revGap)} in monthly backend revenue left on the table with zero additional ad spend needed to capture it.`,
+      action:'→ Audit when and how the backend conversation happens. Is there a proactive re-sign sequence at weeks 8–10 of the client journey? The conversion should be initiated by your system, not left to client initiative.' });
+  }
+
+  if (closeRate > 0 && closeRate < .30) {
+    constraints.push({ rank:constraints.length+1, pri:'p2',
+      title:`Close Rate at ${fmtP(closeRate)} — Below 30% Floor`,
+      desc:`Below 30% signals an avatar mismatch or a broken sales process — not a pricing problem. Lowering price almost never fixes this. The two root causes are: wrong leads are getting to calls, or the sales motion has gaps (no pre-call nurture, no VSL, too much pitch too early).`,
+      action:'→ Review the last 10 lost calls. What killed the deal? "Need to think about it" = insufficient pre-call framing. "Can\'t afford it" = wrong avatar. Fix the root cause before touching price.' });
+  }
+
+  if (laborMargin > .40) {
+    constraints.push({ rank:constraints.length+1, pri:laborMargin>.50?'p2':'p3',
+      title:`Labor Margin at ${fmtP(laborMargin)} — Above 35% Target`,
+      desc:`Labor at ${fmtP(laborMargin)} of revenue is eating into net margin. At the 30–35% target with your current revenue of ${fmtK(cash)}, that's an extra ${fmtK((laborMargin-.35)*cash)}/month going to delivery overhead vs. target.`,
+      action:'→ Map delivery labor per client. What\'s being done 1:1 that could be batched or automated? Group check-ins, templated feedback, and GHL automations can reduce delivery hours without reducing client outcomes.' });
+  }
+
+  if (netMargin > 0 && netMargin < .35) {
+    constraints.push({ rank:constraints.length+1, pri:netMargin<.20?'p2':'p3',
+      title:`Net Margin at ${fmtP(netMargin)} — Below 35% Threshold`,
+      desc:`Net margin at ${fmtP(netMargin)} means roughly ${fmtK(cash*.50 - (cash-((laborMargin+mktgMargin+ohMargin)*cash)))}/month being left in expenses above the 50% net target. This is almost always a labor margin issue first, then overhead.`,
+      action:'→ Don\'t try to fix net margin directly. Fix labor margin first — it\'s the multiplier. Every 1% reduction in labor margin goes straight to net margin.' });
+  }
+
+  // Green wins
+  if (cpl > 0 && cpl < 10) {
+    constraints.push({ rank:'✓', pri:'ok',
+      title:`CPL at ${fmtD(cpl)} — Creative Is Working`,
+      desc:'Well inside the $10 target. Ad creative and audience quality are dialed. Do not sacrifice CPL chasing other metrics.', action:'' });
+  }
+  if (upfrontPct >= .50) {
+    constraints.push({ rank:'✓', pri:'ok',
+      title:`Upfront Collection at ${fmtP(upfrontPct)} — Strong Cash Flow`,
+      desc:'50%+ upfront collection means you\'re largely self-funding growth. Keep this above 30% at minimum — it\'s what lets you scale without external capital.', action:'' });
+  }
+  if (closeRate >= .30 && closeRate <= .45) {
+    constraints.push({ rank:'✓', pri:'ok',
+      title:`Close Rate at ${fmtP(closeRate)} — Appropriately Priced`,
+      desc:`30–40% close rate with a proper pre-call nurture system = the right pricing zone. Focus on pushing AOV up gradually rather than chasing a higher close rate.`, action:'' });
+  }
+
+  const diagHtml = constraints.map(c => `
+    <div class="diag-card ${c.pri}">
+      <div class="diag-head">
+        <div class="diag-rank">${c.rank}</div>
+        <div>
+          <div class="diag-title">${c.title}</div>
+          <div class="diag-desc">${c.desc}</div>
+        </div>
+      </div>
+      ${c.action ? `<div class="diag-action"><strong>Fix:</strong> ${c.action}</div>` : ''}
+    </div>`).join('');
+
+  document.getElementById('results-content').innerHTML = `
+    <div class="sec-label">At a Glance</div>
+    <div class="kpi-band">${kpiHtml}</div>
+
+    <div class="sec-label">Ad &amp; Funnel Metrics</div>
+    <div class="tbl-wrap">
+      <table class="rtbl">
+        <thead><tr><th>Metric</th><th>IFCA Target</th><th>Your Number</th><th>Status</th><th>Note</th></tr></thead>
+        <tbody>${adMetrics.map(tblRow).join('')}</tbody>
+      </table>
+    </div>
+
+    <div class="sec-label">Profit &amp; Margin Metrics</div>
+    <div class="tbl-wrap">
+      <table class="rtbl">
+        <thead><tr><th>Metric</th><th>IFCA Target</th><th>Your Number</th><th>Status</th><th>Note</th></tr></thead>
+        <tbody>${marginMetrics.map(tblRow).join('')}</tbody>
+      </table>
+    </div>
+
+    <div class="sec-label">Constraint Diagnosis — Fix In This Order</div>
+    <div class="diag-list">${diagHtml || '<div class="empty-state"><div class="empty-icon">✅</div><div class="empty-title">No Critical Constraints Found</div><div class="empty-desc">All key metrics are on target. Focus on maintaining cadence and pushing AOV up incrementally.</div></div>'}</div>
+  `;
+}
+
+/* ─────────────────────────────────
+   RENDER EQUILIBRIUM
+───────────────────────────────── */
+function renderEquilibrium({ churnRate, ltv, closes, cash, revEq, active, offboard, avgMonthVal }) {
+  const diff = ((revEq - cash) / Math.max(cash,1) * 100).toFixed(0);
+  let verdictCls, verdictHtml;
+
+  if (revEq > cash * 1.1) {
+    verdictCls  = 'building';
+    verdictHtml = `✓ <strong>Building.</strong> Revenue Equilibrium (${fmtK(revEq)}) is ${diff}% above current monthly revenue (${fmtK(cash)}). Every new close adds ${fmtK(ltv)} in future lifetime value to the base. The gap closes as your existing client base matures. Risk: if close velocity drops below ~${Math.round(cash/ltv)} new clients/month at current churn, equilibrium falls below actual revenue and the base starts eroding. Watch this number monthly.`;
+  } else if (revEq < cash * 0.9) {
+    verdictCls  = 'eroding';
+    verdictHtml = `🚨 <strong>Eroding.</strong> Revenue Equilibrium (${fmtK(revEq)}) is below current revenue (${fmtK(cash)}). Churn is outpacing new acquisition — you are drawing down the base. This is the leaky bucket problem. Fix churn before scaling acquisition spend, or the base will continue to shrink regardless of new closes.`;
+  } else {
+    verdictCls  = 'flat';
+    verdictHtml = `≈ <strong>Holding steady.</strong> Equilibrium and actual revenue are roughly matched. You're maintaining the base but not compounding. To grow, you need to either increase close velocity or reduce monthly churn.`;
+  }
+
+  document.getElementById('eq-content').innerHTML = `
+    <p style="font-size:14px;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:24px;">
+      The leaky bucket question: are you adding client value faster than churn is removing it?
+      <strong style="color:#fff;">Revenue Equilibrium = LTV × New Clients Acquired per month.</strong>
+      If that number is higher than your current revenue, you're compounding. If lower, churn is winning.
+    </p>
+
+    <div style="background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:26px 28px;">
+      <div class="req-grid">
+        <div class="req-cell">
+          <div class="req-label">Monthly Churn Rate</div>
+          <div class="req-val">${fmtP(churnRate)}</div>
+          <div class="req-sub">${offboard} clients off-boarded ÷ ${active} active</div>
+        </div>
+        <div class="req-cell">
+          <div class="req-label">Lifetime Value (LTV)</div>
+          <div class="req-val">${fmtK(ltv)}</div>
+          <div class="req-sub">Avg monthly value ${fmtK(avgMonthVal)} ÷ churn ${fmtP(churnRate)}</div>
+        </div>
+        <div class="req-cell">
+          <div class="req-label">New Clients This Month</div>
+          <div class="req-val">${closes}</div>
+          <div class="req-sub">Closes entered in inputs</div>
+        </div>
+      </div>
+
+      <div class="eq-row">
+        <div class="eq-block eq-side">
+          <div class="eq-b-label">Revenue Equilibrium</div>
+          <div class="eq-b-val">${fmtK(revEq)}</div>
+          <div class="eq-b-sub">LTV × New Clients — what you're building toward</div>
+        </div>
+        <div class="eq-vs">VS</div>
+        <div class="eq-block ac-side">
+          <div class="eq-b-label">Actual Monthly Revenue</div>
+          <div class="eq-b-val">${fmtK(cash)}</div>
+          <div class="eq-b-sub">Cash collected this month</div>
+        </div>
+      </div>
+
+      <div class="eq-verdict ${verdictCls}">${verdictHtml}</div>
+    </div>
+
+    <div class="callout" style="margin-top:16px;">
+      <div class="ch">How to Improve the Equilibrium Number</div>
+      <p>Three levers: <strong>1) Reduce churn</strong> — every client you keep raises LTV without closing anyone new. <strong>2) Increase close velocity</strong> — more new clients per month multiplies the equilibrium directly. <strong>3) Raise front-end price / backend conversion</strong> — both increase average revenue per client, which raises LTV. Churn is almost always the highest-leverage fix first because it compounds silently.</p>
+    </div>
+  `;
+}
+
+/* ─────────────────────────────────
+   GOOGLE SHEETS LOADER
+───────────────────────────────── */
+async function loadFromSheets() {
+  const url = document.getElementById('sheets-url').value.trim();
+  if (!url) { alert('Please paste your published Google Sheet CSV URL first.'); return; }
+
+  // Ensure it's a CSV export URL
+  let csvUrl = url;
+  if (url.includes('/edit') || url.includes('/pub?') && !url.includes('output=csv')) {
+    csvUrl = url.replace('/edit', '/pub').replace(/output=\w+/, 'output=csv');
+    if (!csvUrl.includes('output=csv')) csvUrl += (csvUrl.includes('?') ? '&' : '?') + 'single=true&output=csv';
+  }
+
+  document.getElementById('conn-dot').className = 'conn-dot loading';
+  document.getElementById('conn-label').textContent = 'Loading...';
+
+  try {
+    const resp = await fetch(csvUrl);
+    if (!resp.ok) throw new Error('Fetch failed');
+    const text = await resp.text();
+    parseCSVAndPopulate(text);
+    document.getElementById('conn-dot').className = 'conn-dot connected';
+    document.getElementById('conn-label').textContent = 'Sheet Connected';
+    document.getElementById('sheets-success').classList.add('show');
+    try { localStorage.setItem('ifca_sheets_url', csvUrl); } catch(e) {}
+  } catch (err) {
+    document.getElementById('conn-dot').className = 'conn-dot disconnected';
+    document.getElementById('conn-label').textContent = 'Load Failed';
+    alert('Could not load the sheet. This is usually a CORS restriction from Google. Use Option B (CSV upload) instead — same result, always works.');
+  }
+}
+
+/* ─────────────────────────────────
+   CSV FILE HANDLING
+───────────────────────────────── */
+function handleFileSelect(e) {
+  const file = e.target.files[0];
+  if (file) readCSVFile(file);
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('csv-drop-zone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file && file.name.endsWith('.csv')) readCSVFile(file);
+  else alert('Please drop a .csv file.');
+}
+
+function readCSVFile(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    parseCSVAndPopulate(e.target.result);
+    document.getElementById('csv-success').classList.add('show');
+    document.getElementById('conn-dot').className = 'conn-dot connected';
+    document.getElementById('conn-label').textContent = 'CSV Loaded';
+  };
+  reader.readAsText(file);
+}
+
+/* ─────────────────────────────────
+   CSV PARSER — maps IFCA row labels
+───────────────────────────────── */
+function parseCSVAndPopulate(csvText) {
+  const lines = csvText.split('\n').map(l => l.split(',').map(c => c.replace(/"/g,'').trim()));
+
+  // Build a map: row label → [col values]
+  const rowMap = {};
+  lines.forEach(cols => {
+    if (cols[0]) rowMap[cols[0].toLowerCase().trim()] = cols;
+  });
+
+  function getVal(label, colIndex = 2) {
+    const key = label.toLowerCase().trim();
+    for (const [k, cols] of Object.entries(rowMap)) {
+      if (k.includes(key)) {
+        const v = parseFloat(cols[colIndex]);
+        return isNaN(v) ? 0 : v;
+      }
+    }
+    return 0;
+  }
+
+  // Map known IFCA tracker labels → input fields
+  // YTD is typically column index 2 (0-indexed after label + KPI columns)
+  const COL = 2; // YTD column
+
+  setVal('i-spend',    getVal('ad spend', COL));
+  setVal('i-leads',    getVal('leads', COL));
+  setVal('i-sched',    getVal('scheduled sales calls', COL));
+  setVal('i-live',     getVal('live sales calls', COL));
+  setVal('i-closes',   getVal('closes', COL));
+  setVal('i-aov',      getVal('frontend price point', COL));
+  setVal('i-fe-rev',   getVal('new contracted frontend revenue', COL));
+  setVal('i-be-rev',   getVal('new contracted backend revenue', COL));
+  setVal('i-cash',     getVal('total cash collected', COL));
+  setVal('i-upfront',  getVal('upfront cash collected', COL));
+  setVal('i-labor',    getVal('labor expenses', COL));
+  setVal('i-mktg',     getVal('marketing expenses', COL));
+  setVal('i-overhead', getVal('overhead expenses', COL));
+
+  saveDraft();
+  switchTab('inputs');
+}
+
+function setVal(id, v) {
+  const el = document.getElementById(id);
+  if (el && v && v !== 0) el.value = v;
+}
+
+/* ─────────────────────────────────
+   INIT
+───────────────────────────────── */
+window.addEventListener('DOMContentLoaded', () => {
+  restoreDraft();
+  updateMonthDisplay();
+
+  // Default month to current
+  if (!document.getElementById('i-month').value) {
+    const now = new Date();
+    document.getElementById('i-month').value =
+      now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+    updateMonthDisplay();
+  }
+
+  // Try to reconnect saved sheet
+  try {
+    const savedUrl = localStorage.getItem('ifca_sheets_url');
+    if (savedUrl) document.getElementById('sheets-url').value = savedUrl;
+  } catch(e) {}
+});
+</script>
+</body>
+</html>

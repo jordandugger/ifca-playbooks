@@ -3,1549 +3,1441 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lacey & Zach Iskra — Full Business Audit | IFCA 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Lacey & Zach Iskra — IFCA Business Audit v1</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --navy:        #1E3A5F;
-  --navy-dark:   #0B1A2B;
-  --navy-mid:    #142845;
-  --navy-card:   rgba(20,40,69,0.6);
-  --orange:      #E87722;
-  --orange-dim:  rgba(232,119,34,0.12);
-  --orange-glow: rgba(232,119,34,0.22);
-  --blue-mid:    #4A7FA5;
-  --blue-dim:    rgba(74,127,165,0.12);
-  --blue-light:  #D6E4F0;
-  --gray-400:    #94A3B8;
-  --gray-500:    #64748B;
-  --gray-600:    #475569;
-  --green:       #22C55E;
-  --green-bg:    rgba(34,197,94,0.10);
-  --red:         #DC2626;
-  --red-bg:      rgba(220,38,38,0.09);
-  --yellow:      #F59E0B;
-  --yellow-bg:   rgba(245,158,11,0.10);
-  --purple:      #8B5CF6;
-  --purple-bg:   rgba(139,92,246,0.10);
+  --navy: #1E3A5F;
+  --orange: #E87722;
+  --light: #D6E4F0;
+  --bg: #0D1B2A;
+  --card: #0F2236;
+  --green: #4ade80;
+  --yellow: #fbbf24;
+  --red: #f87171;
+  --text: #e2eaf4;
+  --muted: #8ba5c0;
 }
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-
+* { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--navy-dark);
-  color: #fff;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  display: flex;
+}
+
+/* SIDEBAR NAV */
+#sidebar {
+  width: 220px;
   min-height: 100vh;
-  overflow-x: hidden;
+  background: #07111c;
+  position: fixed;
+  top: 0; left: 0;
+  padding: 32px 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
 }
-
-body::before {
-  content: '';
-  position: fixed; inset: 0; pointer-events: none; z-index: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
-
-body::after {
-  content: '';
-  position: fixed; inset: 0; pointer-events: none; z-index: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 5% 5%, rgba(74,127,165,.09) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 50% at 95% 95%, rgba(232,119,34,.06) 0%, transparent 55%);
-}
-
-.page {
-  position: relative; z-index: 1;
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 0 24px 120px;
-}
-
-/* ── HERO ── */
-.hero {
-  padding: 60px 0 52px;
-  border-bottom: 1px solid rgba(255,255,255,.07);
-  position: relative;
-}
-.hero-eyebrow {
-  font-family: 'DM Mono', monospace; font-size: 11px;
-  letter-spacing: .2em; color: var(--orange);
-  text-transform: uppercase; margin-bottom: 16px;
-  display: flex; align-items: center; gap: 12px;
-}
-.hero-eyebrow::before { content: ''; width: 32px; height: 2px; background: var(--orange); border-radius: 1px; }
-.hero-name {
-  font-family: 'Bebas Neue'; font-size: clamp(52px, 8vw, 96px);
-  line-height: .88; letter-spacing: .02em; color: #fff;
-  margin-bottom: 6px;
-}
-.hero-name span { color: var(--orange); }
-.hero-title {
-  font-family: 'DM Mono', monospace; font-size: 14px;
-  letter-spacing: .08em; color: rgba(255,255,255,.4);
-  text-transform: uppercase; margin-bottom: 28px;
-}
-.hero-stats {
-  display: flex; gap: 0; margin-bottom: 32px;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.07);
-  border-radius: 14px; overflow: hidden;
-}
-.hs { flex: 1; padding: 20px 24px; border-right: 1px solid rgba(255,255,255,.06); }
-.hs:last-child { border-right: none; }
-.hs-val { font-family: 'Bebas Neue'; font-size: 40px; line-height: 1; margin-bottom: 4px; }
-.hs-val.orange { color: var(--orange); }
-.hs-val.green  { color: var(--green); }
-.hs-val.blue   { color: #7ABFDD; }
-.hs-val.white  { color: #fff; }
-.hs-val.red    { color: #F87171; }
-.hs-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-500); }
-.hero-summary {
-  font-size: 15px; color: rgba(255,255,255,.65);
-  line-height: 1.7; max-width: 720px;
-  border-left: 3px solid var(--orange);
-  padding-left: 20px;
-}
-.hero-summary strong { color: rgba(255,255,255,.9); }
-
-/* ── NAV ── */
-.doc-nav {
-  position: sticky; top: 0; z-index: 50;
-  background: rgba(11,26,43,.92);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255,255,255,.07);
-  margin: 0 -24px;
-}
-.doc-nav-inner {
-  max-width: 1080px; margin: 0 auto;
-  padding: 0 24px;
-  display: flex; align-items: center; gap: 4px; overflow-x: auto;
-  scrollbar-width: none;
-}
-.doc-nav-inner::-webkit-scrollbar { display: none; }
-.nav-link {
-  font-family: 'DM Mono', monospace; font-size: 10px;
-  letter-spacing: .1em; text-transform: uppercase;
-  padding: 14px 16px; white-space: nowrap;
-  color: var(--gray-500); text-decoration: none;
-  border-bottom: 2px solid transparent;
-  transition: color .18s, border-color .18s;
-}
-.nav-link:hover { color: rgba(255,255,255,.7); }
-.nav-link.active { color: var(--orange); border-bottom-color: var(--orange); }
-
-/* ── SECTION STRUCTURE ── */
-.doc-section { padding: 56px 0 0; }
-.sec-eyebrow {
-  font-family: 'DM Mono', monospace; font-size: 10px;
-  letter-spacing: .18em; color: var(--orange);
-  text-transform: uppercase; margin-bottom: 8px;
-}
-.sec-heading {
-  font-family: 'Bebas Neue'; font-size: clamp(30px,4vw,44px);
-  line-height: .95; letter-spacing: .02em; color: #fff;
-  margin-bottom: 24px;
-}
-.sec-divider { height: 1px; background: rgba(255,255,255,.07); margin-bottom: 28px; }
-
-/* ── CARDS ── */
-.card {
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.07);
-  border-radius: 14px; padding: 22px 24px;
-}
-.card.orange-left { border-left: 3px solid var(--orange); border-radius: 0 14px 14px 0; background: var(--orange-dim); }
-.card.green-left  { border-left: 3px solid var(--green);  border-radius: 0 14px 14px 0; background: var(--green-bg); }
-.card.red-left    { border-left: 3px solid var(--red);    border-radius: 0 14px 14px 0; background: var(--red-bg); }
-.card.yellow-left { border-left: 3px solid var(--yellow); border-radius: 0 14px 14px 0; background: var(--yellow-bg); }
-.card.blue-left   { border-left: 3px solid var(--blue-mid); border-radius: 0 14px 14px 0; background: var(--blue-dim); }
-
-/* ── GRIDS ── */
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
-.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
-
-@media(max-width:720px){
-  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-  .hero-stats { flex-direction: column; }
-  .hs { border-right: none; border-bottom: 1px solid rgba(255,255,255,.06); }
-  .hs:last-child { border-bottom: none; }
-}
-@media(max-width:900px){
-  .grid-3 { grid-template-columns: 1fr 1fr; }
-  .grid-4 { grid-template-columns: 1fr 1fr; }
-}
-
-/* ── WIN CARDS ── */
-.win-card {
-  background: var(--green-bg); border: 1px solid rgba(34,197,94,.2);
-  border-radius: 12px; padding: 18px;
-  display: flex; align-items: flex-start; gap: 12px;
-}
-.win-icon { font-size: 20px; flex-shrink: 0; padding-top: 2px; }
-.win-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--green); margin-bottom: 4px; }
-.win-desc  { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.55; }
-
-/* ── KPI BAND ── */
-.kpi-band {
-  display: grid; grid-template-columns: repeat(5,1fr); gap: 10px;
-  margin-bottom: 20px;
-}
-@media(max-width:700px){ .kpi-band { grid-template-columns: 1fr 1fr; } }
-
-.kpi-chip {
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 12px; padding: 14px 16px; position: relative; overflow: hidden;
-}
-.kpi-chip::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:12px 12px 0 0; }
-.kpi-chip.pass::before { background: var(--green); }
-.kpi-chip.warn::before { background: var(--yellow); }
-.kpi-chip.fail::before { background: var(--red); }
-.kpi-chip.info::before { background: var(--blue-mid); }
-
-.chip-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); margin-bottom:5px; line-height:1.4; }
-.chip-val   { font-family:'Bebas Neue'; font-size:30px; line-height:1; margin-bottom:3px; }
-.kpi-chip.pass .chip-val { color: var(--green); }
-.kpi-chip.warn .chip-val { color: var(--yellow); }
-.kpi-chip.fail .chip-val { color: #F87171; }
-.kpi-chip.info .chip-val { color: #7ABFDD; }
-.chip-target { font-family:'DM Mono',monospace; font-size:10px; color:var(--gray-500); }
-
-/* ── METRICS TABLE ── */
-.tbl-wrap {
-  background: rgba(255,255,255,.025);
-  border: 1px solid rgba(255,255,255,.07);
-  border-radius: 14px; overflow: hidden;
+#sidebar .logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--orange);
+  letter-spacing: 2px;
+  padding: 0 24px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
   margin-bottom: 16px;
 }
-.mtbl { width:100%; border-collapse:collapse; }
-.mtbl thead tr { background:rgba(255,255,255,.03); }
-.mtbl th {
-  font-family:'DM Mono',monospace; font-size:10px;
-  letter-spacing:.1em; text-transform:uppercase;
-  color:var(--gray-500); padding:10px 14px; text-align:left;
-  border-bottom:1px solid rgba(255,255,255,.06); white-space:nowrap;
+#sidebar a {
+  display: block;
+  padding: 10px 24px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: all 0.15s;
+  border-left: 3px solid transparent;
 }
-.mtbl td {
-  padding:12px 14px; font-size:13px; color:rgba(255,255,255,.7);
-  border-bottom:1px solid rgba(255,255,255,.04); vertical-align:middle;
+#sidebar a:hover, #sidebar a.active {
+  color: var(--orange);
+  border-left-color: var(--orange);
+  background: rgba(232,119,34,0.08);
 }
-.mtbl tbody tr:last-child td { border-bottom:none; }
-.mtbl tbody tr:hover td { background:rgba(255,255,255,.02); }
-.m-name   { font-size:13px; color:rgba(255,255,255,.85); }
-.m-target { font-family:'DM Mono',monospace; font-size:11px; color:var(--gray-500); }
-.m-val    { font-family:'Bebas Neue'; font-size:22px; line-height:1; }
-.m-val.pass { color:var(--green); }
-.m-val.warn { color:var(--yellow); }
-.m-val.fail { color:#F87171; }
-.m-val.info { color:#7ABFDD; }
 
-.badge {
-  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.08em;
-  text-transform:uppercase; padding:3px 9px; border-radius:4px; white-space:nowrap;
+/* MAIN CONTENT */
+#main {
+  margin-left: 220px;
+  flex: 1;
+  max-width: 1100px;
+  padding: 0 40px 80px;
 }
-.badge.pass { background:var(--green-bg); color:var(--green); border:1px solid rgba(34,197,94,.25); }
-.badge.warn { background:var(--yellow-bg); color:var(--yellow); border:1px solid rgba(245,158,11,.25); }
-.badge.fail { background:var(--red-bg); color:#F87171; border:1px solid rgba(220,38,38,.25); }
-.badge.info { background:var(--blue-dim); color:#7ABFDD; border:1px solid rgba(74,127,165,.3); }
 
-.m-note { font-size:11px; color:var(--gray-500); line-height:1.5; max-width:200px; }
-
-/* ── PERIOD SWITCHER ── */
-.period-bar {
-  display: flex; align-items: center; gap: 16px;
-  margin-bottom: 20px; flex-wrap: wrap;
+/* SECTIONS */
+.section {
+  padding: 64px 0 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
 }
-.period-bar-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-500); }
-.period-tabs { display: flex; gap: 4px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 4px; }
-.pt {
-  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
-  padding: 7px 14px; border-radius: 7px; border: none;
-  background: transparent; color: var(--gray-500); cursor: pointer; transition: all .18s;
+.section:last-child { border-bottom: none; }
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--orange);
+  letter-spacing: 3px;
+  margin-bottom: 8px;
 }
-.pt.active { background: var(--navy-mid); color: #fff; }
-.pt:hover:not(.active) { color: rgba(255,255,255,.6); }
-
-/* ── REVENUE EQUILIBRIUM ── */
-.req-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:24px; }
-@media(max-width:580px){ .req-grid { grid-template-columns:1fr; } }
-.req-cell { display:flex; flex-direction:column; gap:4px; }
-.req-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); }
-.req-val   { font-family:'Bebas Neue'; font-size:36px; line-height:1; color:#fff; }
-.req-sub   { font-size:11px; color:var(--gray-500); margin-top:1px; }
-
-.eq-compare { display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:center; margin-bottom:16px; }
-@media(max-width:580px){ .eq-compare { grid-template-columns:1fr; } }
-.eq-block { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:20px; text-align:center; }
-.eq-block.purple { border-color:rgba(139,92,246,.3); background:var(--purple-bg); }
-.eq-block.blue   { border-color:rgba(74,127,165,.3); background:var(--blue-dim); }
-.eq-b-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); margin-bottom:6px; }
-.eq-b-val   { font-family:'Bebas Neue'; font-size:42px; line-height:1; margin-bottom:4px; }
-.eq-block.purple .eq-b-val { color:#c4b5fd; }
-.eq-block.blue   .eq-b-val { color:#7ABFDD; }
-.eq-b-sub  { font-size:11px; color:var(--gray-500); }
-.eq-vs { font-family:'Bebas Neue'; font-size:32px; color:rgba(255,255,255,.18); text-align:center; }
-.eq-verdict { padding:15px 18px; border-radius:10px; font-size:13px; line-height:1.65; }
-.eq-verdict.building { background:var(--green-bg); border:1px solid rgba(34,197,94,.25); color:var(--green); }
-.eq-verdict.eroding  { background:var(--red-bg); border:1px solid rgba(220,38,38,.25); color:#F87171; }
-
-/* ── COMPETITOR TABLE ── */
-.comp-card { background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; overflow: hidden; }
-.comp-tbl { width:100%; border-collapse:collapse; }
-.comp-tbl th {
-  font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase;
-  color:var(--gray-500); padding:10px 14px; text-align:left;
-  background:rgba(255,255,255,.03); border-bottom:1px solid rgba(255,255,255,.06);
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  color: var(--light);
+  letter-spacing: 1px;
+  margin-bottom: 32px;
+  line-height: 1;
 }
-.comp-tbl td {
-  padding:13px 14px; font-size:13px; color:rgba(255,255,255,.65);
-  border-bottom:1px solid rgba(255,255,255,.04); vertical-align:top; line-height:1.5;
+
+/* HERO */
+#hero {
+  padding: 72px 0 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
 }
-.comp-tbl tbody tr:last-child td { border-bottom:none; }
-.comp-tbl td strong { color:rgba(255,255,255,.9); }
-
-.gap-pill {
-  display:inline-block; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.06em; text-transform:uppercase;
-  padding:2px 8px; border-radius:4px; margin:2px 3px 2px 0;
+.hero-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 84px;
+  color: var(--light);
+  letter-spacing: 3px;
+  line-height: 0.9;
 }
-.gap-pill.white-space { background:var(--green-bg); color:var(--green); border:1px solid rgba(34,197,94,.2); }
-.gap-pill.saturated   { background:var(--red-bg); color:#F87171; border:1px solid rgba(220,38,38,.2); }
-.gap-pill.advantage   { background:var(--orange-dim); color:var(--orange); border:1px solid rgba(232,119,34,.2); }
-
-/* ── DIAGNOSIS / PILLAR CARDS ── */
-.diag-list { display:flex; flex-direction:column; gap:12px; }
-.diag-card {
-  border-radius:14px; border:1px solid rgba(255,255,255,.07);
-  background:rgba(255,255,255,.025); overflow:hidden;
+.hero-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--orange);
+  letter-spacing: 2px;
+  margin-top: 12px;
+  margin-bottom: 36px;
 }
-.diag-card.p1 { border-color:rgba(220,38,38,.35); background:rgba(220,38,38,.04); }
-.diag-card.p2 { border-color:rgba(245,158,11,.28); background:rgba(245,158,11,.03); }
-.diag-card.p3 { border-color:rgba(232,119,34,.22); }
-.diag-card.ok { border-color:rgba(34,197,94,.22); background:rgba(34,197,94,.03); }
-
-.diag-head { display:flex; align-items:flex-start; gap:16px; padding:20px 22px 16px; }
-.diag-rank { font-family:'Bebas Neue'; font-size:40px; line-height:1; flex-shrink:0; min-width:36px; padding-top:2px; }
-.diag-card.p1 .diag-rank { color:#F87171; }
-.diag-card.p2 .diag-rank { color:var(--yellow); }
-.diag-card.p3 .diag-rank { color:var(--orange); }
-.diag-card.ok .diag-rank { color:var(--green); }
-
-.diag-title { font-family:'Bebas Neue'; font-size:20px; letter-spacing:.04em; line-height:1.1; margin-bottom:6px; }
-.diag-card.p1 .diag-title { color:#F87171; }
-.diag-card.p2 .diag-title { color:var(--yellow); }
-.diag-card.p3 .diag-title { color:var(--orange); }
-.diag-card.ok .diag-title { color:var(--green); }
-
-.diag-badge { display:inline-block; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.08em; text-transform:uppercase; padding:2px 8px; border-radius:4px; margin-bottom:6px; }
-.diag-card.p1 .diag-badge { background:var(--red-bg); color:#F87171; border:1px solid rgba(220,38,38,.25); }
-.diag-card.p2 .diag-badge { background:var(--yellow-bg); color:var(--yellow); border:1px solid rgba(245,158,11,.25); }
-.diag-card.p3 .diag-badge { background:var(--orange-dim); color:var(--orange); border:1px solid rgba(232,119,34,.25); }
-.diag-card.ok .diag-badge { background:var(--green-bg); color:var(--green); border:1px solid rgba(34,197,94,.25); }
-
-.diag-desc { font-size:13px; color:rgba(255,255,255,.65); line-height:1.65; }
-
-.diag-action {
-  padding:14px 22px 18px 74px;
-  border-top:1px solid rgba(255,255,255,.05);
-  font-family:'DM Mono',monospace; font-size:11px; color:var(--gray-400); line-height:1.6;
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
 }
-.diag-action strong { color:rgba(255,255,255,.75); }
-
-/* ── PLAN ── */
-.plan-list { display:flex; flex-direction:column; gap:10px; }
-.plan-item {
-  display:flex; align-items:flex-start; gap:16px;
-  background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07);
-  border-radius:12px; padding:18px 20px; transition:border-color .2s;
+.hero-stat {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 20px 16px;
+  text-align: center;
 }
-.plan-item:hover { border-color:rgba(232,119,34,.2); }
-.plan-num { font-family:'Bebas Neue'; font-size:38px; color:var(--orange); line-height:1; flex-shrink:0; min-width:30px; }
-.plan-title { font-size:15px; font-weight:600; color:#fff; margin-bottom:5px; line-height:1.2; }
-.plan-desc  { font-size:13px; color:rgba(255,255,255,.6); line-height:1.65; }
-.plan-tag {
-  display:inline-block; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.08em; text-transform:uppercase;
-  padding:2px 8px; border-radius:4px; margin-top:8px; margin-right:4px;
+.hero-stat .val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  color: var(--orange);
+  display: block;
 }
-.plan-tag.sales    { background:var(--green-bg); color:var(--green); border:1px solid rgba(34,197,94,.2); }
-.plan-tag.ops      { background:var(--blue-dim); color:#7ABFDD; border:1px solid rgba(74,127,165,.25); }
-.plan-tag.creative { background:var(--purple-bg); color:#c4b5fd; border:1px solid rgba(139,92,246,.2); }
-.plan-tag.ads      { background:var(--orange-dim); color:var(--orange); border:1px solid rgba(232,119,34,.25); }
-.plan-tag.retention{ background:rgba(139,92,246,.15); color:#c4b5fd; border:1px solid rgba(139,92,246,.25); }
-
-/* ── OFFER FRAMEWORK ── */
-.offer-section { padding: 40px 0 0; }
-.offer-block {
-  background: rgba(255,255,255,.025);
-  border: 1px solid rgba(255,255,255,.07);
-  border-radius: 14px; padding: 24px; margin-bottom: 16px;
+.hero-stat .lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  margin-top: 4px;
+  display: block;
 }
-.offer-block-title {
-  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
-  color: var(--orange); margin-bottom: 12px;
-}
-.offer-statement {
-  font-size: 15px; line-height: 1.75; color: rgba(255,255,255,.82);
-  border-left: 3px solid var(--orange); padding-left: 18px;
+.hero-summary {
+  background: linear-gradient(135deg, rgba(30,58,95,0.4), rgba(232,119,34,0.1));
+  border: 1px solid rgba(232,119,34,0.3);
+  border-radius: 10px;
+  padding: 20px 24px;
+  font-size: 15px;
+  color: var(--light);
   font-style: italic;
 }
-.offer-v-tag {
-  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--gray-500); margin-bottom: 8px;
+
+/* WINS */
+.wins-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.win-card {
+  background: var(--card);
+  border: 1px solid rgba(74,222,128,0.2);
+  border-left: 4px solid var(--green);
+  border-radius: 10px;
+  padding: 20px;
+}
+.win-card .win-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--green);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.win-card p { font-size: 14px; color: var(--text); line-height: 1.5; }
+
+/* DATA SECTION */
+.period-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.period-tab {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.period-tab.active {
+  background: var(--navy);
+  border-color: var(--orange);
+  color: var(--orange);
+}
+.kpi-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.kpi-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+}
+.kpi-chip .chip-label { color: var(--muted); }
+.kpi-chip .chip-val { color: var(--text); font-weight: 500; }
+.kpi-chip .chip-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.badge-pass { background: rgba(74,222,128,0.2); color: var(--green); }
+.badge-warn { background: rgba(251,191,36,0.2); color: var(--yellow); }
+.badge-fail { background: rgba(248,113,113,0.2); color: var(--red); }
+
+/* TABLES */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 28px;
+  font-size: 14px;
+}
+.data-table th {
+  background: var(--navy);
+  color: var(--light);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding: 12px 16px;
+  text-align: left;
+}
+.data-table td {
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  vertical-align: top;
+}
+.data-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+.data-table tr:hover td { background: rgba(30,58,95,0.4); }
+
+/* CONSTRAINT CARDS */
+.constraint-card {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 16px;
+  border-left: 5px solid;
+}
+.constraint-card.p1 { border-left-color: var(--red); }
+.constraint-card.p2 { border-left-color: var(--orange); }
+.constraint-card.p3 { border-left-color: var(--yellow); }
+.constraint-card.pass { border-left-color: var(--green); }
+.constraint-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.priority-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.p1 .priority-badge { background: rgba(248,113,113,0.2); color: var(--red); }
+.p2 .priority-badge { background: rgba(232,119,34,0.2); color: var(--orange); }
+.p3 .priority-badge { background: rgba(251,191,36,0.2); color: var(--yellow); }
+.pass .priority-badge { background: rgba(74,222,128,0.2); color: var(--green); }
+.constraint-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  color: var(--light);
+}
+.constraint-diag {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+.constraint-fix {
+  background: rgba(30,58,95,0.4);
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--light);
+}
+.constraint-fix strong { color: var(--orange); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1px; display: block; margin-bottom: 6px; }
+
+/* CREATIVE SECTION */
+.entity-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 14px;
+}
+.entity-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.entity-num {
+  width: 32px; height: 32px;
+  background: var(--orange);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  color: white;
+  flex-shrink: 0;
+}
+.entity-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  color: var(--light);
+}
+.entity-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.meta-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(30,58,95,0.6);
+  color: var(--light);
+  letter-spacing: 0.5px;
+}
+.entity-hook {
+  font-style: italic;
+  color: var(--orange);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.entity-why {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
 }
 
-/* MECHANISM PILLARS */
-.mech-pillar {
-  background: rgba(255,255,255,.025);
-  border: 1px solid rgba(255,255,255,.07);
-  border-radius: 14px; overflow: hidden; margin-bottom: 12px;
+/* ACTION PLAN */
+.action-item {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
 }
-.mech-pillar-head {
+.action-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px;
+  color: var(--orange);
+  line-height: 1;
+  min-width: 40px;
+}
+.action-content { flex: 1; }
+.action-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  color: var(--light);
+  margin-bottom: 10px;
+}
+.action-desc {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.action-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.action-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+.tag-paid { background: rgba(232,119,34,0.2); color: var(--orange); }
+.tag-creative { background: rgba(74,222,128,0.15); color: var(--green); }
+.tag-sales { background: rgba(251,191,36,0.15); color: var(--yellow); }
+.tag-ops { background: rgba(214,228,240,0.15); color: var(--light); }
+
+/* COPY INTEL */
+.intel-box {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.intel-box h4 {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--orange);
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.hook-list { list-style: none; }
+.hook-list li {
+  padding: 10px 14px;
+  background: rgba(30,58,95,0.4);
+  border-radius: 6px;
+  margin-bottom: 8px;
+  font-style: italic;
+  color: var(--light);
+  font-size: 14px;
+  border-left: 3px solid var(--orange);
+}
+
+.copy-btn {
+  background: var(--orange);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-top: 16px;
+}
+.copy-btn:hover { background: #d06618; }
+.copy-btn.copied { background: var(--green); color: #0D1B2A; }
+
+.callout {
+  background: rgba(232,119,34,0.1);
+  border: 1px solid rgba(232,119,34,0.3);
+  border-radius: 8px;
   padding: 16px 20px;
-  background: rgba(255,255,255,.03);
-  border-bottom: 1px solid rgba(255,255,255,.06);
+  font-size: 13px;
+  color: var(--light);
+  margin-bottom: 20px;
 }
-.mech-pillar-num { font-family: 'Bebas Neue'; font-size: 13px; color: var(--orange); letter-spacing: .1em; }
-.mech-pillar-name { font-family: 'Bebas Neue'; font-size: 20px; color: #fff; letter-spacing: .03em; }
-.mech-pillar-body { padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; }
-.mech-row { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.6; }
-.mech-row-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; display: inline-block; margin-bottom: 3px; }
-.mech-row-label.gray   { color: var(--gray-500); }
-.mech-row-label.red    { color: #F87171; }
-.mech-row-label.gold   { color: #F59E0B; }
+.callout strong { color: var(--orange); }
 
-/* VILLAIN CARDS */
-.villain-card {
-  background: rgba(255,255,255,.025);
-  border: 1px solid rgba(255,255,255,.07);
-  border-radius: 14px; margin-bottom: 12px; overflow: hidden;
+/* INTEL TABLE */
+.intel-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-bottom: 20px;
 }
-.villain-head {
-  padding: 16px 20px 12px;
-  border-bottom: 1px solid rgba(255,255,255,.05);
-  display: flex; align-items: center; gap: 14px;
+.intel-table th {
+  background: var(--navy);
+  color: var(--light);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 10px 14px;
+  text-align: left;
 }
-.villain-num { font-family: 'Bebas Neue'; font-size: 36px; color: var(--red); line-height: 1; flex-shrink: 0; }
-.villain-name { font-family: 'Bebas Neue'; font-size: 18px; color: #fff; letter-spacing: .04em; }
-.villain-body { padding: 14px 20px; display: flex; flex-direction: column; gap: 12px; }
-.villain-hooks { display: flex; flex-direction: column; gap: 6px; }
-.hook-item {
-  font-family: 'DM Mono', monospace; font-size: 12px; color: rgba(255,255,255,.6);
-  padding: 8px 12px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06);
-  border-radius: 8px; line-height: 1.55;
+.intel-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  color: var(--text);
+  vertical-align: top;
 }
-.script-block {
-  background: rgba(232,119,34,.05); border: 1px solid rgba(232,119,34,.15);
-  border-radius: 10px; padding: 14px 16px;
-  font-size: 12px; color: rgba(255,255,255,.6); line-height: 1.7;
-}
-.script-block strong { color: var(--orange); }
+.intel-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
 
-/* CONTENT CALENDAR */
-.cal-row {
-  display: grid; grid-template-columns: 100px 1fr; gap: 0;
-  border-bottom: 1px solid rgba(255,255,255,.05);
+.white-space-box {
+  background: linear-gradient(135deg, rgba(74,222,128,0.08), rgba(30,58,95,0.3));
+  border: 1px solid rgba(74,222,128,0.3);
+  border-radius: 10px;
+  padding: 20px 24px;
 }
-.cal-row:last-child { border-bottom: none; }
-.cal-day {
-  padding: 14px 16px; font-family: 'Bebas Neue'; font-size: 16px; letter-spacing: .05em;
-  color: var(--orange); background: rgba(255,255,255,.02);
-  border-right: 1px solid rgba(255,255,255,.05);
-  display: flex; flex-direction: column; gap: 4px; align-items: flex-start;
+.white-space-box h4 {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 2px;
+  margin-bottom: 14px;
 }
-.cal-theme { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .08em; text-transform: uppercase; color: var(--gray-500); line-height: 1.4; }
-.cal-hooks { padding: 12px 16px; display: flex; flex-direction: column; gap: 5px; }
-.cal-hook { font-size: 12px; color: rgba(255,255,255,.6); line-height: 1.5; }
-.cal-hook::before { content: '→ '; color: var(--orange); font-size: 11px; }
+.white-space-item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: var(--text);
+}
+.ws-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  color: var(--green);
+  min-width: 20px;
+}
 
-/* FOOTER */
-.doc-footer {
-  margin-top:80px; padding:32px 0 0;
-  border-top:1px solid rgba(255,255,255,.07);
-  display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+.closing-para {
+  background: linear-gradient(135deg, rgba(30,58,95,0.5), rgba(232,119,34,0.1));
+  border: 1px solid rgba(232,119,34,0.2);
+  border-radius: 10px;
+  padding: 28px;
+  font-size: 15px;
+  color: var(--light);
+  line-height: 1.7;
+  margin-top: 32px;
 }
-.df-brand { font-family:'Bebas Neue'; font-size:20px; letter-spacing:.08em; color:rgba(255,255,255,.2); }
-.df-brand span { color:rgba(232,119,34,.5); }
-.df-note  { font-family:'DM Mono',monospace; font-size:10px; color:rgba(255,255,255,.15); letter-spacing:.05em; }
-
-/* UTILITY */
-p { font-size:14px; color:rgba(255,255,255,.65); line-height:1.7; }
-p + p { margin-top:10px; }
-strong { color:rgba(255,255,255,.85); }
-em { color:var(--orange); font-style:normal; }
-ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
-ul li { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.6; padding-left: 16px; position: relative; }
-ul li::before { content: '·'; position: absolute; left: 0; color: var(--orange); font-size: 16px; line-height: 1.3; }
-.mt-sm { margin-top:12px; }
-.mt-md { margin-top:20px; }
-.mt-lg { margin-top:32px; }
-.mb-sm { margin-bottom:12px; }
-.mb-md { margin-bottom:20px; }
-.gap-sm { gap:10px; }
-.gap-md { gap:16px; }
 </style>
 </head>
 <body>
-<div class="page">
 
-<!-- ══════════════════════════════
-     HERO
-══════════════════════════════ -->
-<section class="hero" id="overview">
-  <div class="hero-eyebrow">IFCA · Full Business Audit · April 2026</div>
-  <div class="hero-name">LACEY & <span>ZACH ISKRA</span></div>
-  <div class="hero-title">LifestyleU &nbsp;·&nbsp; The Root Cause Reset Method™ &nbsp;·&nbsp; @laceeiskk</div>
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="logo">IFCA · STUDENT AUDIT</div>
+  <a href="#hero" class="active">00 · OVERVIEW</a>
+  <a href="#wins">01 · WINS</a>
+  <a href="#data">02 · DATA</a>
+  <a href="#intelligence">03 · INTELLIGENCE</a>
+  <a href="#constraints">04 · CONSTRAINTS</a>
+  <a href="#creative">05 · CREATIVE</a>
+  <a href="#plan">06 · 90-DAY PLAN</a>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+
+<!-- SECTION 00: HERO -->
+<section class="section" id="hero" style="padding-top:72px;">
+  <div class="section-label">IFCA ACCELERATOR · STUDENT AUDIT</div>
+  <div class="hero-name">LACEY &amp;<br>ZACH ISKRA</div>
+  <div class="hero-sub">@LACEEISKK · LIFESTYLEU · FUNCTIONAL HEALTH COACHING · APRIL 2026</div>
 
   <div class="hero-stats">
-    <div class="hs">
-      <div class="hs-val orange">$84K</div>
-      <div class="hs-label">Q1 Monthly Avg</div>
+    <div class="hero-stat">
+      <span class="val">$827K</span>
+      <span class="lbl">2025 REVENUE</span>
     </div>
-    <div class="hs">
-      <div class="hs-val green">$3.53</div>
-      <div class="hs-label">CPL (target &lt;$10)</div>
+    <div class="hero-stat">
+      <span class="val">+10%</span>
+      <span class="lbl">YOY GROWTH</span>
     </div>
-    <div class="hs">
-      <div class="hs-val blue">$11,610</div>
-      <div class="hs-label">LTV (Q1 Avg)</div>
+    <div class="hero-stat">
+      <span class="val">$84K</span>
+      <span class="lbl">Q1 AVG / MO</span>
     </div>
-    <div class="hs">
-      <div class="hs-val white">7:1</div>
-      <div class="hs-label">CAC:LTV Ratio</div>
+    <div class="hero-stat">
+      <span class="val">$7,515</span>
+      <span class="lbl">LTV (Q1 AVG)</span>
     </div>
-    <div class="hs">
-      <div class="hs-val red">57%</div>
-      <div class="hs-label">Show Rate (target 70%+)</div>
+    <div class="hero-stat">
+      <span class="val">7.1:1</span>
+      <span class="lbl">CAC:LTV RATIO</span>
     </div>
   </div>
 
   <div class="hero-summary">
-    2025 was the rebuild year — <strong>5 new coaches hired, setting team rebuilt, Lacey re-entering the business full-time.</strong> Then Q4 happened and Lacey went viral. The lead problem disappeared overnight. Q1 2026 is the first quarter with <strong>real, clean constraints to attack</strong>: a 57% show rate and 19.8% close rate from a young sales team absorbing 10× the lead volume the system was built for. The unit economics are genuinely elite (LTV $11,610, CAC:LTV 7:1, CPL $3.53). <strong>Fix the conversion stack and this becomes a $150K/month business from the same ad spend they already run.</strong>
+    Lacey &amp; Zach have built a genuinely differentiated functional health brand with a 332K organic following, a proven lab-based mechanism (HTMA + GI-MAP), and strong Q1 2026 unit economics — but a show rate of 57%, a close rate of 20%, and a January operating margin of just 2.6% expose a business whose growth ceiling is being held down by two fixable levers: sales conversion and ad entity diversity.
   </div>
 </section>
 
-<!-- STICKY NAV -->
-<nav class="doc-nav">
-  <div class="doc-nav-inner">
-    <a href="#overview"     class="nav-link active">Overview</a>
-    <a href="#working"      class="nav-link">What's Working</a>
-    <a href="#data"         class="nav-link">Data Snapshot</a>
-    <a href="#equilibrium"  class="nav-link">Rev Equilibrium</a>
-    <a href="#competitive"  class="nav-link">Creative Intel</a>
-    <a href="#constraints"  class="nav-link">Constraints</a>
-    <a href="#plan"         class="nav-link">30-Day Plan</a>
-    <a href="#offer"        class="nav-link">Offer Framework</a>
-    <a href="#villains"     class="nav-link">Villains</a>
-    <a href="#calendar"     class="nav-link">Content Calendar</a>
-  </div>
-</nav>
+<!-- SECTION 01: WINS -->
+<section class="section" id="wins">
+  <div class="section-label">SECTION 01</div>
+  <div class="section-title">WINS &amp; WHAT'S WORKING</div>
 
-<!-- ══════════════════════════════
-     WHAT'S WORKING
-══════════════════════════════ -->
-<section class="doc-section" id="working">
-  <div class="sec-eyebrow">Section 01</div>
-  <div class="sec-heading">What's Working</div>
-  <div class="sec-divider"></div>
-
-  <div class="grid-2 gap-md">
+  <div class="wins-grid">
     <div class="win-card">
-      <div class="win-icon">💥</div>
-      <div>
-        <div class="win-label">Viral Organic Machine</div>
-        <div class="win-desc">Lacey's content went viral in Q4 2025, solving the lead problem entirely. 3,571 leads in Q1 at $3.53 CPL — one of the best CPLs in the IFCA portfolio. 500+ unread DMs at any given moment. Lead volume is no longer the constraint.</div>
-      </div>
+      <div class="win-title">💰 EXCEPTIONAL UNIT ECONOMICS AT THE AD LEVEL</div>
+      <p>Q1 2026 CPL of $3.53 against a $10 target is best-in-class for this niche. With $12.6K in ad spend generating 3,571 leads, Lacey's content is beating the benchmark by 65%. The algorithm loves these creatives — the structural challenge is downstream.</p>
     </div>
     <div class="win-card">
-      <div class="win-icon">💰</div>
-      <div>
-        <div class="win-label">Elite LTV at $11,610</div>
-        <div class="win-desc">One of the strongest LTVs in the portfolio. Clients are staying and paying, which proves the delivery model works. CAC:LTV at 7:1 against a 4:1 target. The unit economics are fundamentally sound.</div>
-      </div>
+      <div class="win-title">📊 ELITE CONTRACTED ROAS</div>
+      <p>A Q1 contracted ROAS of 11.7x (target 5x) against $12.6K in spend means every ad dollar is generating nearly $12 in revenue. This is a business with real margin potential — the leakage is in show rate and close rate, not the top of funnel.</p>
     </div>
     <div class="win-card">
-      <div class="win-icon">🔬</div>
-      <div>
-        <div class="win-label">Differentiated Mechanism (HTMA + GI-MAP)</div>
-        <div class="win-desc">No competitor runs HTMA as a premium diagnostic inside a coaching offer at this scale. Stephen Cabral uses it as a free lead magnet. Lacey uses it as the proof that separates her from every generic hormone coach in the market.</div>
-      </div>
+      <div class="win-title">🧬 GENUINELY DIFFERENTIATED MECHANISM</div>
+      <p>The Root Cause Reset Method™ with HTMA and GI-MAP testing is a real, defensible, proprietary mechanism that competitors cannot replicate without rebuilding their entire delivery. No one else in this space has locked in the lab-first positioning the way Lacey has.</p>
     </div>
     <div class="win-card">
-      <div class="win-icon">🏗️</div>
-      <div>
-        <div class="win-label">Fulfillment Infrastructure in Place</div>
-        <div class="win-desc">5 coaches hired in 9 months. Team rebuilt. The success coach's read: "Fulfillment is ready to go — now we just need to open it up." Delivery capacity is not the bottleneck. Conversion is.</div>
-      </div>
+      <div class="win-title">📱 ORGANIC FLYWHEEL AT SCALE</div>
+      <p>332K followers on @laceeiskk with viral-pattern organic formats (I WOULD NEVER, whiteboard symptoms, kitchen counter conditionais) represents an enormous untapped creative asset. Lacey's organic content is the swipe file — it just hasn't been translated into systematic paid entities yet.</p>
     </div>
     <div class="win-card">
-      <div class="win-icon">📈</div>
-      <div>
-        <div class="win-label">11.7× Contracted ROAS</div>
-        <div class="win-desc">$12,598 in Q1 ad spend generated $147K in contracted frontend revenue. The ads are efficient. This business doesn't have a CPL problem or a ROAS problem. It has a show rate and close rate problem.</div>
-      </div>
-    </div>
-    <div class="win-card">
-      <div class="win-icon">💵</div>
-      <div>
-        <div class="win-label">Premium Price Holding at $3,882</div>
-        <div class="win-desc">Average frontend deal at $3,882 — well above the $3,500 floor. Price integrity is solid. The team isn't discounting to close. This is a qualification and commitment problem, not a price objection problem.</div>
-      </div>
+      <div class="win-title">🔄 BACKEND CONVERSION MOMENTUM</div>
+      <p>FE→BE conversion of 48% Q1 average (trending upward: 36% in Jan, 66% in Feb, 43% in Mar) with a $2,866 backend AOV means a healthy ascension pipeline. When January's outlier data is removed, Feb–Mar backend performance signals real client satisfaction.</p>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════
-     DATA SNAPSHOT
-══════════════════════════════ -->
-<section class="doc-section" id="data">
-  <div class="sec-eyebrow">Section 02</div>
-  <div class="sec-heading">Data Snapshot — Q1 2026</div>
-  <div class="sec-divider"></div>
+<!-- SECTION 02: DATA -->
+<section class="section" id="data">
+  <div class="section-label">SECTION 02</div>
+  <div class="section-title">DATA SNAPSHOT</div>
 
-  <div class="period-bar">
-    <span class="period-bar-label">Period</span>
-    <div class="period-tabs">
-      <button class="pt" onclick="setPeriod('jan')">Jan</button>
-      <button class="pt" onclick="setPeriod('feb')">Feb</button>
-      <button class="pt" onclick="setPeriod('mar')">Mar</button>
-      <button class="pt active" onclick="setPeriod('q1')">Q1 Avg</button>
+  <div class="period-tabs">
+    <div class="period-tab active" onclick="showPeriod('q1')">Q1 AVG</div>
+    <div class="period-tab" onclick="showPeriod('jan')">JAN</div>
+    <div class="period-tab" onclick="showPeriod('feb')">FEB</div>
+    <div class="period-tab" onclick="showPeriod('mar')">MAR</div>
+  </div>
+
+  <div class="kpi-chips">
+    <div class="kpi-chip">
+      <span class="chip-label">CPL</span>
+      <span class="chip-val" id="chip-cpl">$3.53</span>
+      <span class="chip-badge badge-pass">PASS</span>
+    </div>
+    <div class="kpi-chip">
+      <span class="chip-label">SHOW RATE</span>
+      <span class="chip-val" id="chip-show">57.2%</span>
+      <span class="chip-badge badge-fail">FAIL</span>
+    </div>
+    <div class="kpi-chip">
+      <span class="chip-label">CLOSE RATE</span>
+      <span class="chip-val" id="chip-close">19.8%</span>
+      <span class="chip-badge badge-fail">FAIL</span>
+    </div>
+    <div class="kpi-chip">
+      <span class="chip-label">CAC:LTV</span>
+      <span class="chip-val" id="chip-ltv">7.1:1</span>
+      <span class="chip-badge badge-pass">PASS</span>
+    </div>
+    <div class="kpi-chip">
+      <span class="chip-label">NET MARGIN</span>
+      <span class="chip-val" id="chip-margin">36%</span>
+      <span class="chip-badge badge-warn">WATCH</span>
+    </div>
+    <div class="kpi-chip">
+      <span class="chip-label">FE→BE CONV</span>
+      <span class="chip-val" id="chip-febe">48.3%</span>
+      <span class="chip-badge badge-warn">WATCH</span>
     </div>
   </div>
 
-  <div class="kpi-band" id="kpi-band"></div>
-
-  <div class="tbl-wrap">
-    <table class="mtbl">
-      <thead>
-        <tr>
-          <th>Ad &amp; Funnel Metric</th>
-          <th>IFCA Target</th>
-          <th>Your Number</th>
-          <th>Status</th>
-          <th>Note</th>
-        </tr>
-      </thead>
-      <tbody id="ad-tbody"></tbody>
-    </table>
+  <div class="callout">
+    <strong>CONTEXT:</strong> January 2026 was a significant outlier month — $32,229 in overhead expenses (vs. $9.3K in March) distorted net margin to just 2.6%. The Q1 average is more representative but overhead normalization is an urgent ops priority. Feb–Mar tell a much cleaner story.
   </div>
 
-  <div class="tbl-wrap">
-    <table class="mtbl">
-      <thead>
-        <tr>
-          <th>Profit &amp; Margin Metric</th>
-          <th>IFCA Target</th>
-          <th>Your Number</th>
-          <th>Status</th>
-          <th>Note</th>
-        </tr>
-      </thead>
-      <tbody id="margin-tbody"></tbody>
-    </table>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>METRIC</th>
+        <th>IFCA TARGET</th>
+        <th>Q1 AVG</th>
+        <th>JAN</th>
+        <th>FEB</th>
+        <th>MAR</th>
+        <th>STATUS</th>
+        <th>NOTES</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ad Spend</td>
+        <td>—</td>
+        <td>$4,199</td>
+        <td>$4,847</td>
+        <td>$5,104</td>
+        <td>$2,648</td>
+        <td><span class="chip-badge badge-pass">OK</span></td>
+        <td>Mar pullback — opportunity to scale</td>
+      </tr>
+      <tr>
+        <td>CPL</td>
+        <td>&lt; $10</td>
+        <td>$3.53</td>
+        <td>$3.55</td>
+        <td>$3.64</td>
+        <td>$3.31</td>
+        <td><span class="chip-badge badge-pass">PASS</span></td>
+        <td>Elite — 65% better than target</td>
+      </tr>
+      <tr>
+        <td>Leads</td>
+        <td>—</td>
+        <td>1,190/mo</td>
+        <td>1,367</td>
+        <td>1,403</td>
+        <td>801</td>
+        <td><span class="chip-badge badge-pass">OK</span></td>
+        <td>Mar drop with spend pullback</td>
+      </tr>
+      <tr>
+        <td>Scheduled Calls</td>
+        <td>—</td>
+        <td>118/mo</td>
+        <td>91</td>
+        <td>126</td>
+        <td>136</td>
+        <td><span class="chip-badge badge-warn">GROWING</span></td>
+        <td>Lead-to-book 9.9% — healthy</td>
+      </tr>
+      <tr>
+        <td>Show Rate</td>
+        <td>&gt; 70%</td>
+        <td>57.2%</td>
+        <td>69.2%</td>
+        <td>51.6%</td>
+        <td>54.4%</td>
+        <td><span class="chip-badge badge-fail">FAIL</span></td>
+        <td>P1 constraint — 13 pts below target</td>
+      </tr>
+      <tr>
+        <td>Close Rate</td>
+        <td>&gt; 30%</td>
+        <td>19.8%</td>
+        <td>22.2%</td>
+        <td>21.5%</td>
+        <td>16.2%</td>
+        <td><span class="chip-badge badge-fail">FAIL</span></td>
+        <td>P1 constraint — 10+ pts below target</td>
+      </tr>
+      <tr>
+        <td>Cost Per Sched. Call</td>
+        <td>—</td>
+        <td>$35.69</td>
+        <td>$53.26</td>
+        <td>$40.51</td>
+        <td>$19.47</td>
+        <td><span class="chip-badge badge-warn">WATCH</span></td>
+        <td>Improving significantly</td>
+      </tr>
+      <tr>
+        <td>FE Price Point (avg)</td>
+        <td>—</td>
+        <td>$3,882</td>
+        <td>$3,980</td>
+        <td>$3,959</td>
+        <td>$3,708</td>
+        <td><span class="chip-badge badge-pass">STRONG</span></td>
+        <td>Premium positioning holding</td>
+      </tr>
+      <tr>
+        <td>Contracted FE Revenue</td>
+        <td>—</td>
+        <td>$49,051</td>
+        <td>$48,042</td>
+        <td>$55,422</td>
+        <td>$43,690</td>
+        <td><span class="chip-badge badge-pass">OK</span></td>
+        <td>Consistent, Q2 target: $60K+/mo</td>
+      </tr>
+      <tr>
+        <td>Upfront Cash Collection %</td>
+        <td>&gt; 30%</td>
+        <td>56.4%</td>
+        <td>42.0%</td>
+        <td>61.4%</td>
+        <td>65.8%</td>
+        <td><span class="chip-badge badge-pass">PASS</span></td>
+        <td>Excellent — trending up strongly</td>
+      </tr>
+      <tr>
+        <td>Contracted ROAS</td>
+        <td>&gt; 5x</td>
+        <td>11.7x</td>
+        <td>9.9x</td>
+        <td>10.9x</td>
+        <td>16.5x</td>
+        <td><span class="chip-badge badge-pass">PASS</span></td>
+        <td>Best-in-class, scaling justified</td>
+      </tr>
+      <tr>
+        <td>FE→BE Conversion</td>
+        <td>&gt; 50%</td>
+        <td>48.3%</td>
+        <td>36%</td>
+        <td>66%</td>
+        <td>43%</td>
+        <td><span class="chip-badge badge-warn">WATCH</span></td>
+        <td>Volatile — needs stabilization system</td>
+      </tr>
+      <tr>
+        <td>CAC</td>
+        <td>&lt; 25% of FEO</td>
+        <td>$1,626</td>
+        <td>$1,706</td>
+        <td>$1,438</td>
+        <td>$1,742</td>
+        <td><span class="chip-badge badge-warn">WATCH</span></td>
+        <td>42% of AOV — elevated, addressable</td>
+      </tr>
+      <tr>
+        <td>CAC:LTV</td>
+        <td>&gt; 4:1</td>
+        <td>7.1:1</td>
+        <td>4.5:1</td>
+        <td>32:1</td>
+        <td>4.7:1</td>
+        <td><span class="chip-badge badge-pass">PASS</span></td>
+        <td>Feb outlier — volatile LTV calc</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>MARGIN</th>
+        <th>TARGET</th>
+        <th>Q1 AVG</th>
+        <th>JAN</th>
+        <th>FEB</th>
+        <th>MAR</th>
+        <th>STATUS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Labor Margin</td>
+        <td>30–35%</td>
+        <td>34.6%</td>
+        <td>42.6%</td>
+        <td>29.6%</td>
+        <td>33.8%</td>
+        <td><span class="chip-badge badge-warn">WATCH</span></td>
+      </tr>
+      <tr>
+        <td>Marketing Margin</td>
+        <td>10–20%</td>
+        <td>8.2%</td>
+        <td>8.2%</td>
+        <td>5.5%</td>
+        <td>10.9%</td>
+        <td><span class="chip-badge badge-warn">LOW</span></td>
+      </tr>
+      <tr>
+        <td>Overhead Margin</td>
+        <td>3–8%</td>
+        <td>21.2%</td>
+        <td>46.6%</td>
+        <td>12.8%</td>
+        <td>10.2%</td>
+        <td><span class="chip-badge badge-fail">FAIL — JAN SPIKE</span></td>
+      </tr>
+      <tr>
+        <td>Net Operating Margin</td>
+        <td>&gt; 50%</td>
+        <td>36.0%</td>
+        <td>2.6%</td>
+        <td>52.1%</td>
+        <td>45.2%</td>
+        <td><span class="chip-badge badge-warn">WATCH</span></td>
+      </tr>
+      <tr>
+        <td>Total Cash Collected</td>
+        <td>—</td>
+        <td>$84,069</td>
+        <td>$69,095</td>
+        <td>$92,222</td>
+        <td>$90,885</td>
+        <td><span class="chip-badge badge-pass">STRONG</span></td>
+      </tr>
+      <tr>
+        <td>Net Operating Profit</td>
+        <td>—</td>
+        <td>$30,296</td>
+        <td>$1,778</td>
+        <td>$48,073</td>
+        <td>$41,036</td>
+        <td><span class="chip-badge badge-warn">JAN OUTLIER</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SECTION 03: BRAND & COMPETITIVE INTELLIGENCE -->
+<section class="section" id="intelligence">
+  <div class="section-label">SECTION 03</div>
+  <div class="section-title">BRAND &amp; COMPETITIVE INTELLIGENCE</div>
+
+  <table class="intel-table" style="margin-bottom:28px;">
+    <thead>
+      <tr>
+        <th>DIMENSION</th>
+        <th>EVIDENCE</th>
+        <th>STRATEGIC MEANING</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Brand Identity</strong></td>
+        <td>LifestyleU / @laceeiskk — 332K followers, Lacey as the product-of-the-method face, Zach supporting behind the scenes</td>
+        <td>The personal brand IS the differentiator. Lacey's origin story (30 lbs gained post-BC, decade of dysfunction, 2022 root cause revelation) is more powerful than anything a generic brand can manufacture.</td>
+      </tr>
+      <tr>
+        <td><strong>Core Avatar</strong></td>
+        <td>Women 30–50, working mom or professional, chronic bloat/fatigue/stubborn fat, doctor-dismissed, post–birth control, done with generic advice</td>
+        <td>Highly specific, emotionally loaded avatar. "Running on 2G while life is moving in 5G" is exact language. Every ad angle should speak to the specific failure of the conventional system, not just generic hormone messaging.</td>
+      </tr>
+      <tr>
+        <td><strong>Mechanism</strong></td>
+        <td>Root Cause Reset Method™ — HTMA + GI-MAP functional lab testing, 4-phase protocol (Foundations → Healing → Fat Loss → Freedom)</td>
+        <td>Strongest mechanism in the functional health coaching space targeting this avatar. The lab-first positioning is defensible and credibility-building. Nobody is testing before prescribing at Lacey's price point and scale.</td>
+      </tr>
+      <tr>
+        <td><strong>Offer Structure</strong></td>
+        <td>FE: ~$3,882 avg (Phase 1 – Functional Foundations + HTMA); BE: ~$2,866 avg (Phases 2–4 via continuation)</td>
+        <td>Blended LTV with strong backend creates a $6,700+ average client value. The challenge is FE→BE volatility (36%–66% range). Systematic backend offer presentation is the revenue unlock.</td>
+      </tr>
+      <tr>
+        <td><strong>Acquisition Model</strong></td>
+        <td>Primary: DM automation (Comment DRAIN / READY / LABS), Meta ads; Secondary: organic (332K), referral from existing clients</td>
+        <td>DM automation is a structural advantage — lower friction than link-click funnels. Structural advantage vs. 8 of 9 competitors who use landing pages or quizzes as the funnel entry.</td>
+      </tr>
+      <tr>
+        <td><strong>Social Proof</strong></td>
+        <td>Symptom-to-result carousels (yeast infections → glowing skin), specific lab result callouts, Lacey's 10-year personal transformation, 2,000+ client claims</td>
+        <td>Case studies are specific (symptoms named, labs shown) which is far more credible than before/after photos. This format should be standardized into a systematic proof-collection pipeline.</td>
+      </tr>
+      <tr>
+        <td><strong>Organic Content Quality</strong></td>
+        <td>"I WOULD NEVER" (endocrine disruptors), whiteboard symptom clusters, kitchen counter conditional hooks, personal origin story content</td>
+        <td>Four proven organic formats that are performing at 332K scale and are COMPLETELY absent from the current paid ad library. This is the single fastest path to new winning entities without creative guesswork.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Bebas Neue';font-size:26px;color:var(--light);margin-bottom:16px;">META AD LIBRARY AUDIT — COMPETITIVE SET</h3>
+  <table class="intel-table" style="margin-bottom:28px;">
+    <thead>
+      <tr>
+        <th>COMPETITOR</th>
+        <th>ACTIVE ADS</th>
+        <th>PROVEN WINNER (30+ DAYS)</th>
+        <th>FORMAT</th>
+        <th>ANGLE</th>
+        <th>CTA TYPE</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Powerfully Fit Coaching</strong></td>
+        <td>~9</td>
+        <td>"Stop blaming willpower. It's your hormones." (5.5 mo)</td>
+        <td>Static Image + Talking Head</td>
+        <td>Willpower villain / Doctor villain</td>
+        <td>Link (Learn More)</td>
+      </tr>
+      <tr>
+        <td><strong>Shane Smith Fit</strong></td>
+        <td>~6</td>
+        <td>"Feeling podgy and exhausted even though you're doing all the right things." (2 mo)</td>
+        <td>Talking Head + Text Carousel</td>
+        <td>Cortisol villain / Lab inadequacy</td>
+        <td>Comment keyword</td>
+      </tr>
+      <tr>
+        <td><strong>MaddHealthy</strong></td>
+        <td>1</td>
+        <td>"It's been a minute since I (re)introduced myself..." (4 mo)</td>
+        <td>Talking Head</td>
+        <td>Personal story / Root cause</td>
+        <td>DM CTA</td>
+      </tr>
+      <tr>
+        <td><strong>Stephen Cabral</strong></td>
+        <td>~41</td>
+        <td>Free HTMA test lead gen (8 mo)</td>
+        <td>Video + Static</td>
+        <td>HTMA lab reveal / Free offer</td>
+        <td>Link (Get Offer)</td>
+      </tr>
+      <tr>
+        <td><strong>Emily de Luzy</strong></td>
+        <td>1</td>
+        <td>"Since hitting perimenopause, what used to work... stopped working." (6 mo)</td>
+        <td>Video Case Study</td>
+        <td>Cortisol education / Eat more</td>
+        <td>Link (Learn More)</td>
+      </tr>
+      <tr>
+        <td><strong>Dee Gautham</strong></td>
+        <td>1</td>
+        <td>"The real reason you get back 15+ lbs every fall..." (5.5 mo)</td>
+        <td>Talking Head</td>
+        <td>Crash diet villain / Pattern</td>
+        <td>Link (Learn More)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'Bebas Neue';font-size:26px;color:var(--light);margin-bottom:16px;">ENTITY DIVERSITY ASSESSMENT — LIFESTYLEU</h3>
+  <div class="callout">
+    Based on the Meta Ad Library audit, LifestyleU has been running <strong>a narrow range of DM automation ads</strong> in the talking-head and static image format buckets. The 3 core organic viral formats — whiteboard teaching, kitchen counter conditional, and the holding-a-product callout — are completely absent from the paid library. This represents a minimum of 3 immediately testable entity concepts with pre-validated organic proof of concept.
   </div>
 
-  <div class="card orange-left mt-md">
-    <p style="font-size:13px;"><strong>Jordan's read on the numbers:</strong> The CPL and ROAS tell the happy story. The show rate and close rate tell the real one. At 57.2% show rate against a 70% target, roughly 43% of booked calls are evaporating before they happen. At 19.8% close rate against a 30% target, another massive chunk of revenue is left on the table from prospects who do show. Running the Q1 math: if show rate had been 70% and close rate 30%, Lacey and Zach would have contracted <strong>$288K in Q1 frontend alone</strong> — vs. the $147K they actually hit. That's a $141K gap, quarter over quarter, from two metrics. March shows the fix is already working (show rate 54.4%, close rate 16.2% — still below target but improving as qualification tightened).</p>
+  <div class="white-space-box">
+    <h4>WHITE SPACE MAP — WHAT'S UNCONTESTED IN THIS NICHE RIGHT NOW</h4>
+    <div class="white-space-item"><span class="ws-num">1</span><span><strong>The Husband/Wife Dynamic</strong> — Zach is invisible in all ads. No competitor is using the partner perspective. "Watching her do everything right and still feel terrible" is a complete pattern interrupt and owns the relationship/empathy angle nobody else is running.</span></div>
+    <div class="white-space-item"><span class="ws-num">2</span><span><strong>The Physical HTMA Reveal on Camera</strong> — Cabral uses HTMA as a free lead magnet. Nobody is showing the physical lab result paper on camera and explaining what the mineral ratios mean for stubborn belly fat. Lacey can own the premium lab-reveal format.</span></div>
+    <div class="white-space-item"><span class="ws-num">3</span><span><strong>The "First Win in 7 Days" Specific Timeline</strong> — Zero competitors are making a specific short-term win claim. Lacey's "first big win in 7 days" from the offer framework is ready to deploy as a direct hook and is completely uncontested.</span></div>
+    <div class="white-space-item"><span class="ws-num">4</span><span><strong>The "Skin &amp; Period" Entry Point</strong> — Every competitor leads with weight and energy. Hormonal acne and painful periods as the primary hook targets a different, un-served awareness segment of Lacey's exact avatar.</span></div>
+    <div class="white-space-item"><span class="ws-num">5</span><span><strong>The "Normal Lab Range" Villain</strong> — Competitors blame doctors. Lacey can go one level deeper and own the narrative that "normal ranges are based on sick populations, not optimal function." This is a more specific, more credible villain nobody is running.</span></div>
   </div>
 </section>
 
-<!-- ══════════════════════════════
-     REVENUE EQUILIBRIUM
-══════════════════════════════ -->
-<section class="doc-section" id="equilibrium">
-  <div class="sec-eyebrow">Section 03</div>
-  <div class="sec-heading">Revenue Equilibrium</div>
-  <div class="sec-divider"></div>
+<!-- SECTION 04: CONSTRAINTS -->
+<section class="section" id="constraints">
+  <div class="section-label">SECTION 04</div>
+  <div class="section-title">CONSTRAINT DIAGNOSIS</div>
 
-  <p class="mb-md">The leaky bucket question: are you adding client value faster than churn is removing it? <strong>Revenue Equilibrium = LTV × New Clients per month.</strong> If that number is above current revenue, you're building a compounding base. If below, churn is winning.</p>
+  <div class="callout" style="margin-bottom:28px;">
+    <strong>ONE-LINE DIAGNOSIS:</strong> Lacey & Zach's business is not broken at the lead or ROAS level — the revenue ceiling lives in two places simultaneously: a show rate 13 points below target that is burning booked calls before they happen, and a close rate 10+ points below target that is leaving roughly $30K in contracted revenue per month on the table.
+  </div>
 
-  <div class="card mt-md">
-    <div class="req-grid">
-      <div class="req-cell">
-        <span class="req-label">Monthly Churn Rate</span>
-        <span class="req-val">9.5%</span>
-        <span class="req-sub">Q1 avg: ~11 off-boarded / 116 active</span>
-      </div>
-      <div class="req-cell">
-        <span class="req-label">LTV per Client</span>
-        <span class="req-val">$11,610</span>
-        <span class="req-sub">Avg monthly value ÷ churn rate</span>
-      </div>
-      <div class="req-cell">
-        <span class="req-label">New Clients / Month</span>
-        <span class="req-val">~13</span>
-        <span class="req-sub">Q1 avg closes (40 total ÷ 3)</span>
-      </div>
+  <div class="constraint-card p1">
+    <div class="constraint-header">
+      <span class="priority-badge">P1 — CRITICAL</span>
+      <span class="constraint-title">SHOW RATE AT 57% — THE LEAD QUALITY / SHOW-UP SYSTEM IS BROKEN</span>
     </div>
-
-    <div class="eq-compare">
-      <div class="eq-block purple">
-        <div class="eq-b-label">Revenue Equilibrium</div>
-        <div class="eq-b-val">$151K</div>
-        <div class="eq-b-sub">LTV × New Clients — what you're building toward</div>
-      </div>
-      <div class="eq-vs">VS</div>
-      <div class="eq-block blue">
-        <div class="eq-b-label">Actual Monthly Revenue</div>
-        <div class="eq-b-val">$84K</div>
-        <div class="eq-b-sub">Q1 monthly average collected</div>
-      </div>
+    <div class="constraint-diag">
+      Q1 2026 show rate of 57.2% against a 70%+ target means that roughly 13 of every 100 booked calls are evaporating before they happen. With 353 calls scheduled in Q1 and only 202 live calls, that's 151 calls that were booked and never showed — at an average FE close of $3,882, that's potentially $116K+ in contracted revenue that never had the chance to exist. January performed best at 69.2% but February dropped to 51.6% — the inconsistency suggests the problem isn't the lead source, it's the post-booking nurture and confirmation system. This is a show rate problem, not a traffic problem.
     </div>
-
-    <div class="eq-verdict building">
-      ✓ <strong>Building — significantly.</strong> Revenue Equilibrium of $151K is 80% above current monthly revenue of $84K. Every new client closed adds $11,610 in future LTV to the base. The business is compounding. The critical watch: churn at 9.5% is above the 7% benchmark. If it drifts to 12%+, LTV compresses and equilibrium drops. Keep churn under 8% with the onboarding and expectation-setting fixes. Close more clients per month via the sales system fixes and this number climbs fast.
+    <div class="constraint-fix">
+      <strong>FIX →</strong>
+      Implement a 3-touch post-booking confirmation sequence: (1) immediate confirmation with educational value (a 5-min Lacey video on what to expect on the call + why most women don't get the answers they need until now), (2) 24-hour reminder with a "quick question" text to confirm commitment, (3) 2-hour reminder with the specific call link. Layer in: a short pre-call assessment form that creates investment and filters low-intent leads before they waste setter time. Target: 65% by end of Q2, 72% by end of Q3.
     </div>
   </div>
 
-  <div class="card yellow-left mt-md">
-    <p style="font-size:13px;"><strong>The churn context:</strong> Q1 had 6 cancellations logged — 3 in January/February (affordability/ghosting), 3 in February/March (expectation mismatch). The expectation-mismatch cancellations are fully preventable: one client didn't know labs were separate, one felt coach wasn't responsive, one didn't understand the program scope. These are onboarding failures, not delivery failures. A standardized Week 1 welcome protocol eliminates this category entirely.</p>
-  </div>
-</section>
-
-<!-- ══════════════════════════════
-     CREATIVE INTELLIGENCE
-══════════════════════════════ -->
-<section class="doc-section" id="competitive">
-  <div class="sec-eyebrow">Section 04 — Manus Intelligence Report</div>
-  <div class="sec-heading">Creative Intelligence & Competitive Landscape</div>
-  <div class="sec-divider"></div>
-
-  <p class="mb-md">Based on full Meta Ad Library audit of 8 competitors + organic Instagram analysis across the functional health / hormone coaching space.</p>
-
-  <div class="comp-card mb-md">
-    <table class="comp-tbl">
-      <thead>
-        <tr>
-          <th>Competitor</th>
-          <th>Proven Winner (30+ days)</th>
-          <th>Format</th>
-          <th>Core Angle</th>
-          <th>CTA</th>
-          <th>Threat Level</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Powerfully Fit Coaching</strong></td>
-          <td>"Stop blaming willpower. It's your hormones." (5.5 months)</td>
-          <td>Static + Talking Head</td>
-          <td>Willpower villain / Doctor villain</td>
-          <td>Learn More</td>
-          <td><span class="gap-pill saturated">Overlapping</span></td>
-        </tr>
-        <tr>
-          <td><strong>Shane Smith Fit</strong></td>
-          <td>"Feeling podgy... even though you're doing all the right things" (2 mo)</td>
-          <td>Talking Head + Carousel</td>
-          <td>Cortisol villain / Lab inadequacy</td>
-          <td>Comment ROOT</td>
-          <td><span class="gap-pill saturated">Overlapping</span></td>
-        </tr>
-        <tr>
-          <td><strong>Stephen Cabral</strong></td>
-          <td>HTMA lab test content (8 months — longest running)</td>
-          <td>Video + Static</td>
-          <td>Free HTMA as lead magnet</td>
-          <td>Get Offer</td>
-          <td><span class="gap-pill advantage">Lacey owns premium</span></td>
-        </tr>
-        <tr>
-          <td><strong>Emily de Luzy</strong></td>
-          <td>"Since hitting perimenopause, what worked stopped working" (6 mo)</td>
-          <td>Video Case Study</td>
-          <td>Cortisol / Eating more paradox</td>
-          <td>Learn More</td>
-          <td><span class="gap-pill saturated">Adjacent</span></td>
-        </tr>
-        <tr>
-          <td><strong>Endo Nutrition</strong></td>
-          <td>Client Steph's protocol (12 months — oldest ad running)</td>
-          <td>Video Case Study</td>
-          <td>Symptom resolution proof</td>
-          <td>Comment DETAILS</td>
-          <td><span class="gap-pill white-space">Format to steal</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="sec-heading" style="font-size:28px; margin-bottom:16px;">White Space Opportunities</div>
-
-  <div class="grid-2 gap-md mb-md">
-    <div class="card green-left">
-      <div class="offer-block-title" style="color:var(--green); margin-bottom:8px;">🎯 Pure White Space</div>
-      <ul>
-        <li><strong>Husband/Wife Dynamic:</strong> Zach is completely absent from ads. No competitor does the partner perspective. "Watching Lacey do everything right and still feel terrible" is a massive pattern interrupt.</li>
-        <li><strong>HTMA as Premium (not free):</strong> Cabral gives it away. Lacey positions it as the proof layer inside a high-ticket offer. Nobody else is doing this.</li>
-        <li><strong>"First Win in 7 Days" claim:</strong> Zero competitors make a specific short-timeline symptom relief claim. Specificity converts.</li>
-        <li><strong>Skin & Period as primary hook:</strong> Every competitor leads with weight and energy. Hormonal acne + cycle regulation as lead hook targets a different awareness segment entirely.</li>
-      </ul>
+  <div class="constraint-card p1">
+    <div class="constraint-header">
+      <span class="priority-badge">P1 — CRITICAL</span>
+      <span class="constraint-title">CLOSE RATE AT 19.8% — 10+ POINTS BELOW MINIMUM VIABLE TARGET</span>
     </div>
-    <div class="card red-left">
-      <div class="offer-block-title" style="color:#F87171; margin-bottom:8px;">⚠️ Saturated Angles to Avoid</div>
-      <ul>
-        <li>"Doing everything right but still stuck" — every competitor runs this</li>
-        <li>"It's your hormones, not your willpower" — market is numb to it</li>
-        <li>Generic cortisol education without mechanism specificity</li>
-        <li>"Normal labs" angle without the HTMA alternative reveal</li>
-        <li>Landing page CTAs — Lacey's DM automation CTA is a structural advantage over all competitors using link clicks</li>
-      </ul>
+    <div class="constraint-diag">
+      A Q1 close rate of 19.8% (dropping to 16.2% in March) against a 30%+ target represents the largest single revenue lever in this business. If Lacey closed 30% of the same 202 live calls in Q1 instead of 19.8%, that's 20 additional clients at $3,882 each — $77,640 in additional Q1 contracted revenue on zero additional ad spend. The cancellation data provides some signal: three of the six Q1 cancellations involved client misunderstandings about what the program included (Stevi Scott assumed labs were included; Trish Nebo said the coach wasn't responsive). This suggests close-side qualification gaps — clients are being closed without a clear picture of what's included, creating buyer's remorse that costs money on both ends.
+    </div>
+    <div class="constraint-fix">
+      <strong>FIX →</strong>
+      Three interventions: (1) Review every Q1 call recording — identify the top 3 objection patterns where deals are dying (price, time commitment, trust, clarity on deliverables). (2) Build a pre-call primer video that sets crystal-clear expectations about lab costs, what's included, and what Phase 1 looks like before the prospect ever gets on the call — this prevents close-side surprises and filters uncommitted leads. (3) Standardize a closer script that explicitly walks through the HTMA report card reveal as the demo during the call — prospects who see a sample lab result on the call close at higher rates because the mechanism becomes tangible. Target: 25% by end of Q2.
     </div>
   </div>
 
-  <div class="card orange-left">
-    <p style="font-size:13px;"><strong>The Andromeda Entity Recommendation:</strong> Lacey needs 8–10 distinct creative entities. The Manus report identified 8 concepts — the two highest-priority untested ones are Concept 4 (Husband/Wife dual interview) and Concept 5 ("First Win in 7 Days"). Both are pure white space vs. every competitor currently running. The "I WOULD NEVER" callout format (Concept 1) is already proven organic — convert it to paid immediately.</p>
-  </div>
-</section>
-
-<!-- ══════════════════════════════
-     CONSTRAINTS / PILLARS
-══════════════════════════════ -->
-<section class="doc-section" id="constraints">
-  <div class="sec-eyebrow">Section 05</div>
-  <div class="sec-heading">5-Pillar Constraint Analysis</div>
-  <div class="sec-divider"></div>
-
-  <p class="mb-md">Two pillars are CRITICAL. Both live in the same place: between lead entering the system and qualified buyer arriving live on a call. The infrastructure is not broken — it was built for a different volume than it's receiving.</p>
-
-  <div class="diag-list">
-
-    <div class="diag-card p1">
-      <div class="diag-head">
-        <div class="diag-rank">01</div>
-        <div>
-          <div class="diag-badge">CRITICAL</div>
-          <div class="diag-title">Lead Nurture — DM Qualification Layer Overwhelmed</div>
-          <div class="diag-desc">500+ unread DMs at any given time means zero realistic ability to manually qualify leads, send nurture assets, or build price-awareness before a booking occurs. Cold viral leads are booking calls on the strength of a 60-second reel with no context about the program, the price, or what a qualified client looks like. The AI DMer is the right fix — but it needs to be configured as a qualification gate, not just an autoresponder.</div>
-        </div>
-      </div>
-      <div class="diag-action">
-        <strong>FIX →</strong> Deploy AI DMer (Bmarko/doms) with 3–5 qualifying questions BEFORE Calendly link is sent. Add disqualifying language to the Calendly booking page: <em>"Investment starts at $3,500. For women ready to invest in their health now."</em> Add friction to every funnel entry point. The goal is not fewer leads — it's fewer wrong leads on the calendar.
-      </div>
+  <div class="constraint-card p2">
+    <div class="constraint-header">
+      <span class="priority-badge">P2 — MEANINGFUL GAP</span>
+      <span class="constraint-title">AD ENTITY DIVERSITY — 3–4 REAL ENTITIES RUNNING WHERE 8–10 ARE NEEDED</span>
     </div>
-
-    <div class="diag-card p1">
-      <div class="diag-head">
-        <div class="diag-rank">02</div>
-        <div>
-          <div class="diag-badge">CRITICAL</div>
-          <div class="diag-title">Conversion (Sales) — Young Team, No Feedback Infrastructure</div>
-          <div class="diag-desc">57.2% show rate (target 70%+) and 19.8% close rate (target 30%+). These two numbers together represent a $141K/quarter revenue gap on the same lead volume. Root cause is dual: unqualified leads who never intended to buy are driving the show rate down, while a sales team hired 6–9 months ago without systematic training or weekly feedback loops is driving the close rate down. The success coach's note — "Zach has been drinking from several fire hoses" — describes a builder mode, not a sales-manager mode. That shifts now.</div>
-        </div>
-      </div>
-      <div class="diag-action">
-        <strong>FIX →</strong> (1) Film Thank You Page commitment video this week — fastest show rate lever available. (2) Weekly call reviews: Zach scores 2–3 recorded calls per closer per week against a standardized rubric. (3) Build objection-handling playbook for the top 5 objections. (4) Deploy BOF content (cost of inaction, case studies) specifically for call-booked leads. <strong>Target: show rate 65%+ in 45 days, close rate 25%+ in 60 days.</strong>
-      </div>
+    <div class="constraint-diag">
+      The CPL data ($3.53 Q1 average) confirms that the current creative is performing well, but the narrow format range — primarily DM automation talking-head and static ads — is limiting the algorithm's ability to find buyers across different audience segments and creative exposure states. Lacey's organic library contains at minimum four distinct proven format concepts (I WOULD NEVER product callout, whiteboard symptom teaching, kitchen counter conditional, and the origin story personal narrative) that have never been converted to paid entities. The Manus audit confirms none of Lacey's competitors are running these formats in paid — meaning these are uncontested audience segments with zero creative saturation.
     </div>
-
-    <div class="diag-card p2">
-      <div class="diag-head">
-        <div class="diag-rank">03</div>
-        <div>
-          <div class="diag-badge">WATCH</div>
-          <div class="diag-title">Fulfillment — Expectation-Setting Gap Creating Preventable Churn</div>
-          <div class="diag-desc">The delivery infrastructure is solid — 5 coaches hired, capacity available, the success coach confirms it's ready to scale. The watch item: 3 of 6 Q1 cancellations cite expectation mismatch (labs not included, coach responsiveness, scope confusion). These are not fulfillment failures. They're onboarding failures. A standardized Week 1 welcome protocol eliminates this category entirely and protects LTV.</div>
-        </div>
-      </div>
-      <div class="diag-action">
-        <strong>FIX →</strong> Build a "Program Welcome" protocol: Day 1 video from their assigned coach, program outline with explicit what's-included / what's-not (especially lab costs), response time expectations, and Week 1 action items. Add explicit expectation language to the sales close itself: "Before we get started, here's exactly what's included…"
-      </div>
-    </div>
-
-    <div class="diag-card p3">
-      <div class="diag-head">
-        <div class="diag-rank">04</div>
-        <div>
-          <div class="diag-badge">WATCH</div>
-          <div class="diag-title">Retention — Backend Pricing Compressed, Pitch Inconsistent</div>
-          <div class="diag-desc">FE→BE conversion averaging 48.3% — near the 50% target but highly volatile (36%–66% month-to-month). Backend average deal compressed from $4,127 in 2025 to $2,866 in Q1 2026 (March was $1,450 avg — unusually low). This signals the backend pitch is happening informally, inconsistently, and at different price points. The LifestyleU ecosystem has four clear backend tiers — they just aren't being deployed via a structured graduation framework.</div>
-        </div>
-      </div>
-      <div class="diag-action">
-        <strong>FIX →</strong> Formalize a Week 10 graduation-to-backend conversation — not optional, every coach delivers it. Re-anchor backend pricing to $3,500–$4,500. Create a "What Happens After 12 Weeks" one-pager sent at Week 8 to prime the decision. <strong>Target: 50%+ FE→BE consistently, backend avg back to $3,500+, LTV growing toward $13K by end of 2026.</strong>
-      </div>
-    </div>
-
-    <div class="diag-card ok">
-      <div class="diag-head">
-        <div class="diag-rank">05</div>
-        <div>
-          <div class="diag-badge">STRONG</div>
-          <div class="diag-title">Lead Generation — Best-in-Class, Hold and Scale</div>
-          <div class="diag-desc">CPL $3.53 on 3,571 Q1 leads. Contracted ROAS 11.7×. Lacey's viral organic content is producing an overflow of inbound DMs that the manual system literally cannot process. This is a good problem. Hold ad spend at current levels until the conversion system is fixed — then scale aggressively toward $15K–$20K/month. The 8-entity creative expansion (especially Husband/Wife and "First Win in 7 Days") should roll out as conversion metrics stabilize.</div>
-        </div>
-      </div>
-      <div class="diag-action">
-        <strong>ACTION →</strong> Do not scale spend yet — pouring more leads into a broken sales system wastes budget and burns closer capacity. Once show rate hits 65%+, scale to $8K/month. Once close rate hits 25%+, scale to $15K/month. Begin batching Lacey's organic content to reduce founder-dependency on the content machine.
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ══════════════════════════════
-     30-DAY PLAN
-══════════════════════════════ -->
-<section class="doc-section" id="plan">
-  <div class="sec-eyebrow">Section 06</div>
-  <div class="sec-heading">30-Day Action Plan</div>
-  <div class="sec-divider"></div>
-
-  <p class="mb-md">Week 1 targets show rate because it's the fastest revenue unlock with zero new spend — fixing it converts already-booked calls into live revenue immediately. Everything else sequences behind that first win.</p>
-
-  <div class="plan-list">
-    <div class="plan-item">
-      <div class="plan-num">W1</div>
-      <div>
-        <div class="plan-title">Stop the Bleeding — Film the Thank You Page Commitment Video</div>
-        <div class="plan-desc">Lacey films a 4–6 minute commitment video for the Calendly confirmation page. Covers: what the call IS (a root cause assessment conversation), what it IS NOT (a generic sales call), what an ideal client looks like, and the 3 things to prepare before the call. Install on Calendly confirmation page. Build the 3-part email sequence: instant booking confirmation + video → day-before reminder + 3 prep questions → morning-of call link. Add qualifying language to the Calendly booking page. Implement the 24-hour rescheduling policy (no exceptions).</div>
-        <div><span class="plan-tag sales">Show Rate</span><span class="plan-tag ops">Systems</span></div>
-      </div>
-    </div>
-    <div class="plan-item">
-      <div class="plan-num">W2</div>
-      <div>
-        <div class="plan-title">Fix the Qualification Layer — AI DMer + Funnel Friction</div>
-        <div class="plan-desc">Configure AI DMer with 3–5 qualifying questions before Calendly link is delivered: budget awareness, symptom specificity, time sensitivity, past program history. Revise DM setter scripts with disqualifying language. Add friction to all lead magnets (email opt-in required). Film and deploy the Nurture VSL (8–12 min) for setter team to share with warm leads before booking. Do a calendar audit — identify and clear any clearly unqualified bookings. Set the Monday calendar review as a weekly standing routine.</div>
-        <div><span class="plan-tag sales">Lead Nurture</span><span class="plan-tag ads">Funnel</span></div>
-      </div>
-    </div>
-    <div class="plan-item">
-      <div class="plan-num">W3</div>
-      <div>
-        <div class="plan-title">Build the Sales System — Feedback Loops + Training Infrastructure</div>
-        <div class="plan-desc">Zach reviews 2–3 recorded calls per closer this week. Score against the 5-point rubric: problem depth, emotional urgency established, mechanism explained, objection handling, close attempted. Build the objection-handling playbook for the top 5 objections and role-play with every closer. Implement weekly closer scorecard (show rate %, close rate %, revenue generated). Deploy BOF content targeting call-booked leads: cost-of-inaction reels, "what's included" walkthrough, 2–3 transformation case studies. Launch the daily setter stand-up (5 min, 3 metrics: calls booked, cancels, upcoming count).</div>
-        <div><span class="plan-tag sales">Sales System</span><span class="plan-tag creative">Content</span></div>
-      </div>
-    </div>
-    <div class="plan-item">
-      <div class="plan-num">W4</div>
-      <div>
-        <div class="plan-title">Lock the Backend — Graduation Framework + Retention Architecture</div>
-        <div class="plan-desc">Draft and rehearse the Week 10 graduation-to-backend conversation script. Every coach delivers this — not optional. Create the "What Happens After 12 Weeks" one-pager; send to all active clients in Weeks 6–10. Re-anchor backend pricing: $3,500–$4,500 range, communicate clearly to all coaches. Set up monthly alumni touchpoint (one group call, one private community post, one email). Run the first monthly P&L review against Q1 benchmarks to build April targets.</div>
-        <div><span class="plan-tag retention">Retention</span><span class="plan-tag ops">Backend</span></div>
-      </div>
+    <div class="constraint-fix">
+      <strong>FIX →</strong>
+      Immediate entity build queue: prioritize the I WOULD NEVER toxic product callout (TOF), the whiteboard cortisol symptom stack (TOF/MOF), and the Zach co-presenter empathy angle (MOF) as the next three shoots. Each requires a distinct CTA keyword, distinct format, and a genuinely different emotional driver to qualify as a new Andromeda entity. Target: 8 active diverse entities by end of Q2 — maintain 70/30 budget split between proven winners and testing entities.
     </div>
   </div>
 
-  <div class="card orange-left mt-lg">
-    <p style="font-size:13px;"><strong>The one constraint that unlocks everything else:</strong> Show rate. Fix the commitment psychology before the call — through the Thank You Page video and the qualifying confirmation sequence — and revenue improves this week, not next quarter. At 70% show rate and 30% close rate from Lacey and Zach's current call volume, they're looking at $280K+/quarter in contracted frontend revenue. That's the math. Film the video first.</p>
-  </div>
-</section>
-
-<!-- ══════════════════════════════
-     OFFER FRAMEWORK
-══════════════════════════════ -->
-<section class="doc-section" id="offer">
-  <div class="sec-eyebrow">Section 07</div>
-  <div class="sec-heading">Offer Framework — The Root Cause Reset Method™</div>
-  <div class="sec-divider"></div>
-
-  <!-- BIG PROMISE -->
-  <div class="offer-section">
-    <div class="sec-eyebrow">Section A — Big Promise</div>
-    <div class="sec-heading" style="font-size:28px; margin-bottom:16px;">Avatar & Offer Statements</div>
-
-    <div class="offer-block">
-      <div class="offer-block-title">WHO — Hormonally Symptomatic High-Performing Women (30–50)</div>
-      <div class="grid-2 gap-md">
-        <div>
-          <p style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); margin-bottom:8px;">Hell Island — Where She Is Now</p>
-          <ul>
-            <li>"I eat clean, work out, take supplements — and my body is still doing whatever it wants."</li>
-            <li>Wakes up more tired than when she went to bed. Running on caffeine and willpower.</li>
-            <li>Stubborn belly fat that appeared after 35 and won't move no matter what she tries.</li>
-            <li>Doctor says labs are normal — but she doesn't feel normal and wonders if she's crazy.</li>
-            <li>Bloated after everything she eats. Hair thinning. Skin breaking out. Cycle a mess.</li>
-            <li>Snapping at her kids, checked out with her husband, can't explain why she feels this way.</li>
-            <li>Tried four programs in three years. Starting to accept this is just what aging feels like.</li>
-          </ul>
-        </div>
-        <div>
-          <p style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); margin-bottom:8px;">Heaven Island — Where She's Going</p>
-          <ul>
-            <li>Wakes up with real, sustainable energy. No caffeine dependency. Not "pushing through."</li>
-            <li>The bloating is gone. She can eat nourishing meals and feel good afterward.</li>
-            <li>Dropped 12 lbs — not through restriction, but because her body stopped holding on.</li>
-            <li>Skin clear. Cycle regular. Hair stopped falling out. She has actual answers about her biology.</li>
-            <li>Feels like herself again — in her marriage, with her kids, at work.</li>
-            <li>Completely exited the "starting over" cycle. She knows her body now.</li>
-            <li>Tells every woman she knows about this. Becomes the most vocal evangelist in her circle.</li>
-          </ul>
-        </div>
-      </div>
+  <div class="constraint-card p2">
+    <div class="constraint-header">
+      <span class="priority-badge">P2 — MEANINGFUL GAP</span>
+      <span class="constraint-title">JANUARY OVERHEAD SPIKE — $32K IN OVERHEAD ON $69K COLLECTED REVENUE</span>
     </div>
-
-    <div class="offer-block">
-      <div class="offer-v-tag">Version 1 — Recommended (Full Power Statement)</div>
-      <div class="offer-statement">"The Root Cause Reset Method™ helps women 30–50 heal their gut, balance their hormones, and restore their metabolism so they can lose 10–15+ lbs of stubborn fat, reclaim their energy, and finally feel confident and in control of their body — without restrictive dieting, random supplements, or being told their labs are normal when they know something is wrong."</div>
+    <div class="constraint-diag">
+      January's overhead expenses of $32,229 (46.6% overhead margin against a 3–8% target) destroyed what should have been a $33K+ profit month and delivered only $1,778 in net operating income. February and March normalized to $11–12K overhead, suggesting January contained a non-recurring event (possibly a large equipment purchase, event cost, legal fee, or other one-time item). Without knowing the specific source, this cannot be categorized definitively — but it must be identified and either explained as non-recurring or controlled as a systemic cost.
     </div>
-
-    <div class="offer-block">
-      <div class="offer-v-tag">Version 2 — Problem-First</div>
-      <div class="offer-statement">"The Root Cause Reset Method™ helps high-performing women 30–50 who are doing everything right but still feel exhausted, bloated, and stuck — finally get real answers and their body back — by fixing the root causes their doctors missed, without another meal plan, supplement stack, or program that treats symptoms instead of the source."</div>
-    </div>
-
-    <div class="offer-block">
-      <div class="offer-v-tag">Version 3 — Dinner Table Conversational</div>
-      <div class="offer-statement">"You know how so many women in their 30s and 40s feel completely exhausted, bloated, and like their body has just stopped responding — and every doctor tells them their labs are normal? The Root Cause Reset Method™ helps them lose 10–15+ lbs, heal their gut, and balance their hormones by actually identifying what's causing the symptoms in the first place — so they can stop guessing, stop starting over, and start feeling like themselves again."</div>
-    </div>
-
-    <!-- IG BIOS -->
-    <div class="sec-heading" style="font-size:24px; margin: 24px 0 12px;">Instagram Bio Rewrites</div>
-    <div class="grid-3 gap-md">
-      <div class="offer-block">
-        <div class="offer-v-tag">Version A — Recommended</div>
-        <div style="font-family:'DM Mono',monospace; font-size:12px; color:rgba(255,255,255,.75); line-height:1.8;">
-          Lacey Iskra | Functional Health Coach<br>
-          Helping women 30–50 lose the weight & reclaim energy<br>
-          Real labs, not guesswork — gut + hormones + minerals<br>
-          ⚡ The Root Cause Reset Method™<br>
-          DM "RESET" to learn how we test, not guess
-        </div>
-      </div>
-      <div class="offer-block">
-        <div class="offer-v-tag">Version B — Problem-Led</div>
-        <div style="font-family:'DM Mono',monospace; font-size:12px; color:rgba(255,255,255,.75); line-height:1.8;">
-          Your labs are "normal" but you still feel terrible.<br>
-          That's not you. That's a gap in testing.<br>
-          Women 30–50 → root cause answers in 12 weeks<br>
-          Functional labs that find what your doctor missed<br>
-          ↓ DM "LABS" for a free test breakdown
-        </div>
-      </div>
-      <div class="offer-block">
-        <div class="offer-v-tag">Version C — Authority-Led</div>
-        <div style="font-family:'DM Mono',monospace; font-size:12px; color:rgba(255,255,255,.75); line-height:1.8;">
-          Certified Functional Health Coach<br>
-          HTMA + GI-MAP for women 30–50<br>
-          2,000+ women helped | Root cause, not symptoms<br>
-          DM "HTMA" for the lab testing breakdown
-        </div>
-      </div>
+    <div class="constraint-fix">
+      <strong>FIX →</strong>
+      Categorize every January overhead line item. If non-recurring: note it, move on, and use Feb–Mar as the true operating baseline. If systemic: build a monthly overhead budget cap with approval required above $12K. The Q1 net margin of 36% should normalize to 45–50%+ once overhead is controlled — this is the difference between a $30K/month profit business and a $45–50K/month profit business at current revenue.
     </div>
   </div>
 
-  <!-- CORE MARKETING THESIS -->
-  <div class="offer-section mt-lg">
-    <div class="sec-eyebrow">Section B — Core Marketing Thesis</div>
-    <div class="offer-block">
-      <div class="offer-block-title">Education-Led Version (Recommended for Cold Traffic)</div>
-      <p>Most women 30–50 who are exhausted, bloated, and hormonally stuck are making one critical mistake: they're treating a root cause problem with surface-level solutions. They're eating cleaner, exercising more, buying the supplements their favorite influencer recommends, and going to doctors who tell them their labs are normal. When none of it works — when the belly fat won't budge, the bloating is there after a "clean" day, and the fatigue is bone-deep after a full night of sleep — they blame themselves. They try harder. They start over again.</p>
-      <p class="mt-sm">Here's why that's the wrong approach: the symptoms these women are experiencing are not random. They're not personality flaws. They're not inevitable aging. They're signals. The body communicating that something in the underlying systems — gut health, hormone function, mineral balance, metabolic efficiency — has broken down and needs to be addressed at the source. Not managed. Not masked. <strong>Fixed.</strong></p>
-      <p class="mt-sm">So instead, what we do is use The Root Cause Reset Method™ — a structured 12-week functional health system using real lab data (Hair Tissue Mineral Analysis + GI-MAP gut mapping) to identify exactly what's driving her symptoms and build a personalized healing strategy around it. Our clients don't just lose the weight — they get their life back. The energy is real and sustainable. The bloating is gone. The brain fog lifts. And for the first time, they actually understand their body well enough to keep it working for the rest of their lives.</p>
+  <div class="constraint-card p3">
+    <div class="constraint-header">
+      <span class="priority-badge">P3 — WATCH</span>
+      <span class="constraint-title">FE→BE CONVERSION VOLATILITY — 36% TO 66% IN CONSECUTIVE MONTHS</span>
+    </div>
+    <div class="constraint-diag">
+      A 30-point swing in FE→BE conversion between January (36%) and February (66%) with no clear operational explanation suggests the backend offer is being presented reactively rather than systematically. When the offer presentation is reliant on individual coach timing and framing, you get variance. The target is 50%+ consistently — the business reached 66% in February which proves the ceiling exists, the question is why it collapsed to 43% in March. A systematic backend offer presentation at weeks 8–10 of Phase 1 (when first big wins are documented) is the standard fix.
+    </div>
+    <div class="constraint-fix">
+      <strong>FIX →</strong>
+      Build a Week 8 "Results Review + Backend Presentation" call protocol. Every Phase 1 client receives this call at a defined point in the program. The call documents their transformation to date using the metric framework from Phase 1, then presents the Phase 2 continuation as the natural next step. Take the backend offer presentation out of coach discretion and put it into the delivery system as a mandatory milestone.
     </div>
   </div>
 
-  <!-- MECHANISM PILLARS -->
-  <div class="offer-section mt-lg">
-    <div class="sec-eyebrow">Section D — Mechanism</div>
-    <div class="sec-heading" style="font-size:28px; margin-bottom:16px;">The Root Cause Reset Method™ — 4 Pillars</div>
-
-    <div class="mech-pillar">
-      <div class="mech-pillar-head">
-        <div class="mech-pillar-num">PILLAR 01</div>
-        <div class="mech-pillar-name">FUNCTIONAL LAB ASSESSMENT — The HTMA Root Cause Report Card™</div>
-      </div>
-      <div class="mech-pillar-body">
-        <div class="mech-row">
-          <div class="mech-row-label gray">What Everyone Else Does:</div>
-          Standard blood panels detect disease, not dysfunction. Doctors see numbers inside reference ranges and declare the patient healthy. The patient feels terrible. Nothing changes. Stephen Cabral gives HTMA away for free as a lead magnet — Lacey uses it as the proof layer inside a premium offer.
-        </div>
-        <div class="mech-row">
-          <div class="mech-row-label red">What You Do:</div>
-          HTMA reveals what's been happening inside the cells over 90 days: mineral status, metabolic rate, thyroid and adrenal function, heavy metal burden, stress response patterns. Combined with GI-MAP gut microbiome mapping, Lacey and Zach produce a complete biological picture that standard medicine never sees. Test, don't guess.
-        </div>
-        <div class="mech-row">
-          <div class="mech-row-label gold">Why This Works:</div>
-          Root cause addressed. Mineral deficiencies and gut dysbiosis are driving every symptom the client has been told are "stress" or "aging." No protocol succeeds without this baseline — which is exactly why every program she's tried before failed.
-        </div>
-      </div>
+  <div class="constraint-card pass">
+    <div class="constraint-header">
+      <span class="priority-badge">✓ — DO NOT TOUCH</span>
+      <span class="constraint-title">TOP-OF-FUNNEL AD PERFORMANCE — DON'T CHANGE WHAT'S WINNING</span>
     </div>
-
-    <div class="mech-pillar">
-      <div class="mech-pillar-head">
-        <div class="mech-pillar-num">PILLAR 02</div>
-        <div class="mech-pillar-name">PERSONALIZED HEALING PROTOCOL — Built for Her Biology</div>
-      </div>
-      <div class="mech-pillar-body">
-        <div class="mech-row">
-          <div class="mech-row-label gray">What Everyone Else Does:</div>
-          Generic meal plans, one-size-fits-all supplement stacks, HIIT programs that spike cortisol and worsen the exact symptoms they were meant to fix.
-        </div>
-        <div class="mech-row">
-          <div class="mech-row-label red">What You Do:</div>
-          A personalized healing roadmap built around the actual lab findings — not assumptions. Every client's protocol is different because every client's biology is different. Mineral repletion, gut protocol, hormone support, and food-as-medicine calibrated to the individual, not the demographic.
-        </div>
-        <div class="mech-row">
-          <div class="mech-row-label gold">Why This Works:</div>
-          The protocol works because it's built on real data. Clients stop guessing and start following a plan designed for their specific biology. First symptom relief typically visible within 7–14 days of removing the individual's specific inflammatory trigger.
-        </div>
-      </div>
+    <div class="constraint-diag">
+      The CPL machine is running perfectly. $3.53 CPL against a $10 target is genuinely best-in-class for this niche. The current winning entities are doing their job. The directive is: keep the budget on existing winners, run new entity tests at 30% of budget only, do not restructure the campaign, and do not change the targeting on proven performers. The problem is downstream — show rate and close rate. Do not attempt to fix the top of funnel in response to a mid/bottom funnel constraint.
     </div>
-
-    <div class="mech-pillar">
-      <div class="mech-pillar-head">
-        <div class="mech-pillar-num">PILLAR 03</div>
-        <div class="mech-pillar-name">LIFESTYLE INTEGRATION & COACHING — 1:1 Transformation Support</div>
-      </div>
-      <div class="mech-pillar-body">
-        <div class="mech-row">
-          <div class="mech-row-label gray">What Everyone Else Does:</div>
-          Drop a PDF, check in once a week, treat the program as information delivery.
-        </div>
-        <div class="mech-row">
-          <div class="mech-row-label red">What You Do:</div>
-          Weekly 1:1 coaching from a dedicated coach, daily accountability, protocol adjustments as the body responds, and a community of women going through the same journey. Not delivering information — delivering transformation.
-        </div>
-        <div class="mech-row">
-          <div class="mech-row-label gold">Why This Works:</div>
-          Most programs fail because women can't implement alone. The coaching layer converts knowledge into behavior change and behavior change into results. This is why LTV is $11,610 and why clients refer their friends.
-        </div>
-      </div>
-    </div>
-
-    <div class="mech-pillar">
-      <div class="mech-pillar-head">
-        <div class="mech-pillar-num">PILLAR 04</div>
-        <div class="mech-pillar-name">EDUCATION & EMPOWERMENT — Become Your Own Health Expert</div>
-      </div>
-      <div class="mech-pillar-body">
-        <div class="mech-row">
-          <div class="mech-row-label gray">What Everyone Else Does:</div>
-          Keep clients dependent. Give them a protocol without the understanding. They need the coach forever but can't advocate for themselves when life changes.
-        </div>
-        <div class="mech-row">
-          <div class="mech-row-label red">What You Do:</div>
-          Every client leaves understanding: why her symptoms happened, what her labs revealed, how her gut and hormones interact, and how to maintain results permanently. They become their own health expert — and the most vocal referral source in their network.
-        </div>
-        <div class="mech-row">
-          <div class="mech-row-label gold">Why This Works:</div>
-          Client empowerment drives word-of-mouth referrals, reduces churn, and creates the backend retention that makes LTV one of the strongest in the IFCA portfolio. The goal was never just 90 days of results — it was never needing to start over again.
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CLIENT JOURNEY -->
-  <div class="offer-section mt-lg">
-    <div class="sec-eyebrow">Section E — Client Journey</div>
-    <div class="sec-heading" style="font-size:28px; margin-bottom:16px;">12-Week Front-End Program</div>
-
-    <div class="grid-3 gap-md">
-      <div class="offer-block" style="border-top:3px solid var(--orange);">
-        <div class="offer-block-title">Phase 1 — Weeks 1–4</div>
-        <div style="font-family:'Bebas Neue'; font-size:20px; color:#fff; margin-bottom:10px;">Diagnose & Discover</div>
-        <ul>
-          <li>HTMA kit shipped, hair sample collected, GI-MAP ordered</li>
-          <li>Lab Review Call: results explained, root causes identified</li>
-          <li>Personalized protocol built and delivered</li>
-          <li>Daily accountability check-in begins</li>
-        </ul>
-        <div style="margin-top:12px; padding:10px 12px; background:var(--green-bg); border:1px solid rgba(34,197,94,.2); border-radius:8px;">
-          <div style="font-family:'DM Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.1em; color:var(--green); margin-bottom:4px;">First Big Win — Week 3–4</div>
-          <div style="font-size:12px; color:rgba(255,255,255,.7);">Bloating noticeably reduced. Waking up without the 2pm crash for the first time. "I look less pregnant after meals."</div>
-        </div>
-      </div>
-      <div class="offer-block" style="border-top:3px solid var(--blue-mid);">
-        <div class="offer-block-title">Phase 2 — Weeks 5–8</div>
-        <div style="font-family:'Bebas Neue'; font-size:20px; color:#fff; margin-bottom:10px;">Rebuild & Optimize</div>
-        <ul>
-          <li>Protocol deepened based on Phase 1 response</li>
-          <li>Cortisol + adrenal support introduced as needed</li>
-          <li>Food freedom expanding — discovering what body thrives on</li>
-          <li>Scale movement beginning. 5–8 lbs average at checkpoint.</li>
-        </ul>
-        <div style="margin-top:12px; padding:10px 12px; background:var(--blue-dim); border:1px solid rgba(74,127,165,.2); border-radius:8px;">
-          <div style="font-family:'DM Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.1em; color:#7ABFDD; margin-bottom:4px;">Mid-Win — Week 7–8</div>
-          <div style="font-size:12px; color:rgba(255,255,255,.7);">Sleeping through the night. Skin clearing. Cycle more regular. Sustained energy without caffeine dependency.</div>
-        </div>
-      </div>
-      <div class="offer-block" style="border-top:3px solid var(--green);">
-        <div class="offer-block-title">Phase 3 — Weeks 9–12</div>
-        <div style="font-family:'Bebas Neue'; font-size:20px; color:#fff; margin-bottom:10px;">Integrate & Own It</div>
-        <ul>
-          <li>Final labs review: Week 1 vs. Week 12 cellular comparison</li>
-          <li>Lifestyle integration — habits that maintain results permanently</li>
-          <li>10–15+ lbs lost. Gut restored. Hormones stabilized.</li>
-          <li>Week 10: Graduation-to-backend conversation</li>
-        </ul>
-        <div style="margin-top:12px; padding:10px 12px; background:var(--green-bg); border:1px solid rgba(34,197,94,.2); border-radius:8px;">
-          <div style="font-family:'DM Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.1em; color:var(--green); margin-bottom:4px;">Final Transformation</div>
-          <div style="font-size:12px; color:rgba(255,255,255,.7);">Client exits as her own health expert. This is the "never starting over again" outcome that drives referrals.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- BACKEND TIERS -->
-    <div class="sec-heading" style="font-size:24px; margin: 24px 0 12px;">Backend Offer Tiers (LifestyleU Ecosystem)</div>
-    <div class="grid-2 gap-md">
-      <div class="offer-block">
-        <div class="offer-block-title">Option 1 — Root Cause Reset Continuation</div>
-        <div style="font-family:'Bebas Neue'; font-size:24px; color:var(--orange);">$397–$497/mo</div>
-        <p class="mt-sm" style="font-size:13px;">Monthly 1:1 support and protocol adjustments for graduates who want continued accountability. Easiest close — they've just completed a transformation and the momentum is live.</p>
-      </div>
-      <div class="offer-block">
-        <div class="offer-block-title">Option 2 — Functional Living Program</div>
-        <div style="font-family:'Bebas Neue'; font-size:24px; color:var(--orange);">$3,500–$4,500</div>
-        <p class="mt-sm" style="font-size:13px;">16–24 week advanced hormone, thyroid, and genetic optimization. For graduates ready to go deeper. This is the primary backend offer — return this to the $3,500–$4,500 price point immediately.</p>
-      </div>
-      <div class="offer-block">
-        <div class="offer-block-title">Option 3 — LifestyleU Membership Community</div>
-        <div style="font-family:'Bebas Neue'; font-size:24px; color:var(--orange);">$97–$197/mo</div>
-        <p class="mt-sm" style="font-size:13px;">Group coaching, community access, open office hours, lab deep dives. Lower-touch, higher-volume alumni retention. Excellent for clients who can't afford the continuation 1:1 but want to stay in the ecosystem.</p>
-      </div>
-      <div class="offer-block">
-        <div class="offer-block-title">Option 4 — High Impact Coach Certification</div>
-        <div style="font-family:'Bebas Neue'; font-size:24px; color:var(--orange);">$5,000–$8,000</div>
-        <p class="mt-sm" style="font-size:13px;">Certification for clients who want to become functional health coaches. Natural for Lacey's most evangelical clients — the ones who've told everyone they know. Highest-ticket backend tier in the ecosystem.</p>
-      </div>
+    <div class="constraint-fix">
+      <strong>PROTECT →</strong>
+      Maintain 70/30 budget split (proven winners / new entity tests). Apply 3x KPI kill threshold to existing winners — do not kill what's working on gut feel. Any new entity tested receives the 2x KPI threshold before a kill decision is made. The funnel is filling correctly. Fix the downstream conversion, not the source.
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════
-     VILLAINS
-══════════════════════════════ -->
-<section class="doc-section" id="villains">
-  <div class="sec-eyebrow">Section 08 — Section F</div>
-  <div class="sec-heading">Content Villains & Stone-Throwing Angles</div>
-  <div class="sec-divider"></div>
+<!-- SECTION 05: CREATIVE INTELLIGENCE -->
+<section class="section" id="creative">
+  <div class="section-label">SECTION 05</div>
+  <div class="section-title">CREATIVE INTELLIGENCE &amp; ENTITY BUILD QUEUE</div>
 
-  <!-- VILLAIN 1 -->
-  <div class="villain-card">
-    <div class="villain-head">
-      <div class="villain-num">01</div>
-      <div>
-        <div class="villain-name">The Generic Program</div>
-        <div style="font-size:12px; color:rgba(255,255,255,.5); margin-top:3px;">Calorie deficits · macro trackers · 12-week challenges · HIIT for hormones · grocery store supplements</div>
-      </div>
-    </div>
-    <div class="villain-body">
-      <p style="font-size:13px;">She's tried all of these. She carries guilt about it. Naming the program as the villain — not her lack of discipline — is the most validating thing Lacey can say. It positions her as the first person who didn't blame her.</p>
-      <div class="villain-hooks">
-        <div class="hook-item">"The generic program you bought last year didn't fail because you weren't consistent enough. It failed because it wasn't built for your biology."</div>
-        <div class="hook-item">"You can't out-discipline a hormonal imbalance. You can only out-test it."</div>
-        <div class="hook-item">"You don't have a discipline problem. You have a data problem."</div>
-        <div class="hook-item">"Why most 12-week programs give you 12-week results — and then your body reverses everything."</div>
-        <div class="hook-item">"Throw away your calorie deficit. It's treating a root cause problem with a surface level solution."</div>
-      </div>
-      <div class="script-block">
-        <strong>Sample Reel Script:</strong><br>
-        Hook (0–3s): "The reason you can't lose the weight has nothing to do with willpower."<br><br>
-        Body: "My client Sarah had tried 4 programs in 3 years. Eating 1,400 calories, doing cardio 5 days a week, $200/month in supplements. Still bloated. Still exhausted. Still stuck. When we ran her HTMA and GI-MAP, we found: a calcium-to-potassium imbalance making her thyroid sluggish, combined with significant dysbiosis causing her to absorb almost none of the minerals she was supplementing. Every program she tried was built for someone with a functioning metabolism. Nobody had ever looked."<br><br>
-        CTA: "DM me LABS and I'll show you exactly what functional testing reveals that your doctor's bloodwork never will."
-      </div>
-    </div>
+  <div class="intel-box">
+    <h4>COPY-READY STRATEGIC DIAGNOSIS</h4>
+    <p style="line-height:1.7;color:var(--light);">
+      LifestyleU is sitting on an untapped creative goldmine: Lacey has 332K organic followers who have self-selected into her content, four proven viral organic formats that have never run as paid entities, and a mechanism (HTMA lab reveal) that no competitor is using in paid creative. The Andromeda algorithm needs format diversity, hook diversity, and emotional angle diversity to find buyers across the full audience — and right now the paid library is delivering on only one of those three dimensions. The entity build below is designed to systematically cover the remaining two.
+    </p>
+    <button class="copy-btn" onclick="copyIntel()">COPY FOR WORKSHOP</button>
   </div>
 
-  <!-- VILLAIN 2 -->
-  <div class="villain-card">
-    <div class="villain-head">
-      <div class="villain-num">02</div>
-      <div>
-        <div class="villain-name">The Dismissive Doctor</div>
-        <div style="font-size:12px; color:rgba(255,255,255,.5); margin-top:3px;">"Labs are normal" · birth control for hormones · antidepressants for fatigue · "eat better and exercise more"</div>
-      </div>
+  <h3 style="font-family:'Bebas Neue';font-size:28px;color:var(--light);margin-bottom:20px;">PRIORITY HOOK BANK — VERBATIM READY-TO-TEST</h3>
+  <ul class="hook-list">
+    <li>"I would never use these three products in my house if I wanted to balance my hormones." <span style="color:var(--muted);font-style:normal;font-size:12px;font-family:'DM Mono',monospace;"> — I WOULD NEVER format, holding products</span></li>
+    <li>"This piece of paper is why my clients lose 15 pounds of inflammation when nothing else worked." <span style="color:var(--muted);font-style:normal;font-size:12px;font-family:'DM Mono',monospace;"> — HTMA lab reveal, holding physical paper</span></li>
+    <li>"If you wake up exhausted, push through the 2pm crash with caffeine, and still can't sleep at night — your cortisol is reversed." <span style="color:var(--muted);font-style:normal;font-size:12px;font-family:'DM Mono',monospace;"> — whiteboard, symptom stack</span></li>
+    <li>Zach: "Watching Lacey do everything right and still feel terrible was the most frustrating thing in the world." <span style="color:var(--muted);font-style:normal;font-size:12px;font-family:'DM Mono',monospace;"> — Zach co-presenter, empathy angle</span></li>
+    <li>"The difference between a generic diet and a root cause protocol is that you should feel your first massive win in 7 days." <span style="color:var(--muted);font-style:normal;font-size:12px;font-family:'DM Mono',monospace;"> — direct to camera, 7-day promise</span></li>
+    <li>"To the woman who was just told by her doctor that her labs are normal, but she still feels like garbage: I see you." <span style="color:var(--muted);font-style:normal;font-size:12px;font-family:'DM Mono',monospace;"> — walking b-roll, vindication</span></li>
+  </ul>
+
+  <h3 style="font-family:'Bebas Neue';font-size:28px;color:var(--light);margin:32px 0 20px;">ENTITY BUILD QUEUE — 8 PRIORITY ENTITIES</h3>
+
+  <div class="entity-card">
+    <div class="entity-header">
+      <div class="entity-num">1</div>
+      <div class="entity-name">THE "I WOULD NEVER" TOXIC PRODUCT CALLOUT</div>
     </div>
-    <div class="villain-body">
-      <p style="font-size:13px;">Every woman in Lacey's audience has experienced this personally. The emotional punch of being dismissed by a medical authority is enormous. Lacey doesn't attack the doctor — she attacks the system. That distinction matters.</p>
-      <div class="villain-hooks">
-        <div class="hook-item">"To the woman who was just told her labs are normal: your doctor isn't lying. The reference ranges are just wrong."</div>
-        <div class="hook-item">"Standard blood work was designed to find disease. Not dysfunction. You can be in range and completely broken."</div>
-        <div class="hook-item">"If your doctor told you everything is fine but you still feel terrible, you're not crazy. You're just using the wrong test."</div>
-        <div class="hook-item">"Why your thyroid numbers can look 'normal' while your thyroid is significantly underperforming."</div>
-        <div class="hook-item">"Your doctor isn't wrong. They just don't have the tools to find what's actually wrong with you."</div>
-      </div>
-      <div class="script-block">
-        <strong>Sample Reel Script:</strong><br>
-        Hook: "Your doctor told you your labs are normal. Here's why that's not the whole story."<br><br>
-        Body: "Standard reference ranges are built on population averages — including the bottom 5% of the sickest people in a study. TSH has a range of 0.4–4.0. You can be at 3.8 and technically 'normal' while your thyroid is significantly underperforming. HTMA bypasses this entirely. Instead of measuring what's in your blood at one snapshot, we measure what your cells have been absorbing over 90 days. A completely different picture of what's actually happening."<br><br>
-        CTA: "Comment DEEPER and I'll send you the breakdown of exactly what HTMA shows that blood work misses."
-      </div>
+    <div class="entity-meta">
+      <span class="meta-tag">FORMAT: UGC VIDEO · KITCHEN / HOLDING PRODUCTS</span>
+      <span class="meta-tag">FUNNEL: TOF</span>
+      <span class="meta-tag">EMOTION: CURIOSITY / HIDDEN VILLAIN</span>
+      <span class="meta-tag">CTA: COMMENT TOXIC</span>
     </div>
+    <div class="entity-hook">"I would never use these three products in my house if I wanted to balance my hormones."</div>
+    <div class="entity-why">Lacey's proven organic viral format — direct translation from organic to paid. Targets endocrine-disruptor curiosity, a completely uncontested angle in the competitive paid library. The shareability of this format creates organic amplification on top of paid reach. New entity ID: holding-product format + curiosity hook + hidden-villain emotional driver = distinct from all current entities.</div>
   </div>
 
-  <!-- VILLAIN 3 -->
-  <div class="villain-card">
-    <div class="villain-head">
-      <div class="villain-num">03</div>
-      <div>
-        <div class="villain-name">HIIT & Cardio Culture</div>
-        <div style="font-size:12px; color:rgba(255,255,255,.5); margin-top:3px;">High-intensity exercise spiking cortisol · "more exercise = faster results" · running harder into adrenal fatigue</div>
-      </div>
+  <div class="entity-card">
+    <div class="entity-header">
+      <div class="entity-num">2</div>
+      <div class="entity-name">THE HTMA LAB REVEAL</div>
     </div>
-    <div class="villain-body">
-      <p style="font-size:13px;">This villain directly contradicts conventional fitness wisdom in the most provocative way possible. Especially validating for a woman who has been told to "just exercise more" while her cortisol pattern is already dysregulated.</p>
-      <div class="villain-hooks">
-        <div class="hook-item">"Stop doing HIIT if you have stubborn belly fat. You are literally telling your body to store more fat."</div>
-        <div class="hook-item">"The workout you're doing to lose weight is the reason you're not losing weight."</div>
-        <div class="hook-item">"High cortisol + high-intensity exercise = metabolic disaster for women 35+. Here's why."</div>
-        <div class="hook-item">"The type of exercise that actually lowers cortisol and helps with stubborn belly fat (hint: not cardio)."</div>
-        <div class="hook-item">"Why I tell my clients to stop cardio and start eating more in the first 4 weeks — and watch their belly fat move."</div>
-      </div>
-      <div class="script-block">
-        <strong>Sample Reel Script:</strong><br>
-        Hook: "The workout you're doing to lose weight might be the reason you can't lose weight."<br><br>
-        Body: "Most women with stubborn belly fat, hormone symptoms, and exhaustion are already in a chronic cortisol surplus. Then they add daily HIIT on top. Cortisol tells your body you're in a stress state. Your body's response to a stress state is to hold onto fat around the midsection as a survival mechanism. You're literally training your body to hold onto the fat you're trying to lose. The fix is not less movement — it's the right kind. For most of my clients in the first 4 weeks: walking and strength training. The belly fat starts moving."<br><br>
-        CTA: "Comment RESET and I'll send you the exercise framework we use in the first 4 weeks of the Root Cause Reset."
-      </div>
+    <div class="entity-meta">
+      <span class="meta-tag">FORMAT: TALKING HEAD + PHYSICAL LAB PAPER</span>
+      <span class="meta-tag">FUNNEL: MOF</span>
+      <span class="meta-tag">EMOTION: AUTHORITY / MECHANISM CURIOSITY</span>
+      <span class="meta-tag">CTA: COMMENT LABS</span>
     </div>
+    <div class="entity-hook">"This piece of paper is why my clients lose 15 pounds of inflammation when nothing else worked."</div>
+    <div class="entity-why">The single most differentiated format available to Lacey — holding a physical HTMA lab result on camera. Stephen Cabral is the only competitor using HTMA in paid, but he uses it as a free lead gen giveaway. Lacey can position HTMA as the premium diagnostic that proves her method and attacks the "normal labs" villain at the cellular level. New entity: physical prop format + mechanism hook + authority emotional driver.</div>
   </div>
 
-  <!-- VILLAIN 4 -->
-  <div class="villain-card">
-    <div class="villain-head">
-      <div class="villain-num">04</div>
-      <div>
-        <div class="villain-name">The Normal Lab Range</div>
-        <div style="font-size:12px; color:rgba(255,255,255,.5); margin-top:3px;">Reference ranges built on sick populations · TSH "normal" at 3.8 · "everything looks fine" while actively symptomatic</div>
-      </div>
+  <div class="entity-card">
+    <div class="entity-header">
+      <div class="entity-num">3</div>
+      <div class="entity-name">THE WHITEBOARD CORTISOL SYMPTOM STACK</div>
     </div>
-    <div class="villain-body">
-      <p style="font-size:13px;">This is the most underleveraged villain in the market and Lacey's clearest ownership opportunity. Competitors touch on it — none own it the way Lacey can with HTMA as the mechanism-level alternative. The "I'm not crazy" emotional release this creates is massive.</p>
-      <div class="villain-hooks">
-        <div class="hook-item">"The dirty secret about lab reference ranges: they were built to find sick people, not healthy ones."</div>
-        <div class="hook-item">"Normal is not the same as optimal. Most women in their 30s and 40s are living in the gap between those two things."</div>
-        <div class="hook-item">"Why 'everything looks fine on your labs' might be the most gaslighting thing a doctor can say."</div>
-        <div class="hook-item">"The calcium-to-potassium ratio your doctor will never measure — but that controls how well your thyroid works."</div>
-        <div class="hook-item">"(Holding HTMA) This is the piece of paper that finally told me what was actually wrong."</div>
-      </div>
+    <div class="entity-meta">
+      <span class="meta-tag">FORMAT: WHITEBOARD TEACHING</span>
+      <span class="meta-tag">FUNNEL: TOF / MOF</span>
+      <span class="meta-tag">EMOTION: PAIN VALIDATION / EDUCATION</span>
+      <span class="meta-tag">CTA: COMMENT RESET</span>
     </div>
+    <div class="entity-hook">"If you wake up exhausted, push through the 2pm crash with caffeine, and still can't sleep at night — your cortisol is reversed."</div>
+    <div class="entity-why">Proven organic format (whiteboard symptom clusters) that has never appeared in Lacey's paid library. The whiteboard format signals educational authority and stops the scroll differently than talking-head content. Reaches the analytical, problem-aware segment of the avatar who wants to understand the mechanism. New entity: whiteboard/teaching format + pain validation hook + analytical education driver.</div>
   </div>
 
-  <!-- VILLAIN 5 -->
-  <div class="villain-card">
-    <div class="villain-head">
-      <div class="villain-num">05</div>
-      <div>
-        <div class="villain-name">The Supplement Industry</div>
-        <div style="font-size:12px; color:rgba(255,255,255,.5); margin-top:3px;">Generic probiotics · influencer supplement stacks · hormone supplements without testing · "take this for energy" without root cause</div>
-      </div>
+  <div class="entity-card">
+    <div class="entity-header">
+      <div class="entity-num">4</div>
+      <div class="entity-name">THE HUSBAND + WIFE DYNAMIC</div>
     </div>
-    <div class="villain-body">
-      <p style="font-size:13px;">The "I WOULD NEVER" format that went viral for Lacey belongs here. The supplement industry sells the feeling of taking action without addressing root cause. Lacey's testing-first approach is the direct counter-positioning.</p>
-      <div class="villain-hooks">
-        <div class="hook-item">"I would never use these three products in my house if I wanted to balance my hormones."</div>
-        <div class="hook-item">"The problem with taking a probiotic without a GI-MAP: you might be feeding the wrong bacteria."</div>
-        <div class="hook-item">"You can spend $300/month on supplements and make your gut dysbiosis worse. Here's how."</div>
-        <div class="hook-item">"Why we don't recommend any supplements until we've seen the labs. Ever."</div>
-        <div class="hook-item">"Throw away your generic probiotic. It might be making your bloating worse."</div>
-      </div>
-      <div class="script-block">
-        <strong>Sample Reel Script (I WOULD NEVER format — proven viral):</strong><br>
-        Hook: "I would never take these 3 supplements without testing first — and I coach women who've been taking all 3 for years."<br><br>
-        Body: "(Holds up: generic probiotic, B-complex, magnesium supplement) These aren't dangerous. They're just not targeted. A generic Lactobacillus probiotic might completely miss your specific dysbiosis. A B-complex might be adding B6 to a system that already has a B6 excess. And magnesium — legitimately one of the most important minerals for hormone function — comes in 8 forms, and the grocery store version has the lowest bioavailability. We test before we supplement. Every time. Because guessing is what got you here."<br><br>
-        CTA: "Comment GUT and I'll send you the breakdown of what a GI-MAP test actually shows."
-      </div>
+    <div class="entity-meta">
+      <span class="meta-tag">FORMAT: DUAL INTERVIEW · LACEY + ZACH</span>
+      <span class="meta-tag">FUNNEL: MOF</span>
+      <span class="meta-tag">EMOTION: EMPATHY / RELATIONSHIP IMPACT</span>
+      <span class="meta-tag">CTA: COMMENT STORY</span>
     </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════
-     CONTENT CALENDAR
-══════════════════════════════ -->
-<section class="doc-section" id="calendar">
-  <div class="sec-eyebrow">Section 09 — Section G</div>
-  <div class="sec-heading">Weekly Content Calendar</div>
-  <div class="sec-divider"></div>
-
-  <div class="grid-2 gap-md mb-md">
-    <div class="offer-block">
-      <div class="offer-block-title">SAA Pillar Breakdown</div>
-      <ul>
-        <li><strong>40% Trust Building</strong> — HTMA explainers, cortisol education, gut myths, whiteboard content, lab reveals</li>
-        <li><strong>30% Intimacy Building</strong> — Lacey's healing story, Zach's perspective, behind-the-scenes, vulnerable moments</li>
-        <li><strong>20% Proof Content</strong> — Client transformations, before/after labs, DM testimonials as carousels</li>
-        <li><strong>10% Action Content</strong> — CTA reels, program explainers, application CTAs</li>
-      </ul>
-    </div>
-    <div class="card orange-left">
-      <p style="font-size:13px;"><strong>The Content Gap to Close This Month:</strong> Lacey's viral content skews heavily toward value/education (the top of the trust funnel). What's missing is the bottom — <em>cost of inaction</em>, <em>emotional urgency</em>, and <em>social proof with specific results</em>. The success coach called this out directly in the Loom: "We need to get people more of: 'you actually have to take legit action if you want to solve this problem.'" Wednesday (proof) and Thursday (villain/stone-throwing) are the two days to load up immediately.</p>
-    </div>
+    <div class="entity-hook">Zach: "Watching Lacey do everything right and still feel terrible was the most frustrating thing in the world."</div>
+    <div class="entity-why">Complete white space in the entire competitive landscape — zero competitors are using the partner perspective. Zach is entirely absent from Lacey's paid ads. This format pattern-interrupts at the scroll level (two people vs. one) and unlocks the relationship/household-impact pain point that affects Lacey's avatar but is completely absent from competitor messaging. New entity: dual-presenter format + partner empathy hook + relational emotional driver.</div>
   </div>
 
-  <div class="tbl-wrap">
-    <div style="padding:0;">
-      <div class="cal-row">
-        <div class="cal-day">MON<div class="cal-theme">Connection / Intimacy</div></div>
-        <div class="cal-hooks">
-          <div class="cal-hook">"POV: you're a woman in her 40s who has been told her labs are normal for the third year in a row."</div>
-          <div class="cal-hook">"Things only women with undiagnosed gut issues understand…"</div>
-          <div class="cal-hook">"That moment when you eat a salad and immediately look 6 months pregnant."</div>
-          <div class="cal-hook">"Watching Lacey do everything right and still feel terrible was the most frustrating thing. [Zach to camera]"</div>
-          <div class="cal-hook">"The day I found out exhaustion wasn't stress — it was my cellular energy production."</div>
-        </div>
-      </div>
-      <div class="cal-row">
-        <div class="cal-day">TUE<div class="cal-theme">Value / Education</div></div>
-        <div class="cal-hooks">
-          <div class="cal-hook">"3 reasons your thyroid labs are 'normal' but your thyroid isn't functioning optimally."</div>
-          <div class="cal-hook">"The mineral deficiency controlling your stress response, your sleep, and your stubborn belly fat."</div>
-          <div class="cal-hook">"Why 'eating less and moving more' is the worst advice for a woman with cortisol dysregulation."</div>
-          <div class="cal-hook">"5 signs your gut is disrupting your hormone balance (most women have at least 3)."</div>
-          <div class="cal-hook">"The difference between how conventional medicine measures thyroid vs. how functional medicine does."</div>
-        </div>
-      </div>
-      <div class="cal-row">
-        <div class="cal-day">WED<div class="cal-theme">Proof / Case Study</div></div>
-        <div class="cal-hooks">
-          <div class="cal-hook">"She went from chronic yeast infections and bone-deep fatigue to strong, energized, and down 14 lbs."</div>
-          <div class="cal-hook">"GI-MAP showed massive candida overgrowth. Her doctor said her gut was 'fine.' It wasn't."</div>
-          <div class="cal-hook">"3 months after her HTMA: hair stopped falling out, cycle regulated, sleeping through the night."</div>
-          <div class="cal-hook">"From 'I've tried everything' to understanding exactly what was wrong in 10 days."</div>
-          <div class="cal-hook">"What happens when a woman finally gets real answers about her body. [Client screen recording]"</div>
-        </div>
-      </div>
-      <div class="cal-row">
-        <div class="cal-day">THU<div class="cal-theme">Villain / Stone-Throwing</div></div>
-        <div class="cal-hooks">
-          <div class="cal-hook">"Stop following general nutrition influencers for hormone advice. Here's why their advice is making you worse."</div>
-          <div class="cal-hook">"Why your HIIT workout is making your cortisol worse and your belly fat more stubborn."</div>
-          <div class="cal-hook">"Your generic probiotic is probably not fixing your gut — and might be feeding the wrong bacteria."</div>
-          <div class="cal-hook">"The real reason calorie restriction fails for women with thyroid issues."</div>
-          <div class="cal-hook">"Why doctors don't run HTMA: it's not profitable. Here's what it shows that blood work never will."</div>
-        </div>
-      </div>
-      <div class="cal-row">
-        <div class="cal-day">FRI<div class="cal-theme">Connection / Founder Story</div></div>
-        <div class="cal-hooks">
-          <div class="cal-hook">"Why I built the Root Cause Reset Method™ for women who have 'tried everything.'"</div>
-          <div class="cal-hook">"The day I found out my gut dysbiosis had been affecting my hormones for years — and nobody caught it."</div>
-          <div class="cal-hook">"After working with 2,000+ women: the ONE thing every chronically exhausted woman in her 30s and 40s has in common."</div>
-          <div class="cal-hook">"What Zach saw watching me go through hormone issues that my doctors kept dismissing. [Dual camera]"</div>
-          <div class="cal-hook">"Why I refuse to give a single supplement recommendation without running labs first."</div>
-        </div>
-      </div>
-      <div class="cal-row">
-        <div class="cal-day">SAT<div class="cal-theme">Quick Win / Value</div></div>
-        <div class="cal-hooks">
-          <div class="cal-hook">"3 signs your cortisol is reversed — and the one morning habit that starts to fix it."</div>
-          <div class="cal-hook">"The simplest way to tell if your gut is causing your fatigue."</div>
-          <div class="cal-hook">"One thing every woman with stubborn belly fat should check before trying another diet."</div>
-          <div class="cal-hook">"The mineral your body needs more of when you're in chronic stress — and how to get it from food."</div>
-          <div class="cal-hook">"Why your energy crashes at 2pm — and the one thing that's not caffeine to fix it."</div>
-        </div>
-      </div>
+  <div class="entity-card">
+    <div class="entity-header">
+      <div class="entity-num">5</div>
+      <div class="entity-name">THE "FIRST WIN IN 7 DAYS" PROMISE</div>
     </div>
+    <div class="entity-meta">
+      <span class="meta-tag">FORMAT: DIRECT TO CAMERA · HIGH ENERGY</span>
+      <span class="meta-tag">FUNNEL: BOF</span>
+      <span class="meta-tag">EMOTION: HOPE / SPEED OF RESULT</span>
+      <span class="meta-tag">CTA: COMMENT 7DAYS</span>
+    </div>
+    <div class="entity-hook">"The difference between a generic diet and a root cause protocol is that you should feel your first massive win in 7 days."</div>
+    <div class="entity-why">No competitor is making a specific short-term timeline claim. This attacks the deepest objection the exhausted-dieter avatar has: "This will take forever like everything else." The 7-day first win is already in Lacey's offer framework — this entity deploys it as a direct-response BOF hook for retargeting audiences who've seen earlier content. New entity: high-conviction direct-cam format + speed/promise hook + hope/relief emotional driver.</div>
+  </div>
+
+  <div class="entity-card">
+    <div class="entity-header">
+      <div class="entity-num">6</div>
+      <div class="entity-name">THE "EAT MORE" PARADIGM SHIFT</div>
+    </div>
+    <div class="entity-meta">
+      <span class="meta-tag">FORMAT: KITCHEN COUNTER · FOOD B-ROLL</span>
+      <span class="meta-tag">FUNNEL: TOF</span>
+      <span class="meta-tag">EMOTION: PARADIGM SHIFT / RELIEF</span>
+      <span class="meta-tag">CTA: COMMENT NOURISH</span>
+    </div>
+    <div class="entity-hook">"The 'eat less, move more' advice is exactly what broke your metabolism in the first place."</div>
+    <div class="entity-why">Proven kitchen counter organic format + the anti-restriction angle that's winning in adjacent wellness advertising (Emily de Luzy's "eat more" ad has been running 6 months). The visual of abundant food contrasts directly with restriction-based advertising. Attacks the core false belief ("I need to eat less") that Lacey's copy kit identifies as the #1 mistake her avatar is making. New entity: kitchen-counter prop format + paradigm-shift hook + relief emotional driver.</div>
+  </div>
+
+  <div class="entity-card">
+    <div class="entity-header">
+      <div class="entity-num">7</div>
+      <div class="entity-name">THE SYMPTOM-TO-RESULT CASE STUDY CAROUSEL</div>
+    </div>
+    <div class="entity-meta">
+      <span class="meta-tag">FORMAT: STATIC TEXT CAROUSEL · BRANDED</span>
+      <span class="meta-tag">FUNNEL: BOF / RETARGETING</span>
+      <span class="meta-tag">EMOTION: SOCIAL PROOF / SPECIFICITY</span>
+      <span class="meta-tag">CTA: COMMENT APPLY</span>
+    </div>
+    <div class="entity-hook">Slide 1: "How our client went from: Monthly yeast infections, hormonal acne &amp; bone-deep fatigue..."</div>
+    <div class="entity-why">Translates Lacey's top-performing organic carousel format into a retargeting entity. The specificity of symptoms named (yeast infections, hormonal acne — not just "weight loss") targets a different awareness segment than broad weight/energy hooks. Endo Nutrition's 12-month winning carousel confirms this format's longevity. New entity: static carousel format + symptom-specificity hook + social proof/vindication driver.</div>
+  </div>
+
+  <div class="entity-card">
+    <div class="entity-header">
+      <div class="entity-num">8</div>
+      <div class="entity-name">THE "NORMAL LABS" VINDICATION — WALKING B-ROLL</div>
+    </div>
+    <div class="entity-meta">
+      <span class="meta-tag">FORMAT: WALKING B-ROLL + VOICEOVER</span>
+      <span class="meta-tag">FUNNEL: TOF / MOF</span>
+      <span class="meta-tag">EMOTION: VINDICATION / ANTI-GASLIGHTING</span>
+      <span class="meta-tag">CTA: COMMENT DEEPER</span>
+    </div>
+    <div class="entity-hook">"To the woman who was just told by her doctor that her labs are normal, but she still feels like garbage: I see you."</div>
+    <div class="entity-why">Pure emotional validation targeting the most common frustration point of Lacey's exact avatar. The walking b-roll format creates a different visual treatment than studio/talking-head ads. Attacks the villain more specifically than competitors — not just "the doctor" but "the reference range" itself as the villainous system. New entity: movement b-roll format + vindication/empathy hook + anti-gaslighting emotional driver.</div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="doc-footer">
-  <div class="df-brand">IFCA · <span>LifestyleU</span></div>
-  <div class="df-note">Lacey & Zach Iskra · Full Business Audit · April 2026 · Impact Fitness Coaching Academy · Confidential</div>
-</footer>
+<!-- SECTION 06: 90-DAY ACTION PLAN -->
+<section class="section" id="plan">
+  <div class="section-label">SECTION 06</div>
+  <div class="section-title">90-DAY ACTION PLAN</div>
 
-</div><!-- /page -->
+  <div class="action-item">
+    <div class="action-num">1</div>
+    <div class="action-content">
+      <div class="action-title">BUILD THE POST-BOOKING SHOW-UP SYSTEM</div>
+      <div class="action-desc">
+        Every percentage point recovered on show rate is free money — no ad spend required. The immediate build: create a 3-step confirmation sequence in GHL with a 5-minute Lacey orientation video sent immediately after booking, a 24-hour text confirmation requiring a reply, and a 2-hour call link reminder. Simultaneously, build a 5-question pre-call assessment form that creates investment and surfaces lead intent. Deploy within 14 days. Track weekly and compare against Q1 baseline of 57.2%. This single fix at 70% show rate is worth approximately $28K in additional Q2 contracted revenue on existing lead volume.
+      </div>
+      <div class="action-tags">
+        <span class="action-tag tag-ops">OPS</span>
+        <span class="action-tag tag-sales">SALES</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-item">
+    <div class="action-num">2</div>
+    <div class="action-content">
+      <div class="action-title">CLOSE RATE AUDIT + SCRIPT UPGRADE</div>
+      <div class="action-desc">
+        Pull every Q1 call recording. Identify the top 3 patterns where calls are dying — specifically looking for: (a) price objections that aren't being handled, (b) "what's included in labs" confusion (echoed in two of six cancellations), (c) calls ending without a clear decision. From the cancellation data, Stevi Scott's cancellation ("assumed all labs were included") and Trish Nebo's ("didn't feel the coach was responsive") both point to close-side expectation gaps. Build a pre-call primer video (3–4 minutes) that walks through exactly what Phase 1 includes, what labs cost and when they're ordered, and what a typical week looks like. Send this video to every booked prospect 24 hours before their call. The call then opens with a pre-qualified, expectation-calibrated prospect — not a cold inquiry.
+      </div>
+      <div class="action-tags">
+        <span class="action-tag tag-sales">SALES</span>
+        <span class="action-tag tag-ops">OPS</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-item">
+    <div class="action-num">3</div>
+    <div class="action-content">
+      <div class="action-title">ENTITY EXPANSION — FILM 4 NEW CREATIVE ENTITIES</div>
+      <div class="action-desc">
+        Schedule one creative production session (half-day) targeting 4 of the 8 priority entities in the queue. Priority order: (1) I WOULD NEVER product callout — low production cost, high organic proof, tested CTA keyword "TOXIC", (2) Whiteboard cortisol symptom stack — studio or clean background, whiteboard prop, (3) Zach co-presenter empathy angle — requires scheduling one shot with both Lacey and Zach, (4) Walking b-roll vindication voiceover — b-roll footage only, Lacey voiceover in post. Each entity must have a distinct CTA keyword, distinct format bucket, and a distinct emotional driver to qualify as a genuine new entity for the Andromeda algorithm. Deploy at 30% of total ad budget. Kill at 2x CPL target with no qualifying leads generated.
+      </div>
+      <div class="action-tags">
+        <span class="action-tag tag-paid">PAID MEDIA</span>
+        <span class="action-tag tag-creative">CREATIVE</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-item">
+    <div class="action-num">4</div>
+    <div class="action-content">
+      <div class="action-title">SYSTEMATIZE THE BACKEND OFFER PRESENTATION</div>
+      <div class="action-desc">
+        FE→BE conversion variance of 30 points between months is a system problem, not a performance problem. Build a mandatory Week 8 "Results Review + Phase 2 Preview" call that is triggered automatically in GHL for every active Phase 1 client. The call: (1) documents transformation to date using measurable first wins (energy, bloating, sleep data), (2) shares what the GI-MAP reveals that the HTMA set up, (3) presents Phase 2 as the natural continuation. Remove the backend offer from coach discretion entirely — it becomes a required touchpoint in the delivery sequence. Target: 55%+ FE→BE consistency Q2, 60%+ by Q3.
+      </div>
+      <div class="action-tags">
+        <span class="action-tag tag-ops">OPS</span>
+        <span class="action-tag tag-sales">SALES</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-item">
+    <div class="action-num">5</div>
+    <div class="action-content">
+      <div class="action-title">DIAGNOSE AND CATEGORIZE THE JANUARY OVERHEAD SPIKE</div>
+      <div class="action-desc">
+        $32,229 in January overhead (vs. $9–12K in Feb–Mar) is either a legitimate non-recurring item or a systemic cost leak. Pull the January overhead ledger line-by-line. If non-recurring: document it, use Feb–Mar as the operating baseline for Q2 projections, and note Q1 net margin as artificially depressed. If partially systemic: build a monthly overhead approval process with a $12K soft cap requiring Lacey or Zach sign-off above threshold. At the current revenue run rate ($85K/month average), closing the overhead gap from Jan-level to Mar-level would add $22K+ in monthly net operating income — which equals another $264K in annual take-home.
+      </div>
+      <div class="action-tags">
+        <span class="action-tag tag-ops">OPS</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-item">
+    <div class="action-num">6</div>
+    <div class="action-content">
+      <div class="action-title">AD SPEND SCALE PLAN — STAGE-GATE TO $8–10K/MONTH</div>
+      <div class="action-desc">
+        March's ad spend pullback to $2,648 (from $4,847 in January) coincided with March generating 801 leads vs. 1,367 in January. At a $3.53 CPL and 11.7x contracted ROAS, there is clear justification to scale spend. The stage-gate: first, fix show rate to 65%+ and close rate to 25%+ (Actions 1 and 2). Once those metrics are confirmed holding for 4 consecutive weeks, increase spend to $6K/month. Confirm ROAS holds above 8x. Then scale to $8K/month with the 8-entity creative library built (Action 3). The business has demonstrated the capacity to generate $55K in contracted revenue on $5,100 in ad spend (February) — scaling to $10K/month spend at the same ROAS produces $110K+ in contracted monthly revenue.
+      </div>
+      <div class="action-tags">
+        <span class="action-tag tag-paid">PAID MEDIA</span>
+        <span class="action-tag tag-ops">OPS</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="closing-para">
+    <strong style="font-family:'Bebas Neue';font-size:20px;color:var(--orange);display:block;margin-bottom:12px;">THE BIG PICTURE</strong>
+    Lacey &amp; Zach have built something genuinely rare: a 7-figure functional health coaching business with a defensible mechanism, a 332K organic audience, and top-of-funnel ad economics that beat every IFCA benchmark by a significant margin. The revenue this business is producing right now — $827K in 2025, tracking for $1M+ in 2026 — is being generated with a show rate 13 points below target and a close rate 10 points below target. That means the current business is running at roughly 60% of its theoretical maximum on the same cost structure. Fix the show-up system, fix the close rate, build 8 diverse creative entities, and systematize the backend offer presentation — and this becomes a $1.2–1.5M business with the same team, the same ad spend, and the same mechanism that's already working. The ceiling isn't the market. It's the conversion infrastructure. And that's the most solvable problem in this audit.
+  </div>
+</section>
+
+</div><!-- /main -->
+
+<div id="intel-data" style="display:none;">LIFESTYLEU — CREATIVE INTELLIGENCE REPORT (Workshop Copy)
+
+STRATEGIC DIAGNOSIS:
+Lacey & Zach's top-of-funnel ad metrics are best-in-class ($3.53 CPL vs $10 target, 11.7x contracted ROAS). The entity library is narrow — 3-4 real entities where 8-10 are needed. The organic library (332K followers) contains 4+ proven viral formats that have never been converted to paid entities.
+
+PRIORITY HOOK BANK (Verbatim — Ready to Film):
+1. "I would never use these three products in my house if I wanted to balance my hormones." — I WOULD NEVER format, holding products, CTA: COMMENT TOXIC
+2. "This piece of paper is why my clients lose 15 pounds of inflammation when nothing else worked." — HTMA lab reveal, holding physical paper, CTA: COMMENT LABS
+3. "If you wake up exhausted, push through the 2pm crash with caffeine, and still can't sleep at night — your cortisol is reversed." — whiteboard, symptom stack, CTA: COMMENT RESET
+4. ZACH: "Watching Lacey do everything right and still feel terrible was the most frustrating thing in the world." — Zach co-presenter, empathy angle, CTA: COMMENT STORY
+5. "The difference between a generic diet and a root cause protocol is that you should feel your first massive win in 7 days." — direct to camera, 7-day promise, CTA: COMMENT 7DAYS
+6. "To the woman who was just told by her doctor that her labs are normal, but she still feels like garbage: I see you." — walking b-roll, vindication, CTA: COMMENT DEEPER
+
+ENTITY BUILD QUEUE (Priority Order):
+1. I WOULD NEVER TOXIC CALLOUT | Kitchen/holding products | TOF | Curiosity/Hidden villain
+2. HTMA LAB REVEAL | Talking head + physical lab paper | MOF | Authority/Mechanism
+3. WHITEBOARD CORTISOL SYMPTOM STACK | Whiteboard teaching | TOF/MOF | Pain validation
+4. ZACH CO-PRESENTER EMPATHY | Dual interview | MOF | Empathy/Relationship impact
+5. FIRST WIN IN 7 DAYS | Direct to camera, high energy | BOF | Hope/Speed of result
+6. EAT MORE PARADIGM SHIFT | Kitchen counter, food b-roll | TOF | Paradigm shift/Relief
+7. CASE STUDY SYMPTOM CAROUSEL | Static text carousel, branded | BOF/Retargeting | Social proof
+8. NORMAL LABS VINDICATION | Walking b-roll + voiceover | TOF/MOF | Anti-gaslighting/Vindication
+
+WHITE SPACE (What competitors are NOT running):
+- Husband/wife dual-presenter format
+- Physical HTMA lab result shown on camera as premium mechanism
+- Specific 7-day first-win timeline claim
+- Skin and period as primary hook (vs. weight/energy)
+- Normal lab RANGE as the villain (not just the doctor)
+
+COMPETITIVE SATURATION (Hooks to avoid or heavily modify):
+- "Stop blaming willpower. It's your hormones."
+- "Bloated, exhausted, and doing everything right?"
+- "If you've tried everything and nothing works..."
+- "It's not your effort, it's your metabolism."</div>
 
 <script>
-// ── DATA ─────────────────────────────────────────────────────────────────
-const DATA = {
-  jan: {
-    adSpend: 4847, leads: 1367, cpl: 3.55, scheduled: 91, live: 63,
-    showRate: 69.2, closes: 14, closeRate: 22.2, fePrice: 3980, feRev: 48042,
-    cpa: 346, roas: 9.9, roasCollected: 4.2,
-    laborMargin: 42.6, marketingMargin: 8.2, overheadMargin: 46.6, netMargin: 2.6
-  },
-  feb: {
-    adSpend: 5104, leads: 1403, cpl: 3.64, scheduled: 126, live: 65,
-    showRate: 51.6, closes: 14, closeRate: 21.5, fePrice: 3959, feRev: 55422,
-    cpa: 365, roas: 10.9, roasCollected: 6.7,
-    laborMargin: 29.6, marketingMargin: 5.5, overheadMargin: 12.8, netMargin: 52.1
-  },
-  mar: {
-    adSpend: 2648, leads: 801, cpl: 3.31, scheduled: 136, live: 74,
-    showRate: 54.4, closes: 12, closeRate: 16.2, fePrice: 3708, feRev: 43690,
-    cpa: 221, roas: 16.5, roasCollected: 10.9,
-    laborMargin: 33.8, marketingMargin: 10.9, overheadMargin: 10.2, netMargin: 45.2
-  },
-  q1: {
-    adSpend: 4199, leads: 1190, cpl: 3.53, scheduled: 118, live: 67,
-    showRate: 57.2, closes: 13, closeRate: 19.8, fePrice: 3882, feRev: 49051,
-    cpa: 315, roas: 11.7, roasCollected: 6.6,
-    laborMargin: 34.6, marketingMargin: 8.2, overheadMargin: 21.2, netMargin: 36.0
-  }
+// Period tabs
+const periods = {
+  q1: { cpl:'$3.53', show:'57.2%', close:'19.8%', ltv:'7.1:1', margin:'36%', febe:'48.3%' },
+  jan: { cpl:'$3.55', show:'69.2%', close:'22.2%', ltv:'4.5:1', margin:'2.6%', febe:'36%' },
+  feb: { cpl:'$3.64', show:'51.6%', close:'21.5%', ltv:'32:1', margin:'52.1%', febe:'66%' },
+  mar: { cpl:'$3.31', show:'54.4%', close:'16.2%', ltv:'4.7:1', margin:'45.2%', febe:'43%' },
 };
-
-let cur = 'q1';
-function setPeriod(p) {
-  cur = p;
-  document.querySelectorAll('.pt').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase().replace(' avg','') === p));
-  render();
+function showPeriod(p) {
+  document.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  const d = periods[p];
+  document.getElementById('chip-cpl').textContent = d.cpl;
+  document.getElementById('chip-show').textContent = d.show;
+  document.getElementById('chip-close').textContent = d.close;
+  document.getElementById('chip-ltv').textContent = d.ltv;
+  document.getElementById('chip-margin').textContent = d.margin;
+  document.getElementById('chip-febe').textContent = d.febe;
+  // Update badges
+  const showBadge = document.querySelectorAll('.kpi-chip')[1].querySelector('.chip-badge');
+  const closeBadge = document.querySelectorAll('.kpi-chip')[2].querySelector('.chip-badge');
+  const marginBadge = document.querySelectorAll('.kpi-chip')[4].querySelector('.chip-badge');
+  if (p === 'jan') {
+    showBadge.className = 'chip-badge badge-warn'; showBadge.textContent = 'WARN';
+    marginBadge.className = 'chip-badge badge-fail'; marginBadge.textContent = 'FAIL';
+  } else if (p === 'feb') {
+    showBadge.className = 'chip-badge badge-fail'; showBadge.textContent = 'FAIL';
+    marginBadge.className = 'chip-badge badge-pass'; marginBadge.textContent = 'PASS';
+  } else {
+    showBadge.className = 'chip-badge badge-fail'; showBadge.textContent = 'FAIL';
+    marginBadge.className = p === 'mar' ? 'chip-badge badge-warn' : 'chip-badge badge-warn';
+    marginBadge.textContent = 'WATCH';
+  }
 }
 
-function fmt(v, type) {
-  if (type === '$') return '$' + (v >= 1000 ? (v/1000).toFixed(1)+'K' : v.toFixed(0));
-  if (type === '%') return v.toFixed(1) + '%';
-  if (type === 'x') return v.toFixed(1) + '×';
-  return v;
-}
-
-function badge(cls, txt) { return `<span class="badge ${cls}">${txt}</span>`; }
-function val(cls, txt) { return `<span class="m-val ${cls}">${txt}</span>`; }
-
-function render() {
-  const d = DATA[cur];
-
-  // KPI band
-  document.getElementById('kpi-band').innerHTML = `
-    <div class="kpi-chip pass"><div class="chip-label">Cost Per Lead</div><div class="chip-val">$${d.cpl.toFixed(2)}</div><div class="chip-target">Target &lt;$10</div></div>
-    <div class="kpi-chip ${d.showRate >= 70 ? 'pass' : d.showRate >= 55 ? 'warn' : 'fail'}"><div class="chip-label">Show Rate</div><div class="chip-val">${d.showRate.toFixed(0)}%</div><div class="chip-target">Target 70%+</div></div>
-    <div class="kpi-chip ${d.closeRate >= 30 ? 'pass' : d.closeRate >= 22 ? 'warn' : 'fail'}"><div class="chip-label">Close Rate</div><div class="chip-val">${d.closeRate.toFixed(1)}%</div><div class="chip-target">Target 30%+</div></div>
-    <div class="kpi-chip ${d.roas >= 5 ? 'pass' : 'warn'}"><div class="chip-label">Contracted ROAS</div><div class="chip-val">${d.roas.toFixed(1)}×</div><div class="chip-target">Target 5×+</div></div>
-    <div class="kpi-chip ${d.cpa < 776 ? 'pass' : 'warn'}"><div class="chip-label">Blended CPA</div><div class="chip-val">$${Math.round(d.cpa)}</div><div class="chip-target">Target &lt;20% FEO</div></div>
-  `;
-
-  // Ad/funnel metrics table
-  const adRows = [
-    ['Ad Spend', '—', fmt(d.adSpend,'$'), 'info', ''],
-    ['Leads Generated', '—', d.leads.toLocaleString(), 'info', ''],
-    ['Cost Per Lead', '&lt; $10', fmt(d.cpl,'$'), d.cpl < 10 ? 'pass' : 'warn', d.cpl < 10 ? 'Well under target' : 'Approaching target'],
-    ['Scheduled Calls', '—', d.scheduled, 'info', ''],
-    ['Live Calls', '—', d.live, 'info', ''],
-    ['Show Rate', '70%+', fmt(d.showRate,'%'), d.showRate >= 70 ? 'pass' : d.showRate >= 55 ? 'warn' : 'fail', d.showRate >= 70 ? 'On target' : 'PRIMARY CONSTRAINT'],
-    ['Close Rate', '30%+', fmt(d.closeRate,'%'), d.closeRate >= 30 ? 'pass' : d.closeRate >= 22 ? 'warn' : 'fail', d.closeRate >= 30 ? 'On target' : 'PRIMARY CONSTRAINT'],
-    ['FE Price (avg)', '$3,500+', fmt(d.fePrice,'$'), d.fePrice >= 3500 ? 'pass' : 'warn', 'Price integrity strong'],
-    ['FE Contracted Rev', '—', fmt(d.feRev,'$'), 'info', 'Monthly avg'],
-    ['Blended CPA', '&lt;20% FEO', '$' + Math.round(d.cpa), d.cpa < 776 ? 'pass' : 'warn', d.cpa < 500 ? 'Excellent' : 'Watch vs. FE price'],
-    ['Contracted ROAS', '5×+', d.roas.toFixed(1)+'×', d.roas >= 5 ? 'pass' : 'warn', d.roas >= 8 ? 'Elite' : 'Above target'],
-    ['Collected ROAS', '2×+', d.roasCollected.toFixed(1)+'×', d.roasCollected >= 2 ? 'pass' : 'warn', ''],
-  ];
-  document.getElementById('ad-tbody').innerHTML = adRows.map(([n,t,v,s,note]) =>
-    `<tr><td class="m-name">${n}</td><td class="m-target">${t}</td><td>${val(s,v)}</td><td>${badge(s, s==='pass'?'On Target':s==='warn'?'Watch':s==='fail'?'Critical':'Info')}</td><td class="m-note">${note}</td></tr>`
-  ).join('');
-
-  // Margin table
-  const marginRows = [
-    ['Labor Margin', '30–35%', fmt(d.laborMargin,'%'), d.laborMargin <= 35 ? 'pass' : d.laborMargin <= 45 ? 'warn' : 'fail', 'Target ≤35%'],
-    ['Marketing Margin', '10–20%', fmt(d.marketingMargin,'%'), d.marketingMargin >= 10 && d.marketingMargin <= 20 ? 'pass' : 'warn', ''],
-    ['Overhead Margin', '3–8%', fmt(d.overheadMargin,'%'), d.overheadMargin <= 8 ? 'pass' : d.overheadMargin <= 15 ? 'warn' : 'fail', 'Jan skewed by annual exp'],
-    ['Net Operating Margin', '50%+', fmt(d.netMargin,'%'), d.netMargin >= 50 ? 'pass' : d.netMargin >= 35 ? 'warn' : 'fail', d.netMargin < 10 ? 'Jan annual exp drag' : ''],
-  ];
-  document.getElementById('margin-tbody').innerHTML = marginRows.map(([n,t,v,s,note]) =>
-    `<tr><td class="m-name">${n}</td><td class="m-target">${t}</td><td>${val(s,v)}</td><td>${badge(s, s==='pass'?'On Target':s==='warn'?'Watch':s==='fail'?'Critical':'Info')}</td><td class="m-note">${note}</td></tr>`
-  ).join('');
-}
-
-// Initial render
-render();
-
-// ── STICKY NAV ACTIVE STATE ──────────────────────────────────────────────
-const sections = document.querySelectorAll('section[id], div[id]');
-const navLinks = document.querySelectorAll('.nav-link');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
-    }
+// Copy intel
+function copyIntel() {
+  const text = document.getElementById('intel-data').textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✓ COPIED TO CLIPBOARD';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY FOR WORKSHOP'; btn.classList.remove('copied'); }, 2500);
   });
-}, { rootMargin: '-30% 0px -60% 0px' });
-sections.forEach(s => observer.observe(s));
+}
+
+// Active nav on scroll
+const sections = document.querySelectorAll('section.section');
+const navLinks = document.querySelectorAll('#sidebar a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
+  navLinks.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + cur) a.classList.add('active');
+  });
+});
 </script>
 </body>
 </html>

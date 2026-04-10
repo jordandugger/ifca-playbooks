@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFCA Weekly Creative Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:        #1E3A5F;
+  --navy-dark:   #142845;
+  --navy-deeper: #0D1F35;
+  --orange:      #E87722;
+  --orange-dim:  rgba(232,119,34,0.12);
+  --orange-glow: rgba(232,119,34,0.20);
+  --blue-mid:    #4A7FA5;
+  --blue-dim:    rgba(74,127,165,0.12);
+  --blue-light:  #D6E4F0;
+  --gray-400:    #94A3B8;
+  --gray-500:    #64748B;
+  --gray-600:    #475569;
+  --green:       #22C55E;
+  --green-bg:    rgba(34,197,94,0.10);
+  --red:         #DC2626;
+  --red-bg:      rgba(220,38,38,0.08);
+  --yellow:      #F59E0B;
+  --purple:      #8B5CF6;
+  --purple-bg:   rgba(139,92,246,0.10);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy-deeper);
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 15% 15%, rgba(74,127,165,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 50% at 85% 85%, rgba(232,119,34,0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 44px 24px 100px;
+}
+
+/* ── HEADER ── */
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--orange);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 24px; height: 2px;
+  background: var(--orange);
+  border-radius: 1px;
+}
+
+h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(38px, 5.5vw, 60px);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+}
+h1 em { font-style: normal; color: var(--orange); }
+
+.header-meta {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.header-sub {
+  font-size: 14px;
+  color: var(--gray-400);
+  margin-top: 12px;
+  line-height: 1.6;
+  max-width: 460px;
+}
+
+.week-control {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.week-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+}
+
+.week-display {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  color: #fff;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.week-display input[type="date"] {
+  background: transparent;
+  border: none;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  -webkit-appearance: none;
+  padding: 4px 8px;
+  border-bottom: 2px solid rgba(232,119,34,0.4);
+}
+
+.week-display input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) opacity(0.5);
+  cursor: pointer;
+}
+
+/* ── PROGRESS BAR ── */
+.progress-bar-wrap {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.pb-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+.pb-track {
+  flex: 1;
+  height: 6px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.pb-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--orange) 0%, #F5A623 100%);
+  border-radius: 3px;
+  transition: width 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  width: 0%;
+}
+
+.pb-count {
+  font-family: 'Bebas Neue', monospace;
+  font-size: 20px;
+  color: var(--orange);
+  white-space: nowrap;
+  min-width: 50px;
+  text-align: right;
+}
+
+/* ── TIER CONTEXT BAR ── */
+.context-bar {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.cb-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cb-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+}
+
+.cb-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  color: #fff;
+  line-height: 1;
+}
+
+.cb-val.orange { color: var(--orange); }
+.cb-val.green  { color: var(--green); }
+
+.cb-divider {
+  width: 1px;
+  height: 32px;
+  background: rgba(255,255,255,0.08);
+  flex-shrink: 0;
+}
+
+.cb-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.cb-input-row label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+.cb-input-row select {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.18s;
+}
+
+.cb-input-row select:focus { border-color: var(--orange); }
+.cb-input-row select option { background: var(--navy-dark); }
+
+/* ── SECTION LABEL ── */
+.sec-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  margin-top: 36px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sec-label:first-child { margin-top: 0; }
+.sec-label::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: rgba(255,255,255,0.06);
+}
+
+/* ── BRIEF CARDS GRID ── */
+.briefs-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── BRIEF CARD ── */
+.brief-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.brief-card.complete {
+  border-color: rgba(34,197,94,0.3);
+}
+
+.brief-card.active-card {
+  border-color: rgba(232,119,34,0.35);
+}
+
+/* card header */
+.bc-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.025);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.18s;
+}
+
+.bc-header:hover { background: rgba(255,255,255,0.04); }
+
+.bc-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  line-height: 1;
+  color: rgba(255,255,255,0.12);
+  min-width: 40px;
+}
+
+.brief-card.active-card .bc-num { color: var(--orange); opacity: 0.6; }
+.brief-card.complete .bc-num { color: var(--green); opacity: 0.7; }
+
+.bc-header-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.bc-brief-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s;
+}
+
+.brief-card.active-card .bc-brief-title { color: #fff; }
+.brief-card.complete .bc-brief-title { color: var(--green); }
+
+.bc-entity-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--gray-500);
+  margin-top: 2px;
+  transition: color 0.2s;
+}
+
+.brief-card.active-card .bc-entity-badge { color: var(--gray-400); }
+
+.bc-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.bc-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.bc-pill.format { background: var(--blue-dim); color: #7ABFDD; border: 1px solid rgba(74,127,165,0.25); }
+.bc-pill.emotion-fear       { background: var(--red-bg); color: #F87171; border: 1px solid rgba(220,38,38,0.2); }
+.bc-pill.emotion-frustration{ background: rgba(245,158,11,0.1); color: var(--yellow); border: 1px solid rgba(245,158,11,0.2); }
+.bc-pill.emotion-desire     { background: var(--purple-bg); color: #A78BFA; border: 1px solid rgba(139,92,246,0.2); }
+.bc-pill.emotion-hope       { background: var(--green-bg); color: var(--green); border: 1px solid rgba(34,197,94,0.2); }
+.bc-pill.hook   { background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(232,119,34,0.2); }
+.bc-pill.done   { background: var(--green-bg); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
+
+.bc-chevron {
+  font-size: 16px;
+  color: var(--gray-500);
+  transition: transform 0.22s;
+  flex-shrink: 0;
+}
+
+.brief-card.open .bc-chevron { transform: rotate(180deg); }
+
+/* card body */
+.bc-body {
+  display: none;
+  padding: 24px 24px 28px;
+}
+
+.brief-card.open .bc-body { display: block; }
+
+/* ── ENTITY VALIDATOR ── */
+.entity-validator {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ev-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.ev-body { flex: 1; }
+
+.ev-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.ev-title.pass { color: var(--green); }
+.ev-title.fail { color: #F87171; }
+.ev-title.warn { color: var(--yellow); }
+.ev-title.neutral { color: var(--gray-500); }
+
+.ev-text {
+  font-size: 12px;
+  color: var(--gray-400);
+  line-height: 1.5;
+}
+
+/* ── FORM GRID ── */
+.form-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.form-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.form-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+
+@media (max-width: 680px) {
+  .form-grid.cols-3,
+  .form-grid.cols-2 { grid-template-columns: 1fr; }
+}
+
+/* ── FIELD GROUP ── */
+.fg {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.fg label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fg label .req {
+  color: var(--orange);
+  font-size: 12px;
+  line-height: 1;
+}
+
+.fg .hint {
+  font-size: 11px;
+  color: rgba(255,255,255,0.22);
+  margin-top: -2px;
+  line-height: 1.4;
+  font-style: italic;
+}
+
+/* selects */
+.fg select {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: #fff;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748B' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  transition: border-color 0.18s, background-color 0.18s;
+}
+
+.fg select:focus {
+  border-color: rgba(232,119,34,0.5);
+  background-color: rgba(232,119,34,0.05);
+}
+
+.fg select option { background: #0D1F35; color: #fff; }
+
+/* textareas + inputs */
+.fg textarea,
+.fg input[type="text"] {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #fff;
+  outline: none;
+  resize: vertical;
+  line-height: 1.55;
+  transition: border-color 0.18s, background-color 0.18s;
+  width: 100%;
+}
+
+.fg textarea { min-height: 72px; }
+.fg textarea.tall { min-height: 90px; }
+
+.fg textarea:focus,
+.fg input[type="text"]:focus {
+  border-color: rgba(232,119,34,0.5);
+  background-color: rgba(232,119,34,0.04);
+}
+
+.fg textarea::placeholder,
+.fg input[type="text"]::placeholder {
+  color: rgba(255,255,255,0.18);
+  font-style: italic;
+}
+
+/* filled state */
+.fg textarea.filled,
+.fg input[type="text"].filled,
+.fg select.filled {
+  border-color: rgba(255,255,255,0.18);
+}
+
+/* ── DIVIDER ── */
+.field-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+  margin: 8px 0 4px;
+  grid-column: 1 / -1;
+}
+
+/* ── SECTION MINI-LABEL ── */
+.form-section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--gray-600);
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.form-section-label::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: rgba(255,255,255,0.05);
+}
+
+/* ── ENTITY CONFIRM CHECK ── */
+.entity-confirm {
+  grid-column: 1 / -1;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.entity-confirm input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--orange);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.entity-confirm-label {
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.5;
+}
+
+.entity-confirm-label strong { color: rgba(255,255,255,0.9); }
+
+/* ── COMPLETE BUTTON ── */
+.brief-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-complete {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.1s;
+}
+
+.btn-complete:hover { background: #d4681a; transform: translateY(-1px); }
+.btn-complete:active { transform: translateY(0); }
+
+.btn-complete.done {
+  background: var(--green-bg);
+  border: 1px solid rgba(34,197,94,0.3);
+  color: var(--green);
+}
+
+.btn-reset {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s;
+}
+
+.btn-reset:hover { border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
+
+.complete-hint {
+  font-size: 12px;
+  color: var(--gray-500);
+  font-style: italic;
+}
+
+/* ── ADD BRIEF BUTTON ── */
+.add-brief-btn {
+  width: 100%;
+  background: transparent;
+  border: 1px dashed rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 18px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  cursor: pointer;
+  transition: all 0.18s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.add-brief-btn:hover {
+  border-color: rgba(232,119,34,0.4);
+  color: var(--orange);
+  background: var(--orange-dim);
+}
+
+/* ── REFERENCE PANEL ── */
+.reference-panel {
+  background: rgba(13,31,53,0.9);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 36px;
+}
+
+.rp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  cursor: pointer;
+  user-select: none;
+}
+
+.rp-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  color: var(--gray-400);
+}
+
+.rp-toggle {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+}
+
+.rp-body {
+  display: none;
+  padding: 24px;
+}
+
+.reference-panel.open .rp-body { display: block; }
+.reference-panel.open .rp-title { color: #fff; }
+
+.ref-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 640px) { .ref-grid { grid-template-columns: 1fr; } }
+
+.ref-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.ref-card .rc-head {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.ref-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 5px 0;
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.4;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.ref-item:last-child { border-bottom: none; }
+
+.ref-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.ref-dot.orange { background: var(--orange); }
+.ref-dot.blue   { background: var(--blue-mid); }
+.ref-dot.green  { background: var(--green); }
+.ref-dot.red    { background: var(--red); }
+.ref-dot.yellow { background: var(--yellow); }
+.ref-dot.purple { background: var(--purple); }
+
+.ref-new-badge {
+  display: inline-block;
+  background: var(--green-bg);
+  color: var(--green);
+  border: 1px solid rgba(34,197,94,0.25);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  padding: 1px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  margin-left: 4px;
+  flex-shrink: 0;
+}
+
+.ref-same-badge {
+  display: inline-block;
+  background: var(--red-bg);
+  color: #F87171;
+  border: 1px solid rgba(220,38,38,0.25);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  padding: 1px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  margin-left: 4px;
+  flex-shrink: 0;
+}
+
+.callout {
+  border-left: 3px solid var(--orange);
+  background: var(--orange-dim);
+  border-radius: 0 10px 10px 0;
+  padding: 14px 18px;
+  margin-top: 16px;
+}
+
+.callout .ch {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 5px;
+}
+
+.callout p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.6;
+}
+
+/* ── FOOTER ── */
+.footer {
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.25);
+}
+
+.footer-brand span { color: rgba(232,119,34,0.6); }
+
+.footer-note {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: rgba(255,255,255,0.18);
+  letter-spacing: 0.05em;
+}
+
+/* print */
+@media print {
+  body { background: #fff; color: #000; }
+  .add-brief-btn, .reference-panel, .week-control input, .btn-reset { display: none; }
+  .bc-body { display: block !important; }
+  .brief-card { border-color: #ccc; break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-meta">
+      <div>
+        <div class="eyebrow">IFCA · Ad Creative System</div>
+        <h1>WEEKLY<br><em>CREATIVE BRIEF</em></h1>
+        <p class="header-sub">Build 2–3 genuinely new entity briefs in 30 minutes. Every field forces a decision. Done means ready to film.</p>
+      </div>
+      <div class="week-control">
+        <span class="week-label">Week of</span>
+        <div class="week-display">
+          <input type="date" id="week-date" onchange="updateWeekLabel()">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar-wrap">
+    <span class="pb-label">Briefs complete</span>
+    <div class="pb-track">
+      <div class="pb-fill" id="pb-fill"></div>
+    </div>
+    <span class="pb-count" id="pb-count">0 / 0</span>
+  </div>
+
+  <!-- CONTEXT BAR -->
+  <div class="context-bar">
+    <div class="cb-item">
+      <span class="cb-label">Spend Tier</span>
+      <span class="cb-val orange" id="ctx-tier">—</span>
+    </div>
+    <div class="cb-divider"></div>
+    <div class="cb-item">
+      <span class="cb-label">New Ads / Week Target</span>
+      <span class="cb-val" id="ctx-weekly">—</span>
+    </div>
+    <div class="cb-divider"></div>
+    <div class="cb-item">
+      <span class="cb-label">Min Live Entities</span>
+      <span class="cb-val" id="ctx-entities">—</span>
+    </div>
+    <div class="cb-divider"></div>
+    <div class="cb-item">
+      <span class="cb-label">Briefs This Week</span>
+      <span class="cb-val green" id="ctx-briefs">—</span>
+    </div>
+    <div class="cb-input-row">
+      <label for="tier-select">Your spend tier:</label>
+      <select id="tier-select" onchange="updateTierContext()">
+        <option value="">Select tier</option>
+        <option value="1">$500 – $2K / mo</option>
+        <option value="2">$2K – $5K / mo</option>
+        <option value="3">$5K – $15K / mo</option>
+        <option value="4">$15K+ / mo</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- BRIEFS -->
+  <div class="sec-label">This Week's Entity Briefs</div>
+  <div class="briefs-grid" id="briefs-grid"></div>
+
+  <button class="add-brief-btn" onclick="addBrief()">
+    <span style="font-size:18px">+</span> Add Brief
+  </button>
+
+  <!-- REFERENCE PANEL -->
+  <div class="reference-panel" id="ref-panel">
+    <div class="rp-header" onclick="toggleRef()">
+      <span class="rp-title">📋 Quick Reference — Entity Dimensions & Hook Types</span>
+      <span class="rp-toggle" id="ref-toggle-label">Show ▾</span>
+    </div>
+    <div class="rp-body">
+      <div class="ref-grid">
+
+        <div class="ref-card">
+          <div class="rc-head">Format Buckets</div>
+          <div class="ref-item"><span class="ref-dot orange"></span>Talking head — direct to camera</div>
+          <div class="ref-item"><span class="ref-dot blue"></span>B-roll + text overlay</div>
+          <div class="ref-item"><span class="ref-dot green"></span>Skit / acted-out pain <span class="ref-new-badge">uncrowded</span></div>
+          <div class="ref-item"><span class="ref-dot yellow"></span>VSL-style (long-form pitch)</div>
+          <div class="ref-item"><span class="ref-dot purple"></span>Interview / podcast clip</div>
+          <div class="ref-item"><span class="ref-dot blue"></span>Walking / outdoor delivery</div>
+          <div class="ref-item"><span class="ref-dot orange"></span>UGC / client testimonial</div>
+          <div class="ref-item"><span class="ref-dot red"></span>Carousel / static image</div>
+        </div>
+
+        <div class="ref-card">
+          <div class="rc-head">Hook Types</div>
+          <div class="ref-item"><span class="ref-dot orange"></span>Pain callout — name their exact struggle</div>
+          <div class="ref-item"><span class="ref-dot blue"></span>Curiosity gap — tease an insight</div>
+          <div class="ref-item"><span class="ref-dot green"></span>Result lead — lead with outcome</div>
+          <div class="ref-item"><span class="ref-dot yellow"></span>Pattern interrupt — unexpected opener</div>
+          <div class="ref-item"><span class="ref-dot purple"></span>Identity challenge — question their label</div>
+          <div class="ref-item"><span class="ref-dot red"></span>Contrarian take — "X is wrong"</div>
+          <div class="ref-item"><span class="ref-dot orange"></span>Story open — "I used to think…"</div>
+          <div class="ref-item"><span class="ref-dot blue"></span>Direct question — "Are you doing X?"</div>
+        </div>
+
+        <div class="ref-card">
+          <div class="rc-head">Variation Rules</div>
+          <div class="ref-item"><span class="ref-dot orange"></span>Hook Swap only <span class="ref-same-badge">same entity</span></div>
+          <div class="ref-item"><span class="ref-dot green"></span>Format Shift <span class="ref-new-badge">new entity</span></div>
+          <div class="ref-item"><span class="ref-dot green"></span>Angle Shift <span class="ref-new-badge">new entity</span></div>
+          <div class="ref-item"><span class="ref-dot green"></span>Presenter Swap <span class="ref-new-badge">new entity</span></div>
+          <div class="ref-item"><span class="ref-dot red"></span>Same angle + new words = same entity</div>
+          <div class="ref-item"><span class="ref-dot blue"></span>New entity needs all 3 dims different</div>
+          <div class="ref-item"><span class="ref-dot yellow"></span>White space: skit format, BOF proof ads</div>
+          <div class="ref-item"><span class="ref-dot purple"></span>Pain hook without identity label → test now</div>
+        </div>
+
+      </div>
+
+      <div class="callout">
+        <div class="ch">Entity = Format Bucket + Hook Type + Core Emotion</div>
+        <p>All three must differ from existing ads for this to count as a true new entity. Two briefs with the same format + emotion but different hooks are the same entity — you're buying one lottery ticket, not two. When in doubt, change the format first.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-brand">IFCA <span>PLAYBOOKS</span></div>
+    <div class="footer-note">tools-and-calculators/weekly-creative-brief · April 2026</div>
+  </footer>
+
+</div>
+
+<script>
+/* ─────────────────────────────────────────────
+   DATA
+───────────────────────────────────────────── */
+const TIERS = {
+  1: { label: '$500–$2K',  weekly: '2–3',   weeklyMin: 2, entities: '8–10',   briefs: 2 },
+  2: { label: '$2K–$5K',  weekly: '4–5',   weeklyMin: 4, entities: '10–12',  briefs: 3 },
+  3: { label: '$5K–$15K', weekly: '8–12',  weeklyMin: 8, entities: '12–15',  briefs: 4 },
+  4: { label: '$15K+',    weekly: '12–20', weeklyMin:12, entities: '15+',     briefs: 5 },
+};
+
+const FORMAT_OPTIONS = [
+  { value: '', label: '— Select format —' },
+  { value: 'talking-head',  label: 'Talking Head (direct to camera)' },
+  { value: 'broll-text',    label: 'B-Roll + Text Overlay' },
+  { value: 'skit',          label: 'Skit / Acted-Out Pain' },
+  { value: 'vsl',           label: 'VSL-Style (long-form pitch)' },
+  { value: 'interview',     label: 'Interview / Podcast Clip' },
+  { value: 'walking',       label: 'Walking / Outdoor Delivery' },
+  { value: 'ugc',           label: 'UGC / Client Testimonial' },
+  { value: 'carousel',      label: 'Carousel / Static Image' },
+];
+
+const HOOK_OPTIONS = [
+  { value: '', label: '— Select hook type —' },
+  { value: 'pain-callout',    label: 'Pain Callout — name the struggle' },
+  { value: 'curiosity-gap',   label: 'Curiosity Gap — tease an insight' },
+  { value: 'result-lead',     label: 'Result Lead — open with the outcome' },
+  { value: 'pattern-interrupt', label: 'Pattern Interrupt — unexpected opener' },
+  { value: 'identity-challenge', label: 'Identity Challenge — question their label' },
+  { value: 'contrarian',      label: 'Contrarian Take — "X is wrong"' },
+  { value: 'story-open',      label: 'Story Open — "I used to think…"' },
+  { value: 'direct-question', label: 'Direct Question — "Are you doing X?"' },
+];
+
+const EMOTION_OPTIONS = [
+  { value: '', label: '— Select emotion —' },
+  { value: 'fear',        label: 'Fear — threat of loss, pain of staying stuck' },
+  { value: 'frustration', label: 'Frustration — validated anger at a broken system' },
+  { value: 'desire',      label: 'Desire — pull toward a better version of life' },
+  { value: 'hope',        label: 'Hope — belief that change is actually possible' },
+];
+
+const FUNNEL_OPTIONS = [
+  { value: '', label: '— Select funnel stage —' },
+  { value: 'tof', label: 'TOF — Follower / awareness campaign' },
+  { value: 'mof', label: 'MOF — DM Lead Magnet / cold to warm' },
+  { value: 'bof', label: 'BOF — VSL / proof / direct CTA' },
+];
+
+const AVATAR_OPTIONS = [
+  { value: '', label: '— Select avatar —' },
+  { value: 'new-coach',      label: 'New / early-stage coach (0–$5K/mo)' },
+  { value: 'scaling-coach',  label: 'Scaling coach ($5K–$20K/mo)' },
+  { value: 'burnout-coach',  label: 'Burned-out coach — time/delivery problem' },
+  { value: 'niche-specific', label: 'Niche-specific (Hashimoto\'s, women 40+, etc.)' },
+  { value: 'other',          label: 'Other — specify in notes' },
+];
+
+const VARIATION_OPTIONS = [
+  { value: '', label: '— How does this differ from current ads? —' },
+  { value: 'format-shift',    label: 'Format Shift — different physical format' },
+  { value: 'angle-shift',     label: 'Angle Shift — different core emotion' },
+  { value: 'presenter-swap',  label: 'Presenter Swap — different person delivers' },
+  { value: 'all-three',       label: 'All Three Dimensions Different' },
+  { value: 'hook-swap-only',  label: 'Hook Swap Only (same entity — hook rate test)' },
+  { value: 'net-new',         label: 'Net New Concept — nothing like this in library' },
+];
+
+let briefs = [];
+let briefCounter = 0;
+
+/* ─────────────────────────────────────────────
+   INIT
+───────────────────────────────────────────── */
+window.addEventListener('DOMContentLoaded', () => {
+  // Default date to Monday of current week
+  const today = new Date();
+  const day = today.getDay();
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - (day === 0 ? 6 : day - 1));
+  document.getElementById('week-date').value = monday.toISOString().split('T')[0];
+  updateWeekLabel();
+
+  // Add 2 default briefs
+  addBrief();
+  addBrief();
+  // Open first one
+  toggleCard(briefs[0].id);
+});
+
+/* ─────────────────────────────────────────────
+   WEEK LABEL
+───────────────────────────────────────────── */
+function updateWeekLabel() {
+  const d = document.getElementById('week-date').value;
+  if (!d) return;
+  const date = new Date(d + 'T00:00:00');
+  const end = new Date(date);
+  end.setDate(date.getDate() + 6);
+  const opts = { month: 'short', day: 'numeric' };
+  // label already shown in input
+}
+
+/* ─────────────────────────────────────────────
+   TIER CONTEXT
+───────────────────────────────────────────── */
+function updateTierContext() {
+  const tier = parseInt(document.getElementById('tier-select').value);
+  const td = TIERS[tier];
+  if (!td) {
+    ['ctx-tier','ctx-weekly','ctx-entities','ctx-briefs'].forEach(id => {
+      document.getElementById(id).textContent = '—';
+    });
+    return;
+  }
+  document.getElementById('ctx-tier').textContent     = td.label;
+  document.getElementById('ctx-weekly').textContent   = td.weekly + ' / week';
+  document.getElementById('ctx-entities').textContent = td.entities;
+  document.getElementById('ctx-briefs').textContent   = td.briefs + ' this week';
+}
+
+/* ─────────────────────────────────────────────
+   ADD BRIEF
+───────────────────────────────────────────── */
+function addBrief() {
+  briefCounter++;
+  const id = 'brief-' + briefCounter;
+  briefs.push({ id, num: briefCounter, complete: false });
+  renderBriefs();
+  updateProgress();
+}
+
+/* ─────────────────────────────────────────────
+   RENDER ALL BRIEFS
+───────────────────────────────────────────── */
+function renderBriefs() {
+  const grid = document.getElementById('briefs-grid');
+  // Preserve open state
+  const openCards = new Set(
+    [...document.querySelectorAll('.brief-card.open')].map(c => c.dataset.id)
+  );
+
+  grid.innerHTML = '';
+
+  briefs.forEach((b, i) => {
+    const isOpen = openCards.has(b.id) || (!openCards.size && i === 0);
+    grid.insertAdjacentHTML('beforeend', buildBriefCard(b, isOpen));
+  });
+
+  // Re-attach listeners on selects/textareas for live validation
+  briefs.forEach(b => {
+    attachListeners(b.id);
+  });
+}
+
+/* ─────────────────────────────────────────────
+   BUILD BRIEF CARD HTML
+───────────────────────────────────────────── */
+function buildBriefCard(b, isOpen) {
+  const num = b.num.toString().padStart(2, '0');
+  const cardClass = `brief-card ${b.complete ? 'complete' : 'active-card'} ${isOpen ? 'open' : ''}`;
+
+  const sel = (opts, name, placeholder) => `
+    <select name="${name}" onchange="onFieldChange('${b.id}')">
+      ${opts.map(o => `<option value="${o.value}">${o.label}</option>`).join('')}
+    </select>`;
+
+  const ta = (name, ph, tall = false) => `
+    <textarea name="${name}" placeholder="${ph}" class="${tall ? 'tall' : ''}"
+      oninput="onFieldChange('${b.id}')" rows="3"></textarea>`;
+
+  const inp = (name, ph) => `
+    <input type="text" name="${name}" placeholder="${ph}"
+      oninput="onFieldChange('${b.id}')">`;
+
+  return `
+<div class="brief-card ${b.complete ? 'complete' : 'active-card'} ${isOpen ? 'open' : ''}"
+     data-id="${b.id}" id="${b.id}">
+
+  <div class="bc-header" onclick="toggleCard('${b.id}')">
+    <div class="bc-num">${num}</div>
+    <div class="bc-header-body">
+      <div class="bc-brief-title" id="${b.id}-title">${b.complete ? '✓ Brief Complete' : 'Untitled Brief — click to expand'}</div>
+      <div class="bc-entity-badge" id="${b.id}-badge">Entity not yet defined</div>
+    </div>
+    <div class="bc-pills" id="${b.id}-pills"></div>
+    <div class="bc-chevron">▾</div>
+  </div>
+
+  <div class="bc-body">
+
+    <!-- Entity validator -->
+    <div class="entity-validator" id="${b.id}-validator">
+      <div class="ev-icon">📐</div>
+      <div class="ev-body">
+        <div class="ev-title neutral" id="${b.id}-v-title">Entity Not Yet Defined</div>
+        <div class="ev-text" id="${b.id}-v-text">Select format bucket, hook type, and core emotion to check if this is a genuinely new entity.</div>
+      </div>
+    </div>
+
+    <div class="form-grid cols-3">
+
+      <!-- ROW 1: Entity Dimensions -->
+      <div class="form-section-label">Entity Dimensions — All 3 must be different from existing ads</div>
+
+      <div class="fg">
+        <label>Format Bucket <span class="req">*</span></label>
+        ${sel(FORMAT_OPTIONS, 'format', 'Select format')}
+      </div>
+      <div class="fg">
+        <label>Hook Type <span class="req">*</span></label>
+        ${sel(HOOK_OPTIONS, 'hookType', 'Select hook type')}
+      </div>
+      <div class="fg">
+        <label>Core Emotion <span class="req">*</span></label>
+        ${sel(EMOTION_OPTIONS, 'emotion', 'Select emotion')}
+      </div>
+
+      <!-- ROW 2: Targeting -->
+      <div class="form-section-label">Context</div>
+
+      <div class="fg">
+        <label>Funnel Stage</label>
+        ${sel(FUNNEL_OPTIONS, 'funnelStage', '')}
+      </div>
+      <div class="fg">
+        <label>Avatar</label>
+        ${sel(AVATAR_OPTIONS, 'avatar', '')}
+      </div>
+      <div class="fg">
+        <label>Variation Type</label>
+        ${sel(VARIATION_OPTIONS, 'variationType', '')}
+        <span class="hint">What makes this a new entity vs. what you're already running?</span>
+      </div>
+
+      <!-- ROW 3: Hook -->
+      <div class="field-divider"></div>
+      <div class="form-section-label">The Hook — First 3 Seconds</div>
+
+      <div class="fg" style="grid-column: 1 / -1;">
+        <label>Opening Hook — Exact Words <span class="req">*</span></label>
+        ${inp('hookText', 'Write it out verbatim. E.g. "The fitness coaching industry has a problem nobody wants to talk about…"')}
+        <span class="hint">Write it like you'll say it. If you can't write it in one sentence, the hook isn't clear enough yet.</span>
+      </div>
+
+      <div class="fg" style="grid-column: 1 / -1;">
+        <label>Re-Hook at 10–12 Seconds <span class="req">*</span></label>
+        ${inp('rehook', 'The line that rescues nearly-scrolled viewers. E.g. "Here\'s the part nobody tells you…"')}
+        <span class="hint">Mandatory. Missing this single element is the #1 reason hold rate drops below 20%.</span>
+      </div>
+
+      <!-- ROW 4: Body -->
+      <div class="field-divider"></div>
+      <div class="form-section-label">Body — The Middle</div>
+
+      <div class="fg" style="grid-column: span 2;">
+        <label>Core Argument / Message</label>
+        ${ta('coreMessage', 'What\'s the one thing this ad teaches or proves? The mechanism, the insight, the diagnosis. Keep it to the single strongest point.', true)}
+      </div>
+      <div class="fg">
+        <label>Proof Point</label>
+        ${ta('proofPoint', 'Name + number + timeframe. E.g. "Sarah went from $4K to $18K/mo in 6 months without adding a single new client."')}
+        <span class="hint">Specificity beats vague claims every time.</span>
+      </div>
+
+      <!-- ROW 5: CTA -->
+      <div class="field-divider"></div>
+      <div class="form-section-label">CTA — The Close</div>
+
+      <div class="fg">
+        <label>DM Keyword / CTA</label>
+        ${inp('ctaKeyword', 'e.g. Comment "SCALE" — DM me "FREE" — Link in bio')}
+      </div>
+      <div class="fg">
+        <label>Urgency / Reason to Act Now</label>
+        ${inp('urgency', 'e.g. "I\'m opening 3 spots this week" — optional but lifts CTR')}
+      </div>
+      <div class="fg">
+        <label>Approx. Video Length</label>
+        <select name="videoLength" onchange="onFieldChange('${b.id}')">
+          <option value="">— Select —</option>
+          <option value="15s">15 seconds (TOF hook only)</option>
+          <option value="30s">30 seconds (tight DM ad)</option>
+          <option value="60s">60 seconds (standard MOF)</option>
+          <option value="90s">90 seconds (full teaching ad)</option>
+          <option value="3min">3+ minutes (VSL / BOF)</option>
+        </select>
+      </div>
+
+      <!-- ROW 6: Entity confirm -->
+      <div class="field-divider"></div>
+
+      <div class="entity-confirm">
+        <input type="checkbox" name="entityConfirm" id="${b.id}-confirm" onchange="onFieldChange('${b.id}')">
+        <label class="entity-confirm-label" for="${b.id}-confirm">
+          I confirm this brief has a <strong>different format bucket, hook type, AND core emotion</strong> from at least 2 of my current active ads. This is a genuine new entity — not a variation of something already running.
+        </label>
+      </div>
+
+      <!-- Notes -->
+      <div class="fg" style="grid-column: 1 / -1;">
+        <label>Production Notes</label>
+        ${ta('notes', 'Location, props, outfit, on-screen text, background — anything the person filming needs to know.')}
+      </div>
+
+    </div>
+
+    <div class="brief-actions">
+      <div>
+        ${b.complete
+          ? `<span style="color:var(--green); font-family:'DM Mono',monospace; font-size:12px; letter-spacing:0.08em;">✓ BRIEF COMPLETE — READY TO FILM</span>`
+          : `<span class="complete-hint">Fill required fields (*) and check the entity confirmation to mark complete.</span>`
+        }
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn-reset" onclick="resetBrief('${b.id}')">Reset</button>
+        <button class="btn-complete ${b.complete ? 'done' : ''}" id="${b.id}-complete-btn"
+          onclick="markComplete('${b.id}')">
+          ${b.complete ? '✓ Complete' : 'Mark Complete →'}
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>`;
+}
+
+/* ─────────────────────────────────────────────
+   ATTACH LISTENERS (after render)
+───────────────────────────────────────────── */
+function attachListeners(id) {
+  const card = document.getElementById(id);
+  if (!card) return;
+  card.querySelectorAll('select, textarea, input[type="text"], input[type="checkbox"]')
+    .forEach(el => {
+      // listeners already set via inline handlers
+    });
+}
+
+/* ─────────────────────────────────────────────
+   TOGGLE CARD
+───────────────────────────────────────────── */
+function toggleCard(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+
+/* ─────────────────────────────────────────────
+   ON FIELD CHANGE
+───────────────────────────────────────────── */
+function onFieldChange(id) {
+  updateEntityValidator(id);
+  updateCardHeader(id);
+  updateProgress();
+}
+
+/* ─────────────────────────────────────────────
+   ENTITY VALIDATOR
+───────────────────────────────────────────── */
+function updateEntityValidator(id) {
+  const card = document.getElementById(id);
+  if (!card) return;
+
+  const format    = card.querySelector('[name="format"]')?.value;
+  const hookType  = card.querySelector('[name="hookType"]')?.value;
+  const emotion   = card.querySelector('[name="emotion"]')?.value;
+  const variation = card.querySelector('[name="variationType"]')?.value;
+
+  const title  = document.getElementById(id + '-v-title');
+  const text   = document.getElementById(id + '-v-text');
+  const valBox = document.getElementById(id + '-validator');
+
+  const allThree = format && hookType && emotion;
+
+  if (!allThree) {
+    title.className = 'ev-title neutral';
+    title.textContent = 'Entity Not Yet Defined';
+    text.textContent = 'Select format bucket, hook type, and core emotion to validate this entity.';
+    return;
+  }
+
+  // Hook swap = same entity warning
+  if (variation === 'hook-swap-only') {
+    title.className = 'ev-title warn';
+    title.textContent = '⚠ Hook Swap Only — Same Entity';
+    text.textContent = 'A hook swap does NOT create a new entity. This is useful for hook rate testing but gives you the same lottery ticket. Change the format or angle to create a genuinely new entity.';
+    return;
+  }
+
+  // Entity defined — check if it looks new
+  const formatLabel  = FORMAT_OPTIONS.find(o => o.value === format)?.label || format;
+  const hookLabel    = HOOK_OPTIONS.find(o => o.value === hookType)?.label || hookType;
+  const emotionLabel = EMOTION_OPTIONS.find(o => o.value === emotion)?.label || emotion;
+
+  title.className = 'ev-title pass';
+  title.textContent = '✓ New Entity Defined';
+  text.textContent = `${formatLabel} · ${hookLabel} · ${emotionLabel.split('—')[0].trim()}. If these three dimensions differ from your current library, this is a new lottery ticket.`;
+}
+
+/* ─────────────────────────────────────────────
+   UPDATE CARD HEADER (live title + pills)
+───────────────────────────────────────────── */
+function updateCardHeader(id) {
+  const card = document.getElementById(id);
+  if (!card) return;
+
+  const format    = card.querySelector('[name="format"]')?.value;
+  const hookType  = card.querySelector('[name="hookType"]')?.value;
+  const emotion   = card.querySelector('[name="emotion"]')?.value;
+  const hookText  = card.querySelector('[name="hookText"]')?.value?.trim();
+  const stage     = card.querySelector('[name="funnelStage"]')?.value;
+
+  // Title: show hook text if filled, else format+emotion
+  const titleEl = document.getElementById(id + '-title');
+  const b = briefs.find(b => b.id === id);
+
+  if (b?.complete) {
+    titleEl.textContent = hookText ? `✓ "${hookText.slice(0,55)}${hookText.length > 55 ? '…' : ''}"` : '✓ Brief Complete';
+  } else if (hookText) {
+    titleEl.textContent = `"${hookText.slice(0,60)}${hookText.length > 60 ? '…' : ''}"`;
+  } else if (format) {
+    const fl = FORMAT_OPTIONS.find(o => o.value === format)?.label?.split('(')[0].trim() || format;
+    titleEl.textContent = fl + (emotion ? ` · ${emotion}` : '');
+  } else {
+    titleEl.textContent = 'Untitled Brief — click to expand';
+  }
+
+  // Badge
+  const badgeEl = document.getElementById(id + '-badge');
+  if (format && hookType && emotion) {
+    const fl = FORMAT_OPTIONS.find(o => o.value === format)?.label?.split('(')[0].trim() || format;
+    const hl = HOOK_OPTIONS.find(o => o.value === hookType)?.label?.split('—')[0].trim() || hookType;
+    const el = EMOTION_OPTIONS.find(o => o.value === emotion)?.label?.split('—')[0].trim() || emotion;
+    badgeEl.textContent = `${fl} · ${hl} · ${el}`;
+  } else {
+    badgeEl.textContent = 'Entity not yet defined';
+  }
+
+  // Pills
+  const pillsEl = document.getElementById(id + '-pills');
+  let pills = '';
+  if (format) {
+    const fl = FORMAT_OPTIONS.find(o => o.value === format)?.label?.split('(')[0].trim() || format;
+    pills += `<span class="bc-pill format">${fl}</span>`;
+  }
+  if (emotion) {
+    pills += `<span class="bc-pill emotion-${emotion}">${emotion}</span>`;
+  }
+  if (stage) {
+    pills += `<span class="bc-pill hook">${stage.toUpperCase()}</span>`;
+  }
+  if (b?.complete) {
+    pills += `<span class="bc-pill done">✓ Done</span>`;
+  }
+  pillsEl.innerHTML = pills;
+}
+
+/* ─────────────────────────────────────────────
+   MARK COMPLETE
+───────────────────────────────────────────── */
+function markComplete(id) {
+  const card = document.getElementById(id);
+  const b = briefs.find(b => b.id === id);
+  if (!b) return;
+
+  // Check required fields
+  const format   = card.querySelector('[name="format"]')?.value;
+  const hookType = card.querySelector('[name="hookType"]')?.value;
+  const emotion  = card.querySelector('[name="emotion"]')?.value;
+  const hookText = card.querySelector('[name="hookText"]')?.value?.trim();
+  const rehook   = card.querySelector('[name="rehook"]')?.value?.trim();
+  const confirm  = card.querySelector('[name="entityConfirm"]')?.checked;
+
+  const missing = [];
+  if (!format)    missing.push('Format Bucket');
+  if (!hookType)  missing.push('Hook Type');
+  if (!emotion)   missing.push('Core Emotion');
+  if (!hookText)  missing.push('Opening Hook');
+  if (!rehook)    missing.push('Re-Hook at 10–12s');
+  if (!confirm)   missing.push('Entity Confirmation checkbox');
+
+  if (missing.length) {
+    alert(`Complete these required fields first:\n\n• ${missing.join('\n• ')}`);
+    return;
+  }
+
+  b.complete = !b.complete;
+  renderBriefs();
+  updateProgress();
+
+  // Re-open card after re-render
+  if (!b.complete) {
+    const newCard = document.getElementById(id);
+    newCard.classList.add('open');
+  }
+}
+
+/* ─────────────────────────────────────────────
+   RESET BRIEF
+───────────────────────────────────────────── */
+function resetBrief(id) {
+  if (!confirm('Reset this brief? All fields will be cleared.')) return;
+  const b = briefs.find(b => b.id === id);
+  if (b) { b.complete = false; }
+  const card = document.getElementById(id);
+  card.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+  card.querySelectorAll('textarea, input[type="text"]').forEach(t => t.value = '');
+  card.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+  onFieldChange(id);
+}
+
+/* ─────────────────────────────────────────────
+   PROGRESS BAR
+───────────────────────────────────────────── */
+function updateProgress() {
+  const total    = briefs.length;
+  const complete = briefs.filter(b => b.complete).length;
+  const pct      = total > 0 ? (complete / total) * 100 : 0;
+
+  document.getElementById('pb-fill').style.width = pct + '%';
+  document.getElementById('pb-count').textContent = complete + ' / ' + total;
+}
+
+/* ─────────────────────────────────────────────
+   REFERENCE PANEL
+───────────────────────────────────────────── */
+function toggleRef() {
+  const panel = document.getElementById('ref-panel');
+  panel.classList.toggle('open');
+  document.getElementById('ref-toggle-label').textContent =
+    panel.classList.contains('open') ? 'Hide ▴' : 'Show ▾';
+}
+</script>
+</body>
+</html>

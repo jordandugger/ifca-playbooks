@@ -27,6 +27,8 @@
     --purple-dim: rgba(167,139,250,0.12);
     --gold: #F59E0B;
     --gold-dim: rgba(245,158,11,0.12);
+    --teal: #2DD4BF;
+    --teal-dim: rgba(45,212,191,0.1);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -229,11 +231,30 @@
   .cc-stat { display: flex; justify-content: space-between; align-items: center; }
   .cc-stat-label { font-size: 11px; color: rgba(255,255,255,0.35); }
   .cc-stat-val { font-family: 'DM Mono'; font-size: 11px; color: rgba(255,255,255,0.65); }
-  .cc-resources { padding: 10px 20px 18px; display: flex; flex-direction: column; gap: 5px; border-top: 1px solid rgba(255,255,255,0.04); margin-top: auto; }
+  .cc-resources { padding: 10px 20px 14px; display: flex; flex-direction: column; gap: 5px; border-top: 1px solid rgba(255,255,255,0.04); margin-top: auto; }
   .cc-resource { font-size: 11px; color: rgba(255,255,255,0.3); display: flex; align-items: center; gap: 6px; }
   .cc-resource.available { color: rgba(245,158,11,0.7); }
   .cc-resource.available::before { content: '●'; font-size: 7px; color: var(--gold); }
   .cc-resource.unavailable::before { content: '○'; font-size: 7px; color: rgba(255,255,255,0.2); }
+
+  /* ── Tracker resource row — teal accent, visually distinct from standard resources ── */
+  .cc-resource.tracker {
+    color: var(--teal);
+    background: var(--teal-dim);
+    border: 1px solid rgba(45,212,191,0.2);
+    border-radius: 5px;
+    padding: 5px 9px;
+    margin-top: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: background 0.2s, border-color 0.2s;
+    justify-content: space-between;
+  }
+  .cc-resource.tracker::before { content: '📊'; font-size: 10px; flex-shrink: 0; }
+  .cc-resource.tracker a { color: inherit; text-decoration: none; flex: 1; }
+  .cc-resource.tracker::after { content: '↗'; font-size: 10px; opacity: 0.6; flex-shrink: 0; }
+  .client-card:hover .cc-resource.tracker { background: rgba(45,212,191,0.15); border-color: rgba(45,212,191,0.4); }
+
   .cc-footer { padding: 10px 20px 14px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; }
   .cc-open { font-family: 'DM Mono'; font-size: 9px; color: rgba(255,255,255,0.25); letter-spacing: 1px; text-transform: uppercase; }
   .cc-arrow { font-size: 12px; color: rgba(255,255,255,0.2); transition: all 0.2s; }
@@ -623,6 +644,7 @@
       <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
     </a>
 
+    <!-- LINDSEY — has tracker resource -->
     <a class="client-card" href="client-audits/lindsey-mathews/index.html">
       <div class="cc-header">
         <div class="cc-initials">LM</div>
@@ -637,7 +659,10 @@
         <div class="cc-resource available">Business Audit</div>
         <div class="cc-resource unavailable">Intelligence Report</div>
         <div class="cc-resource unavailable">Creative Brief History</div>
-        <div class="cc-resource available"><a href="client-audits/lindsey-mathews/ads-tracker.html" style="color:inherit;text-decoration:none;">↗ Ad Performance Tracker</a></div>
+        <!-- Live Ad Tracker — teal accent row -->
+        <div class="cc-resource tracker">
+          <a href="client-audits/lindsey-mathews/ads-tracker.html">Live Ad Performance Tracker</a>
+        </div>
       </div>
       <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
     </a>
@@ -660,7 +685,8 @@
       <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
     </a>
 
-    <a class="client-card" href="client-audits/amy-jo/index.html">
+    <!-- AMY JO — coming soon -->
+    <div class="client-card" style="opacity:0.45;cursor:default;">
       <div class="cc-header">
         <div class="cc-initials">AJ</div>
         <div class="cc-name">Amy Jo Palmquest</div>
@@ -671,14 +697,15 @@
         <div class="cc-stat"><span class="cc-stat-label">Constraint</span><span class="cc-stat-val">Low spend · Needs creative cadence</span></div>
       </div>
       <div class="cc-resources">
-        <div class="cc-resource available">Business Audit</div>
+        <div class="cc-resource unavailable">Business Audit</div>
         <div class="cc-resource unavailable">Intelligence Report</div>
         <div class="cc-resource unavailable">Creative Brief History</div>
       </div>
-      <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
-    </a>
+      <div class="cc-footer"><span class="cc-open" style="color:rgba(255,255,255,0.15);">Coming Soon</span><span class="cc-arrow" style="opacity:0.3;">→</span></div>
+    </div>
 
-    <a class="client-card" href="client-audits/emily-etni/index.html">
+    <!-- EMILY & ETNI — coming soon -->
+    <div class="client-card" style="opacity:0.45;cursor:default;">
       <div class="cc-header">
         <div class="cc-initials">EE</div>
         <div class="cc-name">Emily &amp; Etni</div>
@@ -689,12 +716,12 @@
         <div class="cc-stat"><span class="cc-stat-label">Constraint</span><span class="cc-stat-val">CPL above target · Hook rate fix needed</span></div>
       </div>
       <div class="cc-resources">
-        <div class="cc-resource available">Business Audit</div>
+        <div class="cc-resource unavailable">Business Audit</div>
         <div class="cc-resource unavailable">Intelligence Report</div>
         <div class="cc-resource unavailable">Creative Brief History</div>
       </div>
-      <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
-    </a>
+      <div class="cc-footer"><span class="cc-open" style="color:rgba(255,255,255,0.15);">Coming Soon</span><span class="cc-arrow" style="opacity:0.3;">→</span></div>
+    </div>
 
   </div>
 </section>

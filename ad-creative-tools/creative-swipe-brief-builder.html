@@ -3,878 +3,610 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IFCA Creative Swipe Brief Builder</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Swipe Brief Builder — IFCA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --navy:       #1E3A5F;
-  --navy-dark:  #0D1F35;
-  --navy-mid:   #142845;
-  --orange:     #E87722;
-  --orange-dim: rgba(232,119,34,0.12);
-  --orange-glow:rgba(232,119,34,0.08);
-  --blue-mid:   #4A7FA5;
-  --blue-dim:   rgba(74,127,165,0.12);
-  --blue-light: #D6E4F0;
-  --gray-400:   #94A3B8;
-  --gray-500:   #64748B;
-  --green:      #22C55E;
-  --green-bg:   rgba(34,197,94,0.10);
-  --red:        #DC2626;
-  --red-bg:     rgba(220,38,38,0.09);
-  --yellow:     #F59E0B;
-  --yellow-bg:  rgba(245,158,11,0.10);
-  --purple:     #8B5CF6;
-  --purple-bg:  rgba(139,92,246,0.10);
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--navy-dark);
-  color: #fff;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-body::before {
-  content: '';
-  position: fixed; inset: 0; pointer-events: none; z-index: 0;
-  background:
-    radial-gradient(ellipse 70% 50% at 10% 10%, rgba(74,127,165,.08) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 90% 90%, rgba(232,119,34,.06) 0%, transparent 60%);
-}
-
-.wrapper {
-  position: relative; z-index: 1;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 44px 24px 120px;
-}
-
-/* ── HEADER ── */
-.eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px; letter-spacing: .18em; color: var(--orange);
-  text-transform: uppercase; margin-bottom: 10px;
-  display: flex; align-items: center; gap: 10px;
-}
-.eyebrow::before { content:''; display:inline-block; width:24px; height:2px; background:var(--orange); border-radius:1px; }
-
-h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(36px,5vw,56px); line-height:.92; letter-spacing:.02em; }
-h1 em { font-style:normal; color:var(--orange); }
-
-.header-row {
-  display: flex; align-items: flex-end; justify-content: space-between;
-  gap: 24px; margin-bottom: 12px; flex-wrap: wrap;
-}
-
-.header-sub {
-  font-size: 14px; color: var(--gray-400);
-  margin-top: 10px; line-height: 1.6; max-width: 540px;
-  margin-bottom: 32px;
-}
-
-/* ── FLOW STEPS ── */
-.flow-steps {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  margin-bottom: 36px;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.07);
-  border-radius: 14px;
-  padding: 18px 24px;
-  overflow-x: auto;
-}
-
-.flow-step {
-  display: flex; align-items: center; gap: 10px;
-  flex-shrink: 0;
-}
-
-.flow-num {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.1);
-  font-family: 'DM Mono'; font-size: 11px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--gray-400);
-  flex-shrink: 0;
-  transition: all .3s;
-}
-
-.flow-num.active { background: var(--orange); border-color: var(--orange); color: white; }
-.flow-num.done   { background: var(--green-bg); border-color: var(--green); color: var(--green); }
-
-.flow-label { font-size: 12px; color: var(--gray-400); font-weight: 500; transition: color .3s; white-space: nowrap; }
-.flow-label.active { color: white; }
-.flow-label.done   { color: var(--green); }
-
-.flow-arrow { margin: 0 14px; color: rgba(255,255,255,.15); font-size: 14px; flex-shrink: 0; }
-
-/* ── PHASE PANELS ── */
-.phase { display: none; }
-.phase.active { display: block; }
-
-/* ── SECTION LABEL ── */
-.sec-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--orange); margin-bottom: 14px; margin-top: 28px;
-  display: flex; align-items: center; gap: 8px;
-}
-.sec-label::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.06); }
-
-/* ── INPUT CARD ── */
-.input-card {
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 14px;
-  padding: 24px;
-  margin-bottom: 16px;
-}
-
-.input-card h3 {
-  font-family: 'Bebas Neue'; font-size: 20px; letter-spacing: .04em;
-  margin-bottom: 6px;
-}
-
-.input-card p {
-  font-size: 13px; color: var(--gray-400); line-height: 1.55; margin-bottom: 16px;
-}
-
-label {
-  display: block;
-  font-family: 'DM Mono'; font-size: 10px; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--gray-400);
-  margin-bottom: 7px;
-}
-
-input[type="text"], select, textarea {
-  width: 100%;
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 8px;
-  padding: 10px 14px;
-  color: #fff;
-  font-family: 'DM Sans'; font-size: 14px;
-  outline: none;
-  transition: border-color .2s;
-  resize: vertical;
-}
-
-input[type="text"]:focus, select:focus, textarea:focus {
-  border-color: var(--orange);
-  background: rgba(232,119,34,.05);
-}
-
-input[type="text"]::placeholder, textarea::placeholder { color: var(--gray-500); }
-
-select option { background: var(--navy-dark); color: #fff; }
-
-.intel-textarea {
-  min-height: 260px;
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media(max-width:600px){ .field-grid { grid-template-columns: 1fr; } }
-
-/* ── TIPS BOX ── */
-.tips-box {
-  background: var(--orange-dim);
-  border: 1px solid rgba(232,119,34,.2);
-  border-radius: 10px;
-  padding: 14px 18px;
-  margin-bottom: 20px;
-  font-size: 13px; color: rgba(255,255,255,.7); line-height: 1.6;
-}
-
-.tips-box strong { color: var(--orange); }
-
-.tip-list { margin-top: 8px; display: flex; flex-direction: column; gap: 5px; }
-.tip-item { display: flex; gap: 8px; align-items: flex-start; }
-.tip-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--orange); flex-shrink: 0; margin-top: 7px; }
-
-/* ── BUTTONS ── */
-.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
-
-.btn-primary {
-  background: var(--orange);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 28px;
-  font-family: 'DM Mono'; font-size: 11px; letter-spacing: .1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all .2s;
-  display: flex; align-items: center; gap: 8px;
-}
-.btn-primary:hover { background: #f08030; transform: translateY(-1px); }
-.btn-primary:disabled { opacity: .45; cursor: not-allowed; transform: none; }
-
-.btn-secondary {
-  background: transparent;
-  color: var(--gray-400);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 8px;
-  padding: 12px 20px;
-  font-family: 'DM Mono'; font-size: 11px; letter-spacing: .1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all .2s;
-}
-.btn-secondary:hover { border-color: var(--orange); color: white; }
-
-/* ── LOADING STATE ── */
-.loading-state {
-  display: none;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 14px;
-  padding: 48px 24px;
-  text-align: center;
-}
-
-.loading-state.active { display: block; }
-
-.loading-spinner {
-  width: 40px; height: 40px;
-  border: 3px solid rgba(255,255,255,.1);
-  border-top-color: var(--orange);
-  border-radius: 50%;
-  animation: spin .8s linear infinite;
-  margin: 0 auto 16px;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.loading-label {
-  font-family: 'DM Mono'; font-size: 12px; letter-spacing: .12em;
-  color: var(--orange); text-transform: uppercase; margin-bottom: 8px;
-}
-
-.loading-sub { font-size: 13px; color: var(--gray-400); }
-
-.loading-steps { display: flex; flex-direction: column; gap: 6px; margin-top: 20px; max-width: 360px; margin-left: auto; margin-right: auto; }
-.load-step { font-size: 12px; color: var(--gray-500); display: flex; align-items: center; gap: 8px; }
-.load-step.done { color: var(--green); }
-.load-step.active { color: white; }
-.load-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
-
-/* ── ANALYSIS SUMMARY (Phase 2) ── */
-.analysis-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin-bottom: 20px;
-}
-
-@media(max-width:680px){ .analysis-grid { grid-template-columns: 1fr; } }
-
-.analysis-card {
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.07);
-  border-radius: 12px;
-  padding: 18px;
-}
-
-.analysis-card.orange { border-color: rgba(232,119,34,.25); background: var(--orange-glow); }
-.analysis-card.blue   { border-color: rgba(74,127,165,.25); background: var(--blue-dim); }
-.analysis-card.purple { border-color: rgba(139,92,246,.25); background: var(--purple-bg); }
-
-.ac-label {
-  font-family: 'DM Mono'; font-size: 9px; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--gray-500); margin-bottom: 10px;
-}
-
-.ac-title { font-family: 'Bebas Neue'; font-size: 18px; margin-bottom: 8px; }
-.analysis-card.orange .ac-title { color: var(--orange); }
-.analysis-card.blue   .ac-title { color: #7ABFDD; }
-.analysis-card.purple .ac-title { color: #c4b5fd; }
-
-.ac-items { display: flex; flex-direction: column; gap: 5px; }
-.ac-item { font-size: 12px; color: rgba(255,255,255,.65); line-height: 1.45; display: flex; gap: 6px; }
-.ac-bullet { color: var(--orange); flex-shrink: 0; }
-
-/* ── WHITE SPACE CALLOUT ── */
-.whitespace-box {
-  background: linear-gradient(135deg, rgba(34,197,94,.08), rgba(34,197,94,.04));
-  border: 1px solid rgba(34,197,94,.25);
-  border-radius: 12px;
-  padding: 20px 22px;
-  margin-bottom: 20px;
-}
-
-.ws-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-.ws-badge {
-  font-family: 'DM Mono'; font-size: 9px; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--green);
-  background: var(--green-bg); border: 1px solid rgba(34,197,94,.3);
-  padding: 3px 10px; border-radius: 20px;
-}
-.ws-title { font-family: 'Bebas Neue'; font-size: 18px; color: var(--green); }
-
-.ws-items { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-@media(max-width:600px){ .ws-items { grid-template-columns: 1fr; } }
-
-.ws-item {
-  background: rgba(34,197,94,.06);
-  border: 1px solid rgba(34,197,94,.15);
-  border-radius: 8px;
-  padding: 10px 14px;
-  font-size: 12px; color: rgba(255,255,255,.7); line-height: 1.45;
-}
-.ws-item strong { color: #86efac; display: block; margin-bottom: 3px; font-size: 11px; }
-
-/* ── BRIEF CARDS ── */
-.brief-cards { display: flex; flex-direction: column; gap: 20px; }
-
-.brief-card {
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.brief-card-header {
-  background: linear-gradient(90deg, rgba(232,119,34,.15), rgba(232,119,34,.05));
-  border-bottom: 1px solid rgba(255,255,255,.06);
-  padding: 16px 22px;
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-}
-
-.bc-num {
-  font-family: 'Bebas Neue'; font-size: 32px; color: var(--orange); line-height: 1;
-  flex-shrink: 0;
-}
-
-.bc-title-block { flex: 1; }
-.bc-entity-label {
-  font-family: 'DM Mono'; font-size: 9px; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--orange); margin-bottom: 4px;
-}
-.bc-title { font-family: 'Bebas Neue'; font-size: 22px; line-height: 1; letter-spacing: .03em; }
-
-.bc-tags { display: flex; gap: 6px; flex-wrap: wrap; }
-.bc-tag {
-  font-family: 'DM Mono'; font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
-  padding: 3px 9px; border-radius: 20px;
-  background: rgba(255,255,255,.06); color: var(--gray-400);
-}
-.bc-tag.format { background: var(--blue-dim); color: #7ABFDD; }
-.bc-tag.emotion { background: var(--orange-dim); color: var(--orange); }
-.bc-tag.gap { background: var(--green-bg); color: #86efac; }
-
-.brief-card-body { padding: 20px 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-@media(max-width:600px){ .brief-card-body { grid-template-columns: 1fr; } }
-
-.brief-field-label {
-  font-family: 'DM Mono'; font-size: 9px; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--gray-500); margin-bottom: 5px;
-}
-
-.brief-field-value {
-  font-size: 13px; color: rgba(255,255,255,.8); line-height: 1.55;
-}
-
-.brief-field-value.hook {
-  font-size: 15px; font-weight: 600; color: white;
-  background: rgba(255,255,255,.04);
-  border-left: 3px solid var(--orange);
-  padding: 10px 14px; border-radius: 0 6px 6px 0;
-}
-
-.brief-field-value.rehook {
-  font-size: 13px; color: rgba(255,255,255,.7);
-  background: rgba(255,255,255,.03);
-  border-left: 3px solid var(--blue-mid);
-  padding: 8px 12px; border-radius: 0 6px 6px 0;
-}
-
-.brief-field { margin-bottom: 14px; }
-.brief-field:last-child { margin-bottom: 0; }
-
-.brief-card-footer {
-  border-top: 1px solid rgba(255,255,255,.06);
-  padding: 12px 22px;
-  display: flex; align-items: center; justify-content: space-between;
-  background: rgba(0,0,0,.1);
-}
-
-.bc-why {
-  font-size: 11px; color: var(--gray-500); line-height: 1.4; flex: 1; max-width: 600px;
-}
-.bc-why strong { color: var(--gray-400); }
-
-.copy-btn {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 6px;
-  padding: 6px 14px;
-  font-family: 'DM Mono'; font-size: 9px; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--gray-400);
-  cursor: pointer; transition: all .2s; flex-shrink: 0;
-}
-.copy-btn:hover { border-color: var(--orange); color: white; }
-.copy-btn.copied { border-color: var(--green); color: var(--green); }
-
-/* ── PRINT / EXPORT BLOCK ── */
-.export-row {
-  display: flex; gap: 12px; flex-wrap: wrap;
-  margin-top: 28px; padding-top: 24px;
-  border-top: 1px solid rgba(255,255,255,.06);
-}
-
-/* ── CALLOUT ── */
-.callout {
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.07);
-  border-radius: 10px;
-  padding: 14px 18px;
-  font-size: 13px; color: rgba(255,255,255,.55); line-height: 1.6;
-  margin-top: 20px;
-}
-.callout strong { color: rgba(255,255,255,.75); }
-
-/* ── FOOTER ── */
-.footer {
-  margin-top: 60px; padding-top: 24px;
-  border-top: 1px solid rgba(255,255,255,.06);
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 12px;
-}
-.footer-brand { font-family:'Bebas Neue'; font-size:18px; color:var(--orange); letter-spacing:.12em; }
-.footer-brand span { color:rgba(255,255,255,.25); font-size:12px; letter-spacing:.1em; font-family:'DM Mono'; margin-left:8px; text-transform:uppercase; }
-.footer-note { font-family:'DM Mono'; font-size:10px; color:var(--gray-500); letter-spacing:.08em; }
-
-/* ── ERROR ── */
-.error-box {
-  display: none;
-  background: var(--red-bg);
-  border: 1px solid rgba(220,38,38,.3);
-  border-radius: 10px;
-  padding: 14px 18px;
-  font-size: 13px; color: #fca5a5; margin-top: 16px;
-}
-.error-box.active { display: block; }
-
-/* ── CHAR COUNT ── */
-.char-count {
-  font-family: 'DM Mono'; font-size: 10px; color: var(--gray-500);
-  text-align: right; margin-top: 5px;
-}
-.char-count.warn { color: var(--yellow); }
-.char-count.over { color: var(--red); }
+  :root {
+    --navy:    #1E3A5F;
+    --navy-mid:#24487A;
+    --orange:  #E87722;
+    --orange-dim: rgba(232,119,34,.12);
+    --orange-glow: rgba(232,119,34,.25);
+    --bg:      #0D1B2A;
+    --bg-card: rgba(255,255,255,.04);
+    --bg-card-hover: rgba(255,255,255,.07);
+    --border:  rgba(255,255,255,.08);
+    --border-bright: rgba(255,255,255,.15);
+    --text:    #F0F4F8;
+    --muted:   rgba(240,244,248,.5);
+    --dimmer:  rgba(240,244,248,.3);
+    --green:   #4ADE80;
+    --green-bg:rgba(74,222,128,.08);
+    --yellow:  #FBBF24;
+    --yellow-bg:rgba(251,191,36,.08);
+    --red:     #F87171;
+    --red-bg:  rgba(248,113,113,.08);
+    --blue:    #60A5FA;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Manrope', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: .4;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    position: relative; z-index: 10;
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(13,27,42,.8);
+    backdrop-filter: blur(12px);
+  }
+  .header-brand {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .header-logo {
+    font-family: 'Bebas Neue'; font-size: 22px;
+    letter-spacing: .1em; color: var(--orange);
+  }
+  .header-sep { width: 1px; height: 20px; background: var(--border-bright); }
+  .header-title {
+    font-family: 'Manrope'; font-size: 13px; font-weight: 600;
+    color: var(--muted); letter-spacing: .04em;
+  }
+  .header-badge {
+    font-family: 'DM Mono'; font-size: 9px; letter-spacing: .12em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 20px;
+    background: var(--orange-dim); color: var(--orange);
+    border: 1px solid var(--orange-glow);
+  }
+
+  /* ── LAYOUT ── */
+  .main {
+    position: relative; z-index: 1;
+    max-width: 1100px; margin: 0 auto;
+    padding: 48px 40px 80px;
+  }
+
+  /* ── HERO ── */
+  .hero { margin-bottom: 48px; }
+  .hero-eyebrow {
+    font-family: 'DM Mono'; font-size: 10px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--orange);
+    margin-bottom: 14px;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue'; font-size: clamp(48px, 6vw, 72px);
+    letter-spacing: .03em; line-height: .95;
+    color: var(--text); margin-bottom: 16px;
+  }
+  .hero-title span { color: var(--orange); }
+  .hero-sub {
+    font-size: 15px; color: var(--muted); line-height: 1.7;
+    max-width: 600px;
+  }
+
+  /* ── FLOW INDICATOR ── */
+  .flow-strip {
+    display: flex; align-items: center; gap: 0;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 20px;
+    margin-bottom: 40px; overflow-x: auto;
+  }
+  .flow-step {
+    display: flex; align-items: center; gap: 8px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .flow-step.active .flow-num { background: var(--orange); color: #fff; }
+  .flow-step.active .flow-label { color: var(--text); font-weight: 700; }
+  .flow-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(255,255,255,.08); color: var(--muted);
+    font-family: 'DM Mono'; font-size: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .flow-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+  .flow-arrow {
+    color: var(--dimmer); font-size: 11px;
+    margin: 0 12px; flex-shrink: 0;
+  }
+
+  /* ── TWO COL ── */
+  .two-col {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── INPUT PANELS ── */
+  .panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+  .panel:focus-within { border-color: var(--border-bright); }
+  .panel-header {
+    padding: 14px 18px 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .panel-icon { font-size: 16px; }
+  .panel-title {
+    font-size: 12px; font-weight: 700; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--text);
+  }
+  .panel-tag {
+    margin-left: auto;
+    font-family: 'DM Mono'; font-size: 9px; letter-spacing: .1em;
+    text-transform: uppercase; padding: 3px 8px; border-radius: 4px;
+  }
+  .panel-tag.required { background: var(--orange-dim); color: var(--orange); border: 1px solid var(--orange-glow); }
+  .panel-tag.optional { background: rgba(255,255,255,.05); color: var(--dimmer); border: 1px solid var(--border); }
+  .panel-body { padding: 16px 18px; }
+  .panel-hint {
+    font-size: 11px; color: var(--dimmer); line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  textarea {
+    width: 100%; background: rgba(0,0,0,.25);
+    border: 1px solid var(--border); border-radius: 8px;
+    color: var(--text); font-family: 'DM Mono'; font-size: 12px;
+    line-height: 1.6; padding: 12px 14px;
+    resize: vertical; outline: none;
+    transition: border-color .2s;
+  }
+  textarea:focus { border-color: rgba(232,119,34,.4); }
+  textarea::placeholder { color: var(--dimmer); }
+
+  /* ── CONTROLS ROW ── */
+  .controls-row {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 36px; flex-wrap: wrap;
+  }
+  .btn-generate {
+    flex: 1; min-width: 200px;
+    background: var(--orange); color: #fff;
+    border: none; border-radius: 10px;
+    font-family: 'Manrope'; font-size: 14px; font-weight: 800;
+    letter-spacing: .04em; padding: 16px 28px;
+    cursor: pointer; transition: all .2s;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .btn-generate:hover { background: #FF8C35; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(232,119,34,.3); }
+  .btn-generate:active { transform: translateY(0); }
+  .btn-generate:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn-generate .btn-icon { font-size: 18px; }
+
+  .entity-count-select {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; color: var(--text);
+    font-family: 'DM Mono'; font-size: 12px;
+    padding: 14px 16px; outline: none; cursor: pointer;
+    transition: border-color .2s;
+  }
+  .entity-count-select:focus { border-color: var(--border-bright); }
+  .entity-count-select option { background: #1a2d42; }
+
+  /* ── STATUS BAR ── */
+  .status-bar {
+    display: none;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 18px;
+    margin-bottom: 24px;
+    align-items: center; gap: 12px;
+  }
+  .status-bar.visible { display: flex; }
+  .status-spinner {
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 2px solid rgba(232,119,34,.2);
+    border-top-color: var(--orange);
+    animation: spin .8s linear infinite; flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .status-text { font-size: 13px; color: var(--muted); }
+  .status-text strong { color: var(--orange); }
+
+  /* ── RESULTS AREA ── */
+  #results { display: none; }
+  #results.visible { display: block; }
+
+  .results-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px; flex-wrap: gap;
+  }
+  .results-title {
+    font-family: 'Bebas Neue'; font-size: 32px;
+    letter-spacing: .05em; color: var(--text);
+  }
+  .results-meta {
+    font-family: 'DM Mono'; font-size: 10px;
+    color: var(--dimmer); letter-spacing: .1em;
+  }
+
+  .btn-copy-all {
+    background: rgba(255,255,255,.05); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--muted);
+    font-family: 'DM Mono'; font-size: 11px;
+    padding: 8px 16px; cursor: pointer; transition: all .2s;
+  }
+  .btn-copy-all:hover { border-color: var(--border-bright); color: var(--text); }
+
+  /* ── ENTITY CARDS ── */
+  .entity-grid { display: flex; flex-direction: column; gap: 16px; }
+
+  .entity-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+    transition: border-color .2s, transform .2s;
+    animation: fadeUp .4s ease both;
+  }
+  .entity-card:hover { border-color: var(--border-bright); }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .entity-card-top {
+    padding: 18px 22px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 16px;
+  }
+  .entity-num {
+    font-family: 'Bebas Neue'; font-size: 42px; line-height: 1;
+    color: rgba(255,255,255,.08); flex-shrink: 0; width: 44px;
+    text-align: center;
+  }
+  .entity-meta { flex: 1; }
+  .entity-name {
+    font-family: 'Instrument Serif'; font-size: 22px;
+    color: var(--text); line-height: 1.2; margin-bottom: 10px;
+  }
+  .entity-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill {
+    font-family: 'DM Mono'; font-size: 9px; letter-spacing: .1em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 20px;
+    white-space: nowrap;
+  }
+  .pill-format  { background: rgba(30,58,95,.6);  color: #7ABFDD; border: 1px solid rgba(122,191,221,.2); }
+  .pill-hook    { background: rgba(251,191,36,.08); color: var(--yellow); border: 1px solid rgba(251,191,36,.2); }
+  .pill-emotion { background: var(--orange-dim); color: var(--orange); border: 1px solid var(--orange-glow); }
+  .pill-funnel  { background: var(--green-bg); color: var(--green); border: 1px solid rgba(74,222,128,.2); }
+
+  .entity-card-body {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  }
+  @media (max-width: 680px) { .entity-card-body { grid-template-columns: 1fr; } }
+
+  .entity-field {
+    padding: 16px 22px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .entity-field:nth-child(even) { border-right: none; }
+  .entity-field:nth-last-child(-n+2) { border-bottom: none; }
+  .entity-field:last-child:nth-child(odd) {
+    grid-column: span 2; border-right: none;
+  }
+
+  .field-label {
+    font-family: 'DM Mono'; font-size: 9px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--dimmer);
+    margin-bottom: 8px;
+  }
+  .field-value {
+    font-size: 13px; color: var(--text); line-height: 1.6;
+  }
+  .field-value.hook-text {
+    font-family: 'Instrument Serif'; font-size: 16px;
+    font-style: italic; color: var(--orange);
+    line-height: 1.5;
+  }
+  .field-value.entity-why {
+    font-size: 12px; color: var(--muted);
+  }
+
+  .entity-copy-btn {
+    display: block; width: 100%;
+    background: rgba(255,255,255,.03); border: none;
+    border-top: 1px solid var(--border);
+    color: var(--dimmer); font-family: 'DM Mono'; font-size: 10px;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: 10px; cursor: pointer; transition: all .2s;
+  }
+  .entity-copy-btn:hover { background: var(--orange-dim); color: var(--orange); }
+
+  /* ── ERROR STATE ── */
+  .error-box {
+    background: var(--red-bg); border: 1px solid rgba(248,113,113,.2);
+    border-radius: 10px; padding: 16px 20px;
+    font-size: 13px; color: var(--red); margin-bottom: 24px;
+    display: none;
+  }
+  .error-box.visible { display: block; }
+
+  /* ── FOOTER ── */
+  .footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 20px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-brand { font-family: 'DM Mono'; font-size: 10px; letter-spacing: .14em; color: var(--dimmer); }
+  .footer-note  { font-size: 11px; color: var(--dimmer); }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    height: 1px; background: var(--border);
+    margin: 32px 0;
+  }
+
+  /* ── COPY TOAST ── */
+  .toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--green); color: #0D1B2A;
+    font-family: 'DM Mono'; font-size: 12px; letter-spacing: .1em;
+    padding: 10px 20px; border-radius: 8px;
+    opacity: 0; transition: all .3s; pointer-events: none;
+    z-index: 9999; white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
-<div class="wrapper">
 
-  <!-- HEADER -->
-  <div class="eyebrow">IFCA Creative Tools &nbsp;·&nbsp; Ad Creative Production System</div>
-  <div class="header-row">
-    <div>
-      <h1>Creative Swipe<br><em>Brief Builder</em></h1>
-    </div>
+<!-- HEADER -->
+<header class="header">
+  <div class="header-brand">
+    <div class="header-logo">IFCA</div>
+    <div class="header-sep"></div>
+    <div class="header-title">Ad Creative Intelligence</div>
   </div>
-  <p class="header-sub">
-    Paste your competitor intelligence report — the AI parses every hook, format, and angle, finds the white space your competitors aren't covering, and outputs 3–5 shoot-ready entity briefs you can film this week.
-  </p>
+  <div class="header-badge">Swipe Brief Builder</div>
+</header>
 
-  <!-- FLOW STEPS -->
-  <div class="flow-steps">
-    <div class="flow-step">
-      <div class="flow-num active" id="fn1">1</div>
-      <div class="flow-label active" id="fl1">Paste Intel Report</div>
+<!-- MAIN -->
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Step 01 of 03 — Creative Intelligence Flow</div>
+    <h1 class="hero-title">Swipe Brief<br><span>Builder</span></h1>
+    <p class="hero-sub">Paste your Manus intelligence report below. The AI parses competitor hooks, format gaps, and white space — then outputs shoot-ready entities, each with a distinct Andromeda Entity ID fingerprint.</p>
+  </div>
+
+  <!-- FLOW STRIP -->
+  <div class="flow-strip">
+    <div class="flow-step active">
+      <div class="flow-num">1</div>
+      <div class="flow-label">Swipe Brief Builder</div>
     </div>
     <div class="flow-arrow">→</div>
     <div class="flow-step">
-      <div class="flow-num" id="fn2">2</div>
-      <div class="flow-label" id="fl2">AI Analysis</div>
+      <div class="flow-num">2</div>
+      <div class="flow-label">Entity Audit Worksheet</div>
     </div>
     <div class="flow-arrow">→</div>
     <div class="flow-step">
-      <div class="flow-num" id="fn3">3</div>
-      <div class="flow-label" id="fl3">Shoot-Ready Briefs</div>
+      <div class="flow-num">3</div>
+      <div class="flow-label">Weekly Creative Brief</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-num">4</div>
+      <div class="flow-label">Script → Film → Launch</div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════
-       PHASE 1 — INPUT
-  ════════════════════════════════════ -->
-  <div class="phase active" id="phase1">
-
-    <div class="sec-label">Your Context</div>
-
-    <div class="input-card">
-      <h3>About Your Business</h3>
-      <p>Give the AI context on who you are and what you sell — so the briefs it creates sound like you, not a generic fitness coach.</p>
-
-      <div class="field-grid">
-        <div>
-          <label>Your Niche / Avatar</label>
-          <input type="text" id="niche" placeholder="e.g. Online fitness coaches, women 30-50, hormone health coaches">
-        </div>
-        <div>
-          <label>Your Offer / Program Name</label>
-          <input type="text" id="offer" placeholder="e.g. 12-week metabolic reset, 1:1 coaching, group program">
-        </div>
+  <!-- INPUT PANELS -->
+  <div class="two-col">
+    <div class="panel" style="grid-column: span 2;">
+      <div class="panel-header">
+        <div class="panel-icon">📋</div>
+        <div class="panel-title">Intelligence Report</div>
+        <div class="panel-tag required">Required</div>
       </div>
+      <div class="panel-body">
+        <div class="panel-hint">Paste your full Manus intelligence report here. The more complete, the better — include competitor ad inventory, organic content audit, angle gap analysis, and white space findings.</div>
+        <textarea id="intel-report" rows="12" placeholder="Paste your full Manus intelligence report here...
 
-      <div style="margin-top:14px;">
-        <label>Your Top Selling Angle or Differentiator (optional)</label>
-        <input type="text" id="differentiator" placeholder="e.g. No extreme diets, root cause approach, results without restriction">
-      </div>
-
-      <div class="field-grid" style="margin-top:14px;">
-        <div>
-          <label>Your Main Ad Format (what you currently film most)</label>
-          <select id="current-format">
-            <option value="">— Select —</option>
-            <option>Talking Head (direct to camera)</option>
-            <option>B-Roll + Text Overlay</option>
-            <option>Skit / Character</option>
-            <option>VSL-Style</option>
-            <option>Interview / Podcast Clip</option>
-            <option>Walking / Outdoor</option>
-            <option>UGC / Testimonial</option>
-            <option>Carousel / Static</option>
-            <option>Mix of formats</option>
-          </select>
-        </div>
-        <div>
-          <label>Number of Brief Entities to Generate</label>
-          <select id="num-entities">
-            <option value="3">3 Entities (quick session)</option>
-            <option value="5" selected>5 Entities (full week)</option>
-            <option value="7">7 Entities (batch shoot)</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="sec-label">Competitor Intelligence Report</div>
-
-    <div class="tips-box">
-      <strong>What to paste here:</strong> Your intelligence report from the AI research session — competitor hooks, active ad formats, organic top posts, pricing language, angles. The fuller the report, the better the briefs.
-      <div class="tip-list">
-        <div class="tip-item"><div class="tip-dot"></div><span>From <strong>Claude + Meta Ad Library</strong>: paste the full output doc</span></div>
-        <div class="tip-item"><div class="tip-dot"></div><span>From <strong>Foreplay boards</strong>: export your swipe notes and paste them</span></div>
-        <div class="tip-item"><div class="tip-dot"></div><span>From <strong>manual research</strong>: competitor names, their hooks verbatim, formats you noticed, how long ads have been running</span></div>
-        <div class="tip-item"><div class="tip-dot"></div><span><strong>Minimum to work well:</strong> 3+ competitors, 5+ hooks noted, at least some format observations</span></div>
-      </div>
-    </div>
-
-    <div class="input-card">
-      <label>Paste Intelligence Report</label>
-      <textarea class="intel-textarea" id="intel-report" placeholder="Paste your competitor intelligence report here...
-
-Example structure (doesn't need to be exact):
-COMPETITOR: [Name]
-- Hook 1: 'Are you a fitness coach struggling to get clients consistently?'
-- Hook 2: 'I went from 0 to $20K/month in 6 months using this one system'
-- Format: Mostly talking head, some B-roll, no skits
-- Running: 60+ days on multiple ads
-- Angle: Pain callout / authority / transformation
-
-COMPETITOR: [Name]
-...
-
-What I noticed they're NOT doing:
-- No testimonial carousels
-- No skit content
-- No text-on-screen/no-face format
-..."></textarea>
-      <div class="char-count" id="char-count">0 characters</div>
-    </div>
-
-    <div class="sec-label">Your Own Top Performers (Optional but Recommended)</div>
-    <div class="input-card">
-      <h3>Your Winning Ads</h3>
-      <p>Paste your current best-performing ad scripts or hooks. The AI will make sure the briefs it generates don't replicate what's already working — and builds on your proven angles.</p>
-      <label>Your Current Top Ad Hooks / Scripts (optional)</label>
-      <textarea style="min-height:120px;" id="own-ads" placeholder="Paste your best-performing hooks or ad scripts here (optional)...
-
-e.g.
-- 'If you're a fitness coach still trading hours for dollars, this is for you' — running 90+ days, hook rate 34%
-- 'She lost 22 pounds in 10 weeks without cutting a single food group' — best close rate
-..."></textarea>
-    </div>
-
-    <div class="error-box" id="error-box">
-      Please paste your competitor intelligence report before generating. The tool needs something to analyze.
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-primary" onclick="runAnalysis()" id="generate-btn">
-        <span>🔍</span> Analyze Intel &amp; Generate Briefs
-      </button>
-      <button class="btn-secondary" onclick="loadExample()">Load Example Report</button>
-    </div>
-
-  </div><!-- /phase1 -->
-
-  <!-- ═══════════════════════════════════
-       PHASE 2 — LOADING
-  ════════════════════════════════════ -->
-  <div class="phase" id="phase-loading">
-    <div class="loading-state active">
-      <div class="loading-spinner"></div>
-      <div class="loading-label">Analyzing Your Intelligence Report</div>
-      <div class="loading-sub">Claude is reading your competitor data and mapping the creative landscape...</div>
-      <div class="loading-steps" id="load-steps">
-        <div class="load-step active" id="ls1"><div class="load-dot"></div> Reading competitor hooks and formats</div>
-        <div class="load-step" id="ls2"><div class="load-dot"></div> Identifying entity clusters and patterns</div>
-        <div class="load-step" id="ls3"><div class="load-dot"></div> Finding white space in the market</div>
-        <div class="load-step" id="ls4"><div class="load-dot"></div> Writing shoot-ready entity briefs</div>
+Include:
+• Meta Ad Library competitive audit (competitor hooks, formats, run duration)
+• Organic content audit (top angles, themes, hooks)
+• Creative angle gap analysis (saturated / opportunity / white space)
+• Competitor steal file
+• Brand snapshot / offer summary"></textarea>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════
-       PHASE 3 — OUTPUT
-  ════════════════════════════════════ -->
-  <div class="phase" id="phase3">
+  <div class="two-col" style="margin-top: 0;">
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-icon">🗂️</div>
+        <div class="panel-title">Entity Audit Summary</div>
+        <div class="panel-tag optional">Optional — Fills Real Gaps Only</div>
+      </div>
+      <div class="panel-body">
+        <div class="panel-hint">Paste a summary of your current active ads with their format bucket, hook type, and emotion. The AI will cross-reference and avoid recommending entities you already have.</div>
+        <textarea id="entity-audit" rows="7" placeholder="Optional — paste your current entity audit summary...
 
-    <!-- ANALYSIS SUMMARY -->
-    <div class="sec-label">Intelligence Analysis</div>
-
-    <div class="analysis-grid" id="analysis-summary">
-      <!-- Populated by JS -->
+Example:
+Ad 1: Talking Head / Pain Callout / Frustration
+Ad 2: Talking Head / Curiosity Gap / Fear
+Ad 3: B-Roll + Text / Result Lead / Desire
+..."></textarea>
+      </div>
     </div>
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-icon">🎯</div>
+        <div class="panel-title">Client Context</div>
+        <div class="panel-tag optional">Optional — Improves Personalization</div>
+      </div>
+      <div class="panel-body">
+        <div class="panel-hint">Add any context about this specific client — offer, avatar, mechanism, primary CTA keyword — so hooks are written in their voice, not generically.</div>
+        <textarea id="client-context" rows="7" placeholder="Optional — add client context...
 
-    <!-- WHITE SPACE -->
-    <div class="whitespace-box" id="whitespace-box">
-      <!-- Populated by JS -->
+Example:
+Name: Lindsey Mathews (@trainerlindsey)
+Niche: Women's body composition / strength coaching
+Avatar: Women 30–50, tried everything, frustrated with results
+Mechanism: Personalized program + accountability system
+CTA keyword: DM 'READY'
+Offer price: ~$4,200 LTV"></textarea>
+      </div>
     </div>
+  </div>
 
-    <!-- BRIEF CARDS -->
-    <div class="sec-label">Shoot-Ready Entity Briefs</div>
-    <div class="callout" style="margin-bottom:16px; margin-top:0;">
-      <strong>These are your filming instructions.</strong> Each brief is a distinct entity — different format, hook type, and emotional angle. Film them all in one batch session. No two should feel like the same ad.
+  <!-- CONTROLS -->
+  <div class="controls-row" style="margin-top: 20px;">
+    <button class="btn-generate" id="generate-btn" onclick="generateBrief()">
+      <span class="btn-icon">⚡</span>
+      Generate Shoot Brief
+    </button>
+    <select class="entity-count-select" id="entity-count">
+      <option value="3">3 Entities</option>
+      <option value="4">4 Entities</option>
+      <option value="5" selected>5 Entities</option>
+      <option value="6">6 Entities</option>
+      <option value="8">8 Entities</option>
+    </select>
+  </div>
+
+  <!-- STATUS -->
+  <div class="status-bar" id="status-bar">
+    <div class="status-spinner"></div>
+    <div class="status-text" id="status-text">Parsing intelligence report...</div>
+  </div>
+
+  <!-- ERROR -->
+  <div class="error-box" id="error-box"></div>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <div class="section-divider"></div>
+    <div class="results-header">
+      <div>
+        <div class="results-title">Your Shoot Brief</div>
+        <div class="results-meta" id="results-meta"></div>
+      </div>
+      <button class="btn-copy-all" onclick="copyAll()">Copy All Entities</button>
     </div>
+    <div class="entity-grid" id="entity-grid"></div>
+  </div>
 
-    <div class="brief-cards" id="brief-cards">
-      <!-- Populated by JS -->
-    </div>
+</main>
 
-    <div class="export-row">
-      <button class="btn-primary" onclick="copyAllBriefs()">
-        <span>📋</span> Copy All Briefs
-      </button>
-      <button class="btn-secondary" onclick="printBriefs()">
-        🖨️ Print / Save PDF
-      </button>
-      <button class="btn-secondary" onclick="resetTool()">
-        ← New Analysis
-      </button>
-    </div>
+<footer class="footer">
+  <div class="footer-brand">IFCA PLAYBOOKS</div>
+  <div class="footer-note">Creative Intelligence Flow · Step 01 of 03 · April 2026</div>
+</footer>
 
-    <div class="callout" style="margin-top:28px;">
-      <strong>Next step:</strong> Take these briefs into your weekly shoot session. Each card = one ad to film. After filming, run your completed ads through the <strong>Entity Audit Worksheet</strong> to confirm you've covered the format gaps identified above — then load your results into the <strong>KPI Calculator</strong> to set kill thresholds before you launch.
-    </div>
-
-  </div><!-- /phase3 -->
-
-  <footer class="footer">
-    <div class="footer-brand">IFCA <span>Playbooks</span></div>
-    <div class="footer-note">ad-creative-tools/creative-swipe-brief-builder · April 2026</div>
-  </footer>
-
-</div><!-- /wrapper -->
+<div class="toast" id="toast">Copied to clipboard ✓</div>
 
 <script>
-/* ═══════════════════════════════════════
-   FLOW STATE
-═══════════════════════════════════════ */
-function setPhase(p) {
-  document.querySelectorAll('.phase').forEach(el => el.classList.remove('active'));
-  if (p === 'loading') {
-    document.getElementById('phase-loading').classList.add('active');
-  } else {
-    document.getElementById('phase' + p).classList.add('active');
-  }
+const SYSTEM_PROMPT = `You are an expert Meta advertising strategist embedded inside Impact Fitness Coaching Academy (IFCA). Your job is to analyze a competitive intelligence report and output a structured shoot brief of creative entities for the client's Meta ad campaigns.
 
-  // Update flow indicators
-  const steps = [1,2,3];
-  const phaseNum = p === 'loading' ? 2 : parseInt(p);
-  steps.forEach(s => {
-    const num = document.getElementById('fn' + s);
-    const lbl = document.getElementById('fl' + s);
-    if (!num) return;
-    num.className = 'flow-num' + (s < phaseNum ? ' done' : s === phaseNum ? ' active' : '');
-    lbl.className = 'flow-label' + (s < phaseNum ? ' done' : s === phaseNum ? ' active' : '');
-    num.textContent = s < phaseNum ? '✓' : s;
-  });
+You understand the Andromeda algorithm's Entity ID principle: Andromeda groups ads with similar format + hook type + emotional driver into the same Entity ID cluster — meaning each cluster only gets ONE auction slot. To maximize reach, every ad must be a genuinely distinct entity with a unique combination of:
+- Format Bucket: Talking Head / B-Roll + Text / Skit / VSL-Style / Interview-Podcast / Walking-Outdoor / UGC-Testimonial / Carousel-Static
+- Hook Type: Pain Callout / Curiosity Gap / Result Lead / Pattern Interrupt / Identity Challenge / Contrarian Take / Story Open / Direct Question
+- Core Emotion: Fear / Frustration / Desire / Hope / Aspiration / Pride / Curiosity
+
+Your output must be a valid JSON array. Each entity in the array must have these exact fields:
+- "entityName": string — a short punchy name for this creative concept
+- "formatBucket": string — one of the format buckets above
+- "hookType": string — one of the hook types above
+- "coreEmotion": string — one of the emotions above
+- "funnelStage": string — "TOF", "MOF", or "BOF"
+- "hook": string — the exact verbatim opening line/hook (first 3 seconds) written as a script the person could read on camera. Make it specific to their niche and avatar. 10-25 words.
+- "rehook": string — a re-hook at the 10-12 second mark that opens a second loop and keeps viewers watching. 1-2 sentences.
+- "proofPrompt": string — a specific instruction for what proof point or story to include in the body of this ad (e.g. "Share the story of [client name] who lost X lbs in Y weeks using [mechanism]")
+- "ctaDirection": string — what CTA action to drive and suggested keyword
+- "whyNewEntity": string — 1 sentence explaining what makes this a distinct Entity ID (different format/hook/emotion combo from the others in this brief)
+- "gapItFills": string — what white space or competitor gap from the intelligence report this entity exploits
+
+CRITICAL RULES:
+1. No two entities in the output may share the same format + hook type + emotion combination. Every entity must be a genuinely new lottery ticket for Andromeda.
+2. Prioritize white space angles — things competitors are NOT doing — over saturated angles.
+3. If an entity audit summary is provided, do not recommend entities that already exist in the client's library.
+4. Hooks must be written in plain, conversational English — no corporate speak, no jargon. Write them as if the coach is speaking directly to their avatar.
+5. Make hooks specific to the niche and avatar from the client context, not generic.
+6. Return ONLY a valid JSON array. No preamble, no explanation, no markdown fencing. Just the raw JSON array starting with [ and ending with ].`;
+
+const STATUS_MESSAGES = [
+  "Parsing intelligence report...",
+  "Identifying competitor hook patterns...",
+  "Mapping format bucket gaps...",
+  "Finding white space angles...",
+  "Building Entity ID fingerprints...",
+  "Writing shoot-ready hooks...",
+  "Finalizing your brief..."
+];
+
+let statusInterval;
+
+function cycleStatus() {
+  let i = 0;
+  statusInterval = setInterval(() => {
+    i = (i + 1) % STATUS_MESSAGES.length;
+    document.getElementById('status-text').innerHTML =
+      STATUS_MESSAGES[i].replace(/(hooks|gaps|white space|Entity ID|brief)/gi,
+        m => `<strong>${m}</strong>`);
+  }, 2200);
 }
 
-/* ═══════════════════════════════════════
-   CHAR COUNT
-═══════════════════════════════════════ */
-const intelTA = document.getElementById('intel-report');
-const charCountEl = document.getElementById('char-count');
+async function generateBrief() {
+  const intelReport = document.getElementById('intel-report').value.trim();
+  const entityAudit = document.getElementById('entity-audit').value.trim();
+  const clientContext = document.getElementById('client-context').value.trim();
+  const entityCount = document.getElementById('entity-count').value;
 
-intelTA.addEventListener('input', () => {
-  const n = intelTA.value.length;
-  charCountEl.textContent = n.toLocaleString() + ' characters';
-  charCountEl.className = 'char-count' + (n > 8000 ? ' warn' : '');
-});
-
-/* ═══════════════════════════════════════
-   EXAMPLE DATA
-═══════════════════════════════════════ */
-function loadExample() {
-  document.getElementById('niche').value = 'Online fitness coaches who want to scale past $10K/month';
-  document.getElementById('offer').value = '12-week Business Accelerator for Fitness Coaches';
-  document.getElementById('differentiator').value = 'Systems-based approach, not just motivation — organic + paid ads flywheel';
-  document.getElementById('current-format').value = 'Talking Head (direct to camera)';
-
-  intelTA.value = `COMPETITOR INTELLIGENCE REPORT — Fitness Coach Market
-Research Date: April 2026
-
-=== COMPETITOR 1: Matt Shiver ===
-Active Ads: 14 (confirmed Meta Ad Library)
-Top Hooks (running 60+ days):
-- "If you're still relying on referrals as a fitness coach, you're leaving money on the table"
-- "I went from 3 clients to 47 clients in 90 days using one Instagram strategy"
-- "The #1 reason fitness coaches fail online (it's not what you think)"
-Format: 95% talking head, direct to camera, outdoor/gym background
-Angle: Authority + pain callout + transformation proof
-Duration: Mostly 60-90 sec
-CTA: DM keyword "SCALE"
-Running longest: 90+ days on the referral hook
-What they're NOT doing: No skits, no testimonials in ad creative, no carousels, no B-roll
-
-=== COMPETITOR 2: Jon Goodman ===
-Active Ads: 8
-Top Hooks:
-- "Online fitness coaching is NOT a business model. Here's what is."
-- "What separates a $5K/month coach from a $50K/month coach"
-Format: Mostly VSL-style, long form 3-5 min
-Angle: Contrarian / authority challenge
-Duration: Long (3-5 min VSLs, some 90 sec)
-CTA: Click to webinar
-What they're NOT doing: No personality-driven content, no humor, no relatable pain scenarios, no UGC
-
-=== COMPETITOR 3: Tanner Chidester ===
-Active Ads: 22
-Top Hooks:
-- "How I built a $2 million online fitness coaching business from scratch"
-- "Fitness coaches: stop training in-person and do this instead"
-- "I made $47,000 in one month as an online fitness coach — here's exactly how"
-Format: Heavy talking head, some screen shares/case studies, one testimonial style
-Angle: Income claims / transformation / lifestyle aspiration
-Duration: 60-120 sec
-CTA: Free training webinar
-What they're NOT doing: No skit content, no text-on-screen no-face format, no organic-feeling content, no "ugly ads"
-
-=== ORGANIC TOP POSTS (Instagram) ===
-Matt Shiver: Walking outdoor content (1M+ views), relatable frustration reels (500K+)
-Jon Goodman: Educational carousels, no strong video presence
-Tanner: Lifestyle/income content, heavy aspirational
-
-=== WHAT NOBODY IS DOING ===
-- Skit / acted-out pain point scenarios
-- Text-on-screen no-face format (for coaches who don't want to be on camera)
-- Client testimonial ads (social proof format)
-- Humor-based identity content
-- Short 15-second pattern interrupts`;
-
-  document.getElementById('own-ads').value = `My current best performers:
-- "If you're still waiting for word-of-mouth referrals to grow your coaching business, you have a system problem" — hook rate 34%, running 60 days
-- "She was charging $200/month per client, working 60 hours a week, and still couldn't pay rent" (B-roll + text) — best CPL, 45 days`;
-
-  charCountEl.textContent = intelTA.value.length.toLocaleString() + ' characters';
-}
-
-/* ═══════════════════════════════════════
-   MAIN ANALYSIS FUNCTION
-═══════════════════════════════════════ */
-async function runAnalysis() {
-  const intelReport = intelTA.value.trim();
-  if (intelReport.length < 100) {
-    document.getElementById('error-box').classList.add('active');
+  if (!intelReport || intelReport.length < 100) {
+    showError('Please paste your intelligence report before generating. The more complete the report, the better the output.');
     return;
   }
-  document.getElementById('error-box').classList.remove('active');
 
-  const niche = document.getElementById('niche').value || 'online fitness coaches';
-  const offer = document.getElementById('offer').value || 'coaching program';
-  const differentiator = document.getElementById('differentiator').value || '';
-  const currentFormat = document.getElementById('current-format').value || 'talking head';
-  const numEntities = document.getElementById('num-entities').value || '5';
-  const ownAds = document.getElementById('own-ads').value || '';
+  // UI state
+  document.getElementById('generate-btn').disabled = true;
+  document.getElementById('results').classList.remove('visible');
+  document.getElementById('error-box').classList.remove('visible');
+  document.getElementById('status-bar').classList.add('visible');
+  document.getElementById('status-text').innerHTML = `<strong>Parsing intelligence report...</strong>`;
+  cycleStatus();
 
-  setPhase('loading');
-  animateLoadingSteps();
-
-  const systemPrompt = `You are an expert Meta ad creative strategist for the fitness coaching industry. You understand the Andromeda era Entity ID principle — that format + hook type + emotion = a unique entity, and having multiple ads in the same entity cluster is wasted budget.
-
-Your job is to analyze competitor intelligence and generate shoot-ready ad entity briefs that fill genuine market gaps.
-
-ALWAYS respond with valid JSON only. No markdown, no explanation outside the JSON.
-
-JSON structure:
-{
-  "competitorPatterns": {
-    "dominantHooks": ["hook pattern 1", "hook pattern 2", "hook pattern 3"],
-    "dominantFormats": ["format 1", "format 2"],
-    "dominantEmotions": ["emotion 1", "emotion 2"],
-    "saturatedAngles": ["angle 1", "angle 2"]
-  },
-  "whiteSpace": [
-    {"opportunity": "Short label", "description": "Why this is a gap and what it looks like"},
-    {"opportunity": "Short label", "description": "..."},
-    {"opportunity": "Short label", "description": "..."},
-    {"opportunity": "Short label", "description": "..."}
-  ],
-  "briefs": [
-    {
-      "entityNum": 1,
-      "title": "Short punchy title for this entity",
-      "formatBucket": "Skit / Character",
-      "hookType": "Pain Callout",
-      "emotion": "Frustration",
-      "isGapFiller": true,
-      "hook": "Full first 3 seconds — exactly what they say or what appears on screen. Make it specific, punchy, platform-native.",
-      "rehook": "Re-hook line at 10-12 seconds to win back anyone who almost scrolled. One sentence.",
-      "bodyDirection": "2-3 sentences describing what the ad body covers — the agitate, solution, proof structure. Specific, not generic.",
-      "proofPoint": "Specific result, name, timeframe, or transformation to reference (e.g. 'Client result: Sarah, 6 weeks, $0 to $8K/month')",
-      "cta": "Exact CTA copy and keyword (e.g. 'Comment SCALE below and I'll send you...')",
-      "filmingNotes": "2-3 practical notes for how to actually film this. Location, energy, on/off camera, style cues.",
-      "whyNewEntity": "One sentence explaining why this is genuinely distinct from competitor ads — the entity gap it fills."
-    }
-  ]
-}`;
-
-  const userPrompt = `BUSINESS CONTEXT:
-Niche/Avatar: ${niche}
-Offer: ${offer}
-Differentiator: ${differentiator || 'Not specified'}
-Current primary ad format: ${currentFormat}
-
-COMPETITOR INTELLIGENCE REPORT:
+  const userMessage = `
+INTELLIGENCE REPORT:
 ${intelReport}
 
-${ownAds ? `MY CURRENT TOP-PERFORMING ADS:
-${ownAds}` : ''}
+${entityAudit ? `CURRENT ENTITY AUDIT (do NOT recommend these existing entities):
+${entityAudit}` : ''}
 
-TASK:
-1. Analyze the competitor intelligence and identify the dominant patterns (what everyone is doing)
-2. Find the white space — the formats, hooks, and angles nobody is running
-3. Generate exactly ${numEntities} shoot-ready entity briefs that fill genuine market gaps
-4. Each brief must be for a DIFFERENT format bucket and emotional angle than the others
-5. Prioritize formats competitors are NOT using heavily
-6. Write hooks that are specific, punchy, and platform-native — not generic
-7. Make the hooks sound like a real fitness coach speaking naturally, not ad copy
+${clientContext ? `CLIENT CONTEXT:
+${clientContext}` : ''}
 
-IMPORTANT: Each entity brief must target a gap in what competitors are doing. If they're all doing talking head authority content, don't write a talking head authority brief. Find the unclaimed territory.`;
+Generate exactly ${entityCount} shoot-ready creative entities based on this intelligence report. Prioritize white space angles and gaps identified in the research. Each entity must have a completely distinct Entity ID fingerprint (format + hook type + emotion combination).
+
+Return ONLY the JSON array. No explanation. No markdown. Just raw JSON starting with [.
+`.trim();
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -883,238 +615,171 @@ IMPORTANT: Each entity brief must target a gap in what competitors are doing. If
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 4000,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: userPrompt }]
+        system: SYSTEM_PROMPT,
+        messages: [{ role: 'user', content: userMessage }]
       })
     });
 
     const data = await response.json();
-    const raw = data.content?.[0]?.text || '';
 
-    let parsed;
-    try {
-      const clean = raw.replace(/```json|```/g, '').trim();
-      parsed = JSON.parse(clean);
-    } catch(e) {
-      throw new Error('Could not parse AI response. Please try again.');
+    if (!response.ok) {
+      throw new Error(data.error?.message || 'API error');
     }
 
-    renderOutput(parsed, numEntities);
-    setPhase(3);
+    const rawText = data.content?.[0]?.text || '';
 
-  } catch(err) {
-    console.error(err);
-    setPhase(1);
-    document.getElementById('error-box').textContent = 'Something went wrong: ' + (err.message || 'Unknown error. Please try again.');
-    document.getElementById('error-box').classList.add('active');
+    // Parse JSON
+    let entities;
+    try {
+      const cleaned = rawText.replace(/```json|```/g, '').trim();
+      entities = JSON.parse(cleaned);
+    } catch(e) {
+      throw new Error('Failed to parse response. Please try again.');
+    }
+
+    renderEntities(entities, entityCount);
+
+  } catch (err) {
+    showError(err.message || 'Something went wrong. Please try again.');
+  } finally {
+    clearInterval(statusInterval);
+    document.getElementById('status-bar').classList.remove('visible');
+    document.getElementById('generate-btn').disabled = false;
   }
 }
 
-/* ═══════════════════════════════════════
-   ANIMATE LOADING STEPS
-═══════════════════════════════════════ */
-function animateLoadingSteps() {
-  const steps = ['ls1','ls2','ls3','ls4'];
-  let i = 0;
-  const interval = setInterval(() => {
-    if (i > 0) {
-      document.getElementById(steps[i-1])?.classList.remove('active');
-      document.getElementById(steps[i-1])?.classList.add('done');
-    }
-    if (i < steps.length) {
-      document.getElementById(steps[i])?.classList.add('active');
-      i++;
-    } else {
-      clearInterval(interval);
-    }
-  }, 1800);
-}
+function renderEntities(entities, countRequested) {
+  const grid = document.getElementById('entity-grid');
+  grid.innerHTML = '';
 
-/* ═══════════════════════════════════════
-   RENDER OUTPUT
-═══════════════════════════════════════ */
-function renderOutput(data, numEntities) {
-  // Analysis summary cards
-  const cp = data.competitorPatterns || {};
-  const summaryEl = document.getElementById('analysis-summary');
-  summaryEl.innerHTML = `
-    <div class="analysis-card orange">
-      <div class="ac-label">Dominant Hooks</div>
-      <div class="ac-title">What Everyone's Saying</div>
-      <div class="ac-items">
-        ${(cp.dominantHooks || []).map(h => `<div class="ac-item"><span class="ac-bullet">→</span> ${h}</div>`).join('')}
-      </div>
-    </div>
-    <div class="analysis-card blue">
-      <div class="ac-label">Dominant Formats + Emotions</div>
-      <div class="ac-title">The Saturated Playbook</div>
-      <div class="ac-items">
-        ${(cp.dominantFormats || []).map(f => `<div class="ac-item"><span class="ac-bullet">📹</span> ${f}</div>`).join('')}
-        ${(cp.dominantEmotions || []).map(e => `<div class="ac-item"><span class="ac-bullet">🎭</span> ${e}</div>`).join('')}
-      </div>
-    </div>
-    <div class="analysis-card purple">
-      <div class="ac-label">Saturated Angles</div>
-      <div class="ac-title">What to Avoid</div>
-      <div class="ac-items">
-        ${(cp.saturatedAngles || []).map(a => `<div class="ac-item"><span class="ac-bullet">✕</span> ${a}</div>`).join('')}
-      </div>
-    </div>
-  `;
+  const count = entities.length;
+  document.getElementById('results-meta').textContent =
+    `${count} entities generated · ${new Date().toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'})}`;
 
-  // White space
-  const ws = data.whiteSpace || [];
-  const wsEl = document.getElementById('whitespace-box');
-  wsEl.innerHTML = `
-    <div class="ws-header">
-      <span class="ws-badge">✓ Market Gaps Found</span>
-      <span class="ws-title">Your White Space — What Nobody's Running</span>
-    </div>
-    <div class="ws-items">
-      ${ws.map(w => `<div class="ws-item"><strong>${w.opportunity}</strong>${w.description}</div>`).join('')}
-    </div>
-  `;
+  entities.forEach((e, i) => {
+    const delay = i * 80;
+    const card = document.createElement('div');
+    card.className = 'entity-card';
+    card.style.animationDelay = `${delay}ms`;
 
-  // Brief cards
-  const briefs = (data.briefs || []).slice(0, parseInt(numEntities));
-  const briefsEl = document.getElementById('brief-cards');
-
-  briefsEl.innerHTML = briefs.map((b, i) => `
-    <div class="brief-card" id="brief-${i}">
-      <div class="brief-card-header">
-        <div class="bc-num">0${b.entityNum || i+1}</div>
-        <div class="bc-title-block">
-          <div class="bc-entity-label">Entity ${b.entityNum || i+1} &nbsp;·&nbsp; Shoot-Ready Brief</div>
-          <div class="bc-title">${b.title || 'Untitled Entity'}</div>
-        </div>
-        <div class="bc-tags">
-          <span class="bc-tag format">${b.formatBucket || 'Format'}</span>
-          <span class="bc-tag emotion">${b.emotion || 'Emotion'}</span>
-          ${b.isGapFiller ? '<span class="bc-tag gap">Gap Filler</span>' : ''}
-        </div>
-      </div>
-      <div class="brief-card-body">
-        <div>
-          <div class="brief-field">
-            <div class="brief-field-label">🎬 Hook — First 3 Seconds</div>
-            <div class="brief-field-value hook">"${b.hook || ''}"</div>
-          </div>
-          <div class="brief-field">
-            <div class="brief-field-label">🔄 Re-Hook — 10–12 Seconds</div>
-            <div class="brief-field-value rehook">"${b.rehook || ''}"</div>
-          </div>
-          <div class="brief-field">
-            <div class="brief-field-label">📢 CTA</div>
-            <div class="brief-field-value">${b.cta || ''}</div>
-          </div>
-        </div>
-        <div>
-          <div class="brief-field">
-            <div class="brief-field-label">📝 Body Direction</div>
-            <div class="brief-field-value">${b.bodyDirection || ''}</div>
-          </div>
-          <div class="brief-field">
-            <div class="brief-field-label">✅ Proof Point to Reference</div>
-            <div class="brief-field-value">${b.proofPoint || ''}</div>
-          </div>
-          <div class="brief-field">
-            <div class="brief-field-label">🎥 Filming Notes</div>
-            <div class="brief-field-value">${b.filmingNotes || ''}</div>
+    card.innerHTML = `
+      <div class="entity-card-top">
+        <div class="entity-num">0${i+1}</div>
+        <div class="entity-meta">
+          <div class="entity-name">${esc(e.entityName)}</div>
+          <div class="entity-pills">
+            <span class="pill pill-format">📹 ${esc(e.formatBucket)}</span>
+            <span class="pill pill-hook">🎣 ${esc(e.hookType)}</span>
+            <span class="pill pill-emotion">⚡ ${esc(e.coreEmotion)}</span>
+            <span class="pill pill-funnel">${esc(e.funnelStage)}</span>
           </div>
         </div>
       </div>
-      <div class="brief-card-footer">
-        <div class="bc-why"><strong>Why this is a new entity:</strong> ${b.whyNewEntity || ''}</div>
-        <button class="copy-btn" onclick="copyBrief(${i}, this)">Copy Brief</button>
+      <div class="entity-card-body">
+        <div class="entity-field" style="grid-column: span 2; background: rgba(232,119,34,.04);">
+          <div class="field-label">Hook — First 3 Seconds</div>
+          <div class="field-value hook-text">"${esc(e.hook)}"</div>
+        </div>
+        <div class="entity-field">
+          <div class="field-label">Re-Hook at 10–12 Seconds</div>
+          <div class="field-value">${esc(e.rehook)}</div>
+        </div>
+        <div class="entity-field">
+          <div class="field-label">Proof Point Prompt</div>
+          <div class="field-value">${esc(e.proofPrompt)}</div>
+        </div>
+        <div class="entity-field">
+          <div class="field-label">CTA Direction</div>
+          <div class="field-value">${esc(e.ctaDirection)}</div>
+        </div>
+        <div class="entity-field">
+          <div class="field-label">Gap This Fills</div>
+          <div class="field-value entity-why">${esc(e.gapItFills)}</div>
+        </div>
+        <div class="entity-field" style="grid-column: span 2;">
+          <div class="field-label">Why This Is a New Entity ID</div>
+          <div class="field-value entity-why">${esc(e.whyNewEntity)}</div>
+        </div>
       </div>
-    </div>
-  `).join('');
-}
-
-/* ═══════════════════════════════════════
-   COPY FUNCTIONS
-═══════════════════════════════════════ */
-function copyBrief(idx, btn) {
-  const data = document.getElementById('brief-' + idx);
-  if (!data) return;
-
-  const title = data.querySelector('.bc-title')?.textContent || '';
-  const format = data.querySelector('.bc-tag.format')?.textContent || '';
-  const emotion = data.querySelector('.bc-tag.emotion')?.textContent || '';
-  const hook = data.querySelector('.brief-field-value.hook')?.textContent || '';
-  const rehook = data.querySelector('.brief-field-value.rehook')?.textContent || '';
-  const fields = data.querySelectorAll('.brief-field');
-  let text = `ENTITY BRIEF: ${title}\nFormat: ${format} | Emotion: ${emotion}\n\n`;
-  fields.forEach(f => {
-    const lbl = f.querySelector('.brief-field-label')?.textContent || '';
-    const val = f.querySelector('.brief-field-value')?.textContent || '';
-    text += `${lbl}\n${val}\n\n`;
+      <button class="entity-copy-btn" onclick="copyEntity(${i})">Copy Entity ${i+1} →</button>
+    `;
+    grid.appendChild(card);
   });
 
-  navigator.clipboard.writeText(text).then(() => {
-    btn.textContent = 'Copied ✓';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy Brief'; btn.classList.remove('copied'); }, 2000);
-  });
+  // Store for copy
+  window._entities = entities;
+
+  document.getElementById('results').classList.add('visible');
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function copyAllBriefs() {
-  const cards = document.querySelectorAll('.brief-card');
-  let full = 'IFCA SHOOT-READY ENTITY BRIEFS\n' + '='.repeat(40) + '\n\n';
-  cards.forEach((card, i) => {
-    const title = card.querySelector('.bc-title')?.textContent || '';
-    const format = card.querySelector('.bc-tag.format')?.textContent || '';
-    const emotion = card.querySelector('.bc-tag.emotion')?.textContent || '';
-    full += `ENTITY ${i+1}: ${title}\nFormat: ${format} | Emotion: ${emotion}\n`;
-    full += '-'.repeat(30) + '\n';
-    card.querySelectorAll('.brief-field').forEach(f => {
-      const lbl = f.querySelector('.brief-field-label')?.textContent || '';
-      const val = f.querySelector('.brief-field-value')?.textContent || '';
-      full += `${lbl}\n${val}\n\n`;
-    });
-    full += '\n';
-  });
-
-  navigator.clipboard.writeText(full).then(() => {
-    const btn = document.querySelector('.export-row .btn-primary');
-    if (btn) { btn.innerHTML = '<span>✓</span> All Briefs Copied!'; setTimeout(() => { btn.innerHTML = '<span>📋</span> Copy All Briefs'; }, 2500); }
-  });
+function esc(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
 
-function printBriefs() { window.print(); }
+function copyEntity(i) {
+  const e = window._entities?.[i];
+  if (!e) return;
+  const text = `ENTITY ${i+1}: ${e.entityName}
+─────────────────────────────
+Format Bucket: ${e.formatBucket}
+Hook Type: ${e.hookType}
+Core Emotion: ${e.coreEmotion}
+Funnel Stage: ${e.funnelStage}
 
-function resetTool() {
-  setPhase(1);
-  document.getElementById('intel-report').value = '';
-  document.getElementById('own-ads').value = '';
-  document.getElementById('niche').value = '';
-  document.getElementById('offer').value = '';
-  document.getElementById('differentiator').value = '';
-  charCountEl.textContent = '0 characters';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+HOOK (First 3 Seconds):
+"${e.hook}"
+
+RE-HOOK (10-12 sec):
+${e.rehook}
+
+PROOF POINT PROMPT:
+${e.proofPrompt}
+
+CTA DIRECTION:
+${e.ctaDirection}
+
+GAP THIS FILLS:
+${e.gapItFills}
+
+WHY NEW ENTITY:
+${e.whyNewEntity}`;
+  navigator.clipboard.writeText(text).then(() => showToast('Entity copied ✓'));
 }
 
-/* ═══════════════════════════════════════
-   PRINT STYLES
-═══════════════════════════════════════ */
-const printCSS = document.createElement('style');
-printCSS.textContent = `
-@media print {
-  body { background: white !important; color: black !important; }
-  body::before { display: none; }
-  .flow-steps, .eyebrow, .header-sub, .export-row, .footer, .callout, .copy-btn { display: none !important; }
-  .brief-card { border: 1px solid #ccc !important; background: white !important; break-inside: avoid; margin-bottom: 20px; }
-  .brief-card-header { background: #f5f5f5 !important; }
-  .brief-field-value.hook { border-left-color: #E87722 !important; background: #fff8f3 !important; color: black !important; }
-  .brief-field-value.rehook { border-left-color: #4A7FA5 !important; background: #f5f8fb !important; color: black !important; }
-  .bc-num, .bc-title { color: #E87722 !important; }
-  .brief-field-value, .bc-why { color: #333 !important; }
-  .brief-field-label { color: #666 !important; }
-  .analysis-grid, .whitespace-box { page-break-after: avoid; }
-  h1 { color: #1E3A5F !important; }
-  h1 em { color: #E87722 !important; }
-}`;
-document.head.appendChild(printCSS);
+function copyAll() {
+  const entities = window._entities;
+  if (!entities?.length) return;
+  const text = entities.map((e, i) => `ENTITY ${i+1}: ${e.entityName}
+─────────────────────────────
+Format: ${e.formatBucket} | Hook: ${e.hookType} | Emotion: ${e.coreEmotion} | Stage: ${e.funnelStage}
+
+HOOK: "${e.hook}"
+RE-HOOK: ${e.rehook}
+PROOF PROMPT: ${e.proofPrompt}
+CTA: ${e.ctaDirection}
+NEW ENTITY BECAUSE: ${e.whyNewEntity}
+GAP IT FILLS: ${e.gapItFills}`).join('\n\n═══════════════════════════════\n\n');
+  navigator.clipboard.writeText(text).then(() => showToast(`All ${entities.length} entities copied ✓`));
+}
+
+function showError(msg) {
+  const box = document.getElementById('error-box');
+  box.textContent = '⚠ ' + msg;
+  box.classList.add('visible');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
 </script>
 </body>
 </html>

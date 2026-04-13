@@ -1,8 +1,1312 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>Coming Soon — IFCA Playbooks</title>
-<style>body{font-family:sans-serif;background:#0D1F35;color:white;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;flex-direction:column;gap:12px;}
-.label{font-family:monospace;font-size:11px;letter-spacing:2px;color:#E87722;text-transform:uppercase;}
-h1{font-size:32px;font-weight:700;}p{color:rgba(255,255,255,0.4);font-size:13px;}
-a{color:#E87722;font-size:12px;margin-top:8px;}
-</style></head>
-<body><div class="label">IFCA Playbooks</div><h1>Coming Soon</h1><p>This resource is in development.</p><a href="../../index.html">← Back to Hub</a></body></html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lindsey Mathews — Full Business Audit | IFCA 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:        #1E3A5F;
+  --navy-dark:   #0B1A2B;
+  --navy-mid:    #142845;
+  --navy-card:   rgba(20,40,69,0.6);
+  --orange:      #E87722;
+  --orange-dim:  rgba(232,119,34,0.12);
+  --orange-glow: rgba(232,119,34,0.22);
+  --blue-mid:    #4A7FA5;
+  --blue-dim:    rgba(74,127,165,0.12);
+  --blue-light:  #D6E4F0;
+  --gray-400:    #94A3B8;
+  --gray-500:    #64748B;
+  --gray-600:    #475569;
+  --green:       #22C55E;
+  --green-bg:    rgba(34,197,94,0.10);
+  --red:         #DC2626;
+  --red-bg:      rgba(220,38,38,0.09);
+  --yellow:      #F59E0B;
+  --yellow-bg:   rgba(245,158,11,0.10);
+  --purple:      #8B5CF6;
+  --purple-bg:   rgba(139,92,246,0.10);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy-dark);
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+body::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 5% 5%, rgba(74,127,165,.09) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 95% 95%, rgba(232,119,34,.06) 0%, transparent 55%);
+}
+
+.page {
+  position: relative; z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px 120px;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 60px 0 52px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  margin-bottom: 0;
+  position: relative;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: .2em; color: var(--orange);
+  text-transform: uppercase; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.hero-eyebrow::before { content: ''; width: 32px; height: 2px; background: var(--orange); border-radius: 1px; }
+
+.hero-name {
+  font-family: 'Bebas Neue'; font-size: clamp(52px, 8vw, 96px);
+  line-height: .88; letter-spacing: .02em; color: #fff;
+  margin-bottom: 6px;
+}
+.hero-name span { color: var(--orange); }
+
+.hero-title {
+  font-family: 'DM Mono', monospace; font-size: 14px;
+  letter-spacing: .08em; color: rgba(255,255,255,.4);
+  text-transform: uppercase; margin-bottom: 28px;
+}
+
+.hero-stats {
+  display: flex; gap: 0; margin-bottom: 32px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 14px; overflow: hidden;
+}
+
+.hs {
+  flex: 1; padding: 20px 24px;
+  border-right: 1px solid rgba(255,255,255,.06);
+}
+.hs:last-child { border-right: none; }
+
+.hs-val { font-family: 'Bebas Neue'; font-size: 40px; line-height: 1; margin-bottom: 4px; }
+.hs-val.orange { color: var(--orange); }
+.hs-val.green  { color: var(--green); }
+.hs-val.blue   { color: #7ABFDD; }
+.hs-val.white  { color: #fff; }
+.hs-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-500); }
+
+.hero-summary {
+  font-size: 15px; color: rgba(255,255,255,.65);
+  line-height: 1.7; max-width: 720px;
+  border-left: 3px solid var(--orange);
+  padding-left: 20px;
+}
+.hero-summary strong { color: rgba(255,255,255,.9); }
+
+/* ── NAV ── */
+.doc-nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(11,26,43,.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  padding: 0;
+  margin: 0 -24px;
+}
+
+.doc-nav-inner {
+  max-width: 1080px; margin: 0 auto;
+  padding: 0 24px;
+  display: flex; align-items: center; gap: 4px; overflow-x: auto;
+  scrollbar-width: none;
+}
+.doc-nav-inner::-webkit-scrollbar { display: none; }
+
+.nav-link {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 14px 16px; white-space: nowrap;
+  color: var(--gray-500); text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color .18s, border-color .18s;
+}
+.nav-link:hover { color: rgba(255,255,255,.7); }
+.nav-link.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+/* ── SECTION STRUCTURE ── */
+.doc-section { padding: 56px 0 0; }
+
+.sec-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: .18em; color: var(--orange);
+  text-transform: uppercase; margin-bottom: 8px;
+}
+
+.sec-heading {
+  font-family: 'Bebas Neue'; font-size: clamp(30px,4vw,44px);
+  line-height: .95; letter-spacing: .02em; color: #fff;
+  margin-bottom: 24px;
+}
+
+.sec-divider {
+  height: 1px; background: rgba(255,255,255,.07);
+  margin-bottom: 28px;
+}
+
+/* ── CARDS ── */
+.card {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 14px;
+  padding: 22px 24px;
+}
+
+.card.orange-left { border-left: 3px solid var(--orange); border-radius: 0 14px 14px 0; background: var(--orange-dim); }
+.card.green-left  { border-left: 3px solid var(--green);  border-radius: 0 14px 14px 0; background: var(--green-bg); }
+.card.red-left    { border-left: 3px solid var(--red);    border-radius: 0 14px 14px 0; background: var(--red-bg); }
+.card.yellow-left { border-left: 3px solid var(--yellow); border-radius: 0 14px 14px 0; background: var(--yellow-bg); }
+.card.blue-left   { border-left: 3px solid var(--blue-mid); border-radius: 0 14px 14px 0; background: var(--blue-dim); }
+
+/* ── 2-COL GRID ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+
+@media(max-width:720px){
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .hero-stats { flex-direction: column; }
+  .hs { border-right: none; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .hs:last-child { border-bottom: none; }
+}
+@media(max-width:900px){
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── WIN CARDS ── */
+.win-card {
+  background: var(--green-bg); border: 1px solid rgba(34,197,94,.2);
+  border-radius: 12px; padding: 18px;
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.win-icon { font-size: 20px; flex-shrink: 0; padding-top: 2px; }
+.win-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--green); margin-bottom: 4px; }
+.win-desc  { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.55; }
+
+/* ── PERIOD SWITCHER ── */
+.period-bar {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 20px; flex-wrap: wrap;
+}
+.period-bar-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-500); }
+.period-tabs { display: flex; gap: 4px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 4px; }
+.pt {
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+  padding: 7px 14px; border-radius: 7px; border: none;
+  background: transparent; color: var(--gray-500); cursor: pointer; transition: all .18s;
+}
+.pt.active { background: var(--navy-mid); color: #fff; }
+.pt:hover:not(.active) { color: rgba(255,255,255,.6); }
+
+.edit-btn {
+  margin-left: auto;
+  background: var(--orange-dim); border: 1px solid rgba(232,119,34,.3);
+  border-radius: 8px; padding: 8px 16px;
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--orange); cursor: pointer; transition: all .18s;
+}
+.edit-btn:hover { background: var(--orange-glow); }
+.edit-btn.on { background: var(--orange); color: #fff; }
+
+/* ── KPI BAND ── */
+.kpi-band {
+  display: grid; grid-template-columns: repeat(5,1fr); gap: 10px;
+  margin-bottom: 20px;
+}
+@media(max-width:700px){ .kpi-band { grid-template-columns: 1fr 1fr; } }
+
+.kpi-chip {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px; padding: 14px 16px; position: relative; overflow: hidden;
+}
+.kpi-chip::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:12px 12px 0 0; }
+.kpi-chip.pass::before { background: var(--green); }
+.kpi-chip.warn::before { background: var(--yellow); }
+.kpi-chip.fail::before { background: var(--red); }
+.kpi-chip.info::before { background: var(--blue-mid); }
+
+.chip-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); margin-bottom:5px; line-height:1.4; }
+.chip-val   { font-family:'Bebas Neue'; font-size:30px; line-height:1; margin-bottom:3px; }
+.kpi-chip.pass .chip-val { color: var(--green); }
+.kpi-chip.warn .chip-val { color: var(--yellow); }
+.kpi-chip.fail .chip-val { color: #F87171; }
+.kpi-chip.info .chip-val { color: #7ABFDD; }
+.chip-target { font-family:'DM Mono',monospace; font-size:10px; color:var(--gray-500); }
+
+/* ── METRICS TABLE ── */
+.tbl-wrap {
+  background: rgba(255,255,255,.025);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 14px; overflow: hidden;
+  margin-bottom: 16px;
+}
+.mtbl { width:100%; border-collapse:collapse; }
+.mtbl thead tr { background:rgba(255,255,255,.03); }
+.mtbl th {
+  font-family:'DM Mono',monospace; font-size:10px;
+  letter-spacing:.1em; text-transform:uppercase;
+  color:var(--gray-500); padding:10px 14px; text-align:left;
+  border-bottom:1px solid rgba(255,255,255,.06); white-space:nowrap;
+}
+.mtbl td {
+  padding:12px 14px; font-size:13px; color:rgba(255,255,255,.7);
+  border-bottom:1px solid rgba(255,255,255,.04); vertical-align:middle;
+}
+.mtbl tbody tr:last-child td { border-bottom:none; }
+.mtbl tbody tr:hover td { background:rgba(255,255,255,.02); }
+
+.m-name   { font-size:13px; color:rgba(255,255,255,.85); }
+.m-target { font-family:'DM Mono',monospace; font-size:11px; color:var(--gray-500); }
+.m-val    { font-family:'Bebas Neue'; font-size:22px; line-height:1; }
+.m-val.pass { color:var(--green); }
+.m-val.warn { color:var(--yellow); }
+.m-val.fail { color:#F87171; }
+.m-val.info { color:#7ABFDD; }
+
+.badge {
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.08em;
+  text-transform:uppercase; padding:3px 9px; border-radius:4px; white-space:nowrap;
+}
+.badge.pass { background:var(--green-bg); color:var(--green); border:1px solid rgba(34,197,94,.25); }
+.badge.warn { background:var(--yellow-bg); color:var(--yellow); border:1px solid rgba(245,158,11,.25); }
+.badge.fail { background:var(--red-bg); color:#F87171; border:1px solid rgba(220,38,38,.25); }
+.badge.info { background:var(--blue-dim); color:#7ABFDD; border:1px solid rgba(74,127,165,.3); }
+
+.m-note { font-size:11px; color:var(--gray-500); line-height:1.5; max-width:200px; }
+
+.edit-input {
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09);
+  border-radius:7px; padding:6px 10px;
+  font-family:'DM Mono',monospace; font-size:13px; color:#fff;
+  outline:none; width:110px; transition:border-color .18s;
+  -moz-appearance:textfield;
+}
+.edit-input::-webkit-inner-spin-button { -webkit-appearance:none; }
+.edit-input:focus { border-color:rgba(232,119,34,.5); background:rgba(232,119,34,.06); }
+
+/* ── REV EQUILIBRIUM ── */
+.eq-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:18px; }
+.eq-stat {
+  background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07);
+  border-radius:12px; padding:18px;
+  text-align:center;
+}
+.eq-stat-val { font-family:'Bebas Neue'; font-size:36px; line-height:1; margin-bottom:4px; color:var(--orange); }
+.eq-stat-label { font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--gray-500); }
+
+.eq-vs-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px; align-items: center; margin-bottom: 16px;
+}
+.eq-box {
+  background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07);
+  border-radius:12px; padding:18px; text-align:center;
+}
+.eq-box-val { font-family:'Bebas Neue'; font-size:32px; line-height:1; margin-bottom:4px; }
+.eq-box-label { font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--gray-500); }
+.eq-vs { font-family:'Bebas Neue'; font-size:28px; color:var(--gray-500); text-align:center; }
+
+.eq-verdict {
+  background:rgba(255,255,255,.025); border:1px solid rgba(255,255,255,.07);
+  border-radius:12px; padding:18px;
+}
+.eq-verdict-label { font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--orange); margin-bottom:8px; }
+.eq-verdict-text { font-size:14px; color:rgba(255,255,255,.7); line-height:1.6; }
+
+/* ── CREATIVE AUDIT ── */
+.audit-table-wrap {
+  background: rgba(255,255,255,.025);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 14px; overflow: hidden;
+}
+.audit-tbl { width:100%; border-collapse:collapse; }
+.audit-tbl th {
+  font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--gray-500); padding:10px 14px; text-align:left;
+  background:rgba(255,255,255,.03); border-bottom:1px solid rgba(255,255,255,.06);
+}
+.audit-tbl td {
+  padding:12px 14px; font-size:13px; color:rgba(255,255,255,.65);
+  border-bottom:1px solid rgba(255,255,255,.04); vertical-align:top; line-height:1.5;
+}
+.audit-tbl tbody tr:last-child td { border-bottom:none; }
+.audit-tbl td strong { color:rgba(255,255,255,.9); }
+
+.gap-pill {
+  display:inline-block; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.06em; text-transform:uppercase;
+  padding:2px 8px; border-radius:4px; margin:2px 3px 2px 0;
+}
+.gap-pill.missing { background:var(--red-bg); color:#F87171; border:1px solid rgba(220,38,38,.2); }
+.gap-pill.opportunity { background:var(--green-bg); color:var(--green); border:1px solid rgba(34,197,94,.2); }
+.gap-pill.warn { background:var(--yellow-bg); color:var(--yellow); border:1px solid rgba(245,158,11,.2); }
+
+/* ── ENTITY SCORECARD ── */
+.entity-score { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin:20px 0; }
+.es-card {
+  background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07);
+  border-radius:12px; padding:18px; text-align:center;
+}
+.es-val { font-family:'Bebas Neue'; font-size:52px; line-height:1; margin-bottom:4px; }
+.es-label { font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--gray-500); }
+.es-card.pass { border-color:rgba(34,197,94,.2); background:var(--green-bg); }
+.es-card.pass .es-val { color:var(--green); }
+.es-card.fail { border-color:rgba(220,38,38,.2); background:var(--red-bg); }
+.es-card.fail .es-val { color:#F87171; }
+.es-card.warn { border-color:rgba(245,158,11,.2); background:var(--yellow-bg); }
+.es-card.warn .es-val { color:var(--yellow); }
+
+/* ── COPY BUTTON ── */
+.copy-btn {
+  background: var(--orange); border: none;
+  border-radius: 10px; padding: 12px 24px;
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  letter-spacing: .1em; text-transform: uppercase; color: #fff;
+  cursor: pointer; transition: all .18s; margin-top: 20px;
+}
+.copy-btn:hover { background: #d06b1c; }
+
+/* ── DIAGNOSIS CARDS ── */
+.diag-list { display:flex; flex-direction:column; gap:12px; }
+
+.diag-card {
+  border-radius:14px; border:1px solid rgba(255,255,255,.07);
+  background:rgba(255,255,255,.025); overflow:hidden;
+}
+.diag-card.p1 { border-color:rgba(220,38,38,.35); background:rgba(220,38,38,.04); }
+.diag-card.p2 { border-color:rgba(245,158,11,.28); background:rgba(245,158,11,.03); }
+.diag-card.p3 { border-color:rgba(232,119,34,.22); }
+.diag-card.ok { border-color:rgba(34,197,94,.22); background:rgba(34,197,94,.03); }
+
+.diag-head {
+  display:flex; align-items:flex-start; gap:16px;
+  padding:20px 22px 16px;
+}
+.diag-rank {
+  font-family:'Bebas Neue'; font-size:40px; line-height:1;
+  flex-shrink:0; min-width:36px; padding-top:2px;
+}
+.diag-card.p1 .diag-rank { color:#F87171; }
+.diag-card.p2 .diag-rank { color:var(--yellow); }
+.diag-card.p3 .diag-rank { color:var(--orange); }
+.diag-card.ok .diag-rank { color:var(--green); }
+
+.diag-title {
+  font-family:'Bebas Neue'; font-size:20px; letter-spacing:.04em; line-height:1.1; margin-bottom:6px;
+}
+.diag-card.p1 .diag-title { color:#F87171; }
+.diag-card.p2 .diag-title { color:var(--yellow); }
+.diag-card.p3 .diag-title { color:var(--orange); }
+.diag-card.ok .diag-title { color:var(--green); }
+
+.diag-desc { font-size:13px; color:rgba(255,255,255,.65); line-height:1.65; }
+
+.diag-action {
+  padding:12px 22px 16px 74px;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.diag-action-label {
+  font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.1em;
+  color:var(--orange); margin-bottom:5px;
+}
+.diag-action-text { font-size:13px; color:rgba(255,255,255,.7); line-height:1.6; }
+
+/* ── PLAN ── */
+.plan-list { display:flex; flex-direction:column; gap:14px; }
+.plan-item {
+  background:rgba(255,255,255,.025); border:1px solid rgba(255,255,255,.07);
+  border-radius:14px; padding:20px 22px;
+  display:flex; gap:18px; align-items:flex-start;
+}
+.plan-num {
+  font-family:'Bebas Neue'; font-size:44px; line-height:1;
+  color:rgba(255,255,255,.12); flex-shrink:0; min-width:36px;
+}
+.plan-content { flex:1; }
+.plan-title { font-size:15px; font-weight:600; color:#fff; margin-bottom:6px; }
+.plan-desc  { font-size:13px; color:rgba(255,255,255,.6); line-height:1.6; }
+.plan-tags  { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+.plan-tag {
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.08em; text-transform:uppercase;
+  padding:3px 10px; border-radius:4px;
+}
+.plan-tag.ads      { background:var(--orange-dim); color:var(--orange); border:1px solid rgba(232,119,34,.25); }
+.plan-tag.sales    { background:var(--blue-dim); color:#7ABFDD; border:1px solid rgba(74,127,165,.3); }
+.plan-tag.ops      { background:var(--purple-bg); color:var(--purple); border:1px solid rgba(139,92,246,.25); }
+.plan-tag.creative { background:rgba(245,158,11,.1); color:var(--yellow); border:1px solid rgba(245,158,11,.25); }
+
+/* ── FOOTER ── */
+.footer {
+  margin-top: 80px; padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,.07);
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.footer-brand { font-family:'Bebas Neue'; font-size:20px; color:var(--orange); letter-spacing:.05em; }
+.footer-meta { font-family:'DM Mono',monospace; font-size:10px; color:var(--gray-500); text-align:right; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">IFCA — Seven-Figure Client Audit · April 2026</div>
+  <div class="hero-name">Lindsey <span>Mathews</span></div>
+  <div class="hero-title">SheShifts™ System — Perimenopause Fat Loss Coaching · Moxie by Lindsey</div>
+  <div class="hero-stats">
+    <div class="hs">
+      <div class="hs-val orange">$1.38M</div>
+      <div class="hs-label">2025 Revenue</div>
+    </div>
+    <div class="hs">
+      <div class="hs-val green">+10%</div>
+      <div class="hs-label">Profit Growth (YoY)</div>
+    </div>
+    <div class="hs">
+      <div class="hs-val blue">$93.9K</div>
+      <div class="hs-label">Q1 Mo Avg Revenue</div>
+    </div>
+    <div class="hs">
+      <div class="hs-val orange">$4,102</div>
+      <div class="hs-label">LTV (Q1 Avg)</div>
+    </div>
+    <div class="hs">
+      <div class="hs-val white">4.4:1</div>
+      <div class="hs-label">CAC:LTV Ratio</div>
+    </div>
+  </div>
+  <div class="hero-summary">
+    Lindsey has proven she can grow a fully ads-driven business without sacrificing margin — a 10% profit increase during the first year of full paid acquisition dependency is a real win. Q1 2026 still produced <strong>$256,825 in contracted revenue</strong> on $38K in spend, with a <strong>5.34x contracted ROAS</strong> and <strong>51.7% frontend-to-backend conversion</strong>. The issue isn't that ads stopped working. The issue is a <strong>narrowing DM funnel with diminishing returns</strong> — scheduled calls are down 15% YoY and March showed clear deterioration, all inside an account with only <strong>6–7 true entities despite 66+ active ads</strong>. The next unlock isn't a magic hook. It's building a wider entity portfolio, adding a secondary inbound funnel, and using the large proof base Lindsey already has.
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="doc-nav">
+  <div class="doc-nav-inner">
+    <a href="#wins"       class="nav-link active">What's Working</a>
+    <a href="#data"       class="nav-link">Data Snapshot</a>
+    <a href="#equilibrium" class="nav-link">Rev Equilibrium</a>
+    <a href="#creative"   class="nav-link">Creative Intel</a>
+    <a href="#diagnosis"  class="nav-link">Constraint Diagnosis</a>
+    <a href="#plan"       class="nav-link">90-Day Plan</a>
+  </div>
+</nav>
+
+<!-- SECTION 01: WHAT'S WORKING -->
+<section class="doc-section" id="wins">
+  <div class="sec-eyebrow">Section 01</div>
+  <div class="sec-heading">What's Working</div>
+  <div class="sec-divider"></div>
+  <div class="grid-3">
+    <div class="win-card">
+      <div class="win-icon">💰</div>
+      <div>
+        <div class="win-label">Profitable At Scale</div>
+        <div class="win-desc">Spent $80K more on ads in 2025 than 2024 and still grew profit 10%. First year of full ad-reliant acquisition — the model held.</div>
+      </div>
+    </div>
+    <div class="win-card">
+      <div class="win-icon">📊</div>
+      <div>
+        <div class="win-label">Strong Contracted ROAS</div>
+        <div class="win-desc">5.34x contracted ROAS in Q1 2026, with individual months hitting 7.9x (February). Well above the 5x IFCA benchmark.</div>
+      </div>
+    </div>
+    <div class="win-card">
+      <div class="win-icon">🔄</div>
+      <div>
+        <div class="win-label">Backend Conversion</div>
+        <div class="win-desc">51.7% frontend-to-backend conversion in Q1 — above the 50% IFCA target. Clients are staying and ascending, which supports growing LTV.</div>
+      </div>
+    </div>
+    <div class="win-card">
+      <div class="win-icon">📞</div>
+      <div>
+        <div class="win-label">Show Rate Improvement</div>
+        <div class="win-desc">Despite 15% fewer scheduled calls YoY, live calls are flat — show rate improved significantly. Sales team quality is solid, not the bottleneck.</div>
+      </div>
+    </div>
+    <div class="win-card">
+      <div class="win-icon">💡</div>
+      <div>
+        <div class="win-label">Channel Separation</div>
+        <div class="win-desc">Facebook and Instagram run as independent channels with dedicated setters. This makes attribution clean and testing meaningful.</div>
+      </div>
+    </div>
+    <div class="win-card">
+      <div class="win-icon">🏗️</div>
+      <div>
+        <div class="win-label">Strong Brand Ecosystem</div>
+        <div class="win-desc">828K Facebook followers, book deal, supplement ownership, 3,800+ lifetime clients, and team of 7+ coaches. More authority assets than the current ads express.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 02: DATA SNAPSHOT -->
+<section class="doc-section" id="data">
+  <div class="sec-eyebrow">Section 02</div>
+  <div class="sec-heading">Data Snapshot</div>
+  <div class="sec-divider"></div>
+
+  <div class="period-bar">
+    <span class="period-bar-label">Period</span>
+    <div class="period-tabs">
+      <button class="pt active" onclick="setPeriod('q1')">Q1 Avg</button>
+      <button class="pt" onclick="setPeriod('jan')">January</button>
+      <button class="pt" onclick="setPeriod('feb')">February</button>
+      <button class="pt" onclick="setPeriod('mar')">March</button>
+    </div>
+    <button class="edit-btn" id="editBtn" onclick="toggleEdit()">Edit Mode</button>
+  </div>
+
+  <!-- KPI BAND -->
+  <div class="kpi-band" id="kpiBand"></div>
+
+  <!-- AD METRICS TABLE -->
+  <div class="tbl-wrap">
+    <table class="mtbl">
+      <thead><tr>
+        <th>Metric</th><th>Target</th><th>Value</th><th>Status</th><th>Notes</th>
+      </tr></thead>
+      <tbody id="adMetricsBody"></tbody>
+    </table>
+  </div>
+
+  <!-- MARGIN TABLE -->
+  <div class="tbl-wrap">
+    <table class="mtbl">
+      <thead><tr>
+        <th>Margin Metric</th><th>Target</th><th>Value</th><th>Status</th><th>Notes</th>
+      </tr></thead>
+      <tbody id="marginMetricsBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SECTION 03: REVENUE EQUILIBRIUM -->
+<section class="doc-section" id="equilibrium">
+  <div class="sec-eyebrow">Section 03</div>
+  <div class="sec-heading">Revenue Equilibrium</div>
+  <div class="sec-divider"></div>
+
+  <div class="eq-stats">
+    <div class="eq-stat">
+      <div class="eq-stat-val">$4,102</div>
+      <div class="eq-stat-label">Q1 Avg LTV</div>
+    </div>
+    <div class="eq-stat">
+      <div class="eq-stat-val">27</div>
+      <div class="eq-stat-label">Q1 Avg New Clients / Mo</div>
+    </div>
+    <div class="eq-stat">
+      <div class="eq-stat-val">9.8%</div>
+      <div class="eq-stat-label">Q1 Avg Churn Rate</div>
+    </div>
+  </div>
+
+  <div class="eq-vs-row">
+    <div class="eq-box">
+      <div class="eq-box-val" style="color:var(--blue-mid);">$110,745</div>
+      <div class="eq-box-label">Revenue Equilibrium (Q1 Avg)<br><small style="font-size:10px;">(LTV × New Clients)</small></div>
+    </div>
+    <div class="eq-vs">VS</div>
+    <div class="eq-box">
+      <div class="eq-box-val" style="color:var(--orange);">$93,934</div>
+      <div class="eq-box-label">Actual Q1 Monthly Revenue</div>
+    </div>
+  </div>
+
+  <div class="eq-verdict">
+    <div class="eq-verdict-label">Equilibrium Verdict</div>
+    <div class="eq-verdict-text">
+      <strong style="color:var(--yellow);">Revenue is running below equilibrium by ~$17K/month.</strong> The equilibrium model shows Lindsey should be generating ~$110K/month based on current LTV and acquisition pace — actual Q1 average came in at $93.9K. The gap is primarily driven by two things: (1) March churn spiked to 12.7% due to the AC situation, which temporarily compressed LTV and equilibrium math; (2) the DM funnel is producing fewer qualified bookings relative to lead volume, meaning the number of paying clients acquired per month is plateauing. The good news: the underlying math is solid. If churn normalizes back toward 6–7% (as seen in February) and new client acquisition holds at 27+/month, equilibrium revenue pushes above $120K. The lever is not cutting costs — it's improving booking quality and qualifying more of the top-of-funnel volume.
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 04: CREATIVE INTELLIGENCE -->
+<section class="doc-section" id="creative">
+  <div class="sec-eyebrow">Section 04</div>
+  <div class="sec-heading">Creative Intelligence Report</div>
+  <div class="sec-divider"></div>
+
+  <!-- Exec Summary -->
+  <div class="card orange-left" style="margin-bottom:20px;">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:10px;">Strategic Summary</div>
+    <div style="font-size:14px;color:rgba(255,255,255,.8);line-height:1.7;">
+      Lindsey's account has <strong>real scale assets — not a startup creative problem</strong>. The business has strong unit economics, message-market fit, a 3,800+ client proof base, and founder authority that very few competitors can match. Q1 still produced 5.34x contracted ROAS on $38K spend. The constraint is not the offer or the messaging — it's that the current creative system is expressing one thesis (DM funnel + perimenopause frustration + eat less / move more is wrong) through too few genuinely distinct entities. With 66 active ads but only 6–7 real entities, the account is generating the illusion of diversity. True scale requires 8–10 entities with structural, emotional, and format-level differentiation.
+    </div>
+  </div>
+
+  <!-- Brand / Offer Table -->
+  <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-500);margin-bottom:12px;">Brand & Offer Positioning</div>
+  <div class="audit-table-wrap" style="margin-bottom:24px;">
+    <table class="audit-tbl">
+      <thead><tr><th>Element</th><th>Current Read</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Niche</strong></td><td>Perimenopause / women-over-40 fat loss coaching</td></tr>
+        <tr><td><strong>Primary Avatar</strong></td><td>Women 40+ with unexplained weight gain, fatigue, hormone disruption — have "done everything right" and still stuck</td></tr>
+        <tr><td><strong>Core Problem</strong></td><td>Old fat-loss methods (eat less, move more) no longer work and actively backfire in a hormonally-shifting perimenopausal body</td></tr>
+        <tr><td><strong>Named Mechanism</strong></td><td><strong>The SheShifts™ System</strong> — hormone-first, built by women in perimenopause, for women in perimenopause</td></tr>
+        <tr><td><strong>Promise</strong></td><td>Lose 15–25 lbs in 16 weeks without restriction, punishing cardio, or giving up favorite foods</td></tr>
+        <tr><td><strong>Key Proof</strong></td><td>Lindsey's personal 50 lb loss at 40, 3,000+ women helped (copy kit), 3,800+ lifetime clients (site), Kim −24 lbs, Pamela back to wedding weight, Nicole −70 lbs</td></tr>
+        <tr><td><strong>Funnel Destination</strong></td><td>Primarily DM keyword (PERI, MENO, SMART, MY TURN, SUMMER, MASTERCLASS) → setter → booked call</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Organic Hooks -->
+  <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-500);margin-bottom:12px;">Organic Content Audit — Verbatim Hooks</div>
+  <div class="audit-table-wrap" style="margin-bottom:24px;">
+    <table class="audit-tbl">
+      <thead><tr><th>Surface</th><th>Verbatim Hook</th><th>Format</th><th>Driver</th><th>Ad Potential</th></tr></thead>
+      <tbody>
+        <tr><td>Facebook video</td><td><strong>"DM me 'PERI' and I'll send you my go-to free guide for easy weight loss in perimenopause!"</strong></td><td>Talking head / short video</td><td>Frustration</td><td><span class="gap-pill opportunity">Active</span></td></tr>
+        <tr><td>Organic reel</td><td><strong>"24 hours until my free, live masterclass 'Perimenopause Fat Loss Secrets'!"</strong></td><td>Short-form video</td><td>Desire</td><td><span class="gap-pill opportunity">Active</span></td></tr>
+        <tr><td>Organic reel</td><td><strong>"If you're trying to lose weight around menopause, please stop doing these three things!"</strong></td><td>Educational video</td><td>Frustration</td><td><span class="gap-pill warn">Untested as ad</span></td></tr>
+        <tr><td>Organic reel</td><td><strong>"Attention women 40+: 'eat less, move more' is the WORST advice for your body right now."</strong></td><td>Belief-breaker</td><td>Frustration</td><td><span class="gap-pill opportunity">Active paid</span></td></tr>
+        <tr><td>Organic reel</td><td><strong>"Eating less and working out more is actually making your belly fat WORSE in perimenopause."</strong></td><td>Short-form belief-breaker</td><td>Fear</td><td><span class="gap-pill warn">Untested as ad</span></td></tr>
+        <tr><td>Organic reel</td><td><strong>"If you're over 40, the rules are different."</strong></td><td>Identity challenge</td><td>Identity</td><td><span class="gap-pill missing">Not in paid</span></td></tr>
+        <tr><td>Organic reel</td><td><strong>"Kim lost 70 pounds — and it started with one decision to stop doing it alone."</strong></td><td>Testimonial / proof</td><td>Social proof</td><td><span class="gap-pill missing">Underused</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Meta Ad Library Audit -->
+  <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-500);margin-bottom:12px;">Meta Ad Library Audit — Live Entities</div>
+  <div class="audit-table-wrap" style="margin-bottom:24px;">
+    <table class="audit-tbl">
+      <thead><tr><th>Ad ID</th><th>Verbatim Hook</th><th>Format</th><th>Driver</th><th>CTA</th><th>Entity Type</th></tr></thead>
+      <tbody>
+        <tr><td><small>1198735272123545</small></td><td><strong>"In perimenopause and struggling with your jeans not fitting..."</strong></td><td>Talking-head video</td><td>Frustration</td><td>DM "MENO"</td><td>Symptom + contradiction</td></tr>
+        <tr><td><small>863262170095367</small></td><td><strong>"Women in perimenopause who feel dismissed by their doctor..."</strong></td><td>Talking head / VSL</td><td>Frustration</td><td>DM "SMART"</td><td>Doctor-dismissal entity</td></tr>
+        <tr><td><small>1655330588823339</small></td><td><strong>"I'm looking for 5 women over 40 who refuse to hide in oversized t-shirts at the pool..."</strong></td><td>Direct-response video</td><td>Desire</td><td>DM "SUMMER"</td><td>Seasonal confidence entity</td></tr>
+        <tr><td><small>1451355286450268</small></td><td><strong>"If you're a woman over 40 and working harder than ever with nothing to show for it…"</strong></td><td>Founder-story talking head</td><td>Identity</td><td>DM "MY TURN"</td><td>Identity restoration entity</td></tr>
+        <tr><td><small>1441238177214100</small></td><td><strong>"Everyone's trying to 'fix their hormones' right now…"</strong></td><td>Myth-busting / contrarian</td><td>Skepticism</td><td>Comment / profile visit</td><td>Anti-hype contrarian entity</td></tr>
+        <tr><td><small>1086251027900992</small></td><td><strong>"If you're a woman over 40 who is eating right, working out, and STILL not losing weight..."</strong></td><td>Talking head / masterclass</td><td>Frustration</td><td>DM "MASTERCLASS"</td><td>Event-promo entity</td></tr>
+        <tr><td><small>1310715827631213</small></td><td><strong>"Attention women 40+: 'eat less, move more' is the WORST advice..."</strong></td><td>Belief-breaker / event promo</td><td>Frustration</td><td>DM "MASTERCLASS"</td><td>Belief-breaker event entity</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Entity Gap Scorecard -->
+  <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-500);margin-bottom:12px;">Entity Gap Scorecard</div>
+  <div class="entity-score">
+    <div class="es-card warn">
+      <div class="es-val">66</div>
+      <div class="es-label">Active Ads in Library</div>
+    </div>
+    <div class="es-card fail">
+      <div class="es-val">6–7</div>
+      <div class="es-label">True Distinct Entities</div>
+    </div>
+    <div class="es-card fail">
+      <div class="es-val">3–4</div>
+      <div class="es-label">Entities Needed to Scale</div>
+    </div>
+  </div>
+
+  <!-- Hook Inventory -->
+  <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-500);margin-bottom:12px;margin-top:8px;">Hook & Angle Inventory — Saturation Map</div>
+  <div class="audit-table-wrap" style="margin-bottom:24px;">
+    <table class="audit-tbl">
+      <thead><tr><th>Hook Family</th><th>Examples</th><th>Current Saturation</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Anti "eat less, move more"</strong></td><td>"eat less, move more is the WORST advice..." / "eating less is making belly fat WORSE"</td><td><span class="gap-pill missing">Very High — Saturated</span></td></tr>
+        <tr><td><strong>Doctor dismissal</strong></td><td>"your labs look normal" / "feel dismissed by their doctor"</td><td><span class="gap-pill missing">High — Saturated</span></td></tr>
+        <tr><td><strong>Hormones / missing piece</strong></td><td>"your hormones are the missing piece nobody told you about"</td><td><span class="gap-pill missing">High — Category Standard</span></td></tr>
+        <tr><td><strong>Educational lead magnet</strong></td><td>DM PERI / DM HELP / DM SMART / DM MENO</td><td><span class="gap-pill warn">High — Showing Fatigue</span></td></tr>
+        <tr><td><strong>Body confidence / hiding</strong></td><td>"hide in oversized t-shirts" / "refuse to hide at the pool"</td><td><span class="gap-pill warn">Moderate</span></td></tr>
+        <tr><td><strong>Founder pain-to-solution story</strong></td><td>"I gained 50 lbs..." / "at 40, everything changed"</td><td><span class="gap-pill warn">Moderate — Underdeveloped</span></td></tr>
+        <tr><td><strong>Proof / named transformation</strong></td><td>Kim −70 lbs, Pamela back to wedding weight, Nicole −70 lbs</td><td><span class="gap-pill opportunity">Low — Major White Space</span></td></tr>
+        <tr><td><strong>Premium identity / accomplished woman</strong></td><td>Busy, successful women over 40 who want their body back, not just weight loss</td><td><span class="gap-pill opportunity">Low — Untapped</span></td></tr>
+        <tr><td><strong>Masterclass / event promotion</strong></td><td>DM "MASTERCLASS" / comment MASTERCLASS</td><td><span class="gap-pill warn">Increasing</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Competitive Benchmarks -->
+  <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-500);margin-bottom:12px;">Competitive Benchmark</div>
+  <div class="audit-table-wrap" style="margin-bottom:24px;">
+    <table class="audit-tbl">
+      <thead><tr><th>Competitor</th><th>Primary Angle</th><th>Dominant Format</th><th>Lindsey's Edge Over Them</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Body Reset</strong></td><td>Bloodwork, gut-based mechanism, science-led</td><td>Educational VSL / clinical framing</td><td>More relatable founder story, warmer delivery, proven team depth</td></tr>
+        <tr><td><strong>Tamsen Fadal</strong></td><td>High-credibility editorial truth-telling, culturally resonant menopause reality</td><td>Authority editorial, platform-style</td><td>More actionable transformation proof, coaching delivery, and mechanism specificity</td></tr>
+        <tr><td><strong>Generic perimenopause coaches</strong></td><td>Hormone chaos + DM keyword + "you're not alone"</td><td>Talking-head DM lead gen</td><td>LTV, proof base, team scale, and named mechanism differentiate clearly</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- White Space Angles -->
+  <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-500);margin-bottom:12px;">White Space Angles — Priority Build Queue</div>
+  <div class="audit-table-wrap" style="margin-bottom:24px;">
+    <table class="audit-tbl">
+      <thead><tr><th>Angle</th><th>Why It's Ownable</th><th>Example Hook Direction</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Proof-dense transformation</strong></td><td>3,800+ clients; named results available (Kim, Pamela, Nicole); account underuses this relative to lead-gen CTAs</td><td>"Kim was told her labs looked normal. She lost 24 lbs anyway. Here's how we actually found the problem."</td></tr>
+        <tr><td><strong>Premium identity restoration</strong></td><td>Aspiration language in copy kit but almost absent in paid ads; moves account above frustration-only targeting</td><td>"This isn't about getting back to a number on the scale. It's about not sitting on the sidelines of your own life anymore."</td></tr>
+        <tr><td><strong>Founder credibility + mechanism depth</strong></td><td>Lindsey's personal story + SheShifts mechanism + supplement/book deal ownership = rare compound authority</td><td>"I've helped 3,000+ women lose stubborn fat after 40. Not one of them succeeded by eating less and working out more."</td></tr>
+        <tr><td><strong>Sharp editorial truth panels</strong></td><td>Adjacent authority brands (Fadal) use memorable, quotable micro-truths; Lindsey's copy kit has strong material</td><td>Text-led static or carousel: "Your doctor isn't lying. They're using the wrong lens. Here's the difference."</td></tr>
+        <tr><td><strong>Team + system authority</strong></td><td>Coach team depth, lab integration, 4-phase system — none of this is reflected in current ads</td><td>"Our team of 7 coaches has one job: find the actual root cause. Most clients come to us after 3 other programs failed them."</td></tr>
+        <tr><td><strong>VSL / inbound call booking</strong></td><td>Pixel issues now resolved per success coach notes; ready to launch non-DM acquisition path</td><td>Short VSL → opt-in → call booking; reduces DM setter dependency and qualifies at higher intent level</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Entity Build Queue -->
+  <div style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-500);margin-bottom:12px;">Entity Build Queue — Next 8–10 Ads</div>
+  <div class="diag-list" style="margin-bottom:24px;">
+    <div class="card blue-left" style="margin-bottom:0;">
+      <div style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.65;">
+        <strong style="color:#7ABFDD;">Priority 1 — Proof-Led Transformation (2 entities):</strong> Named client result video ("Kim was told her labs were normal…") + before/after narrative with SheShifts mechanism reveal. Talking head or testimonial montage. CTA to DM keyword or lead magnet opt-in.<br><br>
+        <strong style="color:#7ABFDD;">Priority 2 — Identity Restoration (2 entities):</strong> "Stop sitting on the sidelines" angle — aspiration-led, desire-driven. Founder-style talking head speaking to accomplished women, not frustrated dieters. Elevated, premium framing.<br><br>
+        <strong style="color:#7ABFDD;">Priority 3 — Founder Authority + SheShifts Mechanism (1–2 entities):</strong> Deep founder story with mechanism reveal — "I gained 50 lbs at 40. Here's the one thing that actually changed everything." Longer-form VSL format to qualify higher-intent prospects.<br><br>
+        <strong style="color:#7ABFDD;">Priority 4 — Text-Led Editorial / Carousel (1 entity):</strong> "Your doctor isn't lying — they're missing something" thesis in static/text format. Sharper editorial voice, quotable, high-share potential.<br><br>
+        <strong style="color:#7ABFDD;">Priority 5 — Lead Magnet / Inbound Call Funnel (1–2 entities):</strong> Once pixel tracking is confirmed stable, launch opt-in ad pointing to lead magnet → email sequence → call booking. Parallel path to DM funnel, not a replacement.
+      </div>
+    </div>
+  </div>
+
+  <!-- Strategic Diagnosis -->
+  <div class="card orange-left">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:10px;">Workshop Verdict</div>
+    <div style="font-size:14px;color:rgba(255,255,255,.8);line-height:1.7;">
+      <strong>Lindsey is not underperforming because her messaging is unclear.</strong> She is under-leveraging a strong business by expressing it through too few paid entities. The account is a textbook case of the difference between <em>ad volume</em> and <em>entity diversity</em>. The DM funnel cluster is maxed out — not because it stopped working, but because it has run out of new variants. The unlock is not finding one magical new hook. It is building 8–10 genuinely distinct entities across multiple emotional registers (frustration → desire → identity → social proof) and multiple formats (talking head → proof video → text-led → inbound VSL). The business has enough authority, proof, and founder credibility to support all of it.
+    </div>
+  </div>
+
+  <button class="copy-btn" onclick="copyForWorkshop()">📋 Copy for Workshop</button>
+</section>
+
+<!-- SECTION 05: CONSTRAINT DIAGNOSIS -->
+<section class="doc-section" id="diagnosis">
+  <div class="sec-eyebrow">Section 05</div>
+  <div class="sec-heading">Constraint Diagnosis</div>
+  <div class="sec-divider"></div>
+
+  <div class="diag-list">
+
+    <div class="diag-card p1">
+      <div class="diag-head">
+        <div class="diag-rank">P1</div>
+        <div>
+          <div class="diag-title">DM Funnel Hitting Diminishing Returns — Narrow Entity Stack</div>
+          <div class="diag-desc">The entire paid acquisition system runs through one funnel type (DM keyword) and one creative cluster (perimenopause frustration + eat less/move more contradiction). Q3 2025 was peak efficiency at $4K–$7K/mo spend. Q4 held but same deal count at double the spend. Q1 2026 — technically in KPI but trendline clearly weakening. Scheduled calls down 15% YoY. March showed clear deterioration on both booked-call rate and downstream CPA. 66 active ads, ~6–7 real entities. This is the constraint that owns everything else.</div>
+        </div>
+      </div>
+      <div class="diag-action">
+        <div class="diag-action-label">Fix</div>
+        <div class="diag-action-text">Build 8–10 truly distinct entities using the priority build queue (proof-led, identity, founder authority, editorial, inbound VSL). Retire duplicate variants that mask entity sameness. Introduce format diversity: testimonial video, text-led carousel, short VSL. Goal: 4 clearly different emotional/format clusters live simultaneously.</div>
+      </div>
+    </div>
+
+    <div class="diag-card p1">
+      <div class="diag-head">
+        <div class="diag-rank">P1</div>
+        <div>
+          <div class="diag-title">No Inbound Call Funnel — Single Acquisition Path Risk</div>
+          <div class="diag-desc">100% of paid acquisition runs through DM → setter → booked call. No opt-in funnel, no VSL landing page, no lead magnet with email sequence, no inbound direct call booking path. Pixel tracking issues historically prevented this. Per the success coach Loom, those issues appear resolved in Q1 2026. Operating with a single-path acquisition model at $38K+/month in spend creates fragility — any DM deliverability issue, setter performance dip, or algorithm shift creates outsized exposure.</div>
+        </div>
+      </div>
+      <div class="diag-action">
+        <div class="diag-action-label">Fix</div>
+        <div class="diag-action-text">Launch a parallel inbound funnel: lead magnet ad → opt-in page → email welcome sequence → call booking link. Even capturing 20–30% of acquisition through this channel adds diversification and builds a list. VSL-style creative for the landing page can also pre-qualify leads, improving booked-call quality without requiring more setter hours.</div>
+      </div>
+    </div>
+
+    <div class="diag-card p2">
+      <div class="diag-head">
+        <div class="diag-rank">P2</div>
+        <div>
+          <div class="diag-title">Collected ROAS Below Target — Cash Efficiency Tightening</div>
+          <div class="diag-desc">Q1 collected ROAS came in at 1.78x — below the 2x IFCA threshold. January was worst at 1.60x; March at 1.18x. Contracted ROAS is strong (5.34x), which means the offer and sales process are working — the cash efficiency gap is a collections and upfront payment issue. March's upfront cash collection rate dropped to 26.7%, dragging the collected ROAS down. February's 2.74x shows what the number should look like when collections are healthy.</div>
+        </div>
+      </div>
+      <div class="diag-action">
+        <div class="diag-action-label">Fix</div>
+        <div class="diag-action-text">Audit the payment structure and upfront offer mechanics. February's 34.5% upfront rate and 2.74x collected ROAS should be the floor, not the ceiling. Push upfront AOV incentives — bonus modules, enrollment bonuses, or pay-in-full discount framing. Target: 33%+ upfront rate consistently to bring collected ROAS above 2x.</div>
+      </div>
+    </div>
+
+    <div class="diag-card p2">
+      <div class="diag-head">
+        <div class="diag-rank">P2</div>
+        <div>
+          <div class="diag-title">Labor Margin Running High — 54.5% vs 30–35% Target</div>
+          <div class="diag-desc">Q1 labor margin is 54.5% of revenue — well above the 30–35% IFCA benchmark. Total labor expenses ran $153K on $281K in collected cash. This reflects the team of 7+ coaches plus setter/closer labor, which is inherent to the delivery model for a 228+ active client base. However, the margin structure leaves limited room for additional scaling spend without compressing net margin further. Net operating margin came in at 29.8% — below the 50% target.</div>
+        </div>
+      </div>
+      <div class="diag-action">
+        <div class="diag-action-label">Fix</div>
+        <div class="diag-action-text">The path to margin improvement runs through LTV and AOV, not cost-cutting. Each $500 increase in frontend AOV and 5% improvement in backend conversion adds ~$15K–$20K in monthly contracted revenue without additional labor cost. Prioritize LTV-maximizing moves (backend offer clarity, FE→BE conversion script work) over cost reduction on a lean coaching team.</div>
+      </div>
+    </div>
+
+    <div class="diag-card p3">
+      <div class="diag-head">
+        <div class="diag-rank">P3</div>
+        <div>
+          <div class="diag-title">Show Rate at 69.1% — Just Below Benchmark</div>
+          <div class="diag-desc">Q1 blended show rate of 69.1% is just under the 70% IFCA target, and January was notably weak at 62.6%. The success coach noted this is actually an improvement — 60 fewer scheduled calls this quarter than Q1 2025 but the same number of live calls, implying better show-up behavior. However, January's 62.6% suggests a meaningful number of lower-quality leads are still booking and not showing, which ties back to the lead qualification problem in the DM funnel.</div>
+        </div>
+      </div>
+      <div class="diag-action">
+        <div class="diag-action-label">Fix</div>
+        <div class="diag-action-text">Improving DM messaging quality upstream (longer, more specific copy that pre-qualifies intent) and adding a pre-call confirmation sequence (video, reminder, re-opt-in) can push show rate consistently above 70%. February's 73% is the right level. January's 62.6% is an outlier that should not be the baseline.</div>
+      </div>
+    </div>
+
+    <div class="diag-card ok">
+      <div class="diag-head">
+        <div class="diag-rank">OK</div>
+        <div>
+          <div class="diag-title">Overall Close Rate — 37.9% and Sales Team Is Not the Bottleneck</div>
+          <div class="diag-desc">Q1 overall close rate of 37.9% is within the 30–45% IFCA target range. February hit 46.6% (excellent). Sales team depth — 1.5–2 closers plus dedicated setters on both Facebook and Instagram — is solid and not capacity-constrained. The bottleneck is above sales: qualified lead volume and booking rate, not what happens once prospects are on the phone.</div>
+        </div>
+      </div>
+      <div class="diag-action">
+        <div class="diag-action-label">Maintain</div>
+        <div class="diag-action-text">No changes needed to the sales process or team structure. Focus any sales-layer investment on pre-call quality (better DM qualification, confirmation sequences, higher-intent lead magnet funnel) rather than close-rate mechanics. The closers are closing — they need better leads.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECTION 06: 90-DAY ACTION PLAN -->
+<section class="doc-section" id="plan">
+  <div class="sec-eyebrow">Section 06</div>
+  <div class="sec-heading">90-Day Action Plan</div>
+  <div class="sec-divider"></div>
+
+  <div class="plan-list">
+
+    <div class="plan-item">
+      <div class="plan-num">01</div>
+      <div class="plan-content">
+        <div class="plan-title">Run a Full Entity Audit — Kill Duplicates, Map True Diversity</div>
+        <div class="plan-desc">Audit every active ad in the account and classify each one as a true entity (unique format + hook + emotion + CTA combination) or a variant of an existing entity. If the account has 66 ads but only 6–7 real entities, kill or pause the lookalike duplicates. Create an entity map on a whiteboard or spreadsheet: rows = emotional driver (frustration, desire, identity, social proof), columns = format (talking head, testimonial, text-led, VSL). The goal is to visually see the gaps.</div>
+        <div class="plan-tags">
+          <span class="plan-tag ads">Ads</span>
+          <span class="plan-tag creative">Creative</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-num">02</div>
+      <div class="plan-content">
+        <div class="plan-title">Produce 4 New Proof-Led Entities in 30 Days</div>
+        <div class="plan-desc">Use the client proof base (Kim, Pamela, Nicole, and 3,800+ lifetime clients) to produce at minimum 2 named-client transformation videos and 2 proof-backed mechanism ads. These should carry a completely different emotional tone from the current frustration-led stack. Goal: move the account from 80%+ frustration-driven into a mix that includes at least 30% desire/proof-driven. Each entity should have 2–3 variants (hook swap, format shift) for testing within 60 days.</div>
+        <div class="plan-tags">
+          <span class="plan-tag ads">Ads</span>
+          <span class="plan-tag creative">Creative</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-num">03</div>
+      <div class="plan-content">
+        <div class="plan-title">Launch the Inbound Call Funnel (Parallel to DM Path)</div>
+        <div class="plan-desc">Pixel is reportedly resolved. Time to launch the non-DM acquisition path. Build: lead magnet opt-in page (perimenopause guide or quiz) → email welcome sequence (3–5 emails) → call booking link with pre-call video. The ads for this funnel should use shorter VSL-style creative with a direct "book your call" or "get the guide" CTA. Target 20–30% of new client acquisition through this channel within 90 days. This eliminates the single-path dependency risk and builds a list for future re-marketing.</div>
+        <div class="plan-tags">
+          <span class="plan-tag ads">Ads</span>
+          <span class="plan-tag ops">Ops</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-num">04</div>
+      <div class="plan-content">
+        <div class="plan-title">Fix the Upfront Cash Rate to Push Collected ROAS Above 2x</div>
+        <div class="plan-desc">Q1 collected ROAS of 1.78x is the number that creates cash pressure. The lever is upfront cash collection rate — currently 33.2% blended but as low as 26.7% in March. Audit the sales close structure: is there a pay-in-full incentive? Is the setter qualifying payment intent before the call? Introduce an enrollment bonus for pay-in-full or a clear two-payment vs. six-payment structure where the two-payment option is meaningfully incentivized. Target: upfront rate consistently above 33%, collected ROAS above 2x by Day 60.</div>
+        <div class="plan-tags">
+          <span class="plan-tag sales">Sales</span>
+          <span class="plan-tag ops">Ops</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-num">05</div>
+      <div class="plan-content">
+        <div class="plan-title">Increase Average Order Value — Target $3,200+ Frontend</div>
+        <div class="plan-desc">Q1 frontend AOV was $3,005 — up from the 2024 average of $1,975, which is a massive improvement. The next move is to push toward $3,200–$3,500 by Q2 with a cleaner premium tier offering or by strengthening the case for the higher-value package on calls. Every $100 AOV increase at 78 closes/quarter = $7,800 more contracted revenue with no additional ad spend. Also reinforces the LTV growth trajectory that has been a key Q1 2026 win.</div>
+        <div class="plan-tags">
+          <span class="plan-tag sales">Sales</span>
+          <span class="plan-tag ops">Ops</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-num">06</div>
+      <div class="plan-content">
+        <div class="plan-title">Establish Weekly Creative Cadence — Test 2 New Entities Per Month</div>
+        <div class="plan-desc">The creative system can't improve if production is ad hoc. Establish a weekly rhythm: Monday — review active entity performance; Wednesday — concept new entity based on data gap; Friday — film or produce 1–2 new assets. Monthly goal: 2 genuinely new entities tested. Kill failing entities within 2× CPA target (≤$1,000 at 0 closes). Scale winners within 3× CPA. Over 90 days this produces 6 new tested entities — enough to restructure the account's creative diversity from the ground up.</div>
+        <div class="plan-tags">
+          <span class="plan-tag ads">Ads</span>
+          <span class="plan-tag creative">Creative</span>
+          <span class="plan-tag ops">Ops</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-brand">IFCA — Impact Fitness Coaching Academy</div>
+  <div class="footer-meta">Lindsey Mathews — Full Business Audit<br>Generated April 2026 · Confidential</div>
+</div>
+
+</div><!-- end .page -->
+
+<script>
+const DATA = {
+  q1: {
+    label: 'Q1 2026 Avg',
+    adSpend: 12783.86,
+    leads: 3107,
+    cpl: 4.11,
+    scheduledCalls: 99,
+    liveCalls: 69,
+    showRate: 0.6913,
+    costPerScheduledCall: 128.70,
+    closes: 26,
+    closeRate: 0.3786,
+    fePrice: 3005,
+    contractedROAS: 5.342,
+    collectedROAS: 1.776,
+    feToBe: 0.5167,
+    bePrice: 3657,
+    upfrontPct: 0.3324,
+    laborMargin: 0.5446,
+    marketingMargin: 0.1361,
+    overheadMargin: 0.0208,
+    netMargin: 0.2985,
+    cac: 955.51,
+    ltv: 4102,
+    cacLtv: 4.41,
+    churn: 0.0979,
+    activeClients: 228,
+    monthlyRev: 93934,
+    newClients: 27
+  },
+  jan: {
+    label: 'January 2026',
+    adSpend: 14612.18,
+    leads: 2891,
+    cpl: 5.05,
+    scheduledCalls: 107,
+    liveCalls: 67,
+    showRate: 0.6262,
+    costPerScheduledCall: 136.56,
+    closes: 26,
+    closeRate: 0.388,
+    fePrice: 3057,
+    contractedROAS: 4.265,
+    collectedROAS: 1.599,
+    feToBe: 0.38,
+    bePrice: 4733,
+    upfrontPct: 0.3749,
+    laborMargin: 0.4821,
+    marketingMargin: 0.1404,
+    overheadMargin: 0.0194,
+    netMargin: 0.3581,
+    cac: 1068.11,
+    ltv: 4338,
+    cacLtv: 4.06,
+    churn: 0.1053,
+    activeClients: 228,
+    monthlyRev: 104107,
+    newClients: 26
+  },
+  feb: {
+    label: 'February 2026',
+    adSpend: 10759.17,
+    leads: 2738,
+    cpl: 3.93,
+    scheduledCalls: 100,
+    liveCalls: 73,
+    showRate: 0.73,
+    costPerScheduledCall: 107.59,
+    closes: 34,
+    closeRate: 0.4658,
+    fePrice: 2992,
+    contractedROAS: 7.937,
+    collectedROAS: 2.738,
+    feToBe: 0.5,
+    bePrice: 3817,
+    upfrontPct: 0.3449,
+    laborMargin: 0.5452,
+    marketingMargin: 0.1118,
+    overheadMargin: 0.0192,
+    netMargin: 0.3237,
+    cac: 729.46,
+    ltv: 6872,
+    cacLtv: 9.42,
+    churn: 0.0617,
+    activeClients: 227,
+    monthlyRev: 96205,
+    newClients: 34
+  },
+  mar: {
+    label: 'March 2026',
+    adSpend: 12980.24,
+    leads: 3691,
+    cpl: 3.52,
+    scheduledCalls: 91,
+    liveCalls: 66,
+    showRate: 0.7253,
+    costPerScheduledCall: 142.64,
+    closes: 18,
+    closeRate: 0.2727,
+    fePrice: 2966,
+    contractedROAS: 4.403,
+    collectedROAS: 1.177,
+    feToBe: 0.67,
+    bePrice: 2420,
+    upfrontPct: 0.2673,
+    laborMargin: 0.6237,
+    marketingMargin: 0.1593,
+    overheadMargin: 0.0245,
+    netMargin: 0.1925,
+    cac: 1182.10,
+    ltv: 2810,
+    cacLtv: 2.38,
+    churn: 0.1266,
+    activeClients: 229,
+    monthlyRev: 81490,
+    newClients: 21
+  }
+};
+
+let currentPeriod = 'q1';
+let editMode = false;
+
+function val(v) { return (v === null || v === undefined || isNaN(v)) ? NaN : v; }
+
+function fmtD(v) {
+  if (isNaN(v)) return '—';
+  if (v >= 1000) return '$' + (v/1000).toFixed(1) + 'K';
+  return '$' + v.toFixed(0);
+}
+function fmtP(v) { return isNaN(v) ? '—' : (v*100).toFixed(1) + '%'; }
+function fmtX(v) { return isNaN(v) ? '—' : v.toFixed(2) + 'x'; }
+function fmtN(v) { return isNaN(v) ? '—' : v.toFixed(0); }
+
+const AD_METRICS = [
+  { key:'adSpend',           label:'Ad Spend',                target:'—',        fmt:fmtD,  pass:()=>true, warn:()=>true,  note:'Monthly spend range $10.8K–$14.6K in Q1' },
+  { key:'leads',             label:'Leads',                   target:'—',        fmt:fmtN,  pass:()=>true, warn:()=>true,  note:'CPL is the real signal — lead volume is solid' },
+  { key:'cpl',               label:'Cost Per Lead (CPL)',      target:'< $10',    fmt:fmtD,  pass:(v)=>v<10, warn:(v)=>v<15, note:'$3.52–$5.05 across Q1 — consistently below benchmark' },
+  { key:'scheduledCalls',    label:'Scheduled Calls',         target:'—',        fmt:fmtN,  pass:()=>true, warn:()=>true,  note:'Down 15% vs Q1 2025 — core constraint' },
+  { key:'liveCalls',         label:'Live Calls',              target:'—',        fmt:fmtN,  pass:()=>true, warn:()=>true,  note:'Flat vs Q1 2025 — show rate improved' },
+  { key:'showRate',          label:'Show Rate',               target:'> 70%',    fmt:fmtP,  pass:(v)=>v>=0.70, warn:(v)=>v>=0.60, note:'Jan 62.6% dragged Q1 avg below benchmark' },
+  { key:'costPerScheduledCall', label:'Cost Per Booked Call', target:'< $1,002 (⅓ CAC)', fmt:fmtD, pass:(v,d)=>v<d.cac/3, warn:(v,d)=>v<d.cac/2, note:'$107–$143 range — well within target' },
+  { key:'closes',            label:'Closes',                  target:'—',        fmt:fmtN,  pass:()=>true, warn:()=>true,  note:'March 18 closes vs February 34 — visible drop' },
+  { key:'closeRate',         label:'Overall Close Rate',      target:'30–45%',   fmt:fmtP,  pass:(v)=>v>=0.30&&v<=0.45, warn:(v)=>v>=0.25, note:'Strong in Jan/Feb; March 27.3% outlier' },
+  { key:'fePrice',           label:'Frontend AOV',            target:'—',        fmt:fmtD,  pass:()=>true, warn:()=>true,  note:'Up from $1,975 avg in 2024 — major improvement' },
+  { key:'contractedROAS',    label:'Contracted ROAS',         target:'> 5x',     fmt:fmtX,  pass:(v)=>v>=5, warn:(v)=>v>=3, note:'5.34x Q1 avg; February hit 7.94x' },
+  { key:'collectedROAS',     label:'Collected ROAS',          target:'> 2x',     fmt:fmtX,  pass:(v)=>v>=2, warn:(v)=>v>=1.5, note:'1.78x Q1 avg — below target; upfront rate the lever' },
+  { key:'feToBe',            label:'FE → BE Conversion',      target:'> 50%',    fmt:fmtP,  pass:(v)=>v>=0.50, warn:(v)=>v>=0.40, note:'51.7% Q1 avg — at benchmark; Feb was exactly 50%' },
+  { key:'upfrontPct',        label:'Upfront Cash %',          target:'> 30%',    fmt:fmtP,  pass:(v)=>v>=0.30, warn:(v)=>v>=0.20, note:'March 26.7% dragged the average; target 33%+' },
+];
+
+const MARGIN_METRICS = [
+  { key:'laborMargin',    label:'Labor Margin',    target:'30–35%',  fmt:fmtP, pass:(v)=>v>=0.30&&v<=0.38, warn:(v)=>v>=0.25, note:'54.5% Q1 — elevated due to 7-coach team + setters/closers' },
+  { key:'marketingMargin', label:'Marketing Margin', target:'10–20%', fmt:fmtP, pass:(v)=>v>=0.10&&v<=0.20, warn:(v)=>v<0.25, note:'13.6% Q1 avg — solidly within benchmark' },
+  { key:'overheadMargin', label:'Overhead Margin',  target:'3–8%',   fmt:fmtP, pass:(v)=>v>=0.03&&v<=0.09, warn:(v)=>v<0.12, note:'2.1% — lean overhead is a competitive advantage' },
+  { key:'netMargin',      label:'Net Operating Margin', target:'> 50%', fmt:fmtP, pass:(v)=>v>=0.50, warn:(v)=>v>=0.35, note:'29.8% Q1 — compressed by high labor; path is LTV growth' },
+];
+
+function getStatus(metric, d) {
+  const v = val(d[metric.key]);
+  if (isNaN(v)) return 'info';
+  if (metric.pass(v, d)) return 'pass';
+  if (metric.warn(v, d)) return 'warn';
+  return 'fail';
+}
+
+function renderKpiBand(d) {
+  const chips = [
+    { label:'CPL', val:fmtD(val(d.cpl)), status: val(d.cpl)<10?'pass':val(d.cpl)<15?'warn':'fail', target:'< $10' },
+    { label:'Show Rate', val:fmtP(val(d.showRate)), status: val(d.showRate)>=0.70?'pass':val(d.showRate)>=0.60?'warn':'fail', target:'> 70%' },
+    { label:'Close Rate', val:fmtP(val(d.closeRate)), status: val(d.closeRate)>=0.30&&val(d.closeRate)<=0.45?'pass':val(d.closeRate)>=0.25?'warn':'fail', target:'30–45%' },
+    { label:'Contracted ROAS', val:fmtX(val(d.contractedROAS)), status: val(d.contractedROAS)>=5?'pass':val(d.contractedROAS)>=3?'warn':'fail', target:'> 5x' },
+    { label:'Collected ROAS', val:fmtX(val(d.collectedROAS)), status: val(d.collectedROAS)>=2?'pass':val(d.collectedROAS)>=1.5?'warn':'fail', target:'> 2x' },
+  ];
+  document.getElementById('kpiBand').innerHTML = chips.map(c=>`
+    <div class="kpi-chip ${c.status}">
+      <div class="chip-label">${c.label}</div>
+      <div class="chip-val">${c.val}</div>
+      <div class="chip-target">Target: ${c.target}</div>
+    </div>
+  `).join('');
+}
+
+function renderTable(tbodyId, metrics, d) {
+  const tbody = document.getElementById(tbodyId);
+  tbody.innerHTML = metrics.map(m => {
+    const v = val(d[m.key]);
+    const status = getStatus(m, d);
+    const display = isNaN(v) ? '—' : m.fmt(v, d);
+    if (editMode) {
+      return `<tr>
+        <td><span class="m-name">${m.label}</span><br><span class="m-target">${m.target}</span></td>
+        <td><span class="m-target">${m.target}</span></td>
+        <td><input class="edit-input" type="number" value="${isNaN(v)?'':v}" onchange="updateVal('${m.key}','${tbodyId}','${metrics===AD_METRICS?'ad':'margin'}',this.value)"></td>
+        <td><span class="badge ${status}">${status.toUpperCase()}</span></td>
+        <td><span class="m-note">${m.note}</span></td>
+      </tr>`;
+    }
+    return `<tr>
+      <td><span class="m-name">${m.label}</span></td>
+      <td><span class="m-target">${m.target}</span></td>
+      <td><span class="m-val ${status}">${display}</span></td>
+      <td><span class="badge ${status}">${status.toUpperCase()}</span></td>
+      <td><span class="m-note">${m.note}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function setPeriod(p) {
+  currentPeriod = p;
+  document.querySelectorAll('.pt').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  render();
+}
+
+function toggleEdit() {
+  editMode = !editMode;
+  document.getElementById('editBtn').classList.toggle('on', editMode);
+  document.getElementById('editBtn').textContent = editMode ? 'Done Editing' : 'Edit Mode';
+  render();
+}
+
+function updateVal(key, tbodyId, type, val) {
+  DATA[currentPeriod][key] = parseFloat(val);
+  render();
+}
+
+function render() {
+  const d = DATA[currentPeriod];
+  renderKpiBand(d);
+  renderTable('adMetricsBody', AD_METRICS, d);
+  renderTable('marginMetricsBody', MARGIN_METRICS, d);
+}
+
+function copyForWorkshop() {
+  const d = DATA[currentPeriod];
+  const text = `LINDSEY MATHEWS — IFCA Creative Intelligence Workshop Export
+Generated: April 2026
+Period: ${d.label}
+
+BUSINESS OVERVIEW
+Niche: Perimenopause / women-over-40 fat loss coaching
+Offer: SheShifts™ System — 16-week hormone-first fat loss program
+Named Mechanism: The SheShifts™ System
+Brand: Moxie by Lindsey / Trainer Lindsey (828K Facebook followers)
+2025 Revenue: $1,377,830 | Q1 2026 Mo Avg: $93,934
+
+KEY PERFORMANCE DATA (${d.label})
+Ad Spend: ${fmtD(val(d.adSpend))} | Leads: ${fmtN(val(d.leads))} | CPL: ${fmtD(val(d.cpl))}
+Scheduled Calls: ${fmtN(val(d.scheduledCalls))} | Live Calls: ${fmtN(val(d.liveCalls))} | Show Rate: ${fmtP(val(d.showRate))}
+Closes: ${fmtN(val(d.closes))} | Close Rate: ${fmtP(val(d.closeRate))}
+Contracted ROAS: ${fmtX(val(d.contractedROAS))} | Collected ROAS: ${fmtX(val(d.collectedROAS))}
+FE→BE Conversion: ${fmtP(val(d.feToBe))} | Upfront Cash %: ${fmtP(val(d.upfrontPct))}
+LTV: ${fmtD(val(d.ltv))} | CAC: ${fmtD(val(d.cac))} | CAC:LTV: ${val(d.cacLtv).toFixed(1)}:1
+
+CREATIVE AUDIT SNAPSHOT
+Active Ads in Library: ~66
+Distinct Entities (True): 6–7
+Primary Funnel: DM keyword automation → setter → booked call
+Dominant Emotion: Frustration
+Dominant Format: Founder-led talking head / short VSL
+Dominant CTA: DM keyword (PERI, MENO, SMART, MY TURN, SUMMER, MASTERCLASS)
+
+TOP PERFORMING HOOK FAMILIES
+- Anti "eat less, move more": Very High Saturation (tiring)
+- Doctor dismissal / "labs look normal": High Saturation
+- Hormones / missing piece: Category standard, not differentiated
+- Proof / named transformation: LOW — major white space
+- Premium identity restoration: LOW — untapped
+
+WHITE SPACE PRIORITY ANGLES
+1. Proof-dense transformation (Kim, Pamela, Nicole — named results)
+2. Premium identity restoration ("stop sitting on the sidelines of your life")
+3. Founder authority + SheShifts mechanism depth (50 lb story + system reveal)
+4. Sharp editorial truth panels (text-led, quotable)
+5. VSL / inbound call booking funnel (parallel to DM path)
+
+WORKSHOP ENTITY BUILD QUEUE
+Priority 1: 2 named-client transformation entities
+Priority 2: 2 identity/desire-led entities (accomplished women framing)
+Priority 3: 1-2 founder authority + mechanism VSL entities
+Priority 4: 1 text-led editorial carousel entity
+Priority 5: 1-2 lead magnet / inbound call funnel entities
+
+CORE DIAGNOSIS
+Lindsey's account is a case study in ad volume vs. entity diversity. 66 active ads, 6-7 real entities. She has proof, authority, and founder credibility to support a much more mature creative system. The next unlock is not finding a magic new hook — it's building a wider entity portfolio across multiple emotional registers and formats.`;
+
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn = document.querySelector('.copy-btn');
+    const orig = btn.textContent;
+    btn.textContent = '✅ Copied to Clipboard';
+    setTimeout(()=>{ btn.textContent = orig; }, 2500);
+  });
+}
+
+// Nav active state on scroll
+const sections = document.querySelectorAll('.doc-section');
+const navLinks = document.querySelectorAll('.nav-link');
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      const link = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if(link) link.classList.add('active');
+    }
+  });
+}, { rootMargin:'-40% 0px -40% 0px' });
+sections.forEach(s=>observer.observe(s));
+
+// Initial render
+render();
+</script>
+</body>
+</html>

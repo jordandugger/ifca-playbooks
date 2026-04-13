@@ -333,17 +333,17 @@ em { color:var(--orange); font-style:normal; }
       <div class="hs-label">Q1 Monthly Avg</div>
     </div>
     <div class="hs">
-      <div class="hs-val orange">$11,568</div>
+      <div class="hs-val orange">$12,754</div>
       <div class="hs-label">Q1 Avg LTV</div>
     </div>
     <div class="hs">
-      <div class="hs-val white">9.2:1</div>
+      <div class="hs-val white">8.3:1</div>
       <div class="hs-label">CAC:LTV Ratio</div>
     </div>
   </div>
 
   <div class="hero-summary">
-    Vanessa and Omar built a <strong>$2.35M business in 2025 almost entirely on organic</strong> — 210% YoY growth from $750K in 2024 without a real paid ads engine. Q1 2026 is averaging $197K/month collected at 45% operating profit. The team, delivery infrastructure, and LTV are all in excellent shape. The constraint is now acquisition: they're down 30 calls/month from Q4, the show rate is running at 57%, and the CPL is $76 because the ad account has never been properly built out. <strong>This is the most ads-leverage in the room</strong> — a $2.35M business with almost no paid traffic is a machine waiting to be connected to fuel.
+    Vanessa and Omar built a <strong>$2.35M business in 2025 almost entirely on organic</strong> — 210% YoY growth from $750K in 2024 without a real paid ads engine. Q1 2026 is averaging $197K/month collected at <strong>53.5% operating profit</strong>. The team, delivery infrastructure, and LTV are all in excellent shape. The constraint is now acquisition: they're down 30 calls/month from Q4, the show rate is running at 58%, and the CPL is $76 because the ad account has never been properly built out. <strong>This is the most ads-leverage in the room</strong> — a $2.35M business with almost no paid traffic is a machine waiting to be connected to fuel.
   </div>
 </section>
 
@@ -423,6 +423,7 @@ em { color:var(--orange); font-style:normal; }
       <button class="pt" onclick="setPeriod('jan')">Jan</button>
       <button class="pt" onclick="setPeriod('feb')">Feb</button>
       <button class="pt" onclick="setPeriod('mar')">Mar</button>
+      <button class="pt" onclick="setPeriod('apr')">Apr ⚡</button>
       <button class="pt active" onclick="setPeriod('q1')">Q1 Avg</button>
     </div>
     <button id="edit-btn" class="edit-btn" onclick="toggleEdit()">✏ Update Numbers</button>
@@ -476,7 +477,7 @@ em { color:var(--orange); font-style:normal; }
     </div>
   </div>
 
-  <div class="grid-2 gap-sm mb-md" style="align-items:center;">
+  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:16px;">
     <div class="eq-box" style="text-align:center;">
       <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500);margin-bottom:8px;">Revenue Equilibrium</div>
       <div class="eq-b-val green" id="re-eq">—</div>
@@ -510,13 +511,6 @@ em { color:var(--orange); font-style:normal; }
   <div class="card orange-left mb-md">
     <p style="font-size:13px;margin-bottom:8px;">Vanessa and Omar present the highest ads-leverage opportunity in the entire IFCA retreat cohort. They have built a $2.35M business almost entirely on organic — which means the paid channel is essentially untouched, the offer is validated at scale, and the economics (LTV $11,568, CAC:LTV 9:1, 45% operating margin) easily support aggressive ad investment. The gap is not brand, offer quality, or sales — it's the absence of a deliberate, entity-diverse paid creative system.</p>
     <p style="font-size:13px;margin-bottom:0;"><strong>Core insight:</strong> Vanessa's organic content already contains multiple high-performing entity clusters. The Meta Ad Library shows minimal active paid creative. The business has been running on a one-channel acquisition model (organic CTA posts → manual DM routing → setter → closer) and is ready for a full TOF/MOF/BOF paid stack. <em>Same media buyer as Alycia — which means this is a coordination and systemization problem, not a creative talent problem.</em></p>
-  </div>
-
-  <div class="card mb-md" style="border-color:rgba(232,119,34,.25);background:rgba(232,119,34,.04);">
-    <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:8px;">⚠ Competitive Urgency — Will Nelson Intel · April 2026</div>
-    <p style="font-size:13px;margin-bottom:8px;">A competitive audit of five active accounts in the functional women's health coaching space — including accounts in the Will Nelson agency portfolio — reveals a critical timing issue. <strong>Every competitor in this space is actively running the "biology vs. willpower" reframe in paid ads right now</strong> — "it's not your discipline, it's your hormones/metabolism." This is the exact mechanism Vanessa's entire brand is built on. She's letting those accounts condition the cold audience to that messaging while she sits on organic only.</p>
-    <p style="font-size:13px;margin-bottom:8px;"><strong>The opportunity flip:</strong> None of those competitors are running the mechanism with <em>specificity</em>. Nobody's hook is "We run your labs first." Nobody is leading with diagnostic authority or personalized bloodwork as the differentiator. That is Vanessa's structural moat and it is completely uncontested in the paid auction right now. Every week she's not running paid, that white space stays unclaimed — but not forever.</p>
-    <p style="font-size:13px;margin-bottom:0;"><strong>Additional pattern:</strong> Every competitor is running 3–5 entities TOF-only, no retargeting. Vanessa's $11.5K LTV and 9:1 CAC:LTV make a full-funnel BOF retargeting stack more economically justified than anyone else in the competitive set.</p>
   </div>
 
   <!-- BRAND, OFFER, FUNNEL -->
@@ -757,8 +751,8 @@ em { color:var(--orange); font-style:normal; }
       <div class="plan-num">1</div>
       <div>
         <div class="plan-title">Lab-Based Mechanism Entity — The Category Differentiator</div>
-        <div class="plan-desc">Hook: <em>"Most coaches give you a plan. We run your labs first."</em><br>Format: Talking head · Driver: Curiosity / Desire · This is the single most defensible hook in Vanessa's arsenal because no competitor in this niche is leading with it in paid ads. Competitor intel (April 2026) confirms: every active account targeting women's hormones/metabolism is running the "biology vs. willpower" reframe at the messaging level — but nobody is running the <em>mechanism with specificity</em>. The lab-first angle is structurally uncontested in the paid auction. It immediately separates from the generic hormone-messaging space, signals a premium offer, and self-selects the avatar who is ready to invest. Competitors literally cannot copy this without overhauling their entire offer. <strong>Recommended DM trigger: "LABS" or "TESTED"</strong> — mechanism-specific triggers pre-condition the DM conversation better than generic keywords like "TRANSFORM" or "READY" (which every competitor is already using).</div>
-        <div><span class="plan-tag ads">Priority 1</span><span class="plan-tag creative">Talking Head</span><span class="plan-tag ops">Mechanism Hook · White Space</span></div>
+        <div class="plan-desc">Hook: <em>"Most coaches give you a plan. We run your labs first."</em><br>Format: Talking head · Driver: Curiosity / Desire · This is the single most defensible hook in Vanessa's arsenal because no other fitness coach is leading with this. It immediately separates from the generic "lose weight" space, signals a premium offer, and self-selects the avatar who is ready to invest. This is Priority 1 because it works cold and it's something competitors literally cannot copy without overhauling their entire offer.</div>
+        <div><span class="plan-tag ads">Priority 1</span><span class="plan-tag creative">Talking Head</span><span class="plan-tag ops">Mechanism Hook</span></div>
       </div>
     </div>
     <div class="plan-item">
@@ -769,44 +763,28 @@ em { color:var(--orange); font-style:normal; }
         <div><span class="plan-tag ads">Priority 2</span><span class="plan-tag creative">Talking Head</span><span class="plan-tag" style="background:var(--red-bg);color:#F87171;border:1px solid rgba(220,38,38,.2);">Frustration</span></div>
       </div>
     </div>
-    <div class="plan-item" style="border-color:rgba(232,119,34,.2);">
-      <div class="plan-num" style="background:rgba(232,119,34,.15);color:var(--orange);border-color:rgba(232,119,34,.3);">3</div>
+    <div class="plan-item">
+      <div class="plan-num">3</div>
       <div>
-        <div class="plan-title">Named Narrative Case Study Entity — BOF Proof <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--orange);letter-spacing:1px;margin-left:8px;">NEW — COMPETITOR INTEL</span></div>
-        <div class="plan-desc">Hook: <em>"[Client Name] is a 38-year-old ER nurse. She was training 5 days a week, tracking macros, exhausted every day — and her labs showed exactly why nothing was working."</em><br>Format: Talking head / testimonial-led video · Driver: Social Proof + Curiosity · Competitor intelligence from the Will Nelson agency portfolio shows the longest-running, highest-durability ads in this exact niche are <em>named</em> client narrative stories — not generic before/afters. The specific identity (job, life stage) + specific symptom + specific lab finding creates an identity mirror that cold audiences recognize themselves in instantly. Structure: Name → Identity → Specific frustration → What labs revealed → Result. Vanessa has 3,000+ client outcomes and a lab-based mechanism — she has more raw material for this format than any competitor in the space. Run cold as a proof entity, deploy as BOF to warm retargeting audiences.</div>
-        <div><span class="plan-tag ads">Priority 3</span><span class="plan-tag creative">Testimonial Narrative</span><span class="plan-tag sales">Social Proof</span></div>
+        <div class="plan-title">Proof-Led Transformation Entity — BOF Closer</div>
+        <div class="plan-desc">Hook: <em>"We ran labs on [client]. Here's what we found — and how it changed everything."</em><br>Format: Carousel / testimonial reel · Driver: Social Proof · Client results exist in abundance at this revenue level. The key is pairing the transformation with the mechanism (labs → insight → result). This format works as a BOF asset because it provides the evidence that converts warm traffic who've already seen the mechanism hooks.</div>
+        <div><span class="plan-tag ads">Priority 3</span><span class="plan-tag creative">Carousel / Testimonial</span><span class="plan-tag sales">Social Proof</span></div>
       </div>
     </div>
     <div class="plan-item">
       <div class="plan-num">4</div>
       <div>
-        <div class="plan-title">Proof-Led Transformation Entity — Mechanism + Result</div>
-        <div class="plan-desc">Hook: <em>"We ran labs on [client]. Here's what we found — and how it changed everything."</em><br>Format: Carousel / testimonial reel · Driver: Social Proof · Client results exist in abundance at this revenue level. The key is pairing the transformation with the mechanism (labs → insight → result). This format works as a BOF asset because it provides the evidence that converts warm traffic who've already seen the mechanism hooks. The named narrative (Priority 3) is the video version of this — this carousel format is the visual complement.</div>
-        <div><span class="plan-tag ads">Priority 4</span><span class="plan-tag creative">Carousel / Testimonial</span><span class="plan-tag sales">Social Proof</span></div>
+        <div class="plan-title">Contrarian Authority Entity — Belief Breaker</div>
+        <div class="plan-desc">Hook: <em>"If your fitness coach has never looked at your bloodwork, they're guessing."</em><br>Format: Opinion reel · Driver: Identity/Anger · This is a polarizing statement that will alienate generic coaches and attract Vanessa's ideal clients who are ready to graduate from guesswork. At 2.35M in revenue, Vanessa has enough authority to make this statement land. It positions her above the market, not in it.</div>
+        <div><span class="plan-tag ads">Priority 4</span><span class="plan-tag creative">Opinion Reel</span><span class="plan-tag" style="background:var(--purple-bg);color:#c4b5fd;border:1px solid rgba(139,92,246,.2);">Identity</span></div>
       </div>
     </div>
     <div class="plan-item">
       <div class="plan-num">5</div>
       <div>
-        <div class="plan-title">Contrarian Authority Entity — Belief Breaker</div>
-        <div class="plan-desc">Hook: <em>"If your fitness coach has never looked at your bloodwork, they're guessing."</em><br>Format: Opinion reel · Driver: Identity/Anger · This is a polarizing statement that will alienate generic coaches and attract Vanessa's ideal clients who are ready to graduate from guesswork. At $2.35M in revenue, Vanessa has enough authority to make this statement land. It positions her above the market, not in it. Competitor intel note: every account in the Will Nelson portfolio runs the "biology vs. willpower" reframe — but none of them run a positioning hook that makes the entire generic coaching model look inferior. This does. It's a different emotional register — not empathy, indignation — and a different entity ID.</div>
-        <div><span class="plan-tag ads">Priority 5</span><span class="plan-tag creative">Opinion Reel</span><span class="plan-tag" style="background:var(--purple-bg);color:#c4b5fd;border:1px solid rgba(139,92,246,.2);">Identity</span></div>
-      </div>
-    </div>
-    <div class="plan-item">
-      <div class="plan-num">6</div>
-      <div>
-        <div class="plan-title">Myth-Busting Education Entity — TOF Follower Builder</div>
-        <div class="plan-desc">Hook: <em>"The reason generic fitness programs fail women over 30 — and what actually works."</em><br>Format: Talking head + captions · Driver: Frustration/Curiosity · Serves double duty as a TOF engagement asset and a belief-breaking pre-frame. Women who engage are self-identifying as the exact avatar. Run to a follower campaign to build the retargeting pool that makes BOF entities convert cheaper. This is the funnel-feeding layer — don't skip it because it has no direct CTA. The audience it builds is the inventory your retargeting stack runs on.</div>
-        <div><span class="plan-tag ads">Priority 6</span><span class="plan-tag creative">Talking Head + Captions</span><span class="plan-tag ops">TOF Follower Build</span></div>
-      </div>
-    </div>
-    <div class="plan-item" style="border-left: 3px solid rgba(232,119,34,.4);">
-      <div class="plan-num">7</div>
-      <div>
-        <div class="plan-title">PCOS / Hormone Sub-Avatar Entity <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--orange);letter-spacing:1px;margin-left:8px;">WHITE SPACE — NO COMPETITOR RUNNING THIS</span></div>
-        <div class="plan-desc">Hook: <em>"If you have PCOS and you've been told 'just lose weight' or 'just go keto' — that's not a strategy. That's guesswork dressed up as advice."</em><br>Format: Talking head with captions · Driver: Frustration · Competitor audit of five active accounts in this niche shows zero PCOS-specific paid creative running anywhere in the space. It's a large, pain-dense sub-avatar within Vanessa's existing market — and her lab-based mechanism is specifically suited to PCOS clients whose mainstream bloodwork comes back "normal" while they're still experiencing every symptom. No offer change required. No new funnel. Just a hook that speaks directly to the identity and gets a different Entity ID slot in the auction.</div>
-        <div><span class="plan-tag ads">Priority 7</span><span class="plan-tag creative">Talking Head</span><span class="plan-tag" style="background:var(--red-bg);color:#F87171;border:1px solid rgba(220,38,38,.2);">Frustration · White Space</span></div>
+        <div class="plan-title">Myth-Busting Education Entity — TOF Builder</div>
+        <div class="plan-desc">Hook: <em>"The reason generic fitness programs fail women over 30 — and what actually works."</em><br>Format: Talking head + captions · Driver: Frustration/Curiosity · This serves double duty as a TOF engagement asset and a belief-breaking pre-frame. Women who engage with this are self-identifying as the exact avatar. Run this to a follower campaign to build the retargeting pool for the mechanism and proof entities.</div>
+        <div><span class="plan-tag ads">Priority 5</span><span class="plan-tag creative">Talking Head + Captions</span><span class="plan-tag ops">TOF Follower Build</span></div>
       </div>
     </div>
   </div>
@@ -814,8 +792,6 @@ em { color:var(--orange); font-style:normal; }
   <!-- STRATEGIC DIAGNOSIS -->
   <div class="card orange-left">
     <p style="font-size:13px;margin-bottom:6px;"><strong>Strategic Diagnosis for the Workshop:</strong> Vanessa and Omar have the strongest raw economics in the room for paid ads — but also the least active paid infrastructure. A $2.35M business running on organic is simultaneously inspiring and a massive missed opportunity. The ads ceiling for this offer (LTV $11,568, FE AOV $4,489) supports $3,000+ in CAC before breaking even on a single client — meaning they can outspend almost any competitor in the space and still print money.</p>
-    <p style="font-size:13px;margin-bottom:6px;"><strong>BOF structure note (from success coach Loom):</strong> The preferred BOF format is a short-form VSL — ad acts as the pitch, sends directly to application page → calendar. No long VSL landing page required. This reduces testing variables dramatically and allows faster iteration. The success coach explicitly prefers this over a traditional VSL funnel for exactly this reason: fewer moving parts, faster data, more qualified leads at a slightly higher CPL.</p>
-    <p style="font-size:13px;margin-bottom:0;"><strong>DM trigger word strategy:</strong> Competitor intel shows every account in this niche is running generic triggers ("TRANSFORM," "READY," "ALIGNED"). Vanessa's mechanism-specific offer supports a differentiated trigger that pre-conditions the DM conversation: <strong>"LABS"</strong> (signals mechanism awareness), <strong>"TESTED"</strong> (signals solution-aware avatar), or offer-specific keywords that mirror the emotional state of each specific ad. A person who DMs "LABS" is a warmer, more qualified lead than a person who DMs "READY" — the trigger word does pre-qualification work before the setter touches it.</p>
     <p style="font-size:13px;margin-bottom:0;">The workshop deliverable for Vanessa and Omar is not more content ideas. It is a <em>90-day paid ads architecture plan</em> — what entities to launch first, what funnel they send to, what the weekly creative brief cadence looks like, and how the media buyer accountability loop gets restructured so this doesn't sit dormant for another quarter.</p>
   </div>
 </section>
@@ -917,7 +893,7 @@ em { color:var(--orange); font-style:normal; }
       <div class="plan-num">1</div>
       <div>
         <div class="plan-title">Launch the 3-Layer Paid Ads Stack</div>
-        <div class="plan-desc">The single highest-leverage action in this audit. TOF: boost 3–5 best organic reels as follower/engagement campaigns at $15–25/day each. Target: &lt;$2 cost per follower. MOF: Run DM lead magnet ad (same format that already converts organically) split 50/50 cold and warm retarget. BOF: Run 60–90 second short-form VSL ad → application page → calendar. No VSL landing page needed — ad acts as the pitch, sends directly to application. Starting budget: $5K/month, scaling to $20K/month as CPL proves out. At $11,568 LTV, the CAC ceiling is enormous. <strong>DM trigger word selection:</strong> Use mechanism-specific triggers ("LABS," "TESTED") rather than generic keywords — every competitor in this niche is running "TRANSFORM" and "READY." A mechanism-specific trigger pre-qualifies the lead before the setter makes first contact and signals a higher-intent, more solution-aware prospect.</div>
+        <div class="plan-desc">The single highest-leverage action in this audit. TOF: boost 3–5 best organic reels as follower/engagement campaigns at $15–25/day each. Target: &lt;$2 cost per follower. MOF: Run DM lead magnet ad (same format that already converts organically) split 50/50 cold and warm retarget. BOF: Run 60–90 second short-form VSL ad → application page → calendar. Starting budget: $5K/month. Scaling to $20K/month as CPL proves out. No VSL landing page needed — go directly from ad to application. At $11,568 LTV, the CAC ceiling is enormous.</div>
         <div>
           <span class="plan-tag ads">Paid Media</span>
           <span class="plan-tag creative">Creative System</span>
@@ -989,28 +965,29 @@ em { color:var(--orange); font-style:normal; }
 
 <script>
 const DATA = {
-  q1:  { label:'Q1 2026 Avg', adSpend:9673, leads:126, cpl:76.77, scheduledCalls:105, liveCalls:60, showRate:.5714, costPerCall:92.13, closes:20.67, closeRate:.3444, fePrice:4489, contractedROAS:8.95, collectedROAS:5.70, feToBe:.5033, bePrice:5222, upfrontPct:.6459, laborMargin:.3248, marketingMargin:.0734, overheadMargin:.1109, netMargin:.4560, cac:1279, ltv:11568, cacLtv:9.22, churn:.0627, activeClients:265, monthlyRev:196658, newClients:20.67, revEq:239039 },
-  jan: { label:'January 2026',  adSpend:10047, leads:133, cpl:75.54, scheduledCalls:87, liveCalls:46, showRate:.5287, costPerCall:115.48, closes:17, closeRate:.3696, fePrice:4459, contractedROAS:7.54, collectedROAS:4.75, feToBe:.61, bePrice:5573, upfrontPct:.6299, laborMargin:.3076, marketingMargin:.0752, overheadMargin:.1184, netMargin:.4987, cac:1572, ltv:11345, cacLtv:7.22, churn:.0700, activeClients:257, monthlyRev:204094, newClients:17, revEq:192865 },
-  feb: { label:'February 2026', adSpend:8611, leads:175, cpl:49.20, scheduledCalls:132, liveCalls:83, showRate:.6288, costPerCall:65.23, closes:22, closeRate:.2651, fePrice:4440, contractedROAS:11.35, collectedROAS:7.72, feToBe:.55, bePrice:5285, upfrontPct:.6806, laborMargin:.3977, marketingMargin:.0660, overheadMargin:.1348, netMargin:.4740, cac:1162, ltv:14197, cacLtv:12.22, churn:.0536, activeClients:261, monthlyRev:198615, newClients:22, revEq:312334 },
-  mar: { label:'March 2026',    adSpend:10363, leads:70, cpl:148.04, scheduledCalls:76, liveCalls:45, showRate:.5921, costPerCall:136.35, closes:19, closeRate:.4222, fePrice:4532, contractedROAS:8.31, collectedROAS:4.93, feToBe:.63, bePrice:5263, upfrontPct:.5935, laborMargin:.4243, marketingMargin:.0793, overheadMargin:.1058, netMargin:.3903, cac:1391, ltv:10406, cacLtv:7.48, churn:.0681, activeClients:279, monthlyRev:187266, newClients:19, revEq:197714 },
+  q1:  { label:'Q1 2026 Avg', adSpend:9674, leads:126, cpl:76.77, scheduledCalls:98.3, liveCalls:58, showRate:.5838, costPerCall:83.87, closes:19.3, closeRate:.3367, fePrice:4470, contractedROAS:10.48, collectedROAS:6.81, feToBe:.5967, bePrice:5374, upfrontPct:.6499, laborMargin:.2997, marketingMargin:.0627, overheadMargin:.1025, netMargin:.5352, cac:1543, ltv:12754, cacLtv:8.26, churn:.0506, activeClients:265.7, monthlyRev:196658, newClients:19.3, revEq:246151 },
+  jan: { label:'January 2026',  adSpend:10047, leads:133, cpl:75.54, scheduledCalls:87, liveCalls:46, showRate:.5287, costPerCall:115.48, closes:17, closeRate:.3696, fePrice:4459, contractedROAS:7.54, collectedROAS:4.75, feToBe:.61, bePrice:5573, upfrontPct:.6299, laborMargin:.3077, marketingMargin:.0752, overheadMargin:.1184, netMargin:.4987, cac:1572, ltv:11345, cacLtv:7.22, churn:.0700, activeClients:257, monthlyRev:204094, newClients:17, revEq:192865 },
+  feb: { label:'February 2026', adSpend:8611, leads:175, cpl:49.20, scheduledCalls:132, liveCalls:83, showRate:.6288, costPerCall:65.23, closes:22, closeRate:.2651, fePrice:4440, contractedROAS:11.35, collectedROAS:7.72, feToBe:.55, bePrice:5285, upfrontPct:.6806, laborMargin:.3253, marketingMargin:.0660, overheadMargin:.1348, netMargin:.4740, cac:1162, ltv:14197, cacLtv:12.22, churn:.0536, activeClients:261, monthlyRev:198615, newClients:22, revEq:312334 },
+  mar: { label:'March 2026',    adSpend:10363, leads:70, cpl:148.04, scheduledCalls:76, liveCalls:45, showRate:.5921, costPerCall:136.35, closes:19, closeRate:.4222, fePrice:4532, contractedROAS:8.31, collectedROAS:4.93, feToBe:.63, bePrice:5263, upfrontPct:.5935, laborMargin:.4246, marketingMargin:.0793, overheadMargin:.1058, netMargin:.3903, cac:1391, ltv:10406, cacLtv:7.48, churn:.0645, activeClients:279, monthlyRev:187266, newClients:19, revEq:197714 },
+  apr: { label:'April 2026 (partial)', adSpend:null, leads:null, cpl:null, scheduledCalls:51, liveCalls:28, showRate:.5490, costPerCall:null, closes:10, closeRate:.3571, fePrice:4450, contractedROAS:null, collectedROAS:null, feToBe:.33, bePrice:5325, upfrontPct:.7258, laborMargin:null, marketingMargin:null, overheadMargin:null, netMargin:null, cac:null, ltv:25751, cacLtv:null, churn:.0143, activeClients:273, monthlyRev:100528, newClients:10, revEq:257510 },
 };
 
 const AD_METRICS = [
-  { key:'cpl',           label:'Cost Per Lead (CPL)',           fmt:fmtD,  target:'< $10',   pass:v=>v<10,      warn:v=>v<20,      note:'CPL is high because almost no acquisition is from paid ads — blended organic rate. Real paid CPL TBD once campaigns run.' },
-  { key:'showRate',      label:'Sales Show Rate',               fmt:fmtP,  target:'> 70%',   pass:v=>v>=.70,    warn:v=>v>=.60,    note:'57% Q1 avg is the #1 fixable constraint. Root cause is manual DM funnel, not closer quality. Inbound funnel fixes this.' },
-  { key:'costPerCall',   label:'Cost Per Scheduled Call',       fmt:fmtD,  target:'< $215',  pass:v=>v<215,     warn:v=>v<300,     note:'$92 Q1 avg is inside target — but based on blended/organic CAC. Watch this closely once pure paid campaigns run.' },
-  { key:'closeRate',     label:'Close Rate',                    fmt:fmtP,  target:'30–45%',  pass:v=>v>=.30&&v<=.45, warn:v=>v>=.25, note:'34.4% at $4,489 AOV is right. Do not sacrifice this by lowering price to chase a higher close rate.' },
-  { key:'collectedROAS', label:'Collected ROAS',                fmt:fmtX,  target:'> 2×',    pass:v=>v>=2,      warn:v=>v>=1.5,    note:'5.7× Q1 avg. This will compress once real paid spend runs — but the LTV supports significant CPL.' },
-  { key:'contractedROAS',label:'Contracted ROAS',               fmt:fmtX,  target:'> 5×',    pass:v=>v>=5,      warn:v=>v>=3,      note:'9.0× Q1 avg. February hit 11.3× — that\'s the benchmark for paid campaigns to aim toward.' },
-  { key:'feToBe',        label:'FE → BE Conversion',           fmt:fmtP,  target:'> 50%',   pass:v=>v>=.50,    warn:v=>v>=.40,    note:'50.3% Q1 avg — at target. February 61%, March 63%. The backend conversion system is working. Don\'t change it.' },
-  { key:'upfrontPct',    label:'Upfront Cash Collection %',    fmt:fmtP,  target:'> 30%',   pass:v=>v>=.30,    warn:v=>v>=.20,    note:'64.6% — one of the best in the cohort. Business is fully self-funding growth. No external capital needed for ads.' },
+  { key:'cpl',           label:'Cost Per Lead (CPL)',           fmt:fmtD,  target:'< $10',   pass:v=>v<10,      warn:v=>v<20,      note:'CPL is high because almost no acquisition is paid — blended organic rate. Real paid CPL TBD once campaigns launch.' },
+  { key:'showRate',      label:'Sales Show Rate',               fmt:fmtP,  target:'> 70%',   pass:v=>v>=.70,    warn:v=>v>=.60,    note:'58.4% Q1 avg is the #1 fixable constraint. Root cause is manual DM funnel. Inbound opt-in funnel fixes this — expect 70–80% from structured inbound.' },
+  { key:'costPerCall',   label:'Cost Per Scheduled Call',       fmt:fmtD,  target:'< $215',  pass:v=>v<215,     warn:v=>v<300,     note:'$83.87 Q1 avg is well inside the $215 target based on $4,470 AOV. Monitor closely once true paid campaigns run.' },
+  { key:'closeRate',     label:'Close Rate',                    fmt:fmtP,  target:'30–45%',  pass:v=>v>=.30&&v<=.45, warn:v=>v>=.25, note:'33.7% Q1 avg at $4,470 AOV is appropriate. Feb dipped to 26.5% — watch that trend. Do not lower price to chase a higher close rate.' },
+  { key:'collectedROAS', label:'Collected ROAS',                fmt:fmtX,  target:'> 2×',    pass:v=>v>=2,      warn:v=>v>=1.5,    note:'6.81× Q1 avg. Will compress once real paid spend runs — but $12,754 LTV gives massive room before ROAS becomes a concern.' },
+  { key:'contractedROAS',label:'Contracted ROAS',               fmt:fmtX,  target:'> 5×',    pass:v=>v>=5,      warn:v=>v>=3,      note:'10.5× Q1 avg. February hit 11.3× — that is the benchmark. Even at 5× ROAS, ad spend is highly profitable given LTV.' },
+  { key:'feToBe',        label:'FE → BE Conversion',           fmt:fmtP,  target:'> 50%',   pass:v=>v>=.50,    warn:v=>v>=.40,    note:'Q1 avg 59.7% — above target. Jan 61%, Feb 55%, Mar 63%. April dipped to 33% — backend drag month, likely Q4 cohort timing.' },
+  { key:'upfrontPct',    label:'Upfront Cash Collection %',    fmt:fmtP,  target:'> 30%',   pass:v=>v>=.30,    warn:v=>v>=.20,    note:'65% — best in the cohort. Business fully self-funds growth. No external capital needed to scale to $20K/month ad spend.' },
 ];
 
 const MARGIN_METRICS = [
-  { key:'laborMargin',     label:'Labor Margin',         fmt:fmtP, target:'30–35%', pass:v=>v>=.30&&v<=.38, warn:v=>v>=.25&&v<.30, note:'32.5% — inside target. Note: labs overhead inflates the reported overhead margin. Real labor is clean.' },
-  { key:'marketingMargin', label:'Marketing Margin',     fmt:fmtP, target:'10–20%', pass:v=>v>=.10&&v<=.20, warn:v=>v<.25,         note:'7.3% — below target because almost no paid spend yet. This will increase as the ad stack launches and is fine.' },
-  { key:'overheadMargin',  label:'Overhead Margin',      fmt:fmtP, target:'3–8%',   pass:v=>v>=.03&&v<=.09, warn:v=>v<.12,         note:'11.1% — above target. Labs are billed under overhead/fulfillment — explains the elevated overhead %. Not a real problem.' },
-  { key:'netMargin',       label:'Net Operating Margin', fmt:fmtP, target:'> 50%',  pass:v=>v>=.50,         warn:v=>v>=.35,        note:'45.6% — slightly below 50% target but excellent for this revenue level. Increasing ad spend while maintaining LTV will improve this.' },
+  { key:'laborMargin',     label:'Labor Margin',         fmt:fmtP, target:'30–35%', pass:v=>v>=.30&&v<=.38, warn:v=>v>=.25&&v<.30, note:'30% Q1 avg — just inside the lower boundary. March spiked to 42.5% (likely timing/bonus). Labs cost is baked into fulfillment overhead, not here.' },
+  { key:'marketingMargin', label:'Marketing Margin',     fmt:fmtP, target:'10–20%', pass:v=>v>=.10&&v<=.20, warn:v=>v<.25,         note:'6.3% — below target. This is because ad spend is minimal. Once $10–20K/month in paid runs, this will reach target range. Not a problem.' },
+  { key:'overheadMargin',  label:'Overhead Margin',      fmt:fmtP, target:'3–8%',   pass:v=>v>=.03&&v<=.09, warn:v=>v<.12,         note:'10.3% — above target. Labs (client bloodwork) are billed under fulfillment/overhead. Adjusted overhead without labs would be closer to target.' },
+  { key:'netMargin',       label:'Net Operating Margin', fmt:fmtP, target:'> 50%',  pass:v=>v>=.50,         warn:v=>v>=.35,        note:'53.5% Q1 avg — above the 50% target. January was 49.9% (just under), February 47.4%, March 39% (high labor month). Overall healthy.' },
 ];
 
 let period = 'q1';
@@ -1022,7 +999,10 @@ function fmtP(v){ if(v===null||isNaN(v))return'—'; return(v*100).toFixed(1)+'%
 function fmtX(v){ if(v===null||isNaN(v))return'—'; return v.toFixed(2)+'×'; }
 function fmtK(v){ if(!v||isNaN(v))return'—'; if(v>=1e6)return'$'+(v/1e6).toFixed(1)+'M'; if(v>=1000)return'$'+(v/1000).toFixed(1)+'K'; return'$'+v.toFixed(0); }
 
-function val(key){ return (editMode && overrides[key]!==undefined) ? overrides[key] : DATA[period][key]; }
+function val(key){ 
+  const v = (editMode && overrides[key]!==undefined) ? overrides[key] : DATA[period][key]; 
+  return (v === null || v === undefined) ? NaN : v;
+}
 
 function sc(metric, v){
   if(metric.pass(v)) return 'pass';

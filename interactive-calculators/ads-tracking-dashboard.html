@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFCA Ad Performance Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root {
+  --navy:       #1E3A5F;
+  --navy-dark:  #0D1F35;
+  --navy-mid:   #142845;
+  --navy-card:  #1a2f4a;
+  --orange:     #E87722;
+  --orange-dim: rgba(232,119,34,0.12);
+  --blue-mid:   #4A7FA5;
+  --blue-dim:   rgba(74,127,165,0.15);
+  --blue-light: #D6E4F0;
+  --gray-400:   #94A3B8;
+  --gray-500:   #64748B;
+  --green:      #22C55E;
+  --green-bg:   rgba(34,197,94,0.12);
+  --red:        #EF4444;
+  --red-bg:     rgba(239,68,68,0.12);
+  --yellow:     #F59E0B;
+  --yellow-bg:  rgba(245,158,11,0.12);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy-dark);
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 5% 0%, rgba(74,127,165,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 95% 100%, rgba(232,119,34,.05) 0%, transparent 60%);
+}
+.wrapper { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 24px 60px; }
+
+/* HEADER */
+header {
+  padding: 32px 0 24px;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  border-bottom: 1px solid rgba(74,127,165,.2);
+  margin-bottom: 32px;
+}
+.header-left { display: flex; flex-direction: column; gap: 4px; }
+.header-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); }
+.header-title { font-family: 'Bebas Neue', sans-serif; font-size: 40px; letter-spacing: .04em; color: #fff; line-height: 1; }
+.header-sub { font-size: 13px; color: var(--gray-400); margin-top: 2px; }
+.header-actions { display: flex; gap: 10px; align-items: center; }
+
+/* NAME EDIT */
+.name-display {
+  display: flex; align-items: center; gap: 10px;
+}
+.name-edit-btn {
+  background: none; border: none; color: var(--gray-500); cursor: pointer;
+  font-size: 14px; padding: 2px 6px; border-radius: 4px; transition: color .15s;
+}
+.name-edit-btn:hover { color: var(--orange); }
+.name-input-wrap { display: none; align-items: center; gap: 8px; }
+.name-input-wrap.active { display: flex; }
+.name-input-wrap input {
+  background: rgba(255,255,255,.07); border: 1px solid rgba(232,119,34,.4);
+  border-radius: 6px; padding: 6px 12px; color: #fff; font-size: 22px;
+  font-family: 'Bebas Neue', sans-serif; letter-spacing: .04em; width: 300px;
+}
+.name-input-wrap input:focus { outline: none; border-color: var(--orange); }
+
+/* BUTTONS */
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 18px; border-radius: 6px; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all .18s; border: none; font-family: 'DM Sans', sans-serif;
+}
+.btn-primary { background: var(--orange); color: #fff; }
+.btn-primary:hover { background: #d06a1a; transform: translateY(-1px); }
+.btn-ghost { background: rgba(255,255,255,.06); color: var(--gray-400); border: 1px solid rgba(255,255,255,.1); }
+.btn-ghost:hover { background: rgba(255,255,255,.1); color: #fff; }
+.btn-sm { padding: 7px 14px; font-size: 12px; }
+.btn-danger { background: rgba(239,68,68,.15); color: var(--red); border: 1px solid rgba(239,68,68,.25); }
+.btn-danger:hover { background: rgba(239,68,68,.25); }
+
+/* TABS */
+.tab-bar {
+  display: flex; gap: 4px; margin-bottom: 28px;
+  border-bottom: 1px solid rgba(74,127,165,.15);
+}
+.tab {
+  padding: 10px 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+  color: var(--gray-400); border-bottom: 2px solid transparent; margin-bottom: -1px;
+  transition: all .18s; border-radius: 4px 4px 0 0; background: none;
+  border-left: none; border-right: none; border-top: none;
+  font-family: 'DM Sans', sans-serif;
+}
+.tab:hover { color: #fff; }
+.tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+/* SECTION LABELS */
+.section-label {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--blue-mid); margin-bottom: 14px;
+}
+
+/* KPI STRIP */
+.kpi-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 32px; }
+.kpi-card {
+  background: var(--navy-card); border: 1px solid rgba(74,127,165,.18);
+  border-radius: 10px; padding: 16px 18px;
+  display: flex; flex-direction: column; gap: 6px;
+  transition: border-color .2s;
+}
+.kpi-card:hover { border-color: rgba(74,127,165,.4); }
+.kpi-label { font-size: 11px; color: var(--gray-400); font-weight: 500; letter-spacing: .03em; }
+.kpi-value { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: .02em; line-height: 1; }
+.kpi-target { font-size: 10px; font-family: 'DM Mono', monospace; }
+.kpi-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: 100px; font-size: 10px; font-weight: 700; width: fit-content;
+}
+.badge-green { background: var(--green-bg); color: var(--green); }
+.badge-yellow { background: var(--yellow-bg); color: var(--yellow); }
+.badge-red { background: var(--red-bg); color: var(--red); }
+.badge-gray { background: rgba(148,163,184,.12); color: var(--gray-400); }
+
+/* ONBOARDING WELCOME */
+.welcome-card {
+  background: var(--navy-card); border: 1px solid rgba(232,119,34,.3);
+  border-radius: 14px; padding: 40px 48px; text-align: center; margin-bottom: 32px;
+}
+.welcome-icon { font-size: 48px; margin-bottom: 16px; }
+.welcome-title { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: #fff; margin-bottom: 8px; letter-spacing: .04em; }
+.welcome-sub { font-size: 14px; color: var(--gray-400); max-width: 480px; margin: 0 auto 28px; line-height: 1.6; }
+.welcome-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.welcome-steps {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  margin-top: 32px; max-width: 640px; margin-left: auto; margin-right: auto;
+}
+.step-item {
+  background: rgba(255,255,255,.04); border: 1px solid rgba(74,127,165,.15);
+  border-radius: 10px; padding: 16px; text-align: left;
+}
+.step-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--orange); font-weight: 700; margin-bottom: 6px; letter-spacing: .08em; }
+.step-text { font-size: 12px; color: var(--gray-400); line-height: 1.5; }
+
+/* TABLE */
+.data-table-wrap {
+  background: var(--navy-card); border: 1px solid rgba(74,127,165,.18);
+  border-radius: 12px; overflow: hidden; margin-bottom: 28px;
+}
+.data-table-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 22px; border-bottom: 1px solid rgba(74,127,165,.15);
+}
+.data-table-title { font-size: 13px; font-weight: 700; color: #fff; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+thead th {
+  padding: 10px 14px; text-align: left;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--gray-500); border-bottom: 1px solid rgba(74,127,165,.1);
+  white-space: nowrap;
+}
+tbody tr { border-bottom: 1px solid rgba(74,127,165,.07); transition: background .15s; }
+tbody tr:hover { background: rgba(74,127,165,.07); }
+tbody tr:last-child { border-bottom: none; }
+td { padding: 10px 14px; color: #d1d9e6; vertical-align: middle; }
+td.num { font-family: 'DM Mono', monospace; font-size: 12px; text-align: right; }
+td:first-child { font-weight: 600; color: #fff; }
+.delete-btn {
+  background: none; border: none; color: var(--gray-500); cursor: pointer;
+  padding: 4px; border-radius: 4px; transition: color .15s; font-size: 14px; line-height: 1;
+}
+.delete-btn:hover { color: var(--red); }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.7);
+  z-index: 100; display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity .2s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--navy-mid); border: 1px solid rgba(74,127,165,.3);
+  border-radius: 14px; padding: 32px; width: 100%; max-width: 720px;
+  max-height: 92vh; overflow-y: auto;
+  transform: translateY(20px); transition: transform .2s; position: relative;
+}
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: #fff; margin-bottom: 6px; letter-spacing: .04em; }
+.modal-sub { font-size: 13px; color: var(--gray-400); margin-bottom: 24px; }
+.modal-close {
+  position: absolute; top: 20px; right: 20px;
+  background: rgba(255,255,255,.08); border: none; color: var(--gray-400);
+  width: 32px; height: 32px; border-radius: 6px; cursor: pointer;
+  font-size: 18px; line-height: 1; display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+}
+.modal-close:hover { background: rgba(255,255,255,.15); color: #fff; }
+.modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(74,127,165,.15); }
+
+/* FORM */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.form-row.single { grid-template-columns: 1fr; }
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+label { font-size: 11px; font-weight: 600; color: var(--gray-400); letter-spacing: .04em; text-transform: uppercase; }
+input[type="number"], input[type="text"], select {
+  background: rgba(255,255,255,.05); border: 1px solid rgba(74,127,165,.25);
+  border-radius: 6px; padding: 9px 12px; color: #fff; font-size: 14px;
+  font-family: 'DM Sans', sans-serif; transition: border-color .18s; width: 100%; appearance: none;
+}
+input[type="number"]:focus, input[type="text"]:focus, select:focus {
+  outline: none; border-color: var(--orange); background: rgba(232,119,34,.05);
+}
+input[type="number"]::placeholder { color: var(--gray-500); }
+select option { background: var(--navy-dark); }
+
+/* LIVE PREVIEW */
+.computed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-top: 14px; }
+.computed-item { background: rgba(255,255,255,.04); border: 1px solid rgba(74,127,165,.12); border-radius: 8px; padding: 12px 14px; }
+.computed-label { font-size: 10px; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+.computed-value { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: .02em; }
+.computed-value.good { color: var(--green); }
+.computed-value.warn { color: var(--yellow); }
+.computed-value.bad  { color: var(--red); }
+.computed-value.neutral { color: #fff; }
+
+/* UPLOAD ZONE */
+.upload-zone {
+  border: 2px dashed rgba(74,127,165,.35); border-radius: 10px;
+  padding: 36px; text-align: center; cursor: pointer;
+  transition: all .2s; background: rgba(74,127,165,.04); margin-bottom: 20px;
+}
+.upload-zone:hover, .upload-zone.drag-over { border-color: var(--orange); background: var(--orange-dim); }
+.upload-zone input { display: none; }
+.upload-icon { font-size: 36px; margin-bottom: 10px; }
+.upload-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+.upload-sub { font-size: 12px; color: var(--gray-400); }
+.upload-hint { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gray-500); margin-top: 8px; }
+
+/* IMPORT RESULT */
+.import-result {
+  background: rgba(34,197,94,.06); border: 1px solid rgba(34,197,94,.2);
+  border-radius: 10px; padding: 16px 18px; margin-bottom: 16px; display: none;
+}
+.import-error {
+  background: var(--red-bg); border: 1px solid rgba(239,68,68,.25);
+  border-radius: 10px; padding: 16px 18px; margin-bottom: 16px; display: none;
+}
+.import-msg { font-size: 13px; font-weight: 600; }
+.import-detail { font-size: 11px; color: var(--gray-400); margin-top: 6px; }
+
+/* CHANNEL MAPPING UI */
+.mapping-table { width: 100%; font-size: 12px; border-collapse: collapse; }
+.mapping-table th { padding: 8px 12px; text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; color: var(--gray-500); border-bottom: 1px solid rgba(74,127,165,.12); }
+.mapping-table td { padding: 8px 12px; border-bottom: 1px solid rgba(74,127,165,.07); color: #d1d9e6; }
+.mapping-table td:first-child { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--orange); }
+.mapping-table select { padding: 5px 8px; font-size: 11px; }
+
+/* SUMMARY */
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.channel-card { background: var(--navy-card); border: 1px solid rgba(74,127,165,.18); border-radius: 10px; padding: 18px 20px; }
+.channel-name { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--orange); margin-bottom: 14px; }
+.channel-stat { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid rgba(74,127,165,.08); }
+.channel-stat:last-child { border-bottom: none; }
+.channel-stat-label { font-size: 11px; color: var(--gray-400); }
+.channel-stat-val { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; }
+
+/* DIVIDER */
+.divider { height: 1px; background: rgba(74,127,165,.12); margin: 20px 0; }
+
+/* EMPTY STATE */
+.empty-state { text-align: center; padding: 48px 24px; color: var(--gray-500); }
+.empty-state .empty-icon { font-size: 36px; margin-bottom: 12px; }
+.empty-state p { font-size: 13px; line-height: 1.6; }
+
+/* CONTROLS */
+.controls-bar { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; flex-wrap: wrap; }
+.control-group { display: flex; align-items: center; gap: 8px; }
+.control-label { font-size: 11px; color: var(--gray-400); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; }
+select.control-select {
+  background: rgba(255,255,255,.05); border: 1px solid rgba(74,127,165,.25);
+  border-radius: 6px; padding: 7px 12px; color: #fff; font-size: 12px;
+  font-family: 'DM Sans', sans-serif; cursor: pointer; width: auto;
+}
+
+/* PILLS */
+.pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+.pill-fb  { background: rgba(24,119,242,.15); color: #5B9BF8; }
+.pill-ig  { background: rgba(228,64,95,.15);  color: #F06080; }
+.pill-vsl { background: rgba(139,92,246,.15); color: #A78BFA; }
+.pill-lm  { background: rgba(16,185,129,.15); color: #34D399; }
+
+/* LIVE PREVIEW BOX */
+.live-preview-box { background: rgba(232,119,34,.05); border: 1px solid rgba(232,119,34,.2); border-radius: 10px; padding: 18px 20px; margin-top: 16px; }
+.live-preview-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--orange); margin-bottom: 14px; }
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 24px; right: 24px; z-index: 200;
+  background: var(--navy-card); border: 1px solid rgba(74,127,165,.3);
+  border-radius: 8px; padding: 12px 18px; font-size: 13px; font-weight: 600;
+  display: flex; align-items: center; gap: 8px;
+  transform: translateY(80px); opacity: 0; transition: all .25s;
+  box-shadow: 0 8px 32px rgba(0,0,0,.4);
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.success { border-color: rgba(34,197,94,.3); color: var(--green); }
+.toast.error   { border-color: rgba(239,68,68,.3);  color: var(--red); }
+
+/* TAG PILLS */
+.tag-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.tag-pill { background: var(--blue-dim); color: var(--blue-mid); padding: 3px 9px; border-radius: 4px; font-size: 10px; font-family: 'DM Mono', monospace; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .form-row { grid-template-columns: 1fr; }
+  .summary-grid { grid-template-columns: 1fr; }
+  .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+  header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .welcome-steps { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <span class="header-eyebrow">IFCA Accelerator · Ad Performance</span>
+      <div class="name-display" id="nameDisplay">
+        <h1 class="header-title" id="dashboardTitle">My Ad Dashboard</h1>
+        <button class="name-edit-btn" onclick="startEditName()" title="Edit name">✎</button>
+      </div>
+      <div class="name-input-wrap" id="nameInputWrap">
+        <input type="text" id="nameInput" value="My Ad Dashboard" onkeydown="handleNameKey(event)" maxlength="60">
+        <button class="btn btn-primary btn-sm" onclick="saveEditName()">Save</button>
+        <button class="btn btn-ghost btn-sm" onclick="cancelEditName()">Cancel</button>
+      </div>
+      <p class="header-sub">Track leads, calls, closings &amp; ad spend across all funnels</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-ghost btn-sm" onclick="openUploadModal()">⬆ Import Sheet</button>
+      <button class="btn btn-ghost btn-sm" onclick="exportCSV()">⬇ Export CSV</button>
+      <button class="btn btn-primary btn-sm" onclick="openEntryModal()">+ Log Entry</button>
+    </div>
+  </header>
+
+  <!-- TABS -->
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchTab('overview', this)">Overview</button>
+    <button class="tab" onclick="switchTab('facebook', this)">Facebook DM</button>
+    <button class="tab" onclick="switchTab('instagram', this)">Instagram DM</button>
+    <button class="tab" onclick="switchTab('vsl', this)">VSL</button>
+    <button class="tab" onclick="switchTab('leadmagnet', this)">Lead Magnet</button>
+    <button class="tab" onclick="switchTab('kpis', this)">KPI Targets</button>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div id="tab-overview" class="tab-content">
+    <div id="welcomeCard" class="welcome-card" style="display:none">
+      <div class="welcome-icon">📊</div>
+      <h2 class="welcome-title">Welcome to Your Ad Performance Dashboard</h2>
+      <p class="welcome-sub">Import your existing tracking spreadsheet or start logging entries manually. Your KPIs will populate automatically.</p>
+      <div class="welcome-actions">
+        <button class="btn btn-primary" onclick="openUploadModal()">⬆ Import Your Spreadsheet</button>
+        <button class="btn btn-ghost" onclick="openEntryModal()">+ Log Entry Manually</button>
+      </div>
+      <div class="welcome-steps">
+        <div class="step-item">
+          <div class="step-num">STEP 01</div>
+          <div class="step-text">Import your XLSX tracker or log entries manually by channel</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">STEP 02</div>
+          <div class="step-text">Dashboard auto-calculates CPL, CPBC, show rate, ROAS, and more</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">STEP 03</div>
+          <div class="step-text">Color-coded KPI badges show where to focus: green = on target, red = fix this</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls-bar">
+      <div class="control-group">
+        <span class="control-label">Year</span>
+        <select class="control-select" id="filterYear" onchange="refreshOverview()">
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026" selected>2026</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <span class="control-label">Month</span>
+        <select class="control-select" id="filterMonth" onchange="refreshOverview()">
+          <option value="all">All Months</option>
+          <option value="1">January</option><option value="2">February</option>
+          <option value="3">March</option><option value="4">April</option>
+          <option value="5">May</option><option value="6">June</option>
+          <option value="7">July</option><option value="8">August</option>
+          <option value="9">September</option><option value="10">October</option>
+          <option value="11">November</option><option value="12">December</option>
+        </select>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px;">
+        <button class="btn btn-danger btn-sm" onclick="confirmClearAll()" id="clearAllBtn" style="display:none">🗑 Clear All Data</button>
+      </div>
+    </div>
+
+    <p class="section-label">North Star KPIs — All Funnels Combined</p>
+    <div class="kpi-strip" id="overviewKPIs"></div>
+
+    <p class="section-label">Channel Breakdown</p>
+    <div class="summary-grid" id="channelCards"></div>
+
+    <p class="section-label">All Entries</p>
+    <div class="data-table-wrap">
+      <div class="data-table-header">
+        <span class="data-table-title" id="allEntriesTitle">All Logged Entries</span>
+        <span id="entryCount" style="font-size:11px;color:var(--gray-400);font-family:'DM Mono',monospace;"></span>
+      </div>
+      <div id="allEntriesTable"></div>
+    </div>
+  </div>
+
+  <!-- FUNNEL TABS -->
+  <div id="tab-facebook"   class="tab-content" style="display:none"><div id="funnel-table-facebook"></div></div>
+  <div id="tab-instagram"  class="tab-content" style="display:none"><div id="funnel-table-instagram"></div></div>
+  <div id="tab-vsl"        class="tab-content" style="display:none"><div id="funnel-table-vsl"></div></div>
+  <div id="tab-leadmagnet" class="tab-content" style="display:none"><div id="funnel-table-leadmagnet"></div></div>
+
+  <!-- KPI TARGETS TAB -->
+  <div id="tab-kpis" class="tab-content" style="display:none">
+    <p class="section-label">IFCA Benchmark Targets</p>
+    <div class="data-table-wrap">
+      <div class="data-table-header"><span class="data-table-title">KPI Reference Table</span></div>
+      <table>
+        <thead><tr><th>Metric</th><th>Category</th><th>Target Range</th><th>🟢 Green (Good)</th><th>🟡 Yellow (Watch)</th><th>🔴 Red (Fix)</th></tr></thead>
+        <tbody>
+          <tr><td>Cost Per Lead</td><td>Funnel</td><td>$4 – $12</td><td>≤ $8</td><td>$8 – $12</td><td>> $12</td></tr>
+          <tr><td>Cost Per Booked Call</td><td>Sales</td><td>$30 – $80</td><td>≤ $60</td><td>$60 – $80</td><td>> $80</td></tr>
+          <tr><td>Lead → Book Rate</td><td>Funnel</td><td>3% – 6%</td><td>≥ 4.5%</td><td>3% – 4.5%</td><td>< 3%</td></tr>
+          <tr><td>Show Rate</td><td>Sales</td><td>> 40%</td><td>≥ 50%</td><td>40% – 50%</td><td>< 40%</td></tr>
+          <tr><td>Live Call Close Rate</td><td>Sales</td><td>> 30%</td><td>≥ 35%</td><td>25% – 35%</td><td>< 25%</td></tr>
+          <tr><td>Cost Per Acquisition</td><td>Revenue</td><td>< 20% of contract</td><td>< 15%</td><td>15% – 20%</td><td>> 20%</td></tr>
+          <tr><td>Collected ROAS</td><td>Revenue</td><td>> 1.5x</td><td>≥ 2x</td><td>1.5x – 2x</td><td>< 1.5x</td></tr>
+          <tr><td>Contracted ROAS</td><td>Revenue</td><td>> 3x</td><td>≥ 4x</td><td>3x – 4x</td><td>< 3x</td></tr>
+          <tr><td>Hook Rate</td><td>Creative</td><td>> 25%</td><td>≥ 30%</td><td>20% – 25%</td><td>< 20%</td></tr>
+          <tr><td>Hold Rate</td><td>Creative</td><td>> 20%</td><td>≥ 25%</td><td>15% – 20%</td><td>< 15%</td></tr>
+          <tr><td>Ad Spend / Month</td><td>Media</td><td>$1,000 – $3,000</td><td>In range</td><td>±20%</td><td>Outside range</td></tr>
+          <tr><td>CPM</td><td>Media</td><td>$30 – $60</td><td>$30 – $45</td><td>$45 – $60</td><td>> $60</td></tr>
+          <tr><td>CTR (All)</td><td>Media</td><td>3% – 4%</td><td>≥ 3.5%</td><td>2.5% – 3.5%</td><td>< 2.5%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:20px;background:var(--navy-card);border:1px solid rgba(74,127,165,.18);border-radius:10px;padding:20px 24px;">
+      <p class="section-label">Best Practices</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div style="background:rgba(255,255,255,.03);border-radius:6px;padding:12px 14px;font-size:12px;color:var(--gray-400);">✓ 3–4 follow-ups minimum per lead</div>
+        <div style="background:rgba(255,255,255,.03);border-radius:6px;padding:12px 14px;font-size:12px;color:var(--gray-400);">✓ Reactivation campaign 2× per month</div>
+        <div style="background:rgba(255,255,255,.03);border-radius:6px;padding:12px 14px;font-size:12px;color:var(--gray-400);">✓ Send FB message if no SMS response</div>
+        <div style="background:rgba(255,255,255,.03);border-radius:6px;padding:12px 14px;font-size:12px;color:var(--gray-400);">✓ Call all leads that didn't show</div>
+        <div style="background:rgba(255,255,255,.03);border-radius:6px;padding:12px 14px;font-size:12px;color:var(--gray-400);">✓ Kill ads at 2× KPI target (new creatives)</div>
+        <div style="background:rgba(255,255,255,.03);border-radius:6px;padding:12px 14px;font-size:12px;color:var(--gray-400);">✓ Kill ads at 3× KPI target (existing winners)</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrapper -->
+
+<!-- ENTRY MODAL -->
+<div class="modal-overlay" id="entryModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('entryModal')">×</button>
+    <h2 class="modal-title">Log Ad Entry</h2>
+    <p class="modal-sub">Enter your weekly or monthly numbers. Calculated metrics auto-fill below.</p>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Funnel / Channel</label>
+        <select id="e_funnel" onchange="updateLivePreview()">
+          <option value="facebook">Facebook DM</option>
+          <option value="instagram">Instagram DM</option>
+          <option value="vsl">VSL</option>
+          <option value="leadmagnet">Lead Magnet</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Period</label>
+        <select id="e_month">
+          <option value="1">January</option><option value="2">February</option>
+          <option value="3">March</option><option value="4">April</option>
+          <option value="5">May</option><option value="6">June</option>
+          <option value="7">July</option><option value="8">August</option>
+          <option value="9">September</option><option value="10">October</option>
+          <option value="11">November</option><option value="12">December</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Year</label>
+        <select id="e_year">
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026" selected>2026</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Week (optional)</label>
+        <select id="e_week">
+          <option value="">Full Month</option>
+          <option value="1">Week 1</option><option value="2">Week 2</option>
+          <option value="3">Week 3</option><option value="4">Week 4</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--blue-mid);margin-bottom:14px;">📊 Ad Spend &amp; Leads</p>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Total Ad Spend ($)</label>
+        <input type="number" id="e_spend" placeholder="e.g. 1850" min="0" step="0.01" oninput="updateLivePreview()">
+      </div>
+      <div class="form-group">
+        <label>Leads Generated</label>
+        <input type="number" id="e_leads" placeholder="e.g. 450" min="0" oninput="updateLivePreview()">
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--blue-mid);margin-bottom:14px;">📞 Booking &amp; Show</p>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Calls Booked</label>
+        <input type="number" id="e_booked" placeholder="e.g. 55" min="0" oninput="updateLivePreview()">
+      </div>
+      <div class="form-group">
+        <label>Live Calls (Showed)</label>
+        <input type="number" id="e_live" placeholder="e.g. 28" min="0" oninput="updateLivePreview()">
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--blue-mid);margin-bottom:14px;">💰 Sales &amp; Revenue</p>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Deals Closed</label>
+        <input type="number" id="e_closed" placeholder="e.g. 8" min="0" oninput="updateLivePreview()">
+      </div>
+      <div class="form-group">
+        <label>Cash Collected ($)</label>
+        <input type="number" id="e_cash" placeholder="e.g. 14000" min="0" step="0.01" oninput="updateLivePreview()">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Total Contracted ($)</label>
+        <input type="number" id="e_contracted" placeholder="e.g. 28000" min="0" step="0.01" oninput="updateLivePreview()">
+      </div>
+      <div class="form-group">
+        <label>Avg Contract Value ($)</label>
+        <input type="number" id="e_acv" placeholder="e.g. 3500" min="0" step="0.01" oninput="updateLivePreview()">
+      </div>
+    </div>
+
+    <div class="live-preview-box">
+      <p class="live-preview-title">⚡ Calculated Metrics (Live Preview)</p>
+      <div class="computed-grid" id="livePreview"></div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('entryModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEntry()">Save Entry</button>
+    </div>
+  </div>
+</div>
+
+<!-- UPLOAD MODAL -->
+<div class="modal-overlay" id="uploadModal">
+  <div class="modal" style="max-width:780px;">
+    <button class="modal-close" onclick="closeModal('uploadModal')">×</button>
+    <h2 class="modal-title">Import Tracking Sheet</h2>
+    <p class="modal-sub">Upload your XLSX or CSV tracker. The importer reads the SUMMARY sheets (Facebook, IG, VSL, Lead Magnet) automatically.</p>
+
+    <div class="upload-zone" id="dropZone"
+      onclick="document.getElementById('fileInput').click()"
+      ondragover="handleDragOver(event)"
+      ondragleave="handleDragLeave(event)"
+      ondrop="handleDrop(event)">
+      <input type="file" id="fileInput" accept=".csv,.xlsx,.xls" onchange="handleFileSelect(event)">
+      <div class="upload-icon">📂</div>
+      <p class="upload-title">Drop your spreadsheet here or click to browse</p>
+      <p class="upload-sub">Reads SUMMARY sheets from the IFCA tracker format, or accepts CSV</p>
+      <p class="upload-hint">Accepted: .xlsx · .xls · .csv · Max 10MB</p>
+    </div>
+
+    <div class="import-result" id="importSuccess">
+      <div class="import-msg" id="importSuccessMsg" style="color:var(--green)"></div>
+      <div class="import-detail" id="importSuccessDetail"></div>
+    </div>
+    <div class="import-error" id="importError">
+      <div class="import-msg" style="color:var(--red)" id="importErrorMsg"></div>
+      <div class="import-detail" id="importErrorDetail"></div>
+    </div>
+
+    <div id="previewSection" style="display:none;">
+      <p class="section-label" style="margin-bottom:12px;">Preview — First 5 Rows to Import</p>
+      <div class="data-table-wrap" style="margin-bottom:16px;">
+        <div id="previewTableContent"></div>
+      </div>
+    </div>
+
+    <div style="background:rgba(255,255,255,.03);border-radius:8px;padding:16px 18px;">
+      <p style="font-size:12px;font-weight:700;color:#fff;margin-bottom:10px;">How import works:</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="font-size:12px;color:var(--gray-400);">✓ Reads SUMMARY-Facebook, SUMMARY-IG, SUMMARY-VSL, SUMMARY-Lead Magnet sheets</div>
+        <div style="font-size:12px;color:var(--gray-400);">✓ Maps Month, Leads, Calls Booked, Live Calls, Closed, Ad Spend, Cash, Contracted</div>
+        <div style="font-size:12px;color:var(--gray-400);">✓ Also accepts generic CSV with column headers</div>
+        <div style="font-size:12px;color:var(--gray-400);">✓ New imports append to existing data (no duplicates by month+channel)</div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('uploadModal')">Cancel</button>
+      <button class="btn btn-primary" id="importBtn" onclick="confirmImport()" disabled>Import Data</button>
+    </div>
+  </div>
+</div>
+
+<!-- CLEAR CONFIRM MODAL -->
+<div class="modal-overlay" id="clearModal">
+  <div class="modal" style="max-width:420px;">
+    <button class="modal-close" onclick="closeModal('clearModal')">×</button>
+    <h2 class="modal-title">Clear All Data?</h2>
+    <p class="modal-sub" style="margin-bottom:8px;">This will permanently delete all logged entries from this dashboard. This cannot be undone.</p>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('clearModal')">Cancel</button>
+      <button class="btn btn-danger" onclick="clearAllData()">Yes, Delete Everything</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── CONSTANTS ────────────────────────────────────────────────────────────────
+const MONTHS = ['','January','February','March','April','May','June','July','August','September','October','November','December'];
+const MONTH_MAP = Object.fromEntries(MONTHS.map((m,i)=>[m.toLowerCase(),i]));
+const FUNNEL_LABELS = { facebook:'Facebook DM', instagram:'Instagram DM', vsl:'VSL', leadmagnet:'Lead Magnet' };
+const FUNNEL_PILLS  = { facebook:'pill-fb', instagram:'pill-ig', vsl:'pill-vsl', leadmagnet:'pill-lm' };
+const STORAGE_KEY   = 'ifca_dash_entries_v2';
+const STORAGE_NAME  = 'ifca_dash_name';
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let entries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+let pendingImport = null;
+let dashName = localStorage.getItem(STORAGE_NAME) || 'My Ad Dashboard';
+
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+  document.getElementById('clearAllBtn').style.display = entries.length ? 'flex' : 'none';
+}
+
+// ─── NAME EDIT ────────────────────────────────────────────────────────────────
+function startEditName() {
+  document.getElementById('nameDisplay').style.display = 'none';
+  const wrap = document.getElementById('nameInputWrap');
+  wrap.classList.add('active');
+  const inp = document.getElementById('nameInput');
+  inp.value = dashName;
+  inp.focus(); inp.select();
+}
+function saveEditName() {
+  const val = document.getElementById('nameInput').value.trim() || 'My Ad Dashboard';
+  dashName = val;
+  localStorage.setItem(STORAGE_NAME, dashName);
+  document.getElementById('dashboardTitle').textContent = dashName;
+  document.title = dashName + ' — IFCA';
+  cancelEditName();
+}
+function cancelEditName() {
+  document.getElementById('nameDisplay').style.display = 'flex';
+  document.getElementById('nameInputWrap').classList.remove('active');
+}
+function handleNameKey(e) {
+  if (e.key === 'Enter') saveEditName();
+  if (e.key === 'Escape') cancelEditName();
+}
+
+// ─── COMPUTE METRICS ─────────────────────────────────────────────────────────
+function compute(e) {
+  const spend = +e.spend||0, leads = +e.leads||0, booked = +e.booked||0;
+  const live = +e.live||0, closed = +e.closed||0;
+  const cash = +e.cash||0, contracted = +e.contracted||0, acv = +e.acv||0;
+  return {
+    cpl:    leads   ? spend/leads   : null,
+    cpbc:   booked  ? spend/booked  : null,
+    cpa:    closed  ? spend/closed  : null,
+    l2b:    leads   ? booked/leads  : null,
+    show:   booked  ? live/booked   : null,
+    close:  live    ? closed/live   : null,
+    colROAS: spend  ? cash/spend    : null,
+    conROAS: spend  ? contracted/spend : null,
+    cpaVsACV: (closed&&acv) ? (spend/closed)/acv : null,
+  };
+}
+
+// ─── KPI STATUS ───────────────────────────────────────────────────────────────
+function kpiStatus(metric, value) {
+  if (value === null || isNaN(value)) return 'gray';
+  const rules = {
+    cpl:     v => v<=8?'green':v<=12?'yellow':'red',
+    cpbc:    v => v<=60?'green':v<=80?'yellow':'red',
+    cpa:     v => v<=300?'green':v<=500?'yellow':'red',
+    l2b:     v => v>=.045?'green':v>=.03?'yellow':'red',
+    show:    v => v>=.5?'green':v>=.4?'yellow':'red',
+    close:   v => v>=.35?'green':v>=.25?'yellow':'red',
+    colROAS: v => v>=2?'green':v>=1.5?'yellow':'red',
+    conROAS: v => v>=4?'green':v>=3?'yellow':'red',
+    cpaVsACV:v => v<=.15?'green':v<=.2?'yellow':'red',
+  };
+  return rules[metric] ? rules[metric](value) : 'gray';
+}
+function kpiColor(k,v) {
+  const s=kpiStatus(k,v);
+  return s==='green'?'var(--green)':s==='yellow'?'var(--yellow)':s==='red'?'var(--red)':'#fff';
+}
+function statusBadge(s, lbl) {
+  const icons={green:'✓',yellow:'⚠',red:'✕',gray:'–'};
+  return `<span class="kpi-badge badge-${s}">${icons[s]} ${lbl}</span>`;
+}
+
+// ─── FORMAT HELPERS ───────────────────────────────────────────────────────────
+function fmt$(v)  { return v===null?'–':'$'+v.toFixed(2); }
+function fmtPct(v){ return v===null?'–':(v*100).toFixed(1)+'%'; }
+function fmtX(v)  { return v===null?'–':v.toFixed(2)+'x'; }
+function fmtN(v)  { return v===null?'–':v.toLocaleString(); }
+
+// ─── ENTRY CRUD ───────────────────────────────────────────────────────────────
+function openEntryModal(funnel) {
+  if (funnel) document.getElementById('e_funnel').value = funnel;
+  const now = new Date();
+  document.getElementById('e_month').value = now.getMonth()+1;
+  document.getElementById('e_year').value = now.getFullYear();
+  ['e_spend','e_leads','e_booked','e_live','e_closed','e_cash','e_contracted','e_acv'].forEach(id => document.getElementById(id).value = '');
+  updateLivePreview();
+  document.getElementById('entryModal').classList.add('open');
+}
+function saveEntry() {
+  const entry = {
+    funnel: document.getElementById('e_funnel').value,
+    month:  +document.getElementById('e_month').value,
+    year:   +document.getElementById('e_year').value,
+    week:   document.getElementById('e_week').value,
+    spend:  +document.getElementById('e_spend').value||0,
+    leads:  +document.getElementById('e_leads').value||0,
+    booked: +document.getElementById('e_booked').value||0,
+    live:   +document.getElementById('e_live').value||0,
+    closed: +document.getElementById('e_closed').value||0,
+    cash:   +document.getElementById('e_cash').value||0,
+    contracted: +document.getElementById('e_contracted').value||0,
+    acv:    +document.getElementById('e_acv').value||0,
+    id: Date.now() + Math.random(),
+  };
+  entries.push(entry);
+  save(); refreshAll();
+  closeModal('entryModal');
+  showToast('success','Entry saved!');
+}
+function deleteEntry(id) {
+  entries = entries.filter(e => e.id !== id);
+  save(); refreshAll();
+  showToast('success','Entry removed');
+}
+function clearAllData() {
+  entries = [];
+  save(); refreshAll();
+  closeModal('clearModal');
+  showToast('success','All data cleared');
+}
+function confirmClearAll() { document.getElementById('clearModal').classList.add('open'); }
+
+function updateLivePreview() {
+  const e = {
+    spend: +document.getElementById('e_spend').value||0,
+    leads: +document.getElementById('e_leads').value||0,
+    booked: +document.getElementById('e_booked').value||0,
+    live: +document.getElementById('e_live').value||0,
+    closed: +document.getElementById('e_closed').value||0,
+    cash: +document.getElementById('e_cash').value||0,
+    contracted: +document.getElementById('e_contracted').value||0,
+    acv: +document.getElementById('e_acv').value||0,
+  };
+  const c = compute(e);
+  document.getElementById('livePreview').innerHTML = [
+    {l:'CPL', v:fmt$(c.cpl), k:'cpl'},
+    {l:'Cost/Booked Call', v:fmt$(c.cpbc), k:'cpbc'},
+    {l:'Lead→Book %', v:fmtPct(c.l2b), k:'l2b'},
+    {l:'Show Rate', v:fmtPct(c.show), k:'show'},
+    {l:'Close Rate', v:fmtPct(c.close), k:'close'},
+    {l:'Collected ROAS', v:fmtX(c.colROAS), k:'colROAS'},
+    {l:'Contracted ROAS', v:fmtX(c.conROAS), k:'conROAS'},
+  ].map(item => {
+    const s = item.k ? kpiStatus(item.k, c[item.k]) : 'neutral';
+    const cls = s==='green'?'good':s==='yellow'?'warn':s==='red'?'bad':'neutral';
+    return `<div class="computed-item">
+      <div class="computed-label">${item.l}</div>
+      <div class="computed-value ${cls}">${item.v}</div>
+    </div>`;
+  }).join('');
+}
+
+// ─── FILTER & AGGREGATE ───────────────────────────────────────────────────────
+function getFiltered(funnel) {
+  const yr = +document.getElementById('filterYear').value;
+  const mo = document.getElementById('filterMonth').value;
+  return entries.filter(e => {
+    if (funnel && e.funnel !== funnel) return false;
+    if (e.year !== yr) return false;
+    if (mo !== 'all' && e.month !== +mo) return false;
+    return true;
+  });
+}
+function aggregateEntries(arr) {
+  return arr.reduce((acc, e) => {
+    acc.spend += +e.spend||0;
+    acc.leads += +e.leads||0;
+    acc.booked += +e.booked||0;
+    acc.live += +e.live||0;
+    acc.closed += +e.closed||0;
+    acc.cash += +e.cash||0;
+    acc.contracted += +e.contracted||0;
+    return acc;
+  }, {spend:0,leads:0,booked:0,live:0,closed:0,cash:0,contracted:0});
+}
+
+// ─── RENDER OVERVIEW ──────────────────────────────────────────────────────────
+function refreshOverview() {
+  const all = getFiltered(null);
+  const agg = aggregateEntries(all);
+  const c = compute(agg);
+
+  // Welcome card
+  const wc = document.getElementById('welcomeCard');
+  wc.style.display = entries.length === 0 ? 'block' : 'none';
+
+  // KPI strip
+  const kpis = [
+    {label:'Total Ad Spend',   val:'$'+agg.spend.toLocaleString(undefined,{maximumFractionDigits:0}), key:null, sub:''},
+    {label:'Total Leads',      val:fmtN(agg.leads), key:null, sub:''},
+    {label:'Cost Per Lead',    val:fmt$(c.cpl), key:'cpl', sub:'Target: $4–$12'},
+    {label:'Calls Booked',     val:fmtN(agg.booked), key:null, sub:''},
+    {label:'Cost / Booked Call',val:fmt$(c.cpbc), key:'cpbc', sub:'Target: $30–$80'},
+    {label:'Show Rate',        val:fmtPct(c.show), key:'show', sub:'Target: >40%'},
+    {label:'Close Rate',       val:fmtPct(c.close), key:'close', sub:'Target: >30%'},
+    {label:'Collected ROAS',   val:fmtX(c.colROAS), key:'colROAS', sub:'Target: >1.5x'},
+    {label:'Contracted ROAS',  val:fmtX(c.conROAS), key:'conROAS', sub:'Target: >3x'},
+  ];
+  document.getElementById('overviewKPIs').innerHTML = kpis.map(k => {
+    const s = k.key ? kpiStatus(k.key, c[k.key]) : 'gray';
+    const colors = {green:'var(--green)',yellow:'var(--yellow)',red:'var(--red)',gray:'#fff'};
+    return `<div class="kpi-card">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value" style="color:${colors[s]}">${k.val}</div>
+      ${k.key ? statusBadge(s, s==='gray'?'No data':s==='green'?'On target':s==='yellow'?'Watch':'Fix this') : ''}
+      ${k.sub ? `<div class="kpi-target" style="color:var(--gray-500)">${k.sub}</div>` : ''}
+    </div>`;
+  }).join('');
+
+  // Channel cards
+  document.getElementById('channelCards').innerHTML = ['facebook','instagram','vsl','leadmagnet'].map(f => {
+    const data = getFiltered(f);
+    if (!data.length) return `<div class="channel-card">
+      <div class="channel-name">${FUNNEL_LABELS[f]}</div>
+      <div class="empty-state" style="padding:16px 0;"><p style="font-size:12px;">No data for this period</p></div>
+    </div>`;
+    const a = aggregateEntries(data);
+    const c2 = compute(a);
+    return `<div class="channel-card">
+      <div class="channel-name">${FUNNEL_LABELS[f]}</div>
+      <div class="channel-stat"><span class="channel-stat-label">Spend</span><span class="channel-stat-val">$${a.spend.toLocaleString(undefined,{maximumFractionDigits:0})}</span></div>
+      <div class="channel-stat"><span class="channel-stat-label">Leads</span><span class="channel-stat-val">${a.leads.toLocaleString()}</span></div>
+      <div class="channel-stat"><span class="channel-stat-label">Cost/Lead</span><span class="channel-stat-val" style="color:${kpiColor('cpl',c2.cpl)}">${fmt$(c2.cpl)}</span></div>
+      <div class="channel-stat"><span class="channel-stat-label">Booked</span><span class="channel-stat-val">${a.booked}</span></div>
+      <div class="channel-stat"><span class="channel-stat-label">Cost/Booked</span><span class="channel-stat-val" style="color:${kpiColor('cpbc',c2.cpbc)}">${fmt$(c2.cpbc)}</span></div>
+      <div class="channel-stat"><span class="channel-stat-label">Show Rate</span><span class="channel-stat-val" style="color:${kpiColor('show',c2.show)}">${fmtPct(c2.show)}</span></div>
+      <div class="channel-stat"><span class="channel-stat-label">Closed</span><span class="channel-stat-val">${a.closed}</span></div>
+      <div class="channel-stat"><span class="channel-stat-label">Col. ROAS</span><span class="channel-stat-val" style="color:${kpiColor('colROAS',c2.colROAS)}">${fmtX(c2.colROAS)}</span></div>
+    </div>`;
+  }).join('');
+
+  renderEntriesTable('allEntriesTable', all, true);
+  document.getElementById('entryCount').textContent = all.length + ' entries';
+}
+
+function renderEntriesTable(containerId, data, showFunnel) {
+  const el = document.getElementById(containerId);
+  if (!data.length) {
+    el.innerHTML = `<div class="empty-state">
+      <div class="empty-icon">📋</div>
+      <p>No entries for this view.<br>Import your sheet or click "+ Log Entry" to start.</p>
+    </div>`;
+    return;
+  }
+  const sorted = [...data].sort((a,b) => (b.year-a.year)||(b.month-a.month));
+  el.innerHTML = `<table>
+    <thead><tr>
+      ${showFunnel?'<th>Channel</th>':''}
+      <th>Period</th>
+      <th style="text-align:right">Spend</th>
+      <th style="text-align:right">Leads</th>
+      <th style="text-align:right">CPL</th>
+      <th style="text-align:right">Booked</th>
+      <th style="text-align:right">CPBC</th>
+      <th style="text-align:right">Show %</th>
+      <th style="text-align:right">Closed</th>
+      <th style="text-align:right">Close %</th>
+      <th style="text-align:right">Cash</th>
+      <th style="text-align:right">Col. ROAS</th>
+      <th style="text-align:right">Con. ROAS</th>
+      <th></th>
+    </tr></thead>
+    <tbody>
+    ${sorted.map(e => {
+      const c = compute(e);
+      const period = MONTHS[e.month]+' '+e.year+(e.week?' W'+e.week:'');
+      return `<tr>
+        ${showFunnel?`<td><span class="pill ${FUNNEL_PILLS[e.funnel]||''}">${FUNNEL_LABELS[e.funnel]||e.funnel}</span></td>`:''}
+        <td>${period}</td>
+        <td class="num">$${(+e.spend||0).toLocaleString(undefined,{maximumFractionDigits:0})}</td>
+        <td class="num">${(+e.leads||0).toLocaleString()}</td>
+        <td class="num" style="color:${kpiColor('cpl',c.cpl)}">${fmt$(c.cpl)}</td>
+        <td class="num">${e.booked}</td>
+        <td class="num" style="color:${kpiColor('cpbc',c.cpbc)}">${fmt$(c.cpbc)}</td>
+        <td class="num" style="color:${kpiColor('show',c.show)}">${fmtPct(c.show)}</td>
+        <td class="num">${e.closed}</td>
+        <td class="num" style="color:${kpiColor('close',c.close)}">${fmtPct(c.close)}</td>
+        <td class="num">$${(+e.cash||0).toLocaleString(undefined,{maximumFractionDigits:0})}</td>
+        <td class="num" style="color:${kpiColor('colROAS',c.colROAS)}">${fmtX(c.colROAS)}</td>
+        <td class="num" style="color:${kpiColor('conROAS',c.conROAS)}">${fmtX(c.conROAS)}</td>
+        <td><button class="delete-btn" onclick="deleteEntry(${e.id})" title="Delete">✕</button></td>
+      </tr>`;
+    }).join('')}
+    </tbody>
+  </table>`;
+}
+
+function refreshFunnelTab(funnel) {
+  const data = entries.filter(e => e.funnel === funnel);
+  const agg = aggregateEntries(data);
+  const c = compute(agg);
+  const container = document.getElementById('funnel-table-'+funnel);
+  container.innerHTML = `
+    <p class="section-label">${FUNNEL_LABELS[funnel]} — All-Time KPIs</p>
+    <div class="kpi-strip" style="margin-bottom:24px;">
+      ${[
+        {l:'Total Spend',   v:'$'+agg.spend.toLocaleString(undefined,{maximumFractionDigits:0}), k:null},
+        {l:'Leads',         v:agg.leads.toLocaleString(), k:null},
+        {l:'CPL',           v:fmt$(c.cpl), k:'cpl'},
+        {l:'CPBC',          v:fmt$(c.cpbc), k:'cpbc'},
+        {l:'Show Rate',     v:fmtPct(c.show), k:'show'},
+        {l:'Close Rate',    v:fmtPct(c.close), k:'close'},
+        {l:'Collected ROAS',v:fmtX(c.colROAS), k:'colROAS'},
+        {l:'Contracted ROAS',v:fmtX(c.conROAS), k:'conROAS'},
+      ].map(k=>{
+        const s = k.k ? kpiStatus(k.k,c[k.k]) : 'gray';
+        const colors={green:'var(--green)',yellow:'var(--yellow)',red:'var(--red)',gray:'#fff'};
+        return `<div class="kpi-card">
+          <div class="kpi-label">${k.l}</div>
+          <div class="kpi-value" style="color:${colors[s]}">${k.v}</div>
+          ${k.k?statusBadge(s,s==='gray'?'No data':s==='green'?'On target':s==='yellow'?'Watch':'Fix this'):''}
+        </div>`;
+      }).join('')}
+    </div>
+    <p class="section-label">All Entries — ${FUNNEL_LABELS[funnel]}</p>
+    <div class="data-table-wrap">
+      <div class="data-table-header">
+        <span class="data-table-title">${FUNNEL_LABELS[funnel]} Log</span>
+        <button class="btn btn-primary btn-sm" onclick="openEntryModal('${funnel}')">+ Add Entry</button>
+      </div>
+      <div id="funnel-inner-${funnel}"></div>
+    </div>`;
+  renderEntriesTable('funnel-inner-'+funnel, data, false);
+}
+
+function refreshAll() {
+  document.getElementById('dashboardTitle').textContent = dashName;
+  document.title = dashName + ' — IFCA';
+  refreshOverview();
+  ['facebook','instagram','vsl','leadmagnet'].forEach(f => refreshFunnelTab(f));
+}
+
+// ─── TABS ─────────────────────────────────────────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.style.display='none');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+name).style.display = 'block';
+  btn.classList.add('active');
+}
+
+// ─── MODALS ───────────────────────────────────────────────────────────────────
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target===o) o.classList.remove('open'); });
+});
+function openUploadModal() {
+  document.getElementById('importBtn').disabled = true;
+  document.getElementById('importSuccess').style.display = 'none';
+  document.getElementById('importError').style.display = 'none';
+  document.getElementById('previewSection').style.display = 'none';
+  pendingImport = null;
+  document.getElementById('uploadModal').classList.add('open');
+}
+
+// ─── DRAG & DROP ──────────────────────────────────────────────────────────────
+function handleDragOver(e)  { e.preventDefault(); document.getElementById('dropZone').classList.add('drag-over'); }
+function handleDragLeave()  { document.getElementById('dropZone').classList.remove('drag-over'); }
+function handleDrop(e) {
+  e.preventDefault(); document.getElementById('dropZone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) processFile(file);
+}
+function handleFileSelect(e) { if (e.target.files[0]) processFile(e.target.files[0]); }
+
+// ─── FILE PROCESSING ──────────────────────────────────────────────────────────
+function processFile(file) {
+  const name = file.name.toLowerCase();
+  if (name.endsWith('.csv')) {
+    processCSV(file);
+  } else if (name.endsWith('.xlsx') || name.endsWith('.xls')) {
+    processXLSX(file);
+  } else {
+    showImportError('Unsupported file type', 'Please upload an .xlsx, .xls, or .csv file.');
+  }
+}
+
+// ─── XLSX IMPORT ──────────────────────────────────────────────────────────────
+function processXLSX(file) {
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const data = new Uint8Array(ev.target.result);
+      const wb = XLSX.read(data, { type:'array', cellText:false, cellDates:true });
+
+      // Map sheet names to funnel keys
+      const sheetFunnelMap = {
+        'summary-facebook':  'facebook',
+        'summary- facebook': 'facebook',
+        'summary-ig':        'instagram',
+        'summary- ig':       'instagram',
+        'summary-instagram': 'instagram',
+        'summary- instagram':'instagram',
+        'summary-vsl':       'vsl',
+        'summary- vsl':      'vsl',
+        'summary-lead magnet':'leadmagnet',
+        'summary- lead magnet':'leadmagnet',
+        'summary-leadmagnet':'leadmagnet',
+      };
+
+      let parsed = [];
+      let sheetsFound = [];
+
+      wb.SheetNames.forEach(sheetName => {
+        const key = sheetName.toLowerCase().trim();
+        const funnel = sheetFunnelMap[key];
+        if (!funnel) return;
+        sheetsFound.push(sheetName);
+
+        const ws = wb.Sheets[sheetName];
+        const rows = XLSX.utils.sheet_to_json(ws, { header:1, defval:null, raw:false });
+
+        // Find header row (contains "Month" column)
+        let headerRowIdx = -1;
+        let headers = [];
+        for (let i = 0; i < rows.length; i++) {
+          const row = rows[i].map(c => c !== null ? String(c).trim() : '');
+          if (row.some(c => c.toLowerCase() === 'month')) {
+            headerRowIdx = i;
+            headers = row;
+            break;
+          }
+        }
+        if (headerRowIdx === -1) return;
+
+        // Find column indices
+        const colIdx = (names) => {
+          for (const n of names) {
+            const idx = headers.findIndex(h => h.toLowerCase().includes(n.toLowerCase()));
+            if (idx !== -1) return idx;
+          }
+          return -1;
+        };
+        const idxMonth      = colIdx(['month']);
+        const idxLeads      = colIdx(['leads','applications']);
+        const idxBooked     = colIdx(['calls booked','booked']);
+        const idxLive       = colIdx(['live calls','live']);
+        const idxClosed     = colIdx(['closed deals','closed']);
+        const idxSpend      = colIdx(['total ad spend','ad spend','spend']);
+        const idxCash       = colIdx(['cash collected','cash']);
+        const idxContracted = colIdx(['total contracted','contracted']);
+
+        for (let i = headerRowIdx+1; i < rows.length; i++) {
+          const row = rows[i];
+          if (!row || row.every(c => c===null||c==='')) continue;
+          const monthRaw = idxMonth >= 0 ? String(row[idxMonth]||'').trim() : '';
+          if (!monthRaw) continue;
+
+          const monthNum = MONTH_MAP[monthRaw.toLowerCase()];
+          if (!monthNum) continue;
+
+          // Determine year from context (look at first row for year header)
+          let year = 2025;
+          for (let y = 0; y < headerRowIdx; y++) {
+            const cell = rows[y] && rows[y][0] ? String(rows[y][0]) : '';
+            const m = cell.match(/20\d\d/);
+            if (m) { year = parseInt(m[0]); break; }
+          }
+
+          const num = (idx) => idx >= 0 && row[idx] !== null ? parseFloat(String(row[idx]).replace(/[$,%]/g,''))||0 : 0;
+
+          const entry = {
+            funnel,
+            month: monthNum,
+            year,
+            week: '',
+            spend:      num(idxSpend),
+            leads:      num(idxLeads),
+            booked:     num(idxBooked),
+            live:       num(idxLive),
+            closed:     num(idxClosed),
+            cash:       num(idxCash),
+            contracted: num(idxContracted),
+            acv: 0,
+            id: Date.now() + Math.random(),
+          };
+
+          if (entry.spend > 0 || entry.leads > 0) {
+            parsed.push(entry);
+          }
+        }
+      });
+
+      if (parsed.length === 0 && sheetsFound.length === 0) {
+        showImportError('No matching sheets found',
+          'Expected sheets named: SUMMARY-Facebook, SUMMARY-IG, SUMMARY-VSL, SUMMARY-Lead Magnet. ' +
+          'Available sheets: ' + wb.SheetNames.join(', '));
+        return;
+      }
+
+      if (parsed.length === 0) {
+        showImportError('Sheets found but no data extracted',
+          `Found sheets: ${sheetsFound.join(', ')}. Check that rows have Month, Leads, and Ad Spend data.`);
+        return;
+      }
+
+      pendingImport = parsed;
+      document.getElementById('importBtn').disabled = false;
+      showImportSuccess(
+        `✓ Found ${parsed.length} entries across ${sheetsFound.length} sheet(s)`,
+        `Sheets: ${sheetsFound.join(', ')}`
+      );
+      renderImportPreview(parsed.slice(0,5));
+
+    } catch(err) {
+      showImportError('Failed to parse spreadsheet', err.message);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+// ─── CSV IMPORT ───────────────────────────────────────────────────────────────
+function processCSV(file) {
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const text = ev.target.result;
+    const rows = text.trim().split('\n').map(r => r.split(',').map(c => c.trim().replace(/^"|"$/g,'')));
+    if (rows.length < 2) { showImportError('File appears empty',''); return; }
+    const headers = rows[0].map(h => h.toLowerCase().replace(/\s+/g,'_'));
+    const g = (names) => {
+      for (const n of names) {
+        const idx = headers.findIndex(h => h.includes(n));
+        if (idx !== -1) return idx;
+      }
+      return -1;
+    };
+    const parsed = rows.slice(1).map(row => {
+      const v = (names, fallback='') => { const i=g(names); return i>=0?row[i]||fallback:fallback; };
+      const n = (names) => parseFloat(v(names,'0').replace(/[$,%]/g,''))||0;
+      return {
+        funnel: v(['funnel'],'facebook'),
+        month: MONTH_MAP[v(['month']).toLowerCase()] || +v(['month'],1),
+        year: +v(['year'],'2025'),
+        week: v(['week'],''),
+        spend: n(['spend','ad_spend']),
+        leads: n(['leads']),
+        booked: n(['booked','calls_booked']),
+        live: n(['live','live_calls']),
+        closed: n(['closed']),
+        cash: n(['cash','cash_collected']),
+        contracted: n(['contracted']),
+        acv: n(['acv']),
+        id: Date.now() + Math.random(),
+      };
+    }).filter(r => r.spend||r.leads);
+
+    if (!parsed.length) { showImportError('No valid rows found','Check that your CSV has the right column headers.'); return; }
+    pendingImport = parsed;
+    document.getElementById('importBtn').disabled = false;
+    showImportSuccess(`✓ Found ${parsed.length} rows to import`,'CSV parsed successfully');
+    renderImportPreview(parsed.slice(0,5));
+  };
+  reader.readAsText(file);
+}
+
+// ─── IMPORT HELPERS ───────────────────────────────────────────────────────────
+function showImportSuccess(msg, detail) {
+  document.getElementById('importSuccess').style.display = 'block';
+  document.getElementById('importError').style.display = 'none';
+  document.getElementById('importSuccessMsg').textContent = msg;
+  document.getElementById('importSuccessDetail').textContent = detail;
+}
+function showImportError(msg, detail) {
+  document.getElementById('importError').style.display = 'block';
+  document.getElementById('importSuccess').style.display = 'none';
+  document.getElementById('importErrorMsg').textContent = '✕ ' + msg;
+  document.getElementById('importErrorDetail').textContent = detail;
+  document.getElementById('importBtn').disabled = true;
+  pendingImport = null;
+}
+function renderImportPreview(rows) {
+  document.getElementById('previewSection').style.display = 'block';
+  document.getElementById('previewTableContent').innerHTML = `<table>
+    <thead><tr><th>Channel</th><th>Month</th><th>Year</th><th>Spend</th><th>Leads</th><th>Booked</th><th>Live</th><th>Closed</th><th>Cash</th><th>Contracted</th></tr></thead>
+    <tbody>${rows.map(r=>`<tr>
+      <td><span class="pill ${FUNNEL_PILLS[r.funnel]||''}">${FUNNEL_LABELS[r.funnel]||r.funnel}</span></td>
+      <td>${MONTHS[r.month]||r.month}</td>
+      <td>${r.year}</td>
+      <td class="num">$${(+r.spend||0).toLocaleString(undefined,{maximumFractionDigits:0})}</td>
+      <td class="num">${r.leads}</td>
+      <td class="num">${r.booked}</td>
+      <td class="num">${r.live}</td>
+      <td class="num">${r.closed}</td>
+      <td class="num">$${(+r.cash||0).toLocaleString(undefined,{maximumFractionDigits:0})}</td>
+      <td class="num">$${(+r.contracted||0).toLocaleString(undefined,{maximumFractionDigits:0})}</td>
+    </tr>`).join('')}</tbody>
+  </table>`;
+}
+
+function confirmImport() {
+  if (!pendingImport) return;
+
+  // Deduplicate: skip entries where same funnel+month+year already exists
+  const existingKeys = new Set(entries.map(e => `${e.funnel}-${e.month}-${e.year}`));
+  let added = 0, skipped = 0;
+  pendingImport.forEach(e => {
+    const key = `${e.funnel}-${e.month}-${e.year}`;
+    if (existingKeys.has(key)) { skipped++; }
+    else { entries.push(e); existingKeys.add(key); added++; }
+  });
+
+  save(); refreshAll();
+  closeModal('uploadModal');
+  pendingImport = null;
+  showToast('success', `Imported ${added} entries${skipped?' ('+skipped+' skipped — duplicates)':''}`);
+}
+
+// ─── EXPORT ───────────────────────────────────────────────────────────────────
+function exportCSV() {
+  if (!entries.length) { showToast('error','No data to export'); return; }
+  const headers = ['funnel','month','year','week','spend','leads','booked','live','closed','cash','contracted','acv','cpl','cpbc','cpa','show_rate','close_rate','col_roas','con_roas'];
+  const rows = entries.map(e => {
+    const c = compute(e);
+    return [
+      e.funnel, MONTHS[e.month], e.year, e.week||'',
+      e.spend, e.leads, e.booked, e.live, e.closed, e.cash, e.contracted, e.acv,
+      c.cpl?.toFixed(2)||'', c.cpbc?.toFixed(2)||'', c.cpa?.toFixed(2)||'',
+      c.show?.toFixed(4)||'', c.close?.toFixed(4)||'',
+      c.colROAS?.toFixed(4)||'', c.conROAS?.toFixed(4)||'',
+    ].join(',');
+  });
+  const csv = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  const safeName = dashName.replace(/[^a-zA-Z0-9]/g,'_').toLowerCase();
+  a.download = safeName + '_ad_tracker.csv'; a.click();
+  showToast('success','CSV downloaded!');
+}
+
+// ─── TOAST ────────────────────────────────────────────────────────────────────
+function showToast(type, msg) {
+  const t = document.getElementById('toast');
+  t.textContent = (type==='success'?'✓ ':'✕ ') + msg;
+  t.className = 'toast '+type+' show';
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+document.getElementById('dashboardTitle').textContent = dashName;
+document.title = dashName + ' — IFCA';
+document.getElementById('clearAllBtn').style.display = entries.length ? 'flex' : 'none';
+refreshAll();
+</script>
+</body>
+</html>

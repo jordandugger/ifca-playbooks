@@ -1,8 +1,1009 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>Coming Soon — IFCA Playbooks</title>
-<style>body{font-family:sans-serif;background:#0D1F35;color:white;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;flex-direction:column;gap:12px;}
-.label{font-family:monospace;font-size:11px;letter-spacing:2px;color:#E87722;text-transform:uppercase;}
-h1{font-size:32px;font-weight:700;}p{color:rgba(255,255,255,0.4);font-size:13px;}
-a{color:#E87722;font-size:12px;margin-top:8px;}
-</style></head>
-<body><div class="label">IFCA Playbooks</div><h1>Coming Soon</h1><p>This resource is in development.</p><a href="../index.html">← Back to Hub</a></body></html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFCA — AI Integration Workshop</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1E3A5F;
+    --navy-dark: #142845;
+    --navy-light: #2A4F7F;
+    --orange: #E87722;
+    --orange-light: #F09040;
+    --orange-pale: #FDF3E8;
+    --blue-light: #D6E4F0;
+    --blue-mid: #A8C8E0;
+    --white: #FFFFFF;
+    --off-white: #F8FAFC;
+    --gray-100: #F1F5F9;
+    --gray-200: #E2E8F0;
+    --gray-400: #94A3B8;
+    --gray-600: #475569;
+    --gray-800: #1E293B;
+    --text: #1A2840;
+    --text-muted: #4A6080;
+    --slide-w: 1100px;
+    --slide-h: 620px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #0D1B2E;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  #nav {
+    width: var(--slide-w);
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  #nav .logo { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--orange); letter-spacing: 2px; }
+  #nav .controls { display: flex; align-items: center; gap: 12px; }
+  #nav button {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white; width: 36px; height: 36px;
+    border-radius: 8px; font-size: 16px; cursor: pointer;
+    transition: all 0.15s; display: flex; align-items: center; justify-content: center;
+  }
+  #nav button:hover { background: rgba(255,255,255,0.15); }
+  #nav button:disabled { opacity: 0.3; cursor: default; }
+  #slide-counter { font-family: 'DM Mono', monospace; font-size: 13px; color: rgba(255,255,255,0.5); min-width: 60px; text-align: center; }
+
+  #toc-bar { width: var(--slide-w); max-width: 100%; display: flex; gap: 4px; flex-wrap: wrap; }
+  .toc-dot { height: 4px; flex: 1; border-radius: 2px; background: rgba(255,255,255,0.15); cursor: pointer; transition: background 0.2s; min-width: 20px; }
+  .toc-dot.active { background: var(--orange); }
+  .toc-dot:hover { background: rgba(255,255,255,0.4); }
+
+  #stage { width: var(--slide-w); max-width: 100%; aspect-ratio: 16/9; position: relative; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.5); }
+
+  .slide { position: absolute; inset: 0; display: none; background: var(--white); animation: fadeIn 0.2s ease; }
+  .slide.active { display: flex; }
+  @keyframes fadeIn { from { opacity: 0.4; } to { opacity: 1; } }
+
+  /* COVER */
+  .cover { flex-direction: column; background: var(--navy-dark); overflow: hidden; }
+  .cover-top { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 60px 70px 40px; position: relative; }
+  .cover-top::before { content: ''; position: absolute; right: -60px; top: -60px; width: 400px; height: 400px; border-radius: 50%; background: rgba(232,119,34,0.08); pointer-events: none; }
+  .cover-top::after { content: ''; position: absolute; right: 40px; top: 40px; width: 200px; height: 200px; border-radius: 50%; border: 1px solid rgba(232,119,34,0.2); pointer-events: none; }
+  .cover-eyebrow { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 3px; color: var(--orange); text-transform: uppercase; margin-bottom: 16px; }
+  .cover-title { font-family: 'Bebas Neue', sans-serif; font-size: 74px; line-height: 0.95; color: var(--white); letter-spacing: 2px; margin-bottom: 20px; }
+  .cover-title span { color: var(--orange); }
+  .cover-subtitle { font-size: 16px; color: var(--blue-mid); font-weight: 300; max-width: 520px; line-height: 1.6; }
+  .cover-bottom { background: var(--orange); padding: 18px 70px; display: flex; align-items: center; justify-content: space-between; }
+  .cover-bottom .host { font-size: 13px; color: white; font-weight: 500; letter-spacing: 0.5px; }
+  .cover-bottom .retreat { font-family: 'DM Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.75); letter-spacing: 1px; text-transform: uppercase; }
+
+  /* SECTION DIVIDER */
+  .section-divider { flex-direction: column; justify-content: center; align-items: flex-start; background: var(--navy); padding: 0 70px; position: relative; overflow: hidden; }
+  .section-divider::before { content: ''; position: absolute; left: -100px; bottom: -100px; width: 500px; height: 500px; border-radius: 50%; background: rgba(232,119,34,0.06); }
+  .section-divider::after { content: ''; position: absolute; right: 60px; top: 60px; width: 300px; height: 300px; border: 1px solid rgba(255,255,255,0.06); border-radius: 50%; }
+  .section-num { font-family: 'Bebas Neue', sans-serif; font-size: 120px; color: rgba(255,255,255,0.05); line-height: 1; position: absolute; right: 60px; bottom: 20px; }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 3px; color: var(--orange); text-transform: uppercase; margin-bottom: 16px; }
+  .section-heading { font-family: 'Bebas Neue', sans-serif; font-size: 58px; color: var(--white); line-height: 1.05; letter-spacing: 1px; max-width: 600px; }
+  .section-desc { margin-top: 20px; font-size: 15px; color: var(--blue-mid); max-width: 500px; line-height: 1.6; font-weight: 300; }
+
+  /* CONTENT SLIDE */
+  .content-slide { flex-direction: column; background: var(--off-white); }
+  .slide-header { background: var(--navy); padding: 22px 50px; display: flex; align-items: center; justify-content: space-between; }
+  .slide-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: var(--white); letter-spacing: 1px; }
+  .slide-header .section-tag { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; }
+  .slide-body { flex: 1; padding: 28px 50px; display: flex; flex-direction: column; gap: 14px; overflow: hidden; }
+  .slide-footer { background: var(--navy-dark); padding: 8px 50px; display: flex; align-items: center; justify-content: space-between; }
+  .slide-footer span { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 1px; text-transform: uppercase; }
+  .slide-footer .slide-num { color: var(--orange); opacity: 0.7; }
+
+  /* CALLOUT */
+  .callout { background: var(--navy); border-left: 4px solid var(--orange); border-radius: 0 8px 8px 0; padding: 14px 20px; }
+  .callout p { font-size: 14px; color: var(--blue-light); line-height: 1.6; font-style: italic; }
+  .callout strong { color: var(--orange); font-style: normal; }
+
+  /* TWO COL */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; }
+  .two-col .col-card { background: var(--white); border-radius: 10px; padding: 18px 20px; border: 1px solid var(--gray-200); }
+  .col-card h4 { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid var(--orange); display: inline-block; }
+
+  /* ENTITY GRID */
+  .entity-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .entity-card { background: var(--white); border-radius: 8px; padding: 14px 16px; border: 1px solid var(--gray-200); border-top: 3px solid var(--navy); }
+  .entity-card.orange-top { border-top-color: var(--orange); }
+  .entity-card .e-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+  .entity-card .e-title { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+  .entity-card .e-body { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  /* METRIC CARDS */
+  .metric-grid { display: grid; gap: 12px; }
+  .metric-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .metric-grid.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .metric-card { background: var(--white); border-radius: 10px; padding: 16px 18px; border: 1px solid var(--gray-200); }
+  .metric-card .m-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 500; margin-bottom: 6px; }
+  .metric-card .m-value { font-family: 'Bebas Neue', sans-serif; font-size: 38px; color: var(--navy); line-height: 1; letter-spacing: 1px; }
+  .metric-card .m-desc { font-size: 12px; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
+  .metric-card.orange { border-top: 3px solid var(--orange); }
+  .metric-card.navy { border-top: 3px solid var(--navy); }
+  .metric-card.green { border-top: 3px solid #22C55E; }
+
+  /* STEP LIST */
+  .step-list { display: flex; flex-direction: column; gap: 8px; }
+  .step-item { display: flex; gap: 14px; align-items: flex-start; background: var(--white); border-radius: 8px; padding: 11px 16px; border: 1px solid var(--gray-200); }
+  .step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--navy); color: white; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-num.orange { background: var(--orange); }
+  .step-content { flex: 1; }
+  .step-content strong { font-size: 13px; color: var(--navy); display: block; margin-bottom: 2px; }
+  .step-content span { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+
+  /* BULLET LIST */
+  .bullet-list { display: flex; flex-direction: column; gap: 8px; }
+  .bullet-item { display: flex; gap: 12px; align-items: flex-start; font-size: 13px; color: var(--text); line-height: 1.5; }
+  .bullet-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); flex-shrink: 0; margin-top: 5px; }
+  .bullet-item strong { color: var(--navy); }
+
+  /* BADGE */
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; }
+  .badge-orange { background: var(--orange-pale); color: var(--orange); }
+  .badge-navy { background: var(--blue-light); color: var(--navy); }
+  .badge-green { background: #DCFCE7; color: #166534; }
+
+  /* FORMULA BOX */
+  .formula-box { background: var(--navy); border-radius: 10px; padding: 18px 24px; display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .formula-part { text-align: center; }
+  .formula-part .f-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--orange); letter-spacing: 1px; line-height: 1; }
+  .formula-part .f-label { font-size: 11px; color: var(--blue-mid); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+  .formula-op { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: rgba(255,255,255,0.3); }
+
+  /* KPI BLOCK */
+  .kpi-row { display: flex; gap: 10px; }
+  .kpi-block { flex: 1; background: var(--white); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--gray-200); display: flex; flex-direction: column; gap: 4px; }
+  .kpi-block .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 500; }
+  .kpi-block .kpi-val { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--navy); letter-spacing: 1px; line-height: 1; }
+  .kpi-block .kpi-sub { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+  .kpi-block.orange { border-left: 4px solid var(--orange); }
+  .kpi-block.green { border-left: 4px solid #22C55E; }
+
+  /* TOOL CHIP */
+  .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; background: var(--white); border: 1px solid var(--gray-200); color: var(--text); }
+  .chip.orange { background: var(--orange-pale); border-color: var(--orange); color: var(--orange); }
+  .chip.navy { background: var(--blue-light); border-color: var(--blue-mid); color: var(--navy); }
+
+  /* WARNING SLIDE SPECIAL */
+  .warning-box { background: #FEF3E2; border: 2px solid var(--orange); border-radius: 10px; padding: 16px 20px; }
+  .warning-box .w-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--orange); letter-spacing: 1px; margin-bottom: 8px; }
+  .warning-box .w-body { font-size: 13px; color: var(--text); line-height: 1.6; }
+
+  /* MINI TRAINING GRID */
+  .mt-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .mt-card { background: var(--white); border-radius: 8px; padding: 12px 14px; border: 1px solid var(--gray-200); border-top: 3px solid var(--navy); }
+  .mt-card.orange-top { border-top-color: var(--orange); }
+  .mt-card.green-top { border-top-color: #22C55E; }
+  .mt-card .mt-cat { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--orange); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+  .mt-card .mt-title { font-size: 11px; font-weight: 600; color: var(--navy); line-height: 1.4; }
+
+  /* PROGRESS BAR */
+  #progress { width: var(--slide-w); max-width: 100%; height: 2px; background: rgba(255,255,255,0.1); border-radius: 2px; }
+  #progress-fill { height: 100%; background: var(--orange); border-radius: 2px; transition: width 0.3s ease; }
+
+  #hint { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.2); letter-spacing: 1px; }
+  .highlight { color: var(--orange); font-weight: 600; }
+  .navy-text { color: var(--navy); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div id="nav">
+  <div class="logo">IFCA</div>
+  <div class="controls">
+    <button id="btn-prev" onclick="navigate(-1)" disabled>&#8592;</button>
+    <span id="slide-counter">1 / 15</span>
+    <button id="btn-next" onclick="navigate(1)">&#8594;</button>
+  </div>
+</div>
+
+<div id="toc-bar"></div>
+<div id="progress"><div id="progress-fill"></div></div>
+
+<div id="stage">
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 1 — COVER
+═══════════════════════════════════════════════ -->
+<div class="slide active cover" id="s1">
+  <div class="cover-top">
+    <div class="cover-eyebrow">Seven-Figure Legacy Retreat &bull; April 2026</div>
+    <div class="cover-title">AI <span>INTEGRATION</span><br>WORKSHOP</div>
+    <div class="cover-subtitle">Work less. Output more. Scale without proportional hiring — by building AI leverage into the three systems that drive your business.</div>
+  </div>
+  <div class="cover-bottom">
+    <div class="host">Jordan Dugger &mdash; Co-Founder, IFCA</div>
+    <div class="retreat">Impact Fitness Coaching Academy &bull; Confidential</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 2 — THE WARNING
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s2">
+  <div class="slide-header">
+    <h2>The Biggest AI Mistake You Can Make</h2>
+    <span class="section-tag">Foundation</span>
+  </div>
+  <div class="slide-body">
+    <div class="callout">
+      <p><strong>Most coaches use AI to solve problems that don't exist.</strong> They build elaborate workflows for things that weren't a bottleneck. They spend 10 hours automating a task that took 20 minutes a week. That's not leverage — that's a new job.</p>
+    </div>
+    <div class="two-col" style="flex: 0; gap: 12px;">
+      <div style="background: #FEE2E2; border-radius: 10px; padding: 16px 20px; border: 1px solid #FECACA;">
+        <div style="font-family: 'Bebas Neue'; font-size: 16px; color: #991B1B; letter-spacing: 1px; margin-bottom: 10px;">⚠ Signs You're In a Rabbit Hole</div>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot" style="background:#EF4444;"></div><span>You've spent more time building AI systems than actually using them in your business</span></div>
+          <div class="bullet-item"><div class="bullet-dot" style="background:#EF4444;"></div><span>You're automating tasks you could hire a $10/hr VA to do</span></div>
+          <div class="bullet-item"><div class="bullet-dot" style="background:#EF4444;"></div><span>You've collected 6+ AI tools but have a consistent workflow in zero of them</span></div>
+          <div class="bullet-item"><div class="bullet-dot" style="background:#EF4444;"></div><span>You're building an AI system before you've validated what your actual constraint is</span></div>
+        </div>
+      </div>
+      <div style="background: #F0FDF4; border-radius: 10px; padding: 16px 20px; border: 1px solid #BBF7D0;">
+        <div style="font-family: 'Bebas Neue'; font-size: 16px; color: #166534; letter-spacing: 1px; margin-bottom: 10px;">✓ The Right Application</div>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot" style="background:#22C55E;"></div><span><strong>Constraint first.</strong> What is the single bottleneck slowing your growth right now?</span></div>
+          <div class="bullet-item"><div class="bullet-dot" style="background:#22C55E;"></div><span><strong>Time audit.</strong> Where are you personally spending hours on tasks AI can handle at 80% quality?</span></div>
+          <div class="bullet-item"><div class="bullet-dot" style="background:#22C55E;"></div><span><strong>Leverage math.</strong> If AI frees 10 hrs/week at $500/hr value = $260K/yr in recovered capacity</span></div>
+          <div class="bullet-item"><div class="bullet-dot" style="background:#22C55E;"></div><span><strong>Build one system, use it daily</strong> before adding the next one</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="background: var(--navy); border-radius: 8px; padding: 14px 20px; display: flex; align-items: center; gap: 20px; flex: 0;">
+      <div style="font-family: 'Bebas Neue'; font-size: 20px; color: var(--orange); white-space: nowrap;">The Rule</div>
+      <div style="font-size: 13px; color: var(--blue-light); line-height: 1.5;">AI should optimize a real constraint, replace real overhead, or multiply real output. If it doesn't do one of those three things — it's a hobby, not a strategy.</div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">2</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 3 — THE FRAMEWORK
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s3">
+  <div class="slide-header">
+    <h2>Your Filter for Everything in This Workshop</h2>
+    <span class="section-tag">The Framework</span>
+  </div>
+  <div class="slide-body">
+    <div style="display: flex; gap: 0; background: var(--navy); border-radius: 12px; overflow: hidden; flex: 0;">
+      <div style="flex: 1; padding: 28px 30px; border-right: 1px solid rgba(255,255,255,0.08);">
+        <div style="font-family: 'DM Mono'; font-size: 10px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">Step 01</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 36px; color: var(--white); letter-spacing: 1px; margin-bottom: 10px;">Determine<br>Priority</div>
+        <div style="font-size: 13px; color: var(--blue-mid); line-height: 1.6;">What is your #1 bottleneck right now? Marketing output, sales conversion, client fulfillment load? Write it down — this is your filter.</div>
+      </div>
+      <div style="flex: 1; padding: 28px 30px; border-right: 1px solid rgba(255,255,255,0.08); background: rgba(232,119,34,0.07);">
+        <div style="font-family: 'DM Mono'; font-size: 10px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">Step 02</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 36px; color: var(--white); letter-spacing: 1px; margin-bottom: 10px;">Uncover<br>Possibility</div>
+        <div style="font-size: 13px; color: var(--blue-mid); line-height: 1.6;">Which AI use case directly addresses your constraint? Today you'll see the full landscape — your job is to match it to your problem.</div>
+      </div>
+      <div style="flex: 1; padding: 28px 30px;">
+        <div style="font-family: 'DM Mono'; font-size: 10px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">Step 03</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 36px; color: var(--white); letter-spacing: 1px; margin-bottom: 10px;">Explore<br>Product</div>
+        <div style="font-size: 13px; color: var(--blue-mid); line-height: 1.6;">Pick the right tool for that one job. Build or deploy the system. Use it consistently before stacking the next one.</div>
+      </div>
+    </div>
+    <div style="background: var(--white); border-radius: 10px; padding: 18px 24px; border: 1px solid var(--gray-200); flex: 0;">
+      <div style="font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 10px;">✏️ &nbsp;Live Exercise — Write Your Answer Now</div>
+      <div style="display: flex; gap: 20px;">
+        <div style="flex: 1;">
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 4px;">My #1 Bottleneck Right Now</div>
+          <div style="background: var(--gray-100); border-radius: 6px; height: 36px; border: 1px dashed var(--gray-400);"></div>
+        </div>
+        <div style="flex: 1;">
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 4px;">Domain (Marketing / Sales / Fulfillment)</div>
+          <div style="background: var(--gray-100); border-radius: 6px; height: 36px; border: 1px dashed var(--gray-400);"></div>
+        </div>
+        <div style="flex: 1;">
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 4px;">Hours/Week Lost to This</div>
+          <div style="background: var(--gray-100); border-radius: 6px; height: 36px; border: 1px dashed var(--gray-400);"></div>
+        </div>
+      </div>
+    </div>
+    <div class="callout" style="flex: 0;">
+      <p>This exercise comes back at the end. Every use case you see today — run it through this filter. <strong>Does it address my #1 bottleneck?</strong> If yes, circle it. That's your first build.</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">3</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 4 — LLM VS AGENTS
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s4">
+  <div class="slide-header">
+    <h2>The AI Landscape in 2026 — What's Actually Different</h2>
+    <span class="section-tag">Foundation</span>
+  </div>
+  <div class="slide-body" style="gap: 10px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; flex: 0;">
+      <div style="background: var(--white); border-radius: 10px; padding: 18px; border: 1px solid var(--gray-200); border-top: 3px solid var(--navy);">
+        <div style="font-family: 'DM Mono'; font-size: 10px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px;">Layer 01</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 26px; color: var(--navy); letter-spacing: 1px; margin-bottom: 8px;">LLM Chat</div>
+        <div style="font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">A brilliant thinking partner you have a conversation with. Generates, analyzes, edits, plans. Lives inside a chat window.</div>
+        <div class="chip-row">
+          <span class="chip navy">Claude Chat</span>
+          <span class="chip navy">ChatGPT</span>
+        </div>
+      </div>
+      <div style="background: var(--white); border-radius: 10px; padding: 18px; border: 1px solid var(--gray-200); border-top: 3px solid var(--orange);">
+        <div style="font-family: 'DM Mono'; font-size: 10px; color: var(--orange); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px;">Layer 02</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 26px; color: var(--navy); letter-spacing: 1px; margin-bottom: 8px;">Agent</div>
+        <div style="font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">That same thinking partner — but now it has <strong style="color:var(--navy);">tools, memory, and can take action</strong>. It doesn't just answer — it executes steps, reads files, triggers workflows.</div>
+        <div class="chip-row">
+          <span class="chip orange">CoWork</span>
+          <span class="chip orange">Claude Code</span>
+        </div>
+      </div>
+      <div style="background: var(--navy); border-radius: 10px; padding: 18px; border: 1px solid var(--navy-light);">
+        <div style="font-family: 'DM Mono'; font-size: 10px; color: var(--orange); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px;">Layer 03</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 26px; color: var(--white); letter-spacing: 1px; margin-bottom: 8px;">Agentic Workflow</div>
+        <div style="font-size: 12px; color: var(--blue-mid); line-height: 1.6; margin-bottom: 10px;">A <strong style="color:var(--white);">system of agents</strong> running a process — often without you in the loop. Input triggers a chain of actions across multiple tools.</div>
+        <div class="chip-row">
+          <span class="chip orange">GHL + Zapier</span>
+          <span class="chip orange">ManyChat</span>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; gap: 10px; flex: 0;">
+      <div style="flex: 1; background: var(--orange-pale); border-radius: 8px; padding: 14px 18px; border: 1px solid rgba(232,119,34,0.2);">
+        <div style="font-size: 12px; font-weight: 600; color: var(--orange); margin-bottom: 4px;">Where You Are Today</div>
+        <div style="font-size: 12px; color: var(--text); line-height: 1.5;">Most of you are at Layer 1 — using AI to chat, write, and think. <strong>The 10x unlock is moving to Layer 2</strong> — where Claude can take action across your business without you narrating every step.</div>
+      </div>
+      <div style="flex: 1; background: var(--gray-100); border-radius: 8px; padding: 14px 18px; border: 1px solid var(--gray-200);">
+        <div style="font-size: 12px; font-weight: 600; color: var(--navy); margin-bottom: 4px;">The Real Unlock: Compound Leverage</div>
+        <div style="font-size: 12px; color: var(--text); line-height: 1.5;">One good AI system runs while you're not working. <strong>It doesn't take vacation. It doesn't make emotional decisions. It doesn't need a Slack message.</strong> That's the business model shift.</div>
+      </div>
+    </div>
+    <div class="callout" style="flex: 0;">
+      <p>You don't need to understand the technology. You need to understand <strong>what layer solves your problem</strong> — and what to hand to your VA or success coach to build it.</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">4</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 5 — YOUR AI STACK
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s5">
+  <div class="slide-header">
+    <h2>Your Stack: Three Tools, Three Jobs</h2>
+    <span class="section-tag">Foundation</span>
+  </div>
+  <div class="slide-body" style="gap: 12px;">
+    <div style="display: flex; flex-direction: column; gap: 8px; flex: 0;">
+      <div style="display: flex; gap: 14px; align-items: stretch; background: var(--white); border-radius: 10px; padding: 16px 20px; border: 1px solid var(--gray-200); border-left: 5px solid var(--navy);">
+        <div style="min-width: 110px;">
+          <div style="font-family: 'Bebas Neue'; font-size: 22px; color: var(--navy); letter-spacing: 1px;">Claude</div>
+          <div style="font-family: 'DM Mono'; font-size: 9px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase;">Chat + Projects</div>
+        </div>
+        <div style="flex: 1; border-left: 1px solid var(--gray-200); padding-left: 16px;">
+          <div style="font-size: 13px; color: var(--text); line-height: 1.6;"><strong style="color:var(--navy);">Your thinking partner and content engine.</strong> Writes in your voice, analyzes data, builds strategy, drafts copy, answers complex questions. Lives in a browser tab. <span class="highlight">Projects</span> give it persistent memory of your business — no more re-explaining context every session.</div>
+        </div>
+        <div style="min-width: 120px; text-align: right;">
+          <span class="badge badge-navy">Start Here</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 14px; align-items: stretch; background: var(--white); border-radius: 10px; padding: 16px 20px; border: 1px solid var(--gray-200); border-left: 5px solid var(--orange);">
+        <div style="min-width: 110px;">
+          <div style="font-family: 'Bebas Neue'; font-size: 22px; color: var(--navy); letter-spacing: 1px;">CoWork</div>
+          <div style="font-family: 'DM Mono'; font-size: 9px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase;">Desktop Agent</div>
+        </div>
+        <div style="flex: 1; border-left: 1px solid var(--gray-200); padding-left: 16px;">
+          <div style="font-size: 13px; color: var(--text); line-height: 1.6;"><strong style="color:var(--navy);">Claude with hands.</strong> It can open apps, browse your desktop, execute multi-step tasks, and work across your computer while you do something else. <span class="highlight">This is where 80% of your workflow automation lives.</span> Not code — CoWork handles it through your existing tools.</div>
+        </div>
+        <div style="min-width: 120px; text-align: right;">
+          <span class="badge badge-orange">High Leverage</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 14px; align-items: stretch; background: var(--white); border-radius: 10px; padding: 16px 20px; border: 1px solid var(--gray-200); border-left: 5px solid var(--gray-400);">
+        <div style="min-width: 110px;">
+          <div style="font-family: 'Bebas Neue'; font-size: 22px; color: var(--navy); letter-spacing: 1px;">Claude Code</div>
+          <div style="font-family: 'DM Mono'; font-size: 9px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase;">Advanced Builds</div>
+        </div>
+        <div style="flex: 1; border-left: 1px solid var(--gray-200); padding-left: 16px;">
+          <div style="font-size: 13px; color: var(--text); line-height: 1.6;"><strong style="color:var(--navy);">Custom tools, GitHub deploys, interactive HTML pages like this one.</strong> Used to build the mini-training library, carousels, dashboards, and automation scripts. <span style="color: var(--text-muted);">This is VA or tech-person territory — but worth knowing it exists and what it can build for you.</span></div>
+        </div>
+        <div style="min-width: 120px; text-align: right;">
+          <span class="badge" style="background: var(--gray-100); color: var(--gray-600);">Later Stage</span>
+        </div>
+      </div>
+    </div>
+    <div style="background: var(--navy); border-radius: 8px; padding: 14px 20px; display: flex; align-items: center; gap: 20px; flex: 0;">
+      <div style="font-family: 'Bebas Neue'; font-size: 18px; color: var(--orange); white-space: nowrap;">The Sequence</div>
+      <div style="font-size: 13px; color: var(--blue-light); line-height: 1.5;">Master Claude chat + Projects first → Add CoWork for execution → Use Code (or hire someone who knows it) for custom builds. Don't skip ahead. CoWork alone can 10x most of what's in this room.</div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">5</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 6 — PROJECTS
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s6">
+  <div class="slide-header">
+    <h2>Claude Projects — Stop Re-Explaining Your Business</h2>
+    <span class="section-tag">Foundation</span>
+  </div>
+  <div class="slide-body" style="gap: 12px;">
+    <div class="callout" style="flex: 0;">
+      <p>Every time you open a new Claude chat without a Project, you're starting from zero. Claude doesn't know your voice, your offer, your audience, your frameworks. <strong>You spend the first 10 messages re-uploading your business.</strong> Projects fix this permanently.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 0;">
+      <div style="background: var(--white); border-radius: 10px; padding: 18px; border: 1px solid var(--gray-200);">
+        <div style="font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--orange); display: inline-block;">What You Store in a Project</div>
+        <div class="step-list">
+          <div class="step-item" style="padding: 8px 14px;">
+            <div class="step-num orange" style="font-size: 10px; width: 22px; height: 22px;">01</div>
+            <div class="step-content"><strong>Brand Voice Doc</strong><span>Your writing style, tone, phrases you use, phrases you avoid. Claude writes as you — not as a generic AI.</span></div>
+          </div>
+          <div class="step-item" style="padding: 8px 14px;">
+            <div class="step-num orange" style="font-size: 10px; width: 22px; height: 22px;">02</div>
+            <div class="step-content"><strong>Offer + Framework Context</strong><span>What you sell, who buys it, the transformation, key objections, your methodology. No re-explaining.</span></div>
+          </div>
+          <div class="step-item" style="padding: 8px 14px;">
+            <div class="step-num orange" style="font-size: 10px; width: 22px; height: 22px;">03</div>
+            <div class="step-content"><strong>SOPs + Templates</strong><span>Your check-in templates, onboarding docs, email frameworks, DM scripts. Claude references them on demand.</span></div>
+          </div>
+          <div class="step-item" style="padding: 8px 14px;">
+            <div class="step-num orange" style="font-size: 10px; width: 22px; height: 22px;">04</div>
+            <div class="step-content"><strong>Client Data + Context</strong><span>Past wins, testimonials, client profiles. Powers personalized marketing and fulfillment without manual input every time.</span></div>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="background: var(--navy); border-radius: 10px; padding: 18px; flex: 1;">
+          <div style="font-family: 'Bebas Neue'; font-size: 20px; color: var(--orange); margin-bottom: 8px; letter-spacing: 1px;">Before Projects</div>
+          <div class="bullet-list">
+            <div class="bullet-item"><div class="bullet-dot" style="background: rgba(255,255,255,0.3);"></div><span style="color: var(--blue-mid); font-size: 12px;">Upload your brand doc every session</span></div>
+            <div class="bullet-item"><div class="bullet-dot" style="background: rgba(255,255,255,0.3);"></div><span style="color: var(--blue-mid); font-size: 12px;">Re-explain your audience, your offer, your tone</span></div>
+            <div class="bullet-item"><div class="bullet-dot" style="background: rgba(255,255,255,0.3);"></div><span style="color: var(--blue-mid); font-size: 12px;">Generic AI output that doesn't sound like you</span></div>
+            <div class="bullet-item"><div class="bullet-dot" style="background: rgba(255,255,255,0.3);"></div><span style="color: var(--blue-mid); font-size: 12px;">10 messages of context before real work starts</span></div>
+          </div>
+        </div>
+        <div style="background: #F0FDF4; border-radius: 10px; padding: 18px; border: 1px solid #BBF7D0; flex: 1;">
+          <div style="font-family: 'Bebas Neue'; font-size: 20px; color: #166534; margin-bottom: 8px; letter-spacing: 1px;">After Projects</div>
+          <div class="bullet-list">
+            <div class="bullet-item"><div class="bullet-dot" style="background: #22C55E;"></div><span style="font-size: 12px; color: #1A2840;">Open Claude, type your request, get an on-brand result</span></div>
+            <div class="bullet-item"><div class="bullet-dot" style="background: #22C55E;"></div><span style="font-size: 12px; color: #1A2840;">Context is always there — every conversation picks up where the last left off</span></div>
+            <div class="bullet-item"><div class="bullet-dot" style="background: #22C55E;"></div><span style="font-size: 12px; color: #1A2840;">Output sounds like you wrote it</span></div>
+            <div class="bullet-item"><div class="bullet-dot" style="background: #22C55E;"></div><span style="font-size: 12px; color: #1A2840;">One setup — leveraged across every future session</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">6</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 7 — THREE DOMAINS OVERVIEW
+═══════════════════════════════════════════════ -->
+<div class="slide section-divider" id="s7">
+  <div class="section-num">02</div>
+  <div class="section-label">Section 02</div>
+  <div class="section-heading">Where AI<br>Moves<br>the Needle</div>
+  <div class="section-desc">Three domains. Three different leverage points. Marketing gives you output at scale. Sales gives you conversion without overhead. Fulfillment gives you capacity without headcount.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 8 — MARKETING
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s8">
+  <div class="slide-header">
+    <h2>Marketing — Your Content Machine Doesn't Need to Sleep</h2>
+    <span class="section-tag">Domain 01 &mdash; Marketing</span>
+  </div>
+  <div class="slide-body" style="gap: 10px;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; flex: 0;">
+      <div class="entity-card orange-top">
+        <div class="e-label">Content at Scale</div>
+        <div class="e-title">Voice-Matched Output</div>
+        <div class="e-body">30 days of content in a single session. Reels scripts, carousels, captions — all in your voice via a brand voice project. No more blank page.</div>
+      </div>
+      <div class="entity-card">
+        <div class="e-label">Ad Creative</div>
+        <div class="e-title">Hooks, Angles & Variations</div>
+        <div class="e-body">Generate 10 hook variations from a winning concept. Competitor angle research. Brief creation for your video team. Test more, spend less on losers.</div>
+      </div>
+      <div class="entity-card orange-top">
+        <div class="e-label">Research</div>
+        <div class="e-title">Market Intelligence</div>
+        <div class="e-body">IG Audit Agent analyzes your profile and gives a full optimization report. Competitor content mining. ICP interview synthesis into marketing angles.</div>
+      </div>
+      <div class="entity-card">
+        <div class="e-label">Design</div>
+        <div class="e-title">Carousels in Claude</div>
+        <div class="e-body">Build branded carousel graphics without Canva. Generate slide copy, visuals, and publish — all from one prompt chain.</div>
+      </div>
+      <div class="entity-card orange-top">
+        <div class="e-label">Distribution</div>
+        <div class="e-title">Auto-Post to Social</div>
+        <div class="e-body">CoWork + Zapier pipeline: content approved in Notion → auto-scheduled to IG, LinkedIn, Facebook. Your VA approves, Claude publishes.</div>
+      </div>
+      <div class="entity-card">
+        <div class="e-label">Repurposing</div>
+        <div class="e-title">One Piece → Many</div>
+        <div class="e-body">Podcast episode → 5 reels scripts + 3 carousels + 2 emails. The leverage math: 1 hour of content creation becomes 10 pieces of distribution.</div>
+      </div>
+    </div>
+    <div style="background: var(--navy); border-radius: 8px; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; flex: 0;">
+      <div style="font-size: 13px; color: var(--blue-light); line-height: 1.5; flex: 1;">Real example: <strong style="color:white;">Darius Lukas replaced a $25K/month marketing team</strong> with a $10K/month AI-native setup — saving $180K/year while <em>increasing</em> content output.</div>
+      <div style="font-family: 'Bebas Neue'; font-size: 22px; color: var(--orange); white-space: nowrap; padding-left: 20px;">$180K/yr Saved</div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">8</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 8B — LIVE DEMO: QUIZ LEAD MAGNET
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s8b">
+  <div class="slide-header">
+    <h2>Live Demo — Build a Lead Magnet in 30 Minutes</h2>
+    <span class="section-tag">Domain 01 &mdash; Marketing</span>
+  </div>
+  <div class="slide-body" style="gap: 10px;">
+    <div class="callout" style="flex: 0;">
+      <p>"I'm going to show you something I built in about 30 minutes that has more persuasive power than any PDF lead magnet you've ever made. It's a quiz. Not a Google Form — an actual beautiful, interactive page that lives on the internet for free. The only tools I used were Claude and a free GitHub account."</p>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 1;">
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="background: var(--white); border-radius: 10px; padding: 16px 18px; border: 1px solid var(--gray-200); border-top: 3px solid var(--orange);">
+          <div style="font-size: 12px; font-weight: 600; color: var(--navy); margin-bottom: 10px;">Why Quizzes Beat PDFs</div>
+          <div class="bullet-list">
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size:12px;"><strong>PDF download:</strong> zero commitment. 20–30% ever open it.</span></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size:12px;"><strong>Quiz answer 1 of 5:</strong> they're committed. 70–85% finish.</span></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size:12px;"><strong>The result page</strong> is your pitch — and it doesn't feel like one.</span></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size:12px;"><strong>GitHub hosting = $0/month.</strong> The URL never expires.</span></div>
+          </div>
+        </div>
+        <div style="background: var(--white); border-radius: 10px; padding: 16px 18px; border: 1px solid var(--gray-200);">
+          <div style="font-size: 12px; font-weight: 600; color: var(--navy); margin-bottom: 8px;">The Formula (Don't Deviate)</div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <div style="background: var(--orange-pale); border: 1px solid rgba(232,119,34,0.3); border-radius: 6px; padding: 6px 12px; font-size: 11px; font-weight: 600; color: var(--orange);">5 Questions Max</div>
+            <div style="background: var(--orange-pale); border: 1px solid rgba(232,119,34,0.3); border-radius: 6px; padding: 6px 12px; font-size: 11px; font-weight: 600; color: var(--orange);">3 Result Types</div>
+            <div style="background: var(--orange-pale); border: 1px solid rgba(232,119,34,0.3); border-radius: 6px; padding: 6px 12px; font-size: 11px; font-weight: 600; color: var(--orange);">Multiple Choice Only</div>
+            <div style="background: var(--orange-pale); border: 1px solid rgba(232,119,34,0.3); border-radius: 6px; padding: 6px 12px; font-size: 11px; font-weight: 600; color: var(--orange);">One CTA on Result Page</div>
+          </div>
+          <div style="margin-top: 10px; font-size: 12px; color: var(--text-muted); line-height: 1.5;">Title rule: <strong style="color:var(--navy);">sounds like something your client Googles at 11pm.</strong> "Why Are You Always Tired?" converts. "Health Quiz" does not.</div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="background: var(--navy); border-radius: 10px; padding: 18px; flex: 1;">
+          <div style="font-family: 'Bebas Neue'; font-size: 16px; color: var(--orange); letter-spacing: 1px; margin-bottom: 10px;">Live Exercise — 10 Minutes</div>
+          <div class="step-list">
+            <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 8px 12px;">
+              <div class="step-num" style="background: var(--orange); width:22px; height:22px; font-size:10px;">1</div>
+              <div class="step-content"><strong style="color:white; font-size:12px;">Choose your quiz title</strong><span style="color:var(--blue-mid); font-size:11px;">Pick from the idea bank or write one that fits your niche</span></div>
+            </div>
+            <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 8px 12px;">
+              <div class="step-num" style="background: var(--orange); width:22px; height:22px; font-size:10px;">2</div>
+              <div class="step-content"><strong style="color:white; font-size:12px;">Fill in the prompt template</strong><span style="color:var(--blue-mid); font-size:11px;">Your specialty, 3 result type names, booking link</span></div>
+            </div>
+            <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 8px 12px;">
+              <div class="step-num" style="background: var(--orange); width:22px; height:22px; font-size:10px;">3</div>
+              <div class="step-content"><strong style="color:white; font-size:12px;">Paste into Claude → run it</strong><span style="color:var(--blue-mid); font-size:11px;">Working first draft in ~60 seconds</span></div>
+            </div>
+            <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 8px 12px;">
+              <div class="step-num" style="background: var(--orange); width:22px; height:22px; font-size:10px;">4</div>
+              <div class="step-content"><strong style="color:white; font-size:12px;">Write one follow-up prompt</strong><span style="color:var(--blue-mid); font-size:11px;">Brand color, testimonial, or podcast embed</span></div>
+            </div>
+          </div>
+        </div>
+        <div style="background: var(--orange); border-radius: 8px; padding: 12px 16px; flex: 0;">
+          <div style="font-size: 12px; color: white; line-height: 1.5;"><strong>Full guide in your resource library:</strong> Master prompt template, quiz idea bank by niche, GitHub hosting steps, and the live demo quiz at hormone-quiz.html</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">8B</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 9 — SALES
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s9">
+  <div class="slide-header">
+    <h2>Sales — Turn Every Closer Into an Order-Taker</h2>
+    <span class="section-tag">Domain 02 &mdash; Sales</span>
+  </div>
+  <div class="slide-body" style="gap: 10px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 0;">
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div class="step-item">
+          <div class="step-num orange">1</div>
+          <div class="step-content">
+            <strong>DM Qualification Automation</strong>
+            <span>ManyChat flow asks the right questions, scores the lead, routes qualified prospects directly to a booking link. Closers only talk to people who are ready.</span>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num orange">2</div>
+          <div class="step-content">
+            <strong>Pre-Call Research Brief</strong>
+            <span>Lead fills out a form → Claude generates a full pre-call brief: background, pain points, likely objections, recommended angle. Closer walks in prepared.</span>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num orange">3</div>
+          <div class="step-content">
+            <strong>Post-Call Review + Coaching</strong>
+            <span>Paste in call transcript → Claude identifies missed objections, scores against your script, generates a Loom coaching note for the closer. Feedback loop closes automatically.</span>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num orange">4</div>
+          <div class="step-content">
+            <strong>Objection Prep Library</strong>
+            <span>Upload your top 20 objections → Claude builds a custom objection handling guide in your methodology. New closers ramp in days, not months.</span>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="background: var(--navy); border-radius: 10px; padding: 20px; flex: 1;">
+          <div style="font-family: 'Bebas Neue'; font-size: 18px; color: var(--orange); letter-spacing: 1px; margin-bottom: 12px;">The Leverage Math</div>
+          <div class="kpi-row" style="gap: 8px; flex-direction: column;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(255,255,255,0.06); border-radius: 6px;">
+              <span style="font-size: 12px; color: var(--blue-mid);">Hours saved per closer/day</span>
+              <span style="font-family: 'Bebas Neue'; font-size: 20px; color: var(--orange);">2 hrs</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(255,255,255,0.06); border-radius: 6px;">
+              <span style="font-size: 12px; color: var(--blue-mid);">Value of that time at $500/hr</span>
+              <span style="font-family: 'Bebas Neue'; font-size: 20px; color: var(--orange);">$1K/day</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(255,255,255,0.06); border-radius: 6px;">
+              <span style="font-size: 12px; color: var(--blue-mid);">Annualized per closer</span>
+              <span style="font-family: 'Bebas Neue'; font-size: 20px; color: var(--orange);">$260K</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(232,119,34,0.15); border-radius: 6px; border: 1px solid rgba(232,119,34,0.3);">
+              <span style="font-size: 12px; color: var(--orange); font-weight: 600;">Close rate lift from prep</span>
+              <span style="font-family: 'Bebas Neue'; font-size: 20px; color: #4ADE80;">+15–25%</span>
+            </div>
+          </div>
+        </div>
+        <div class="callout" style="background: var(--orange-pale); border-left-color: var(--orange);">
+          <p style="color: var(--text);">The goal isn't to replace closers with AI. It's to make every closer perform like your <strong>best</strong> closer — consistently.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">9</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 10 — FULFILLMENT
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s10">
+  <div class="slide-header">
+    <h2>Fulfillment — Serve 50+ Clients Without Burning Out Your Team</h2>
+    <span class="section-tag">Domain 03 &mdash; Fulfillment</span>
+  </div>
+  <div class="slide-body" style="gap: 10px;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; flex: 0;">
+      <div class="entity-card orange-top">
+        <div class="e-label">Check-Ins</div>
+        <div class="e-title">AI-Drafted Responses</div>
+        <div class="e-body">Client submits check-in → AI drafts a personalized, empathetic response using their history and coach notes. Coach reviews and sends in 2 minutes instead of 20.</div>
+      </div>
+      <div class="entity-card">
+        <div class="e-label">Onboarding</div>
+        <div class="e-title">Automated Welcome Flow</div>
+        <div class="e-body">New client enrolled → GHL triggers onboarding sequence: welcome email, program PDF, first check-in template, intro call prep — all without a human touch.</div>
+      </div>
+      <div class="entity-card orange-top">
+        <div class="e-label">Analysis</div>
+        <div class="e-title">Lab Work + Data Review</div>
+        <div class="e-body">For functional coaches: upload bloodwork or intake data → Claude's custom skill analyzes patterns, flags concerns, and drafts a coaching note. The AI success coach layer.</div>
+      </div>
+      <div class="entity-card">
+        <div class="e-label">Memory</div>
+        <div class="e-title">Client Context Engine</div>
+        <div class="e-body">Store every client's goals, history, preferences, and progress in a Claude Project or GHL notes. Claude references it on demand — no scrolling back through months of messages.</div>
+      </div>
+      <div class="entity-card orange-top">
+        <div class="e-label">Communication</div>
+        <div class="e-title">Templated + Personalized</div>
+        <div class="e-body">Build a library of proven communication frameworks (check-in prompts, milestone messages, re-engagement copy) and let AI personalize them per client at volume.</div>
+      </div>
+      <div class="entity-card">
+        <div class="e-label">Skills</div>
+        <div class="e-title">Custom AI Assistants</div>
+        <div class="e-body">Build a Claude Skill trained on your methodology. Your team calls it like an SOP — consistent, on-brand coaching support for every client, every time.</div>
+      </div>
+    </div>
+    <div style="background: var(--navy); border-radius: 8px; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; flex: 0;">
+      <div style="font-size: 13px; color: var(--blue-light); line-height: 1.5; flex: 1;">The model shift: <strong style="color:white;">your success coaches stop being response machines and start being relationship managers.</strong> AI handles the volume; your team handles the judgment calls.</div>
+      <div style="font-family: 'Bebas Neue'; font-size: 22px; color: var(--orange); white-space: nowrap; padding-left: 20px;">10x Capacity</div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">10</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 11 — THE AGENT LAYER
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s11">
+  <div class="slide-header">
+    <h2>The Agent Layer — What Becomes Possible When AI Takes Action</h2>
+    <span class="section-tag">Advanced</span>
+  </div>
+  <div class="slide-body" style="gap: 10px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; flex: 0;">
+      <div style="background: var(--navy); border-radius: 10px; padding: 18px; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; border-radius: 50%; background: rgba(232,119,34,0.1);"></div>
+        <div class="e-label" style="color: var(--orange);">Demo 01</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 22px; color: var(--white); margin-bottom: 8px; letter-spacing: 1px;">IG Audit Agent</div>
+        <div style="font-size: 12px; color: var(--blue-mid); line-height: 1.6;">Paste your Instagram URL → Agent audits bio, content mix, hooks, engagement patterns, and returns a full optimization report with specific recommendations. Done in 90 seconds.</div>
+        <div style="margin-top: 10px;"><span class="badge badge-orange">Live Demo</span></div>
+      </div>
+      <div style="background: var(--navy); border-radius: 10px; padding: 18px; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; border-radius: 50%; background: rgba(232,119,34,0.1);"></div>
+        <div class="e-label" style="color: var(--orange);">Demo 02</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 22px; color: var(--white); margin-bottom: 8px; letter-spacing: 1px;">Check-In Draft Agent</div>
+        <div style="font-size: 12px; color: var(--blue-mid); line-height: 1.6;">Client check-in submitted → Agent pulls their history, reads today's submission, drafts a personalized coaching response, and flags if the coach needs to step in directly.</div>
+        <div style="margin-top: 10px;"><span class="badge badge-orange">Live Demo</span></div>
+      </div>
+      <div style="background: var(--navy); border-radius: 10px; padding: 18px; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; border-radius: 50%; background: rgba(232,119,34,0.1);"></div>
+        <div class="e-label" style="color: var(--orange);">Demo 03</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 22px; color: var(--white); margin-bottom: 8px; letter-spacing: 1px;">DM Qualifier Flow</div>
+        <div style="font-size: 12px; color: var(--blue-mid); line-height: 1.6;">ManyChat DM flow → qualifies leads with 3 questions → scores them → routes hot leads directly to booking → sends unqualified leads to a nurture sequence. Zero closer time wasted.</div>
+        <div style="margin-top: 10px;"><span class="badge badge-orange">Live Demo</span></div>
+      </div>
+    </div>
+    <div style="display: flex; gap: 12px; flex: 0;">
+      <div style="flex: 1; background: var(--white); border-radius: 8px; padding: 14px 18px; border: 1px solid var(--gray-200);">
+        <div style="font-size: 12px; font-weight: 600; color: var(--navy); margin-bottom: 6px;">What's Coming — The Agentic Future</div>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size: 12px;">Multi-step agents: lead opts in → research runs → brief generated → CRM updated → closer notified → all without a human trigger</span></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size: 12px;">GHL + Zapier + Claude: the full automation stack running your pipeline while you sleep</span></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size: 12px;">AI agents that monitor your metrics and flag problems before you see them</span></div>
+        </div>
+      </div>
+      <div style="flex: 0; min-width: 260px; background: var(--orange-pale); border-radius: 8px; padding: 14px 18px; border: 1px solid rgba(232,119,34,0.2);">
+        <div style="font-size: 12px; font-weight: 600; color: var(--orange); margin-bottom: 6px;">Expectation Check</div>
+        <div style="font-size: 12px; color: var(--text); line-height: 1.6;">Agents require setup. CoWork gets you 80% there today. Full agentic systems are a VA build — not a Jordan-does-it-himself build. <strong>Know what to direct, not what to build.</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">11</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 12 — MINI TRAINING LIBRARY
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s12">
+  <div class="slide-header">
+    <h2>Your Resource Library — Everything to Go Deploy This</h2>
+    <span class="section-tag">Implementation</span>
+  </div>
+  <div class="slide-body" style="gap: 10px;">
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; flex: 0;">
+      <!-- Getting Started -->
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-family: 'DM Mono'; font-size: 9px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; padding-bottom: 4px; border-bottom: 2px solid var(--orange);">Getting Started</div>
+        <div class="mt-card orange-top"><div class="mt-title">Migrating from ChatGPT to Claude</div></div>
+        <div class="mt-card orange-top"><div class="mt-title">Getting Started with Claude</div></div>
+        <div class="mt-card orange-top"><div class="mt-title">Setting Up Claude Projects</div></div>
+        <div class="mt-card orange-top"><div class="mt-title">How Artifacts Work</div></div>
+        <div class="mt-card orange-top"><div class="mt-title">Saving Claude Usage / Token Guide</div></div>
+      </div>
+      <!-- Marketing -->
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-family: 'DM Mono'; font-size: 9px; color: var(--navy); letter-spacing: 2px; text-transform: uppercase; padding-bottom: 4px; border-bottom: 2px solid var(--navy);">Marketing</div>
+        <div class="mt-card"><div class="mt-title">IG Audit Agent</div></div>
+        <div class="mt-card"><div class="mt-title">Carousels in Claude</div></div>
+        <div class="mt-card"><div class="mt-title">Auto-Post to Instagram</div></div>
+        <div class="mt-card"><div class="mt-title">Design in Canva with Claude</div></div>
+        <div class="mt-card"><div class="mt-title">Content Dashboard</div></div>
+        <div class="mt-card"><div class="mt-title">Editing Videos in Claude</div></div>
+      </div>
+      <!-- Sales -->
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-family: 'DM Mono'; font-size: 9px; color: var(--navy); letter-spacing: 2px; text-transform: uppercase; padding-bottom: 4px; border-bottom: 2px solid var(--navy);">Sales</div>
+        <div class="mt-card"><div class="mt-title">ManyChat DM Automation</div></div>
+        <div class="mt-card"><div class="mt-title">DM Qualification Flow</div></div>
+        <div class="mt-card"><div class="mt-title">Comment Response Automation</div></div>
+        <div class="mt-card"><div class="mt-title">Pre-Call Brief Builder</div></div>
+      </div>
+      <!-- Fulfillment -->
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-family: 'DM Mono'; font-size: 9px; color: var(--navy); letter-spacing: 2px; text-transform: uppercase; padding-bottom: 4px; border-bottom: 2px solid var(--navy);">Fulfillment</div>
+        <div class="mt-card"><div class="mt-title">Creating Claude Skills</div></div>
+        <div class="mt-card"><div class="mt-title">Onboarding Skill Setup</div></div>
+        <div class="mt-card"><div class="mt-title">Check-In Response Automation</div></div>
+        <div class="mt-card"><div class="mt-title">Lab Analysis Skill (Functional)</div></div>
+        <div class="mt-card"><div class="mt-title">Client Communication Templates</div></div>
+      </div>
+      <!-- Advanced -->
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-family: 'DM Mono'; font-size: 9px; color: var(--gray-400); letter-spacing: 2px; text-transform: uppercase; padding-bottom: 4px; border-bottom: 2px solid var(--gray-400);">Advanced</div>
+        <div class="mt-card" style="border-top-color: var(--gray-400);"><div class="mt-title">Claude Code Intro</div></div>
+        <div class="mt-card" style="border-top-color: var(--gray-400);"><div class="mt-title">HTML Pages via GitHub</div></div>
+        <div class="mt-card" style="border-top-color: var(--gray-400);"><div class="mt-title">Creating Dashboards</div></div>
+        <div class="mt-card" style="border-top-color: var(--gray-400);"><div class="mt-title">Prompt Bible</div></div>
+        <div class="mt-card" style="border-top-color: var(--gray-400);"><div class="mt-title">Marketing Skills (Code)</div></div>
+      </div>
+    </div>
+    <div style="background: var(--navy); border-radius: 8px; padding: 12px 20px; display: flex; align-items: center; gap: 20px; flex: 0;">
+      <div style="font-family: 'Bebas Neue'; font-size: 18px; color: var(--orange); white-space: nowrap;">How to Use This</div>
+      <div style="font-size: 13px; color: var(--blue-light); line-height: 1.5;">Each mini-training is a standalone guide your VA or success coach can implement. <strong style="color:white;">Your job is to direct the build, not execute it.</strong> Pick the one that addresses your bottleneck. Give it to your team. Revisit this library as you move to the next constraint.</div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">12</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 13 — PRIORITY ACTION
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s13">
+  <div class="slide-header">
+    <h2>One Constraint. One System. This Week.</h2>
+    <span class="section-tag">Action</span>
+  </div>
+  <div class="slide-body" style="gap: 12px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; flex: 0;">
+      <div style="background: var(--white); border-radius: 10px; padding: 20px; border: 1px solid var(--gray-200);">
+        <div style="font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--orange); display: inline-block;">✏️ Your Priority Action Plan</div>
+        <div class="step-list">
+          <div class="step-item" style="padding: 10px 14px;">
+            <div class="step-num orange">1</div>
+            <div class="step-content">
+              <strong>Name your #1 bottleneck</strong>
+              <span>From the exercise in Slide 3 — which single constraint is most limiting your growth right now?</span>
+            </div>
+          </div>
+          <div class="step-item" style="padding: 10px 14px;">
+            <div class="step-num orange">2</div>
+            <div class="step-content">
+              <strong>Match it to a domain</strong>
+              <span>Marketing, Sales, or Fulfillment — and identify the specific use case from this workshop that addresses it.</span>
+            </div>
+          </div>
+          <div class="step-item" style="padding: 10px 14px;">
+            <div class="step-num orange">3</div>
+            <div class="step-content">
+              <strong>Find your mini-training</strong>
+              <span>Go to the resource library. Circle the one guide your VA or success coach will implement this week.</span>
+            </div>
+          </div>
+          <div class="step-item" style="padding: 10px 14px;">
+            <div class="step-num orange">4</div>
+            <div class="step-content">
+              <strong>Run the system for 30 days</strong>
+              <span>Build one thing, use it consistently, measure the output. Then add the next system. Don't boil the ocean.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="background: var(--navy); border-radius: 10px; padding: 20px; flex: 1;">
+          <div style="font-family: 'Bebas Neue'; font-size: 20px; color: var(--orange); margin-bottom: 10px; letter-spacing: 1px;">The Principle That Scales</div>
+          <div class="bullet-list">
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="color: var(--blue-mid); font-size: 13px;"><strong style="color: white;">Constraint first,</strong> tool second. Always.</span></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="color: var(--blue-mid); font-size: 13px;"><strong style="color: white;">Direct the build,</strong> don't execute it. That's what your team is for.</span></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="color: var(--blue-mid); font-size: 13px;"><strong style="color: white;">One system,</strong> used daily, beats ten systems used occasionally.</span></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="color: var(--blue-mid); font-size: 13px;"><strong style="color: white;">AI doesn't replace judgment.</strong> It multiplies it. Your edge is knowing what to build.</span></div>
+          </div>
+        </div>
+        <div style="background: var(--orange-pale); border-radius: 8px; padding: 14px 18px; border: 1px solid rgba(232,119,34,0.3);">
+          <div style="font-size: 12px; font-weight: 600; color: var(--orange); margin-bottom: 4px;">What Separates the Coaches Who Win With AI</div>
+          <div style="font-size: 13px; color: var(--text); line-height: 1.6;">It's not technical skill. It's <strong>clarity on the constraint</strong> and the discipline to build one system at a time until it's running without them.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">13</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 14 — CLOSE
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s14">
+  <div class="slide-header">
+    <h2>Resources, Next Steps & What's Coming</h2>
+    <span class="section-tag">Close</span>
+  </div>
+  <div class="slide-body" style="gap: 12px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; flex: 0;">
+      <div style="background: var(--white); border-radius: 10px; padding: 18px; border: 1px solid var(--gray-200); border-top: 3px solid var(--orange);">
+        <div style="font-family: 'Bebas Neue'; font-size: 18px; color: var(--navy); margin-bottom: 10px; letter-spacing: 1px;">Start Today</div>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size: 12px;">Set up your first Claude Project with your brand voice doc</span></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size: 12px;">Run the IG Audit Agent on your own profile</span></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size: 12px;">Identify your first mini-training and hand it to your team</span></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size: 12px;">Download Claude for Desktop if you haven't yet</span></div>
+        </div>
+      </div>
+      <div style="background: var(--white); border-radius: 10px; padding: 18px; border: 1px solid var(--gray-200); border-top: 3px solid var(--navy);">
+        <div style="font-family: 'Bebas Neue'; font-size: 18px; color: var(--navy); margin-bottom: 10px; letter-spacing: 1px;">Access Your Library</div>
+        <div style="font-size: 13px; color: var(--text-muted); line-height: 1.7;">All mini-trainings, prompts, and workflow guides are available in your IFCA resource hub. New modules added as they're built.</div>
+        <div style="margin-top: 12px; background: var(--gray-100); border-radius: 6px; padding: 10px 14px; border: 1px solid var(--gray-200);">
+          <div style="font-family: 'DM Mono'; font-size: 11px; color: var(--navy); letter-spacing: 1px;">IFCA Resource Hub</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Workshop Index Page → AI Tools Library</div>
+        </div>
+      </div>
+      <div style="background: var(--navy); border-radius: 10px; padding: 18px;">
+        <div style="font-family: 'Bebas Neue'; font-size: 18px; color: var(--orange); margin-bottom: 10px; letter-spacing: 1px;">What's Being Built Next</div>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="color: var(--blue-mid); font-size: 12px;">Full GHL + Zapier automation blueprint</span></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="color: var(--blue-mid); font-size: 12px;">AI-generated UGC ad creative workflow</span></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="color: var(--blue-mid); font-size: 12px;">Prompt Bible for fitness coaches</span></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="color: var(--blue-mid); font-size: 12px;">CoWork Skills library for common coach tasks</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="background: var(--orange); border-radius: 10px; padding: 20px 28px; display: flex; align-items: center; justify-content: space-between; flex: 0;">
+      <div>
+        <div style="font-family: 'Bebas Neue'; font-size: 28px; color: white; letter-spacing: 1px;">The coaches who win with AI aren't the most technical.</div>
+        <div style="font-size: 14px; color: rgba(255,255,255,0.85); margin-top: 4px;">They're the ones who identify the right constraint, build one system, and run it until it becomes invisible leverage.</div>
+      </div>
+      <div style="font-family: 'Bebas Neue'; font-size: 48px; color: rgba(255,255,255,0.15); padding-left: 24px;">IFCA</div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">14</span></div>
+</div>
+
+</div><!-- end #stage -->
+
+<div id="hint">← → arrow keys to navigate</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+
+const tocBar = document.getElementById('toc-bar');
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'toc-dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goTo(i);
+  tocBar.appendChild(dot);
+});
+
+function update() {
+  slides.forEach((s, i) => s.classList.toggle('active', i === current));
+  document.querySelectorAll('.toc-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  document.getElementById('slide-counter').textContent = (current + 1) + ' / ' + total;
+  document.getElementById('btn-prev').disabled = current === 0;
+  document.getElementById('btn-next').disabled = current === total - 1;
+  document.getElementById('progress-fill').style.width = ((current + 1) / total * 100) + '%';
+}
+
+function navigate(dir) {
+  current = Math.max(0, Math.min(total - 1, current + dir));
+  update();
+}
+
+function goTo(i) {
+  current = i;
+  update();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+  if (e.key === 'Home') goTo(0);
+  if (e.key === 'End') goTo(total - 1);
+});
+</script>
+</body>
+</html>

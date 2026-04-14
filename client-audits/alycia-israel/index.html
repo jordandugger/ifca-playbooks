@@ -648,48 +648,48 @@ em { color:var(--orange); font-style:normal; }
   <div class="sec-heading">Revenue Equilibrium</div>
   <div class="sec-divider"></div>
 
-  <p class="mb-md">The leaky bucket question: are you adding client value faster than churn is removing it? <strong>Revenue Equilibrium = LTV × New Clients Acquired per month.</strong> If that number is above your current revenue, you're building a compounding base. If it's below, churn is winning even if you're closing well.</p>
+  <p class="mb-md">Revenue Equilibrium = LTV × New Clients acquired per month. This is the total lifetime value being added to the business each month. The Monthly Revenue Cap is what the business converges to if churn, close rate, and client value stay exactly flat — it's the ceiling you're building toward. If Equilibrium exceeds the Cap, the business is compounding. If it falls below, churn is winning even when you're closing.</p>
 
   <div class="card mt-md">
     <div class="req-grid">
       <div class="req-cell">
-        <span class="req-label">Monthly Churn Rate</span>
+        <span class="req-label">Q1 Avg Churn Rate</span>
         <span class="req-val" id="re-churn">6.0%</span>
-        <span class="req-sub">Off-boarded ÷ active clients at start of month</span>
+        <span class="req-sub">Jan=5.4% · Feb=6.1% · Mar=6.5%</span>
       </div>
       <div class="req-cell">
-        <span class="req-label">LTV per Client</span>
+        <span class="req-label">Q1 Avg LTV</span>
         <span class="req-val" id="re-ltv">$8,421</span>
-        <span class="req-sub">Avg monthly value ÷ churn rate</span>
+        <span class="req-sub">Jan=$9,045 · Feb=$7,871 · Mar=$8,394</span>
       </div>
       <div class="req-cell">
-        <span class="req-label">New Clients / Month</span>
-        <span class="req-val" id="re-new">16</span>
-        <span class="req-sub">Avg closes this period</span>
+        <span class="req-label">Q1 New Clients/Mo</span>
+        <span class="req-val" id="re-new">16.3</span>
+        <span class="req-sub">Jan=11 · Feb=26 · Mar=12</span>
       </div>
     </div>
 
     <div class="eq-compare">
       <div class="eq-block purple">
-        <div class="eq-b-label">Revenue Equilibrium</div>
-        <div class="eq-b-val" id="re-eq">$137K</div>
-        <div class="eq-b-sub">LTV × New Clients — what you're building toward</div>
+        <div class="eq-b-label">Revenue Equilibrium (LTV × New Clients)</div>
+        <div class="eq-b-val" id="re-eq">$137.3K</div>
+        <div class="eq-b-sub">Jan=$99.5K · Feb=$204.6K · Mar=$100.7K</div>
       </div>
       <div class="eq-vs">VS</div>
       <div class="eq-block blue">
-        <div class="eq-b-label">Actual Monthly Revenue</div>
-        <div class="eq-b-val" id="re-actual">$75.7K</div>
-        <div class="eq-b-sub">Cash collected this period</div>
+        <div class="eq-b-label">Monthly Revenue Cap (Flat-State Ceiling)</div>
+        <div class="eq-b-val" id="re-actual">$75.8K</div>
+        <div class="eq-b-sub">Avg Monthly Value ÷ Churn · ~150 active clients</div>
       </div>
     </div>
 
     <div class="eq-verdict building" id="re-verdict">
-      ✓ <strong>Building.</strong> Your Revenue Equilibrium ($137K) is 81% above current monthly revenue ($75.7K). Every new client closes adds $8,421 in future LTV to the base. The gap will close as the client base matures. Risk: if close velocity drops below ~9 new clients/month at current churn, equilibrium falls below actual revenue and the base starts shrinking. Watch the equilibrium number monthly — it's the earliest warning signal available.
+      ✓ <strong>Building.</strong> Revenue Equilibrium ($137.3K) is 81% above the flat-state ceiling ($75.8K). Every close adds $8,421 in future LTV — the base is compounding. February's spike to $204.6K (26 closes) shows what the funnel can produce when fully loaded. The risk is volatility: Jan and Mar both fell under $105K equilibrium, driven by close volume dips to 11–12/month. If new clients drop below ~9/month at current churn, equilibrium falls below the cap and the base starts eroding. The churn trend (5.4% → 6.5%) is moving in the wrong direction — keep it under 7%.
     </div>
   </div>
 
   <div class="card yellow-left mt-md">
-    <p style="font-size:13px;"><strong>The churn watch:</strong> At 6% monthly churn (~9 clients/month off-boarded at 150 active), LTV holds at $8,421. If churn creeps to 8%, LTV drops to ~$6,300 — cutting $2,100 in lifetime value per client and pushing equilibrium down to ~$103K. Churn is the multiplier on everything else. Keep it under 7%.</p>
+    <p style="font-size:13px;"><strong>The churn watch:</strong> At 6% monthly churn (~9 clients/month off-boarded at 150 active), LTV holds at $8,421. If churn creeps to 8%, LTV drops to ~$6,300 — cutting $2,100 in lifetime value per client and pushing the equilibrium ceiling down to ~$103K. Churn is the multiplier on everything else. Keep it under 7%.</p>
   </div>
 </section>
 

@@ -310,42 +310,61 @@ em{color:var(--orange);font-style:normal}
   <div class="sec-heading">Revenue Equilibrium</div>
   <div class="sec-divider"></div>
 
-  <p class="mb-md">The LTGP sheet churn and active client fields are not yet populated in Amy Jo's tracker — LTV and CAC:LTV are not calculable from the available data. The success coach context notes the business is in a transitionary build phase. Using available data: Q1 averaged <strong>8.3 new clients per month</strong> from frontend closes alone. Revenue is on a strong upward trend: Jan $21.9K → Feb $23.9K → Mar $32.9K — a <strong>50% revenue increase from January to March</strong>.</p>
+  <p class="mb-md">Revenue Equilibrium = LTV × New Clients acquired per month. The Monthly Revenue Cap is what the business converges to at flat state. <strong>This section is incomplete</strong> — the three inputs below are not yet entered in Amy Jo's data tracker and are required to calculate LTV, Revenue Equilibrium, and Monthly Revenue Cap.</p>
+
+  <!-- DATA NEEDED CALLOUT -->
+  <div style="border:1px solid rgba(251,191,36,.4);background:rgba(251,191,36,.06);border-radius:12px;padding:20px 24px;margin-bottom:24px;">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#fbbf24;margin-bottom:12px;">⚠ Data Needed to Complete This Section</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+      <div>
+        <div style="font-size:12px;font-weight:600;color:var(--gray-100);margin-bottom:4px;">Total Active Clients</div>
+        <div style="font-size:11px;color:var(--gray-400);">How many paying clients are currently enrolled? Enter monthly in the LTGP tracker under "Active Clients."</div>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:600;color:var(--gray-100);margin-bottom:4px;">Clients Off-Boarded / Mo</div>
+        <div style="font-size:11px;color:var(--gray-400);">How many clients cancelled or completed and did not renew each month? Needed to calculate churn rate.</div>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:600;color:var(--gray-100);margin-bottom:4px;">Total Monthly Revenue</div>
+        <div style="font-size:11px;color:var(--gray-400);">Total cash collected per month (all programs). Needed to calculate average monthly client value and LTV.</div>
+      </div>
+    </div>
+  </div>
 
   <div class="req-grid">
     <div class="req-cell">
-      <div class="req-label">Q1 Avg CAC</div>
-      <div class="req-val" style="color:var(--orange);">$333</div>
-      <div class="req-sub">Jan $277 · Feb $473 · Mar $300 · 14.8% of $2,252 FEO</div>
+      <div class="req-label">Q1 Avg Churn Rate</div>
+      <div class="req-val" style="color:var(--gray-500);">—</div>
+      <div class="req-sub">Awaiting active client + off-board data</div>
+    </div>
+    <div class="req-cell">
+      <div class="req-label">Q1 Avg LTV</div>
+      <div class="req-val" style="color:var(--gray-500);">—</div>
+      <div class="req-sub">Calculated once churn is populated</div>
     </div>
     <div class="req-cell">
       <div class="req-label">Q1 New Clients/Mo</div>
       <div class="req-val" style="color:#7ABFDD;">8.3</div>
-      <div class="req-sub">Jan=9 · Feb=6 · Mar=10 · Trending up</div>
-    </div>
-    <div class="req-cell">
-      <div class="req-label">Revenue Growth Q1</div>
-      <div class="req-val" style="color:var(--green);">+50%</div>
-      <div class="req-sub">Jan $21.9K → Mar $32.9K within Q1</div>
+      <div class="req-sub">Jan=9 · Feb=6 · Mar=10 · Trending up ✓</div>
     </div>
   </div>
 
   <div class="eq-compare">
     <div class="eq-block purple">
-      <div class="eq-b-label">Q1 Avg Monthly Operating Expenses</div>
-      <div class="eq-b-val">$10.9K</div>
-      <div class="eq-b-sub">Labor + Marketing + Overhead avg per month</div>
+      <div class="eq-b-label">Revenue Equilibrium (LTV × New Clients)</div>
+      <div class="eq-b-val" style="color:var(--gray-500);">—</div>
+      <div class="eq-b-sub">Requires LTV to calculate</div>
     </div>
     <div class="eq-vs">VS</div>
     <div class="eq-block blue">
-      <div class="eq-b-label">Q1 Avg Monthly Collected Revenue</div>
-      <div class="eq-b-val">$26.3K</div>
-      <div class="eq-b-sub">Jan $21.9K · Feb $23.9K · Mar $32.9K</div>
+      <div class="eq-b-label">Monthly Revenue Cap (Flat-State Ceiling)</div>
+      <div class="eq-b-val" style="color:var(--gray-500);">—</div>
+      <div class="eq-b-sub">Requires churn + active clients to calculate</div>
     </div>
   </div>
 
   <div class="eq-verdict building">
-    <strong>Verdict: Building — strong trajectory with meaningful upside locked in the FE→BE gap.</strong> Revenue grew 50% within Q1 alone, and the business is profitable at a 57% net margin. The LTV and CAC:LTV metrics are not yet calculable from the tracker (active clients and churn fields unpopulated), but the directional signal is clear: the business is growing, the cost structure is lean, and the margin headroom is real. The biggest single unlockable lever is the 30% FE→BE conversion — fixing that to the 50% target adds roughly $1,700/month in backend revenue per close on the same client base with zero additional ad spend.
+    <strong>Directional read: Building.</strong> Revenue grew 50% within Q1 (Jan $21.9K → Mar $32.9K) at a 57% net margin, and new clients are trending up (9 → 6 → 10). The full equilibrium picture — LTV, Revenue Equilibrium, and Monthly Revenue Cap — unlocks as soon as active client count and monthly churn are entered in the tracker. Once populated, this section will show exactly whether the business is compounding or at risk, and which lever (lower churn, more closes, or higher client value) moves the number most.
   </div>
 </section>
 

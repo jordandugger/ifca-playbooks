@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creating Claude Skills & Cowork â IFCA AI Training</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy-dark: #102236;
+      --navy-mid: #162d44;
+      --navy-light: #1e3a52;
+      --orange: #E87722;
+      --orange-dim: rgba(232,119,34,0.12);
+      --orange-border: rgba(232,119,34,0.35);
+      --white: #ffffff;
+      --white-60: rgba(255,255,255,0.6);
+      --white-40: rgba(255,255,255,0.4);
+      --white-15: rgba(255,255,255,0.08);
+      --green: #22c55e;
+      --green-dim: rgba(34,197,94,0.1);
+      --green-border: rgba(34,197,94,0.3);
+      --blue: #38bdf8;
+      --blue-dim: rgba(56,189,248,0.1);
+      --blue-border: rgba(56,189,248,0.3);
+      --red: #f87171;
+      --red-dim: rgba(248,113,113,0.1);
+      --red-border: rgba(248,113,113,0.3);
+      --purple: #a78bfa;
+      --purple-dim: rgba(167,139,250,0.1);
+      --purple-border: rgba(167,139,250,0.3);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--navy-dark);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ââ NOISE TEXTURE ââ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ââ HERO ââ */
+    .hero {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(160deg, #1a3a5c 0%, var(--navy-dark) 60%);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 64px 24px 56px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(232,119,34,0.13) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(44px, 7vw, 76px);
+      letter-spacing: 0.03em;
+      line-height: 1;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .hero-title span { color: var(--orange); }
+
+    .hero-sub {
+      font-size: 17px;
+      color: var(--white-60);
+      max-width: 580px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+
+    .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      border: 1px solid;
+    }
+
+    .badge.orange { background: var(--orange-dim); border-color: var(--orange-border); color: var(--orange); }
+    .badge.green  { background: var(--green-dim);  border-color: var(--green-border);  color: var(--green); }
+    .badge.blue   { background: var(--blue-dim);   border-color: var(--blue-border);   color: var(--blue); }
+
+    /* ââ MAIN CONTENT ââ */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(255,255,255,0.07);
+      margin: 48px 0;
+    }
+
+    /* ââ SECTION BLOCKS ââ */
+    .section-block { margin-bottom: 0; }
+
+    .section-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(28px, 4vw, 40px);
+      letter-spacing: 0.03em;
+      color: var(--white);
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    /* ââ CALLOUT ââ */
+    .callout {
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 24px 0;
+      border-left: 3px solid;
+    }
+    .callout.orange { background: var(--orange-dim); border-color: var(--orange); }
+    .callout.green  { background: var(--green-dim);  border-color: var(--green); }
+    .callout.blue   { background: var(--blue-dim);   border-color: var(--blue); }
+    .callout.purple { background: var(--purple-dim); border-color: var(--purple); }
+
+    .callout-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .callout.orange .callout-label { color: var(--orange); }
+    .callout.green  .callout-label { color: var(--green); }
+    .callout.blue   .callout-label { color: var(--blue); }
+    .callout.purple .callout-label { color: var(--purple); }
+
+    .callout-text {
+      font-size: 14.5px;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.65;
+    }
+
+    /* ââ STEP LIST ââ */
+    .step-list { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+
+    .step-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: var(--white-15);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 20px 22px;
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--orange-dim);
+      border: 1px solid var(--orange-border);
+      color: var(--orange);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .step-content { flex: 1; }
+
+    .step-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .step-desc {
+      font-size: 14px;
+      color: var(--white-60);
+      line-height: 1.65;
+    }
+
+    .step-desc strong { color: rgba(255,255,255,0.88); font-weight: 600; }
+
+    /* ââ CARD GRID ââ */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .info-card {
+      background: var(--white-15);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 22px 20px;
+    }
+
+    .info-card.orange { border-top: 2px solid var(--orange); }
+    .info-card.green  { border-top: 2px solid var(--green); }
+    .info-card.blue   { border-top: 2px solid var(--blue); }
+    .info-card.purple { border-top: 2px solid var(--purple); }
+
+    .card-icon { font-size: 26px; margin-bottom: 10px; }
+
+    .card-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .card-label.orange { color: var(--orange); }
+    .card-label.green  { color: var(--green); }
+    .card-label.blue   { color: var(--blue); }
+    .card-label.purple { color: var(--purple); }
+
+    .card-h {
+      font-weight: 700;
+      font-size: 14.5px;
+      color: var(--white);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .card-body {
+      font-size: 13.5px;
+      color: var(--white-60);
+      line-height: 1.6;
+    }
+    .card-body strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+
+    /* ââ CODE BLOCK ââ */
+    .code-block {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.7;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    .code-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white-40);
+      margin-bottom: 8px;
+    }
+
+    /* ââ TWO COL ââ */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ââ SKILL EXAMPLE CARD ââ */
+    .skill-card {
+      background: var(--white-15);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 22px 20px;
+    }
+
+    .skill-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .skill-card-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: var(--orange-dim);
+      border: 1px solid var(--orange-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .skill-card-name {
+      font-weight: 700;
+      font-size: 14.5px;
+      color: var(--white);
+    }
+
+    .skill-card-trigger {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--orange);
+      margin-top: 2px;
+    }
+
+    .skill-card-desc {
+      font-size: 13.5px;
+      color: var(--white-60);
+      line-height: 1.6;
+    }
+
+    /* ââ WHAT IS COWORK ââ */
+    .cowork-visual {
+      background: linear-gradient(135deg, rgba(232,119,34,0.08), rgba(56,189,248,0.06));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 32px 28px;
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .cowork-visual .big-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px;
+      letter-spacing: 0.05em;
+      color: var(--orange);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .cowork-visual .sub-label {
+      font-size: 14px;
+      color: var(--white-60);
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    /* ââ FOOTER ââ */
+    footer {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 40px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      background: rgba(0,0,0,0.2);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 0.1em;
+      color: var(--orange);
+    }
+
+    .footer-sub {
+      font-size: 12px;
+      color: var(--white-40);
+      margin-top: 2px;
+    }
+
+    .footer-right {
+      font-size: 12px;
+      color: var(--white-40);
+      text-align: right;
+    }
+
+    @media (max-width: 600px) {
+      footer { padding: 24px 20px; }
+      .footer-right { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ââ HERO ââ -->
+<div class="hero">
+  <div class="hero-eyebrow">IFCA Â· AI Training Library Â· Module 3</div>
+  <h1 class="hero-title">Creating Claude<br><span>Skills &amp; Cowork</span></h1>
+  <p class="hero-sub">How to build reusable AI automations and run Claude directly on your computer â the features that separate power users from everyone else.</p>
+  <div class="badge-row">
+    <span class="badge orange">â¡ Advanced Feature</span>
+    <span class="badge green">â Workshop Live</span>
+    <span class="badge blue">â 25 min</span>
+  </div>
+</div>
+
+<!-- ââ MAIN ââ -->
+<main>
+
+  <!-- ââ WHAT ARE SKILLS ââ -->
+  <div class="section-block">
+    <div class="section-eyebrow">Part 1 of 2</div>
+    <div class="section-title">What Are Claude Skills?</div>
+    <p style="font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:24px;">A Skill is a saved instruction set that tells Claude exactly how to handle a specific task â every time, without you re-explaining it. Think of it as a macro for your AI. You trigger it once, Claude runs the full workflow.</p>
+
+    <div class="callout orange">
+      <div class="callout-label">The Core Idea</div>
+      <div class="callout-text"><strong>Skills turn one-time prompts into repeatable systems.</strong> Instead of writing "write a 5-hook ad carousel in my voice using the Forester Strategy" every time â you type <code style="background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:4px; font-family:'DM Mono',monospace; font-size:12px;">/ad-carousel</code> and Claude already knows exactly what to do.</div>
+    </div>
+
+    <div class="section-eyebrow" style="margin-top:36px;">Real Examples From IFCA</div>
+    <div class="card-grid">
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-card-icon">ð</div>
+          <div>
+            <div class="skill-card-name">Business Audit</div>
+            <div class="skill-card-trigger">/ifca-audit</div>
+          </div>
+        </div>
+        <div class="skill-card-desc">Runs a full 7-figure constraint audit from a student's tracker spreadsheet. Outputs a formatted HTML dashboard with KPIs, What's Working, Revenue Equilibrium, and 90-Day Action Plan.</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-card-icon">ð</div>
+          <div>
+            <div class="skill-card-name">Ad Copy Generator</div>
+            <div class="skill-card-trigger">/ifca-marketing</div>
+          </div>
+        </div>
+        <div class="skill-card-desc">Generates Meta ad scripts, hooks, captions, and VSL copy in Jordan or Erin's voice â with IFCA offer context pre-loaded. No brand briefing required every time.</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-card-icon">ð</div>
+          <div>
+            <div class="skill-card-name">Contract Review</div>
+            <div class="skill-card-trigger">/ifca-contract-review</div>
+          </div>
+        </div>
+        <div class="skill-card-desc">Loads the full APA redline state, flags open items, and suggests language changes â with the entire deal context baked in from the first word.</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-card-icon">ð¯</div>
+          <div>
+            <div class="skill-card-name">Offer Optimizer</div>
+            <div class="skill-card-trigger">/ifca-offer-optimizer</div>
+          </div>
+        </div>
+        <div class="skill-card-desc">Audits a student's offer scorecard, writes their core marketing thesis, builds a content calendar, and outputs a polished .docx deliverable in one run.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ââ HOW TO BUILD A SKILL ââ -->
+  <div class="section-block">
+    <div class="section-eyebrow">Build Your First Skill</div>
+    <div class="section-title">How to Create a Skill</div>
+    <p style="font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:4px;">A Skill is just a markdown file with a clear name and a detailed prompt. You don't need to code anything. Here's the exact process:</p>
+
+    <div class="step-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Identify a Task You Do Repeatedly</div>
+          <div class="step-desc">Think about what you type into Claude most often. Writing ad hooks? Drafting client check-in emails? Building weekly content calendars? <strong>If you've explained it more than twice, it should be a Skill.</strong></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Write the Skill Prompt in a .md File</div>
+          <div class="step-desc">Open a text editor and write your full instructions as if briefing a new assistant. Include: what to do, what format to output, your brand voice rules, what to never do, and an example output if you have one. <strong>The more specific the Skill, the better Claude performs.</strong></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Add a Trigger Description</div>
+          <div class="step-desc">At the top of your .md file, add a short description that tells Claude when to activate this Skill â specific phrases, keywords, or situations that should load it automatically. <strong>This is what makes Skills feel magical: Claude knows when to use them without you typing the slash command.</strong></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Save It to Your Skills Folder in Cowork</div>
+          <div class="step-desc">In Cowork mode, save the file to your <code style="background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:4px; font-family:'DM Mono',monospace; font-size:12px;">.claude/skills/</code> folder. From that point on, every Cowork session can access it. <strong>No setup, no re-loading â it's always there.</strong></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">Test It and Refine</div>
+          <div class="step-desc">Run your Skill a few times. If Claude is missing something, go back and add it to the prompt. Skills get better every time you edit them. <strong>Think of it like training a team member â the more context you give, the less you have to correct.</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout green" style="margin-top:28px;">
+      <div class="callout-label">What a Skill File Looks Like</div>
+      <div class="callout-text">
+        <div class="code-label">Example: /my-ad-hooks skill</div>
+        <div class="code-block">## Ad Hook Generator â IFCA Voice
+
+Use this skill when the user asks for ad hooks, scroll-stoppers,
+or opening lines for Meta/Instagram ads.
+
+## Brand Voice
+- Direct, punchy, no fluff
+- Speaks to online fitness coaches making $3kâ$20k/month
+- Uses "you" language, never "we"
+- Never uses: "unlock", "transform", "journey", "game-changer"
+
+## Output Format
+Generate 10 hooks. Format as numbered list.
+Each hook: max 2 sentences. First sentence grabs. Second teases.
+
+## Example Output
+1. You're not posting bad content. You're posting content that
+   doesn't make people feel seen. Here's the difference.
+2. The coaches hitting $30k months aren't working harder.
+   They changed one thing in how they position their offer.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ââ WHAT IS COWORK ââ -->
+  <div class="section-block">
+    <div class="section-eyebrow">Part 2 of 2</div>
+    <div class="section-title">What Is Cowork Mode?</div>
+    <p style="font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:24px;">Cowork is Claude's desktop app mode where Claude can see and interact with files on your actual computer â not just text you paste in. It turns Claude from a chat tool into an agent that can read, write, and manage files on your behalf.</p>
+
+    <div class="cowork-visual">
+      <div class="big-label">COWORK</div>
+      <div class="sub-label">Claude + Your Computer Files = A fully autonomous AI assistant that works inside your actual workflow â not just inside a chat box.</div>
+    </div>
+
+    <div class="card-grid" style="margin-top:24px;">
+      <div class="info-card orange">
+        <div class="card-icon">ð</div>
+        <div class="card-label orange">File Access</div>
+        <div class="card-h">Claude Reads Your Actual Files</div>
+        <div class="card-body">Point Cowork at a folder â your Google Drive, Downloads, project folder â and Claude can read every file inside it. <strong>No copy-pasting needed.</strong></div>
+      </div>
+      <div class="info-card blue">
+        <div class="card-icon">âï¸</div>
+        <div class="card-label blue">File Creation</div>
+        <div class="card-h">Outputs Land as Real Files</div>
+        <div class="card-body">When Claude builds an audit, writes a doc, or creates a spreadsheet, it saves it as an actual .docx, .xlsx, or .pdf in your outputs folder. <strong>Ready to send immediately.</strong></div>
+      </div>
+      <div class="info-card green">
+        <div class="card-icon">â¡</div>
+        <div class="card-label green">Skill System</div>
+        <div class="card-h">Skills Load Automatically</div>
+        <div class="card-body">Your Skills folder lives on your computer. Every Cowork session loads them fresh. <strong>Build a Skill once, use it in every future session forever.</strong></div>
+      </div>
+      <div class="info-card purple">
+        <div class="card-icon">ð</div>
+        <div class="card-label purple">Integrations</div>
+        <div class="card-h">Connects to Your Tools</div>
+        <div class="card-body">Cowork can connect to Gmail, Google Calendar, Notion, Slack, HubSpot, Asana, and more via plugins. <strong>Claude manages your tools â not just your text.</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ââ COWORK SETUP ââ -->
+  <div class="section-block">
+    <div class="section-eyebrow">Getting Set Up</div>
+    <div class="section-title">How to Start Using Cowork</div>
+
+    <div class="step-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Download the Claude Desktop App</div>
+          <div class="step-desc">Cowork is part of the Claude desktop app for Mac and Windows. Go to <strong>claude.ai</strong>, click the download button, and install it. It's the same Claude account you already have â just with more capability.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Enable Cowork Mode in Settings</div>
+          <div class="step-desc">In the desktop app, go to Settings and enable Cowork mode. This activates the file access system and the Skills folder. <strong>Takes 30 seconds.</strong></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Select Your Working Folder</div>
+          <div class="step-desc">When you start a Cowork session, Claude will ask you to select a folder to work in. Point it at the project folder or Google Drive folder you want Claude to access. <strong>Claude can only see what you give it access to â your other files stay private.</strong></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Build Your First Skill (Optional but Powerful)</div>
+          <div class="step-desc">Create a folder called <code style="background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:4px; font-family:'DM Mono',monospace; font-size:12px;">.claude/skills/</code> in your working directory. Add your first .md Skill file. <strong>Next session, it's already loaded and waiting.</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ââ SKILLS vs PROMPTS ââ -->
+  <div class="section-block">
+    <div class="section-eyebrow">Key Distinction</div>
+    <div class="section-title">Skills vs. Projects vs. Prompts</div>
+    <p style="font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:24px;">These are three different layers of Claude's memory and instruction system. They all matter, but they do different things:</p>
+
+    <div class="two-col">
+      <div class="info-card blue" style="border-top:2px solid var(--blue);">
+        <div class="card-label blue">Claude Projects</div>
+        <div class="card-h">Your Brand Context Layer</div>
+        <div class="card-body">Lives in Claude's chat interface. Stores your system prompt + uploaded brand docs. Applies to all conversations inside that Project. <strong>Best for: brand voice, offer details, audience info.</strong></div>
+      </div>
+      <div class="info-card orange" style="border-top:2px solid var(--orange);">
+        <div class="card-label orange">Claude Skills</div>
+        <div class="card-h">Your Workflow Automation Layer</div>
+        <div class="card-body">Lives in Cowork on your computer. Stores specific task instructions. Triggered by keywords or slash commands. <strong>Best for: repeatable tasks, multi-step processes, file outputs.</strong></div>
+      </div>
+    </div>
+
+    <div class="callout blue" style="margin-top:24px;">
+      <div class="callout-label">How They Work Together</div>
+      <div class="callout-text">Use <strong>Projects</strong> for who you are (brand, offer, audience). Use <strong>Skills</strong> for what you do repeatedly (content, audits, emails). When they're both set up, Claude knows your business AND your workflows â every session starts at full speed.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ââ POWER MOVES ââ -->
+  <div class="section-block">
+    <div class="section-eyebrow">Advanced Usage</div>
+    <div class="section-title">3 Power Moves for IFCA Members</div>
+
+    <div class="card-grid">
+      <div class="info-card green">
+        <div class="card-icon">ðï¸</div>
+        <div class="card-label green">Power Move 1</div>
+        <div class="card-h">Build a Client Folder System</div>
+        <div class="card-body">Create a folder per student. Drop their tracker, Loom notes, and onboarding form inside. Point Cowork at it. <strong>Claude reads everything and runs the audit in one command.</strong></div>
+      </div>
+      <div class="info-card orange">
+        <div class="card-icon">ð</div>
+        <div class="card-label orange">Power Move 2</div>
+        <div class="card-h">Monthly Content in 20 Minutes</div>
+        <div class="card-body">Build a skill that reads your last 3 top-performing posts, identifies patterns, and generates a 30-day calendar with hooks, captions, and CTAs. <strong>Run it first of every month.</strong></div>
+      </div>
+      <div class="info-card purple">
+        <div class="card-icon">ð§</div>
+        <div class="card-label purple">Power Move 3</div>
+        <div class="card-h">Connect Gmail + Notion</div>
+        <div class="card-body">With Cowork plugins, Claude can read incoming emails, draft responses in your voice, and log key info to Notion â all in a single session. <strong>This is where "AI employee" actually becomes real.</strong></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div>
+    <div class="footer-logo">IFCA</div>
+    <div class="footer-sub">Seven-Figure Client Retreat Â· AI Training Library</div>
+  </div>
+  <div class="footer-right">Creating Claude Skills &amp; Cowork<br>Â© 2026 IFCA Â· Confidential</div>
+</footer>
+
+</body>
+</html>

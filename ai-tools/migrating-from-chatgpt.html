@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Migrating from ChatGPT to Claude â IFCA AI Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-dark: #102236;
+    --navy-mid: #1a3352;
+    --navy-card: rgba(255,255,255,0.035);
+    --orange: #E87722;
+    --orange-dim: rgba(232,119,34,0.12);
+    --orange-light: #F09040;
+    --blue-mid: #4A7FA5;
+    --blue-dim: rgba(74,127,165,0.12);
+    --green: #22C55E;
+    --green-dim: rgba(34,197,94,0.1);
+    --white: #ffffff;
+    --gray-400: #94A3B8;
+    --gold: #F59E0B;
+    --gold-dim: rgba(245,158,11,0.1);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--navy-dark); color: var(--white); overflow-x: hidden; min-height: 100vh; }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1000; opacity: 0.4;
+  }
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: 64px; padding: 0 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(16,34,54,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .logo-mark { font-family: 'Bebas Neue'; font-size: 22px; color: var(--orange); letter-spacing: 3px; }
+  .header-right { display: flex; align-items: center; gap: 20px; }
+  .back-link { font-family: 'DM Mono'; font-size: 11px; color: rgba(255,255,255,0.4); text-decoration: none; letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; transition: color 0.2s; }
+  .back-link:hover { color: var(--orange); }
+  .cat-tag { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(232,119,34,0.2); }
+  .hero {
+    padding: 120px 48px 80px;
+    background: radial-gradient(ellipse 70% 60% at 80% 30%, rgba(232,119,34,0.07) 0%, transparent 60%),
+                linear-gradient(160deg, var(--navy-dark) 0%, #0d1e30 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::after { content: ''; position: absolute; top: 0; right: 20%; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent, rgba(232,119,34,0.15), transparent); transform: rotate(6deg); }
+  .hero-content { max-width: 780px; position: relative; z-index: 2; }
+  .hero-eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  .eyebrow-line { width: 36px; height: 2px; background: var(--orange); }
+  .eyebrow-text { font-family: 'DM Mono'; font-size: 11px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; }
+  .hero-title { font-family: 'Bebas Neue'; font-size: clamp(52px, 6.5vw, 92px); line-height: 0.9; color: white; margin-bottom: 20px; }
+  .hero-subtitle { font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.65; max-width: 600px; }
+  .hero-meta { display: flex; align-items: center; gap: 24px; margin-top: 32px; flex-wrap: wrap; }
+  .meta-chip { font-family: 'DM Mono'; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); }
+  .meta-chip.green { color: #86efac; background: var(--green-dim); border-color: rgba(34,197,94,0.2); }
+  main { max-width: 900px; margin: 0 auto; padding: 64px 48px 80px; }
+  @media(max-width:768px) { main { padding: 48px 24px 60px; } header { padding: 0 24px; } .hero { padding: 100px 24px 60px; } }
+  .section-eyebrow { font-family: 'DM Mono'; font-size: 10px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
+  .section-eyebrow::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: rgba(232,119,34,0.3); }
+  .section-title { font-family: 'Bebas Neue'; font-size: 40px; color: white; line-height: 1; letter-spacing: 1px; margin-bottom: 24px; }
+  .section-block { margin-bottom: 64px; }
+  .card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 16px; }
+  .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .card-grid.cols-1 { grid-template-columns: 1fr; }
+  @media(max-width:640px) { .card-grid { grid-template-columns: 1fr; } }
+  .info-card { background: var(--navy-card); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 24px 22px; display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden; }
+  .info-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: rgba(232,119,34,0.3); }
+  .info-card.orange::before { background: var(--orange); }
+  .info-card.blue::before { background: var(--blue-mid); }
+  .info-card.green::before { background: var(--green); }
+  .info-card.gold::before { background: var(--gold); }
+  .info-card.purple::before { background: var(--purple); }
+  .info-card.red::before { background: #ef4444; }
+  .card-icon { font-size: 26px; }
+  .card-label { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange); }
+  .card-label.blue { color: var(--blue-mid); }
+  .card-label.green { color: #86efac; }
+  .card-label.gold { color: var(--gold); }
+  .card-label.purple { color: var(--purple); }
+  .card-label.red { color: #f87171; }
+  .card-h { font-family: 'Bebas Neue'; font-size: 22px; color: white; line-height: 1.05; letter-spacing: 0.5px; }
+  .card-body { font-size: 13px; color: rgba(255,255,255,0.52); line-height: 1.6; }
+  .card-body strong { color: rgba(255,255,255,0.8); }
+  .callout { background: var(--orange-dim); border: 1px solid rgba(232,119,34,0.2); border-left: 3px solid var(--orange); border-radius: 0 12px 12px 0; padding: 18px 22px; margin: 24px 0; }
+  .callout.blue { background: var(--blue-dim); border-color: rgba(74,127,165,0.2); border-left-color: var(--blue-mid); }
+  .callout.green { background: var(--green-dim); border-color: rgba(34,197,94,0.2); border-left-color: var(--green); }
+  .callout.gold { background: var(--gold-dim); border-color: rgba(245,158,11,0.2); border-left-color: var(--gold); }
+  .callout-label { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange); margin-bottom: 6px; }
+  .callout.blue .callout-label { color: var(--blue-mid); }
+  .callout.green .callout-label { color: #86efac; }
+  .callout.gold .callout-label { color: var(--gold); }
+  .callout-text { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+  .callout-text strong { color: white; }
+
+  /* SIDE-BY-SIDE COMPARE */
+  .vs-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; margin-bottom: 12px; align-items: stretch; }
+  .vs-col { background: var(--navy-card); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 22px 20px; }
+  .vs-col.gpt { border-top-color: rgba(255,255,255,0.12); }
+  .vs-col.claude { border-top-color: rgba(232,119,34,0.4); }
+  .vs-badge { display: flex; align-items: center; justify-content: center; }
+  .vs-dot { font-family: 'Bebas Neue'; font-size: 18px; color: rgba(255,255,255,0.2); letter-spacing: 2px; writing-mode: vertical-rl; text-orientation: mixed; padding: 0 8px; }
+  .vs-head { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; color: rgba(255,255,255,0.35); }
+  .vs-head.orange { color: var(--orange); }
+  .vs-item { font-size: 13px; color: rgba(255,255,255,0.55); padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.04); line-height: 1.5; display: flex; align-items: flex-start; gap: 8px; }
+  .vs-item:last-child { border-bottom: none; }
+  .vs-item::before { content: 'Â·'; color: rgba(255,255,255,0.2); flex-shrink: 0; margin-top: 1px; }
+  .vs-col.claude .vs-item::before { content: 'â'; color: var(--orange); }
+  @media(max-width:640px) { .vs-row { grid-template-columns: 1fr; } .vs-badge { display: none; } }
+
+  /* TRANSLATION TABLE */
+  .trans-table { width: 100%; border-collapse: collapse; }
+  .trans-table th { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.3); padding: 10px 16px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.02); }
+  .trans-table td { font-size: 13px; color: rgba(255,255,255,0.55); padding: 13px 16px; border-bottom: 1px solid rgba(255,255,255,0.05); line-height: 1.5; vertical-align: top; }
+  .trans-table tr:last-child td { border-bottom: none; }
+  .trans-table td:first-child { font-family: 'DM Mono'; font-size: 11px; color: rgba(255,255,255,0.65); }
+  .trans-table td:nth-child(2) { color: rgba(255,255,255,0.3); }
+  .trans-table td:nth-child(3) { color: rgba(255,255,255,0.7); font-weight: 500; }
+  .trans-wrap { background: var(--navy-card); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; overflow: hidden; margin-bottom: 24px; }
+
+  .step-list { display: flex; flex-direction: column; gap: 14px; }
+  .step-item { display: flex; gap: 18px; align-items: flex-start; background: var(--navy-card); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 20px 22px; }
+  .step-num { width: 34px; height: 34px; border-radius: 50%; background: var(--orange-dim); border: 1px solid rgba(232,119,34,0.25); font-family: 'Bebas Neue'; font-size: 18px; color: var(--orange); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-title { font-family: 'Bebas Neue'; font-size: 20px; color: white; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .step-desc { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+  .step-desc strong { color: rgba(255,255,255,0.8); }
+
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent); margin: 48px 0; }
+  footer { padding: 40px 48px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .footer-logo { font-family: 'Bebas Neue'; font-size: 22px; color: var(--orange); letter-spacing: 3px; }
+  .footer-sub { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.2); letter-spacing: 1px; margin-top: 4px; }
+  .footer-right { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.15); letter-spacing: 1px; text-align: right; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">IFCA</div>
+  <div class="header-right">
+    <span class="cat-tag">Getting Started</span>
+    <a class="back-link" href="../index.html">â Back to Playbooks</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">AI Training Â· Module 02</div></div>
+    <div class="hero-title">Migrating from<br>ChatGPT to Claude</div>
+    <div class="hero-subtitle">What's different, what carries over, and how to move your prompts, workflows, and context without starting from zero.</div>
+    <div class="hero-meta">
+      <span class="meta-chip green">â Live</span>
+      <span class="meta-chip">Getting Started</span>
+      <span class="meta-chip">~12 min read</span>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- ââ THE MINDSET SHIFT ââ -->
+  <div class="section-block">
+    <div class="section-eyebrow">First</div>
+    <div class="section-title">The Core Difference</div>
+    <p style="font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:28px;">ChatGPT and Claude both answer questions. But Claude is trained differently â it's optimized for longer conversations, more nuanced writing, and following complex multi-step instructions. The gap shows up fast in content-heavy work.</p>
+
+    <div class="vs-row">
+      <div class="vs-col gpt">
+        <div class="vs-head">ChatGPT Feels Like...</div>
+        <div class="vs-item">Quick question â quick answer</div>
+        <div class="vs-item">Good at generating lists and bullet points</div>
+        <div class="vs-item">Memory resets every conversation (unless using Projects/Assistants)</div>
+        <div class="vs-item">GPT-4o is the standard model â very capable, fast</div>
+        <div class="vs-item">Voice mode is strong, especially with real-time updates</div>
+        <div class="vs-item">Custom Instructions for brand context</div>
+      </div>
+      <div class="vs-badge"><div class="vs-dot">VS</div></div>
+      <div class="vs-col claude">
+        <div class="vs-head orange">Claude Feels Like...</div>
+        <div class="vs-item">Better at holding a long thread â less drift in multi-step tasks</div>
+        <div class="vs-item">Stronger long-form writing: emails, scripts, structured content</div>
+        <div class="vs-item">Projects = persistent context across all conversations</div>
+        <div class="vs-item">Three model tiers â Haiku, Sonnet, Opus â pick by task complexity</div>
+        <div class="vs-item">Voice mode on mobile works well, improving fast</div>
+        <div class="vs-item">Artifacts panel for previewing HTML/code/docs live</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Bottom Line</div>
+      <div class="callout-text"><strong>For fitness coaches doing content, ads, and email:</strong> Claude typically writes cleaner, more on-brand copy on the first pass. ChatGPT can be great for research and quick tasks. You don't have to pick one forever â but Claude should be your primary tool for anything going out to an audience.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ââ WHAT CARRIES OVER ââ -->
+  <div class="section-block">
+    <div class="section-eyebrow">Good News</div>
+    <div class="section-title">What Carries Over</div>
+    <p style="font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:28px;">Most of your existing prompts will work in Claude with zero changes. A few habits make them work better.</p>
+
+    <div class="card-grid cols-3">
+      <div class="info-card green">
+        <div class="card-icon">â</div>
+        <div class="card-label green">Works Directly</div>
+        <div class="card-h">Your Existing Prompts</div>
+        <div class="card-body">80â90% of ChatGPT prompts work in Claude as-is. Paste them in. You'll often get a better result immediately, especially for copy-heavy outputs.</div>
+      </div>
+      <div class="info-card green">
+        <div class="card-icon">â</div>
+        <div class="card-label green">Works Directly</div>
+        <div class="card-h">Role-Based Prompting</div>
+        <div class="card-body">"Act as a fitness marketing expertâ¦" works exactly the same. Claude responds well to role framing. Keep your existing openers.</div>
+      </div>
+      <div class="info-card green">
+        <div class="card-icon">â</div>
+        <div class="card-label green">Works Directly</div>
+        <div class="card-h">Format Instructions</div>
+        <div class="card-body">"Give me 5 versions in bullet formatâ¦", "Write this as a numbered listâ¦", "Output as a tableâ¦" â all format instructions carry over perfectly.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ââ PROMPT TRANSLATION ââ -->
+  <div class="section-block">
+    <div class="section-eyebrow">Translation Guide</div>
+    <div class="section-title">ChatGPT â Claude Prompt Shifts</div>
+    <p style="font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:24px;">A handful of small adjustments make Claude output noticeably better. None of these are required â they just close the gap faster.</p>
+
+    <div class="trans-wrap">
+      <table class="trans-table">
+        <thead>
+          <tr><th>What You Did in ChatGPT</th><th>â</th><th>What Works Better in Claude</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Custom Instructions for brand context</td><td>â</td><td>Project System Prompt â persistent, richer, per-use-case</td></tr>
+          <tr><td>Pasting brand info every session</td><td>â</td><td>Upload docs to your Project once. Never paste again.</td></tr>
+          <tr><td>Short prompt â iterate from output</td><td>â</td><td>Longer, structured prompt upfront. Claude handles complexity better.</td></tr>
+          <tr><td>"Write 5 ad hooks"</td><td>â</td><td>"Write 10 ad hooks. Use emotional triggers. First 3: fear of plateau. Next 3: identity aspiration. Last 4: social proof. All for 35â45F fitness coaches."</td></tr>
+          <tr><td>Regenerate when output is off</td><td>â</td><td>Tell Claude exactly what was wrong: "Too formal. More conversational. Cut the last paragraph. Lead with the result."</td></tr>
+          <tr><td>GPT Assistants for repeatable tasks</td><td>â</td><td>Claude Projects â same concept, more document context, better writing</td></tr>
+          <tr><td>Memory (beta feature)</td><td>â</td><td>Projects = permanent context. No memory feature needed.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ââ MOVING YOUR WORKFLOWS ââ -->
+  <div class="section-block">
+    <div class="section-eyebrow">Migration Steps</div>
+    <div class="section-title">Moving Your Workflows</div>
+    <p style="font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:24px;">A practical 4-step migration that takes under an hour and sets you up for faster output than you ever got from ChatGPT.</p>
+
+    <div class="step-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Recreate Your Context as a Claude Project</div>
+          <div class="step-desc">Go to Projects â New Project. Copy your ChatGPT Custom Instructions into the System Prompt. Expand them â add your offer name, target client, typical transformation, tone guide, and words you never use. <strong>This is better than Custom Instructions because it's per-project, not global.</strong></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Upload Your Core Reference Documents</div>
+          <div class="step-desc">Inside your Project, upload: your sales page PDF, your best email sequence, your latest lead magnet, and any brand voice guidelines. These live in the Project permanently. <strong>Claude will reference them automatically without you pasting them.</strong></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Port Your Top 5 Prompts</div>
+          <div class="step-desc">Take the 5 prompts you use most in ChatGPT. Paste them into Claude (inside your Project). Run them. Compare the output side-by-side. You'll see where Claude already wins â and where you need to add more specificity to the prompt. <strong>This is the fastest calibration method.</strong></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Pick One Workflow to Run Exclusively in Claude for 7 Days</div>
+          <div class="step-desc">Choose your highest-volume content task â ad hooks, email campaigns, Instagram captions. Run it only in Claude for 7 days. By day 3 you've learned the model. By day 7 you're faster than you ever were in ChatGPT. <strong>Switching tools mid-task is where most people lose time.</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout green">
+      <div class="callout-label">The Projects Unlock</div>
+      <div class="callout-text"><strong>Projects are Claude's biggest advantage over ChatGPT.</strong> Once you build one with your brand docs, every conversation in that Project starts with Claude already knowing your offer, your audience, your tone, your hooks that have worked, and your competitors. You never explain yourself twice.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ââ COMMON GOTCHAS ââ -->
+  <div class="section-block">
+    <div class="section-eyebrow">Watch Out For</div>
+    <div class="section-title">3 Common Mistakes</div>
+    <div class="card-grid">
+      <div class="info-card red">
+        <div class="card-icon">â ï¸</div>
+        <div class="card-label red">Mistake 1</div>
+        <div class="card-h">Expecting Claude to Be Edgy</div>
+        <div class="card-body">Claude defaults to measured, professional tone. If your brand voice is punchy, direct, and uses sentence fragments â say so explicitly in your System Prompt. <strong>Claude matches your voice when you give it a clear example.</strong> Add 3 sample sentences in your Project System Prompt that show how you actually write.</div>
+      </div>
+      <div class="info-card red">
+        <div class="card-icon">â ï¸</div>
+        <div class="card-label red">Mistake 2</div>
+        <div class="card-h">Using Claude Without a Project</div>
+        <div class="card-body">If you're not in a Project, Claude has zero context about your business every new conversation. That's why it feels generic. <strong>95% of quality issues disappear once you work inside a properly set up Project.</strong> Set it up before your next session.</div>
+      </div>
+      <div class="info-card red">
+        <div class="card-icon">â ï¸</div>
+        <div class="card-label red">Mistake 3</div>
+        <div class="card-h">Short Prompts for Complex Tasks</div>
+        <div class="card-body">Claude is better at following complex multi-part instructions than ChatGPT â so give it more. More context, more examples, more constraints. <strong>A 6-sentence prompt beats a 1-sentence prompt almost every time.</strong> You only need to write it once â save it as a template.</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div>
+    <div class="footer-logo">IFCA</div>
+    <div class="footer-sub">Seven-Figure Client Retreat Â· AI Training Library</div>
+  </div>
+  <div class="footer-right">Migrating from ChatGPT to Claude<br>Â© 2026 IFCA Â· Confidential</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Getting Started with Claude â IFCA AI Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-dark: #102236;
+    --navy-mid: #1a3352;
+    --navy-card: rgba(255,255,255,0.035);
+    --orange: #E87722;
+    --orange-dim: rgba(232,119,34,0.12);
+    --orange-light: #F09040;
+    --blue-mid: #4A7FA5;
+    --blue-dim: rgba(74,127,165,0.12);
+    --green: #22C55E;
+    --green-dim: rgba(34,197,94,0.1);
+    --white: #ffffff;
+    --gray-400: #94A3B8;
+    --gray-500: #64748B;
+    --gold: #F59E0B;
+    --purple: #a78bfa;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--navy-dark); color: var(--white); overflow-x: hidden; min-height: 100vh; }
+
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1000; opacity: 0.4;
+  }
+
+  /* ââ HEADER ââ */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: 64px; padding: 0 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(16,34,54,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .logo-mark { font-family: 'Bebas Neue'; font-size: 22px; color: var(--orange); letter-spacing: 3px; }
+  .header-right { display: flex; align-items: center; gap: 20px; }
+  .back-link {
+    font-family: 'DM Mono'; font-size: 11px; color: rgba(255,255,255,0.4);
+    text-decoration: none; letter-spacing: 1px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px; transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--orange); }
+  .back-arrow { font-size: 14px; }
+  .cat-tag { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(232,119,34,0.2); }
+
+  /* ââ HERO ââ */
+  .hero {
+    padding: 120px 48px 80px;
+    background: radial-gradient(ellipse 70% 60% at 80% 30%, rgba(232,119,34,0.07) 0%, transparent 60%),
+                linear-gradient(160deg, var(--navy-dark) 0%, #0d1e30 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::after { content: ''; position: absolute; top: 0; right: 20%; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent, rgba(232,119,34,0.15), transparent); transform: rotate(6deg); }
+  .hero-content { max-width: 780px; position: relative; z-index: 2; }
+  .hero-eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  .eyebrow-line { width: 36px; height: 2px; background: var(--orange); }
+  .eyebrow-text { font-family: 'DM Mono'; font-size: 11px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; }
+  .hero-title { font-family: 'Bebas Neue'; font-size: clamp(56px, 7vw, 96px); line-height: 0.9; color: white; margin-bottom: 20px; }
+  .hero-subtitle { font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.65; max-width: 600px; }
+  .hero-meta { display: flex; align-items: center; gap: 24px; margin-top: 32px; flex-wrap: wrap; }
+  .meta-chip { font-family: 'DM Mono'; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.4); }
+  .meta-chip.green { color: #86efac; background: var(--green-dim); border-color: rgba(34,197,94,0.2); }
+
+  /* ââ MAIN CONTENT ââ */
+  main { max-width: 900px; margin: 0 auto; padding: 64px 48px 80px; }
+  @media(max-width:768px) { main { padding: 48px 24px 60px; } header { padding: 0 24px; } .hero { padding: 100px 24px 60px; } }
+
+  /* ââ SECTION HEADERS ââ */
+  .section-eyebrow { font-family: 'DM Mono'; font-size: 10px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
+  .section-eyebrow::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: rgba(232,119,34,0.3); }
+  .section-title { font-family: 'Bebas Neue'; font-size: 40px; color: white; line-height: 1; letter-spacing: 1px; margin-bottom: 24px; }
+  .section-block { margin-bottom: 64px; }
+
+  /* ââ CARDS ââ */
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 16px; }
+  .card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .card-grid.cols-1 { grid-template-columns: 1fr; }
+  @media(max-width:640px) { .card-grid { grid-template-columns: 1fr; } }
+
+  .info-card {
+    background: var(--navy-card); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px; padding: 24px 22px;
+    display: flex; flex-direction: column; gap: 10px;
+    position: relative; overflow: hidden;
+  }
+  .info-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: rgba(232,119,34,0.3); }
+  .info-card.orange::before { background: var(--orange); }
+  .info-card.blue::before { background: var(--blue-mid); }
+  .info-card.green::before { background: var(--green); }
+  .info-card.gold::before { background: var(--gold); }
+  .info-card.purple::before { background: var(--purple); }
+  .card-icon { font-size: 28px; }
+  .card-label { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange); }
+  .card-label.blue { color: var(--blue-mid); }
+  .card-label.green { color: #86efac; }
+  .card-label.gold { color: var(--gold); }
+  .card-label.purple { color: var(--purple); }
+  .card-h { font-family: 'Bebas Neue'; font-size: 22px; color: white; line-height: 1.05; letter-spacing: 0.5px; }
+  .card-body { font-size: 13px; color: rgba(255,255,255,0.52); line-height: 1.6; }
+  .card-price { font-family: 'Bebas Neue'; font-size: 32px; color: white; }
+  .card-price span { font-family: 'DM Mono'; font-size: 11px; color: rgba(255,255,255,0.3); }
+  .card-badge { display: inline-flex; align-items: center; font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; margin-top: 4px; }
+  .card-badge.rec { background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(232,119,34,0.25); }
+  .card-badge.good { background: var(--green-dim); color: #86efac; border: 1px solid rgba(34,197,94,0.2); }
+  .card-badge.adv { background: var(--blue-dim); color: var(--blue-mid); border: 1px solid rgba(74,127,165,0.25); }
+
+  /* ââ STEP LIST ââ */
+  .step-list { display: flex; flex-direction: column; gap: 16px; }
+  .step-item {
+    display: flex; gap: 20px; align-items: flex-start;
+    background: var(--navy-card); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px; padding: 22px 24px;
+  }
+  .step-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--orange-dim); border: 1px solid rgba(232,119,34,0.25);
+    font-family: 'Bebas Neue'; font-size: 18px; color: var(--orange);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-content { flex: 1; }
+  .step-title { font-family: 'Bebas Neue'; font-size: 20px; color: white; letter-spacing: 0.5px; line-height: 1.1; margin-bottom: 6px; }
+  .step-desc { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+  .step-desc strong { color: rgba(255,255,255,0.8); font-weight: 600; }
+  .step-tag { display: inline-flex; font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; margin-left: 10px; background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(232,119,34,0.2); vertical-align: middle; }
+
+  /* ââ CALLOUT ââ */
+  .callout {
+    background: var(--orange-dim); border: 1px solid rgba(232,119,34,0.2);
+    border-left: 3px solid var(--orange);
+    border-radius: 0 12px 12px 0; padding: 18px 22px;
+    margin: 24px 0;
+  }
+  .callout.blue { background: var(--blue-dim); border-color: rgba(74,127,165,0.2); border-left-color: var(--blue-mid); }
+  .callout.green { background: var(--green-dim); border-color: rgba(34,197,94,0.2); border-left-color: var(--green); }
+  .callout-label { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange); margin-bottom: 6px; }
+  .callout.blue .callout-label { color: var(--blue-mid); }
+  .callout.green .callout-label { color: #86efac; }
+  .callout-text { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+  .callout-text strong { color: white; }
+
+  /* ââ COMPARE TABLE ââ */
+  .compare-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  .compare-table th { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.3); padding: 10px 16px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .compare-table td { font-size: 13px; color: rgba(255,255,255,0.55); padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: top; line-height: 1.5; }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table td:first-child { font-weight: 600; color: rgba(255,255,255,0.75); }
+  .compare-table td.hl { color: #86efac; }
+  .compare-table td.warn { color: var(--gold); }
+
+  /* ââ DIVIDER ââ */
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent); margin: 48px 0; }
+
+  /* ââ FOOTER ââ */
+  footer { padding: 40px 48px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .footer-logo { font-family: 'Bebas Neue'; font-size: 22px; color: var(--orange); letter-spacing: 3px; }
+  .footer-sub { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.2); letter-spacing: 1px; margin-top: 4px; }
+  .footer-right { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.15); letter-spacing: 1px; text-align: right; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-mark">IFCA</div>
+  <div class="header-right">
+    <span class="cat-tag">Getting Started</span>
+    <a class="back-link" href="../index.html"><span class="back-arrow">â</span> Back to Playbooks</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">AI Training Â· Module 01</div></div>
+    <div class="hero-title">Getting Started<br>with Claude</div>
+    <div class="hero-subtitle">Plans, models, interface orientation, and the five things to set up before your first real work session â so you're not burning message quota on setup.</div>
+    <div class="hero-meta">
+      <span class="meta-chip green">â Live</span>
+      <span class="meta-chip">Getting Started</span>
+      <span class="meta-chip">~15 min read</span>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<main>
+
+  <!-- ââ SECTION 1: WHICH PLAN ââ -->
+  <div class="section-block">
+    <div class="section-eyebrow">Step 1</div>
+    <div class="section-title">Choose Your Plan</div>
+    <p style="font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:28px;">Three tiers. Your choice determines which models you can access and how many messages you get per day. Most IFCA members doing serious AI work need Pro or Max.</p>
+
+    <div class="card-grid">
+      <div class="info-card">
+        <div class="card-label">Free</div>
+        <div class="card-price">$0 <span>/ month</span></div>
+        <div class="card-h">Try It Out</div>
+        <div class="card-body">Limited daily messages. Access to Sonnet only. Good for testing Claude before committing. <strong>Not enough for daily content or ad work.</strong></div>
+      </div>
+      <div class="info-card orange">
+        <div class="card-label">Pro</div>
+        <div class="card-price">$20 <span>/ month</span></div>
+        <div class="card-h">Daily Driver</div>
+        <div class="card-body">5Ã more usage than Free. Access to all models including Opus. Projects, file uploads, and artifacts enabled. <strong>This is where most IFCA members start.</strong></div>
+        <div class="card-badge rec">Recommended</div>
+      </div>
+      <div class="info-card blue">
+        <div class="card-label">Max</div>
+        <div class="card-price">$100 <span>/ month</span></div>
+        <div class="card-h">Power Users</div>
+        <div class="card-body">20Ã usage vs Free. Priority access, extended context windows, and early feature access. Best if you're running Claude for your whole team's content pipeline.</div>
+        <div class="card-badge adv">Advanced</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">Pro Tip</div>
+      <div class="callout-text">Start with <strong>Pro at $20/month</strong>. If you hit your daily limit consistently within the first week, upgrade to Max. Most fitness coaches at 5â7 figures don't need Max unless they're producing 10+ pieces of content daily.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ââ SECTION 2: MODELS ââ -->
+  <div class="section-block">
+    <div class="section-eyebrow">Step 2</div>
+    <div class="section-title">Know Your Models</div>
+    <p style="font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:28px;">Claude has three models. Each one burns a different amount of your daily usage. Choosing the right model for each task is the single biggest lever for extending your message budget.</p>
+
+    <div class="card-grid">
+      <div class="info-card">
+        <div class="card-icon">â¡</div>
+        <div class="card-label">Fastest</div>
+        <div class="card-h">Claude Haiku</div>
+        <div class="card-body">Fastest, cheapest on message quota. Best for simple, repeatable tasks: formatting, categorizing, summarizing, quick rewrites.</div>
+        <div class="card-badge good">Use for simple tasks</div>
+      </div>
+      <div class="info-card orange">
+        <div class="card-icon">ð¯</div>
+        <div class="card-label">Best Balance</div>
+        <div class="card-h">Claude Sonnet</div>
+        <div class="card-body">Best quality-to-speed ratio. Use this for 80% of your work: ad scripts, email sequences, hook writing, social captions, research synthesis.</div>
+        <div class="card-badge rec">Your daily driver</div>
+      </div>
+      <div class="info-card blue">
+        <div class="card-icon">ð§ </div>
+        <div class="card-label">Most Powerful</div>
+        <div class="card-h">Claude Opus</div>
+        <div class="card-body">Deepest reasoning, highest quality output. Burns more usage. Save for complex strategy, offer analysis, or anything that requires extended multi-step thinking.</div>
+        <div class="card-badge adv">Save for big tasks</div>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <div class="callout-label">Model Selection Rule</div>
+      <div class="callout-text"><strong>Sonnet for almost everything.</strong> Haiku when you're doing bulk/repetitive tasks (rewriting 10 subject lines). Opus when you need Claude to think deeply â strategy sessions, offer audits, complex analysis.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ââ SECTION 3: INTERFACE ââ -->
+  <div class="section-block">
+    <div class="section-eyebrow">Step 3</div>
+    <div class="section-title">Interface Orientation</div>
+    <p style="font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:28px;">Three features in the Claude interface that change how you work. Most people miss them in the first week and waste time repeating context.</p>
+
+    <div class="card-grid cols-2" style="margin-bottom:14px;">
+      <div class="info-card orange">
+        <div class="card-icon">ð</div>
+        <div class="card-label">Feature 1</div>
+        <div class="card-h">Projects</div>
+        <div class="card-body">A persistent workspace with a shared system prompt and uploaded documents. Think of it like an AI assistant with permanent memory of your brand, offer, and tone. <strong>Set one up before you do any real work.</strong></div>
+      </div>
+      <div class="info-card">
+        <div class="card-icon">ð¼ï¸</div>
+        <div class="card-label">Feature 2</div>
+        <div class="card-h">Artifacts</div>
+        <div class="card-body">When Claude creates code, HTML, or long documents, it puts them in a side panel called an Artifact. You can preview, copy, iterate, and publish them. Every quiz, tool, and training page in these playbooks was built as an Artifact.</div>
+      </div>
+    </div>
+    <div class="card-grid cols-1">
+      <div class="info-card blue">
+        <div class="card-icon">ðï¸</div>
+        <div class="card-label">Feature 3</div>
+        <div class="card-h">Voice Mode</div>
+        <div class="card-body">On mobile and desktop, you can talk to Claude instead of typing. Best for: brainstorming while you drive, voice-drafting email responses, capturing ideas before they disappear. Uses the same message quota as text.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ââ SECTION 4: 5 THINGS TO SET UP ââ -->
+  <div class="section-block">
+    <div class="section-eyebrow">Step 4</div>
+    <div class="section-title">5 Things to Set Up First</div>
+    <p style="font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:28px;">Do these once. They save hundreds of repeated prompts over time.</p>
+
+    <div class="step-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Create Your Brand Project <span class="step-tag">10 min</span></div>
+          <div class="step-desc">Go to Projects â New Project. Name it "IFCA Business." In the System Prompt, paste your: business name, target audience, offer name, typical client outcome, tone of voice (3 adjectives), and words/phrases you never use. This becomes Claude's permanent context for your brand. <strong>Every conversation inside this project inherits it automatically.</strong></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Upload Your Core Documents <span class="step-tag">5 min</span></div>
+          <div class="step-desc">Inside your Project, upload: your lead magnet or free guide, your sales page or offer one-pager, your most recent email sequence, and any winning ad scripts. Claude will reference these automatically. <strong>You'll never have to paste your offer details into a prompt again.</strong></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Save a Starter Prompt Template <span class="step-tag">5 min</span></div>
+          <div class="step-desc">Create a note (Apple Notes, Notion, wherever) with your go-to prompt structures: one for ad scripts, one for email sequences, one for Instagram captions. Starting with structure beats starting from blank. <strong>Template first, customize second â always faster.</strong></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Enable Artifacts Preview <span class="step-tag">2 min</span></div>
+          <div class="step-desc">In Claude settings, make sure the Artifacts panel is enabled. When Claude builds an HTML file, quiz, calculator, or long document â it appears in the preview pane on the right. You can instantly see what it looks like without copying and pasting into a browser. <strong>Essential for building any interactive tools.</strong></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">Install the Claude Mobile App <span class="step-tag">2 min</span></div>
+          <div class="step-desc">iOS and Android. Your Pro subscription works on all platforms â same quota, same Projects, same models. The mobile app supports voice mode for dictating ideas. <strong>You'll use this more than you expect during commutes and workouts.</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ââ SECTION 5: FIRST SESSION ââ -->
+  <div class="section-block">
+    <div class="section-eyebrow">Step 5</div>
+    <div class="section-title">Your First Real Work Session</div>
+    <p style="font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:28px;">Start with a task you'd normally spend 45â90 minutes on manually. Use your Brand Project. Here's the fastest path to "I can't believe how good this is."</p>
+
+    <div class="card-grid">
+      <div class="info-card green">
+        <div class="card-icon">ð</div>
+        <div class="card-label">Best First Task</div>
+        <div class="card-h">Write 5 Ad Hook Variations</div>
+        <div class="card-body">Give Claude: your best-performing hook from the last 30 days, the emotion that drives it, and your target audience. Ask for 10 variations. Pick your top 5. <strong>20-minute task that used to take 2 hours.</strong></div>
+      </div>
+      <div class="info-card">
+        <div class="card-icon">ð§</div>
+        <div class="card-label">Or Try This</div>
+        <div class="card-h">Repurpose a Podcast Episode</div>
+        <div class="card-body">Upload the transcript or paste a summary. Ask Claude to: write 3 Instagram captions, a 5-part email sequence, and 2 short-form video scripts. All from one source. <strong>This is the content multiplication play.</strong></div>
+      </div>
+      <div class="info-card">
+        <div class="card-icon">ð</div>
+        <div class="card-label">Or This</div>
+        <div class="card-h">Analyze a Competitor's Top Ad</div>
+        <div class="card-body">Screenshot a competitor's best-performing ad creative. Ask Claude to break down: the hook mechanism, emotional trigger, implied promise, and 3 white-space angles you can own. <strong>Intelligence in 5 minutes.</strong></div>
+      </div>
+    </div>
+
+    <div class="callout green">
+      <div class="callout-label">The Rule</div>
+      <div class="callout-text"><strong>Never start with a blank prompt.</strong> Always give Claude: a role ("you're an expert in X"), context ("my audience is Y, my offer is Z"), the task, and the format you want. The more specific your input, the closer the first draft lands to publish-ready.</div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">IFCA</div>
+    <div class="footer-sub">Seven-Figure Client Retreat Â· AI Training Library</div>
+  </div>
+  <div class="footer-right">Getting Started with Claude<br>Â© 2026 IFCA Â· Confidential</div>
+</footer>
+
+</body>
+</html>

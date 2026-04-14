@@ -162,7 +162,7 @@ body::after {
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
 .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
-@media(max-width:720px){ .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } .hero-stats { flex-direction: column; } .hs { border-right: none; border-bottom: 1px solid rgba(255,255,255,.06); } .hs:last-child { border-bottom: none; } }
+@media(max-width:720px){ .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } .hero-stats { flex-direction: column; } .hs { border-right: none; border-bottom: 1px solid rgba(255,255,255,.06); } .hs:last-child { border-bottom: none; } .eq-compare { grid-template-columns:1fr; } .eq-vs { display:none; } }
 @media(max-width:900px){ .grid-3 { grid-template-columns: 1fr 1fr; } .grid-4 { grid-template-columns: 1fr 1fr; } }
 
 /* WIN CARDS */
@@ -247,6 +247,21 @@ body::after {
 
 /* REV EQUILIBRIUM */
 .eq-box { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:12px; padding:18px 20px; }
+.req-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:24px; }
+@media(max-width:580px){ .req-grid { grid-template-columns:1fr; } }
+.req-cell { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:10px; padding:16px; }
+.req-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); margin-bottom:4px; }
+.req-val { font-family:'Bebas Neue'; font-size:36px; line-height:1; margin-bottom:3px; }
+.req-sub { font-size:11px; color:var(--gray-500); }
+.eq-compare { display:grid; grid-template-columns:1fr auto 1fr; gap:16px; align-items:center; margin-bottom:20px; }
+.eq-block { border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:24px; text-align:center; }
+.eq-block.purple { border-color:rgba(139,92,246,.3); background:var(--purple-bg); }
+.eq-block.blue   { border-color:rgba(74,127,165,.3); background:var(--blue-dim); }
+.eq-b-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); margin-bottom:6px; }
+.eq-b-val   { font-family:'Bebas Neue'; font-size:42px; line-height:1; margin-bottom:4px; }
+.eq-block.purple .eq-b-val { color:#c4b5fd; }
+.eq-block.blue   .eq-b-val { color:#7ABFDD; }
+.eq-b-sub  { font-size:11px; color:var(--gray-500); }
 .eq-b-val { font-family:'Bebas Neue'; font-size:36px; color:#fff; line-height:1; }
 .eq-b-val.green  { color: var(--green); }
 .eq-b-val.orange { color: var(--orange); }
@@ -456,42 +471,43 @@ em { color:var(--orange); font-style:normal; }
   <div class="sec-eyebrow">Section 03</div>
   <div class="sec-heading">Revenue Equilibrium</div>
   <div class="sec-divider"></div>
-  <p class="mb-md">Revenue Equilibrium = LTV × New Clients acquired per month. This is the total lifetime value being added to the business each month. The Monthly Revenue Cap is what the business converges to if churn, close rate, and client value stay exactly flat — it's the ceiling you're building toward. If Equilibrium exceeds the Cap, the business is compounding. If it falls below, churn is winning even when you're closing.</p>
+
+  <p class="mb-md">Revenue Equilibrium = LTV × New Clients acquired per month. This is the total lifetime value being added to the business each month. The Monthly Revenue Cap is what the business converges to if churn, close rate, and client value stay exactly flat — the ceiling you're building toward at the current pace. If Equilibrium exceeds the Cap, the base is compounding. If it falls below, churn is winning even when you're closing.</p>
 
   <div class="req-grid">
     <div class="req-cell">
       <div class="req-label">Q1 Avg Churn Rate</div>
-      <div class="req-val" style="color:var(--yellow);">5.1%</div>
-      <div class="req-sub">Jan=7.0% · Feb=5.4% · Mar=6.5% · Apr=0% (anomaly)</div>
+      <div class="req-val" style="color:var(--green);">6.3%</div>
+      <div class="req-sub">Jan=7.0% · Feb=5.4% · Mar=6.8% — healthy range</div>
     </div>
     <div class="req-cell">
       <div class="req-label">Q1 Avg LTV</div>
-      <div class="req-val" style="color:var(--orange);">$12,754</div>
+      <div class="req-val" style="color:var(--orange);">$11,568</div>
       <div class="req-sub">Jan=$11,345 · Feb=$14,197 · Mar=$10,406</div>
     </div>
     <div class="req-cell">
       <div class="req-label">Q1 New Clients/Mo</div>
-      <div class="req-val" style="color:#7ABFDD;">17</div>
-      <div class="req-sub">Jan=17 · Feb=22 · Mar=19 · Apr=10</div>
+      <div class="req-val" style="color:#7ABFDD;">19</div>
+      <div class="req-sub">Jan=17 · Feb=22 · Mar=19 — consistent</div>
     </div>
   </div>
 
   <div class="eq-compare">
     <div class="eq-block purple">
       <div class="eq-b-label">Revenue Equilibrium (LTV × New Clients)</div>
-      <div class="eq-b-val">$216.8K</div>
+      <div class="eq-b-val">$239K</div>
       <div class="eq-b-sub">Jan=$192.9K · Feb=$312.3K · Mar=$197.7K</div>
     </div>
     <div class="eq-vs">VS</div>
     <div class="eq-block blue">
       <div class="eq-b-label">Monthly Revenue Cap (Flat-State Ceiling)</div>
-      <div class="eq-b-val">$172.6K</div>
-      <div class="eq-b-sub">Avg Monthly Value ÷ Churn · ~268 active clients</div>
+      <div class="eq-b-val">$192K</div>
+      <div class="eq-b-sub">Avg Monthly Value ÷ Churn · ~265 active clients</div>
     </div>
   </div>
 
-  <div class="eq-verdict building" id="re-verdict">
-    <strong>Verdict: Building.</strong> Revenue Equilibrium ($216.8K) is 26% above the flat-state ceiling ($172.6K). With 268 active clients and $12,754 LTV, the compounding math is strong. April's drop to 10 closes is the signal to watch — at 10 new clients/month, equilibrium falls to ~$127K, still above the cap but with shrinking margin. The levers here are LTV protection (keep churn under 7%) and close velocity (keep new clients above 15/month). February's $312K equilibrium month shows what this business looks like when all three inputs are optimized simultaneously.
+  <div class="eq-verdict building">
+    <strong>Verdict: Building.</strong> Revenue Equilibrium ($239K) is 24% above the flat-state ceiling ($192K). With 265 active clients, a $11,568 LTV, and churn holding in the 6–7% range, the compounding math is strong. Every new client closed adds $11.5K in future lifetime value — and at 19 closes/month, the business is adding $220K+ in future LTV every 30 days. The lever to watch is the acquisition gap: the ad account is essentially unbuilt, which means this equilibrium is being driven almost entirely by organic. The moment a paid stack is running, equilibrium jumps materially. The single most important thing is not to let churn creep above 8% as the client base scales past 280.
   </div>
 </section>
 

@@ -74,6 +74,26 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 .win-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:4px}
 .win-desc{font-size:13px;color:rgba(255,255,255,.65);line-height:1.55}
 .period-bar{display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.year-selector{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.06)}
+.year-bar-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500)}
+.year-tabs{display:flex;gap:4px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:4px}
+.yt{background:transparent;border:none;border-radius:7px;padding:6px 18px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-400);cursor:pointer;transition:all .15s}
+.yt.active{background:var(--orange);color:#fff}
+.yt.y2025.active{background:#8B5CF6;color:#fff}
+.yoy-banner{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:16px}
+.yoy-cell{text-align:center}
+.yoy-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500);margin-bottom:4px}
+.yoy-vals{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.yoy-2025{font-family:'Bebas Neue';font-size:18px;color:#8B5CF6}
+.yoy-arrow{font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-500)}
+.yoy-2026{font-family:'Bebas Neue';font-size:18px;color:var(--orange)}
+.yoy-delta{font-family:'DM Mono',monospace;font-size:10px;padding:2px 6px;border-radius:4px;margin-top:2px}
+.yoy-delta.up{background:rgba(34,197,94,.12);color:var(--green)}
+.yoy-delta.dn{background:rgba(220,38,38,.12);color:var(--red)}
+.yoy-delta.neut{background:rgba(255,255,255,.06);color:var(--gray-400)}
+.year-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:4px;margin-left:8px;vertical-align:middle}
+.year-badge.y2026{background:rgba(232,119,34,.15);color:var(--orange)}
+.year-badge.y2025{background:rgba(139,92,246,.15);color:#8B5CF6}
 .period-bar-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500)}
 .period-tabs{display:flex;gap:4px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:4px}
 .pt{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:7px 14px;border-radius:7px;border:none;background:transparent;color:var(--gray-500);cursor:pointer;transition:all .18s}
@@ -272,6 +292,15 @@ em{color:var(--orange);font-style:normal}
   <div class="sec-heading">Data Snapshot</div>
   <div class="sec-divider"></div>
 
+  <div class="year-selector">
+    <span class="year-bar-label">Year:</span>
+    <div class="year-tabs">
+      <button class="yt active" id="yt-2026" onclick="setYear('2026')">2026</button>
+      <button class="yt y2025" id="yt-2025" onclick="setYear('2025')">2025</button>
+    </div>
+    <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray-500);margin-left:4px;">↑ Switch year to compare</span>
+  </div>
+
   <div class="period-bar">
     <span class="period-bar-label">Period:</span>
     <div class="period-tabs">
@@ -283,11 +312,14 @@ em{color:var(--orange);font-style:normal}
     <button class="edit-btn" id="edit-toggle" onclick="toggleEdit()">✏ Edit Mode</button>
   </div>
 
+  <!-- YOY COMPARISON BANNER -->
+  <div class="yoy-banner" id="yoy-banner"></div>
+
   <div class="kpi-band" id="kpi-band"></div>
 
   <div class="tbl-wrap">
     <table class="mtbl">
-      <thead><tr><th>Metric</th><th>Target</th><th id="period-col">Q1 Avg</th><th>Status</th><th>Note</th></tr></thead>
+      <thead><tr><th>Metric</th><th>Target</th><th id="period-col">Q1 Avg <span class="year-badge y2026" id="period-year-badge">2026</span></th><th>Status</th><th>Note</th></tr></thead>
       <tbody id="ad-tbody"></tbody>
     </table>
   </div>
@@ -896,52 +928,97 @@ em{color:var(--orange);font-style:normal}
 
 <script>
 const DATA = {
-  q1: {
-    label:'Q1 2026 Avg',
-    adSpend:1624, leads:1195, cpl:1.47,
-    scheduledCalls:25.0, liveCalls:23.3, showRate:0.931, costPerCall:67.33,
-    closes:8.3, closeRate:0.359, fePrice:2252,
-    contractedROAS:11.39, collectedROAS:8.42, feToBe:0.30, bePrice:3230,
-    upfrontPct:0.742, laborMargin:0.306, marketingMargin:0.065, overheadMargin:0.058,
-    netMargin:0.571, cac:333, ltv:null, cacLtv:null, churn:null, activeClients:null,
-    monthlyRev:26252, newClients:8.3
+  '2026': {
+    q1: {
+      label:'Q1 2026 Avg',
+      adSpend:1624, leads:1195, cpl:1.47,
+      scheduledCalls:25.0, liveCalls:23.3, showRate:0.931, costPerCall:67.33,
+      closes:8.3, closeRate:0.359, fePrice:2252,
+      contractedROAS:11.39, collectedROAS:8.42, feToBe:0.30, bePrice:3230,
+      upfrontPct:0.742, laborMargin:0.306, marketingMargin:0.065, overheadMargin:0.058,
+      netMargin:0.571, cac:333, ltv:null, cacLtv:null, churn:null, activeClients:null,
+      monthlyRev:26252, newClients:8.3
+    },
+    jan: {
+      label:'January 2026',
+      adSpend:1550, leads:808, cpl:1.92,
+      scheduledCalls:22, liveCalls:21, showRate:0.955, costPerCall:70.45,
+      closes:9, closeRate:0.429, fePrice:2294,
+      contractedROAS:13.32, collectedROAS:8.15, feToBe:0.30, bePrice:1950,
+      upfrontPct:0.611, laborMargin:0.359, marketingMargin:0.071, overheadMargin:0.105,
+      netMargin:0.466, cac:277, ltv:null, cacLtv:null, churn:null, activeClients:null,
+      monthlyRev:21934, newClients:9
+    },
+    feb: {
+      label:'February 2026',
+      adSpend:1696, leads:1665, cpl:1.02,
+      scheduledCalls:21, liveCalls:19, showRate:0.905, costPerCall:80.76,
+      closes:6, closeRate:0.316, fePrice:2533,
+      contractedROAS:8.96, collectedROAS:6.40, feToBe:0.25, bePrice:4500,
+      upfrontPct:0.714, laborMargin:0.318, marketingMargin:0.071, overheadMargin:0.041,
+      netMargin:0.570, cac:473, ltv:null, cacLtv:null, churn:null, activeClients:null,
+      monthlyRev:23952, newClients:6
+    },
+    mar: {
+      label:'March 2026',
+      adSpend:1625, leads:1113, cpl:1.46,
+      scheduledCalls:32, liveCalls:30, showRate:0.938, costPerCall:50.78,
+      closes:10, closeRate:0.333, fePrice:1930,
+      contractedROAS:11.88, collectedROAS:10.71, feToBe:0.35, bePrice:3240,
+      upfrontPct:0.902, laborMargin:0.241, marketingMargin:0.053, overheadMargin:0.028,
+      netMargin:0.678, cac:300, ltv:null, cacLtv:null, churn:null, activeClients:null,
+      monthlyRev:32869, newClients:10
+    }
   },
-  jan: {
-    label:'January 2026',
-    adSpend:1550, leads:808, cpl:1.92,
-    scheduledCalls:22, liveCalls:21, showRate:0.955, costPerCall:70.45,
-    closes:9, closeRate:0.429, fePrice:2294,
-    contractedROAS:13.32, collectedROAS:8.15, feToBe:0.30, bePrice:1950,
-    upfrontPct:0.611, laborMargin:0.359, marketingMargin:0.071, overheadMargin:0.105,
-    netMargin:0.466, cac:277, ltv:null, cacLtv:null, churn:null, activeClients:null,
-    monthlyRev:21934, newClients:9
-  },
-  feb: {
-    label:'February 2026',
-    adSpend:1696, leads:1665, cpl:1.02,
-    scheduledCalls:21, liveCalls:19, showRate:0.905, costPerCall:80.76,
-    closes:6, closeRate:0.316, fePrice:2533,
-    contractedROAS:8.96, collectedROAS:6.40, feToBe:0.25, bePrice:4500,
-    upfrontPct:0.714, laborMargin:0.318, marketingMargin:0.071, overheadMargin:0.041,
-    netMargin:0.570, cac:473, ltv:null, cacLtv:null, churn:null, activeClients:null,
-    monthlyRev:23952, newClients:6
-  },
-  mar: {
-    label:'March 2026',
-    adSpend:1625, leads:1113, cpl:1.46,
-    scheduledCalls:32, liveCalls:30, showRate:0.938, costPerCall:50.78,
-    closes:10, closeRate:0.333, fePrice:1930,
-    contractedROAS:11.88, collectedROAS:10.71, feToBe:0.35, bePrice:3240,
-    upfrontPct:0.902, laborMargin:0.241, marketingMargin:0.053, overheadMargin:0.028,
-    netMargin:0.678, cac:300, ltv:null, cacLtv:null, churn:null, activeClients:null,
-    monthlyRev:32869, newClients:10
+  '2025': {
+    q1: {
+      label:'Q1 2025 Avg',
+      adSpend:173, leads:430, cpl:0.44,
+      scheduledCalls:22.3, liveCalls:21.3, showRate:0.958, costPerCall:7.91,
+      closes:9.3, closeRate:0.439, fePrice:2000,
+      contractedROAS:149.7, collectedROAS:161.7, feToBe:0.60, bePrice:3500,
+      upfrontPct:1.200, laborMargin:0.081, marketingMargin:0.001, overheadMargin:0.025,
+      netMargin:0.893, cac:18, ltv:null, cacLtv:null, churn:null, activeClients:null,
+      monthlyRev:24761, newClients:9.3
+    },
+    jan: {
+      label:'January 2025',
+      adSpend:70, leads:122, cpl:0.57,
+      scheduledCalls:16, liveCalls:16, showRate:1.000, costPerCall:4.38,
+      closes:6, closeRate:0.375, fePrice:2000,
+      contractedROAS:168.6, collectedROAS:168.6, feToBe:0.60, bePrice:2500,
+      upfrontPct:1.000, laborMargin:0.107, marketingMargin:0.000, overheadMargin:0.042,
+      netMargin:0.851, cac:11.67, ltv:null, cacLtv:null, churn:null, activeClients:null,
+      monthlyRev:15400, newClients:6
+    },
+    feb: {
+      label:'February 2025',
+      adSpend:100, leads:300, cpl:0.33,
+      scheduledCalls:29, liveCalls:28, showRate:0.966, costPerCall:3.45,
+      closes:11, closeRate:0.393, fePrice:2000,
+      contractedROAS:220.0, collectedROAS:220.0, feToBe:null, bePrice:4000,
+      upfrontPct:1.000, laborMargin:0.066, marketingMargin:0.002, overheadMargin:0.034,
+      netMargin:0.898, cac:9.09, ltv:null, cacLtv:null, churn:null, activeClients:null,
+      monthlyRev:25050, newClients:11
+    },
+    mar: {
+      label:'March 2025',
+      adSpend:350, leads:869, cpl:0.40,
+      scheduledCalls:22, liveCalls:20, showRate:0.909, costPerCall:15.91,
+      closes:11, closeRate:0.550, fePrice:2000,
+      contractedROAS:60.4, collectedROAS:96.7, feToBe:null, bePrice:4000,
+      upfrontPct:1.000, laborMargin:0.071, marketingMargin:0.000, overheadMargin:0.000,
+      netMargin:0.929, cac:31.82, ltv:null, cacLtv:null, churn:null, activeClients:null,
+      monthlyRev:33833, newClients:11
+    }
   }
 };
 
-let period='q1', editMode=false, overrides={};
+let activeYear='2026', period='q1', editMode=false, overrides={};
 
 function val(key){
-  const v=(editMode&&overrides[key]!==undefined)?overrides[key]:DATA[period][key];
+  const d=DATA[activeYear][period];
+  const v=(editMode&&overrides[key]!==undefined)?overrides[key]:d[key];
   return(v===null||v===undefined)?NaN:v;
 }
 function fmtD(v){if(isNaN(v))return'—';if(v>=100000)return'$'+(v/1000).toFixed(0)+'K';if(v>=1000)return'$'+(v/1000).toFixed(1)+'K';return'$'+v.toFixed(2);}
@@ -949,31 +1026,87 @@ function fmtP(v){return isNaN(v)?'—':(v*100).toFixed(1)+'%';}
 function fmtX(v){return isNaN(v)?'—':v.toFixed(1)+'×';}
 function fmtN(v){return isNaN(v)?'—':v.toFixed(1);}
 
+const NOTES={
+  '2026':{
+    adSpend:'$1,624/mo Q1 avg — a 9× increase over 2025\'s $173/mo. Marketing margin at 6.5% is still below the 10% floor, meaning there\'s room to scale further without margin pressure.',
+    leads:'3,586 Q1 leads at $1.47 CPL. Volume is not the constraint. Lead-to-book rate of 2.3% is. Compare to 2025\'s 1,291 Q1 leads — scale has nearly 3×\'d while CPL only tripled.',
+    cpl:'$1.47 Q1 avg — still 7× below the $10 benchmark despite 9× more spend than 2025. CPL has risen from $0.44 but efficiency remains elite. Do not optimize for CPL — focus on conversion quality.',
+    scheduledCalls:'75 Q1 total. Lead-to-book 2.3%. Compare: 2025 Q1 booked 67 calls on 1,291 leads (5.2% book rate). The scale of leads has grown but booking rate has compressed — DM nurture sequence needs tightening.',
+    showRate:'93.1% Q1 avg — essentially flat vs 2025\'s 95.5%. This metric has been elite and consistent across both years. Do not change the confirmation/setter process.',
+    costPerCall:'$67 Q1 avg — up from $7.91 in 2025, directly tracking the ad spend increase. Still well below the 1/3-of-FEO max ($751). The rise is expected and healthy at scale.',
+    closeRate:'35.9% Q1 avg — down from 43.9% in Q1 2025. The dip correlates with the coach transition mid-quarter. The pre-existing close rate ceiling is there to recover back to. Feb at 31.6% was the low; Mar 33.3% is trending back.',
+    contractedROAS:'11.4× Q1 avg — still outstanding, but context matters. 2025 Q1 was 149× on near-zero ad spend. The 2026 number is the real one — it reflects a scaled, functioning paid acquisition system, not an organic-only base.',
+    collectedROAS:'8.4× Q1 avg. 2025 Q1 was 161× — again, tiny denominator effect. 2026\'s 8.4× on real ad spend is the benchmark to grow from. Mar at 10.7× is directionally excellent.',
+    feToBe:'30% Q1 avg — primary P1 constraint. 2025 Q1 was 60% FE→BE on a much smaller client base. The drop likely reflects scale + offer pivot in progress. Each 10% recovery = ~$2,700/mo in additional backend contracted revenue.',
+    fePrice:'$2,252 Q1 avg, up from $2,000 flat in 2025 Q1. Pricing is moving in the right direction as the hormone/functional health positioning matures. March dipped to $1,930 — watch for pressure during the pivot.',
+    upfrontPct:'74.2% Q1 avg — down from 120% in 2025 (over-collected upfront vs contract value). 2026\'s 74% is healthier and more predictable. March at 90.2% is strong.'
+  },
+  '2025':{
+    adSpend:'$173/mo Q1 avg — the business was running almost entirely organic. Very low ad spend relative to revenue produced. This is the pre-paid-acquisition baseline; 2026\'s $1,624 avg shows the deliberate scale-up.',
+    leads:'430 Q1 leads at $0.44 CPL. A very small organic-anchored lead base. The entire Q1 sales volume was built on 430 leads booking at a 5.2% rate — nearly 2.5× better booking efficiency than 2026.',
+    cpl:'$0.44 Q1 avg — ultra-low, driven by almost zero paid spend (mostly organic). Not a sustainable benchmark at scale. 2026\'s $1.47 on 3,586 leads tells the real story of what paid acquisition delivers.',
+    scheduledCalls:'67 Q1 total from 430 leads — 5.2% lead-to-book rate. Meaningful contrast to 2026\'s 2.3% on 3,586 leads. At lower volume, the DM setter process converted better. Worth auditing what changed in the sequence.',
+    showRate:'95.5% Q1 avg — marginally above 2026\'s 93.1%. Essentially the same. This is a process strength that has held across both years regardless of volume or ad spend level.',
+    costPerCall:'$7.91 Q1 avg — near-zero cost per call on organic leads. Not a meaningful benchmark for a paid acquisition system. Useful as a historical floor; 2026\'s $67 reflects real paid traffic economics.',
+    closeRate:'43.9% Q1 avg — the pre-pivot, pre-coach-transition close rate ceiling. Jan at 37.5%, Feb 39.3%, Mar at 55%. This is the performance level to target recovering to in 2026 as the team stabilizes.',
+    contractedROAS:'149.7× Q1 avg — misleading at face value. On $173/mo in spend, any revenue produces astronomical ROAS. The real story is that the core offer economics were strong enough to merit scaling. 2026\'s 11.4× on real spend is the true benchmark.',
+    collectedROAS:'161.7× Q1 avg — same context as contracted ROAS. Near-zero ad spend denominator inflates the multiple. Focus on 2026\'s 8.4× as the operating benchmark for a funded paid funnel.',
+    feToBe:'60% Q1 avg (Jan only — Feb/Mar unpopulated). The pre-pivot FE→BE conversion was strong. The 30-point drop in 2026 (down to 30%) is partially explained by the offer pivot in progress. The 2025 ceiling is achievable again once messaging stabilizes.',
+    fePrice:'$2,000 flat across Q1 2025 — consistent, no price variation. 2026\'s $2,252 avg reflects a pricing nudge in the right direction as the functional health positioning adds perceived value.',
+    upfrontPct:'120% Q1 avg — over-collected vs contracted value (deposits exceeding contract amounts, likely payment plan dynamics). 2026\'s 74% is a more normalized read. Both indicate very strong day-one cash collection.'
+  }
+};
+
+const MARGIN_NOTES={
+  '2026':{
+    monthlyRev:'Q1 avg $26.3K collected — up from $24.8K in Q1 2025. Revenue has grown 6% YoY at Q1, but the spend is 9× higher. The margin compression is intentional: Amy Jo invested in paid acquisition. Trajectory within Q1 is excellent: $21.9K → $23.9K → $32.9K.',
+    laborMargin:'30.6% Q1 avg — significantly elevated vs 2025\'s 8.1%. The team has scaled: setters, coaches, and new functional health hire. 2025 was nearly solo-operator economics. 2026 reflects a real delivery team. Watch for further pressure as the new coach ramps.',
+    marketingMargin:'6.5% Q1 avg — still BELOW the 10% floor even with the ad spend increase. 2025 was effectively 0.1% marketing margin (organic only). The 2026 number leaves room to double ad budget before hitting the 20% ceiling.',
+    overheadMargin:'5.8% Q1 avg — clean. Jan spiked to 10.5% (one-time item). Compare to 2025\'s 2.5% — overhead has grown modestly as the business scaled. Well-controlled relative to revenue growth.',
+    netMargin:'57.1% Q1 avg — down from 89.3% in 2025 Q1. The compression is entirely explained by intentional labor and ad investment. A 57% net margin on a scaled, team-run business is outstanding. 2025\'s 89%+ was solo-operator math.',
+    cac:'$333 Q1 avg — vs $18 in 2025. The CAC has grown 18× as Amy Jo moved from organic to paid. Still inside the 25%-of-FEO ceiling ($563 max). The trade: paying $333 to acquire a $2,252 FE client is a very healthy ratio.',
+    ltv:'Not calculable — active clients and churn fields unpopulated in tracker. Recommend populating for Q2 to unlock the full LTV/CAC picture.',
+    cacLtv:'Not calculable — LTV data unavailable. At $333 CAC with $2,252 FEO and historically strong FE→BE conversion, the ratio is likely well above the 3:1 IFCA floor.',
+    newClients:'8.3/mo Q1 avg — down slightly from 9.3/mo in 2025 Q1, despite 9× more ad spend. This is the core tension: spend scaled, closes per month are similar. The lead-to-book compression (5.2% → 2.3%) is absorbing the extra volume.'
+  },
+  '2025':{
+    monthlyRev:'Q1 avg $24.8K collected — strong for a near-zero ad budget. Jan $15.4K, Feb $25.1K, Mar $33.8K — a 120% ramp within Q1 2025. This organic growth trajectory preceded the decision to scale with paid ads in 2026.',
+    laborMargin:'8.1% Q1 avg — near solo-operator economics. Very low team cost relative to revenue. As Amy Jo scaled into 2026 and hired setters, coaches, and support, this metric rightfully increased. 2025\'s 8% is not a target — it\'s a pre-scale baseline.',
+    marketingMargin:'0.1% Q1 avg — effectively zero. Near-pure organic. The entire revenue was generated on social content and referrals. This is why 2026\'s 6.5% marketing margin still looks conservative — the business went from 0% to 6.5% and revenue only grew 6%.',
+    overheadMargin:'2.5% Q1 avg — minimal overhead structure. Jan at 4.2% was the peak. This pre-scale figure shows how lean the business was before team buildout. 2026\'s 5.8% overhead margin is modest growth, not a concern.',
+    netMargin:'89.3% Q1 avg — exceptional solo-operator margins. Jan 85.1%, Feb 89.8%, Mar 92.9%. Not sustainable at scale, but a powerful baseline: Amy Jo\'s offer economics are fundamentally very strong. 2026\'s 57% compression is investment, not deterioration.',
+    cac:'$18 Q1 avg — the near-organic CAC baseline. Jan $11.67, Feb $9.09, Mar $31.82 (first meaningful ad spend month). The jump to $333 in 2026 reflects the transition to a fully funded paid funnel. Still inside healthy CAC parameters.',
+    ltv:'Not calculable — active clients and churn fields unpopulated in the 2025 tracker as well. Consistent data gap across both years.',
+    cacLtv:'Not calculable — LTV data unavailable for 2025. The $18 CAC suggests the ratio would have been extraordinary at the time.',
+    newClients:'9.3/mo Q1 avg — remarkably similar to 2026\'s 8.3/mo. On zero ad spend in 2025 vs $1,624/mo in 2026, the close count is nearly flat. This is the core insight: paid ads have added 3× more leads but not yet proportionally more clients. Booking rate is the unlock.'
+  }
+};
+
 const AD_METRICS=[
-  {key:'adSpend',label:'Ad Spend',fmt:fmtD,target:'—',pass:v=>true,warn:v=>true,note:'$1,624/mo Q1 avg. Marketing margin only 6.5% vs 10–20% target — business is underinvesting in ads, not overspending. Room to 2–3× budget safely.'},
-  {key:'leads',label:'DM Leads',fmt:fmtN,target:'—',pass:v=>true,warn:v=>true,note:'Q1 total 3,586 leads at $1.47 CPL. Volume is not the constraint. Lead-to-book rate of 2.3% is.'},
-  {key:'cpl',label:'Cost Per Lead (CPL)',fmt:fmtD,target:'< $10',pass:v=>v<10,warn:v=>v<15,note:'$1.47 Q1 avg — 7× below benchmark. Best-in-cohort efficiency. Do not optimize for CPL — focus on conversion.'},
-  {key:'scheduledCalls',label:'Scheduled Calls',fmt:fmtN,target:'—',pass:v=>true,warn:v=>true,note:'75 Q1 total. Lead-to-book 2.3% (808/22=2.7%, 1665/21=1.3%, 1113/32=2.9%). For a DM-for-coaching funnel this is soft — target 4–5%.'},
-  {key:'showRate',label:'Show Rate',fmt:fmtP,target:'> 70%',pass:v=>v>=.70,warn:v=>v>=.60,note:'93.1% Q1 avg — elite. Best in cohort. Setter process and confirmation sequence are working. Do not change.'},
-  {key:'costPerCall',label:'Cost Per Scheduled Call',fmt:fmtD,target:'< $'+Math.round(2252/3),pass:v=>v<2252/3,warn:v=>v<2252/2,note:'$67 Q1 avg — well below 1/3 of FEO (~$751 max). Not the constraint. Cost per call is not the problem; show rate and close rate are the opportunity.'},
-  {key:'closeRate',label:'Close Rate',fmt:fmtP,target:'30–45%',pass:v=>v>=.30&&v<=.45,warn:v=>v>=.25,note:'35.9% Q1 avg — passing. Jan 42.9% was strong; Feb 31.6% softened with coach transition. Trending back up in Mar at 33.3%.'},
-  {key:'contractedROAS',label:'Contracted ROAS',fmt:fmtX,target:'> 5×',pass:v=>v>=5,warn:v=>v>=3,note:'11.4× Q1 avg — 2× the 5× IFCA target. Jan 13.3× was outstanding. Strong economics confirm the offer is viable at current ad spend.'},
-  {key:'collectedROAS',label:'Collected ROAS',fmt:fmtX,target:'> 2×',pass:v=>v>=2,warn:v=>v>=1.5,note:'8.4× Q1 avg — 4× the 2× target. Mar strongest at 10.7×. Cash collection is healthy and strengthening Q1.'},
-  {key:'feToBe',label:'FE → BE Conversion',fmt:fmtP,target:'> 50%',pass:v=>v>=.50,warn:v=>v>=.40,note:'30% Q1 avg — primary P1 constraint. 20 points below 50% target. Each 10% improvement = ~$2,700/mo in additional backend contracted revenue.'},
-  {key:'fePrice',label:'Avg Frontend Deal',fmt:fmtD,target:'—',pass:v=>true,warn:v=>true,note:'$2,252 Q1 avg. March dipped to $1,930 — watch for pricing pressure as the offer pivot introduces higher-ticket functional health positioning.'},
-  {key:'upfrontPct',label:'Upfront Cash %',fmt:fmtP,target:'> 30%',pass:v=>v>=.30,warn:v=>v>=.20,note:'74.2% Q1 avg — 2× the 30% floor. March at 90.2% is exceptional. Strong day-one cash flow.'}
+  {key:'adSpend',label:'Ad Spend',fmt:fmtD,target:'—',pass:v=>true,warn:v=>true,note:y=>NOTES[y].adSpend},
+  {key:'leads',label:'DM Leads',fmt:fmtN,target:'—',pass:v=>true,warn:v=>true,note:y=>NOTES[y].leads},
+  {key:'cpl',label:'Cost Per Lead (CPL)',fmt:fmtD,target:'< $10',pass:v=>v<10,warn:v=>v<15,note:y=>NOTES[y].cpl},
+  {key:'scheduledCalls',label:'Scheduled Calls',fmt:fmtN,target:'—',pass:v=>true,warn:v=>true,note:y=>NOTES[y].scheduledCalls},
+  {key:'showRate',label:'Show Rate',fmt:fmtP,target:'> 70%',pass:v=>v>=.70,warn:v=>v>=.60,note:y=>NOTES[y].showRate},
+  {key:'costPerCall',label:'Cost Per Scheduled Call',fmt:fmtD,target:'< $'+Math.round(2252/3),pass:v=>v<2252/3,warn:v=>v<2252/2,note:y=>NOTES[y].costPerCall},
+  {key:'closeRate',label:'Close Rate',fmt:fmtP,target:'30–45%',pass:v=>v>=.30&&v<=.45,warn:v=>v>=.25,note:y=>NOTES[y].closeRate},
+  {key:'contractedROAS',label:'Contracted ROAS',fmt:fmtX,target:'> 5×',pass:v=>v>=5,warn:v=>v>=3,note:y=>NOTES[y].contractedROAS},
+  {key:'collectedROAS',label:'Collected ROAS',fmt:fmtX,target:'> 2×',pass:v=>v>=2,warn:v=>v>=1.5,note:y=>NOTES[y].collectedROAS},
+  {key:'feToBe',label:'FE → BE Conversion',fmt:fmtP,target:'> 50%',pass:v=>v>=.50,warn:v=>v>=.40,note:y=>NOTES[y].feToBe},
+  {key:'fePrice',label:'Avg Frontend Deal',fmt:fmtD,target:'—',pass:v=>true,warn:v=>true,note:y=>NOTES[y].fePrice},
+  {key:'upfrontPct',label:'Upfront Cash %',fmt:fmtP,target:'> 30%',pass:v=>v>=.30,warn:v=>v>=.20,note:y=>NOTES[y].upfrontPct}
 ];
 
 const MARGIN_METRICS=[
-  {key:'monthlyRev',label:'Monthly Revenue (Collected)',fmt:fmtD,target:'—',pass:v=>true,warn:v=>true,note:'Q1 avg $26.3K. Strong 50% increase Jan→Mar within Q1: $21.9K → $23.9K → $32.9K. Trajectory is excellent.'},
-  {key:'laborMargin',label:'Labor Margin',fmt:fmtP,target:'30–35%',pass:v=>v>=.30&&v<=.38,warn:v=>v>=.25,note:'30.6% Q1 avg — marginally inside target. March dipped to 24.1%. New functional health coach hire will put pressure here — structure comp with performance incentive.'},
-  {key:'marketingMargin',label:'Marketing Margin',fmt:fmtP,target:'10–20%',pass:v=>v>=.10&&v<=.20,warn:v=>v<.25,note:'6.5% Q1 avg — BELOW the 10% floor. Amy Jo is underinvesting in ads relative to business capacity. Budget can safely increase 2–3× before hitting the 20% ceiling.'},
-  {key:'overheadMargin',label:'Overhead Margin',fmt:fmtP,target:'3–8%',pass:v=>v>=.03&&v<=.09,warn:v=>v<.12,note:'5.8% Q1 avg — inside 3–8% target. January spiked to 10.5% (one-time overhead item likely). Generally well-controlled.'},
-  {key:'netMargin',label:'Net Operating Margin',fmt:fmtP,target:'> 50%',pass:v=>v>=.50,warn:v=>v>=.35,note:'57.1% Q1 avg — above 50% target. January borderline at 46.6%; February and March well above. Improving trajectory through Q1.'},
-  {key:'cac',label:'Customer Acquisition Cost',fmt:fmtD,target:'< 25% FE',pass:v=>v<val('fePrice')*.25,warn:v=>v<val('fePrice')*.35,note:'$333 Q1 avg = 14.8% of $2,252 FEO — well inside 25% max. Feb spiked to $473 (low-close month). CAC is healthy and not a constraint.'},
-  {key:'ltv',label:'LTV (Lifetime Value)',fmt:fmtD,target:'—',pass:v=>true,warn:v=>true,note:'Not calculable — active clients and churn fields unpopulated in tracker. Business is in transitionary build phase. Recommend populating for Q2.'},
-  {key:'cacLtv',label:'CAC:LTV Ratio',fmt:v=>isNaN(v)?'N/A':v.toFixed(1)+':1',target:'> 3:1',pass:v=>v>=3,warn:v=>v>=2,note:'Not calculable — LTV data unavailable. At $333 CAC and the current contract/pricing structure, a 5:1+ ratio is likely when calculated.'},
-  {key:'newClients',label:'New Clients / Month',fmt:fmtN,target:'—',pass:v=>true,warn:v=>true,note:'8.3/mo Q1 avg (Jan=9, Feb=6, Mar=10). Trending up. At $2,252 FEO, that is ~$18.7K in new contracted FE revenue per month.'}
+  {key:'monthlyRev',label:'Monthly Revenue (Collected)',fmt:fmtD,target:'—',pass:v=>true,warn:v=>true,note:y=>MARGIN_NOTES[y].monthlyRev},
+  {key:'laborMargin',label:'Labor Margin',fmt:fmtP,target:'30–35%',pass:v=>v>=.30&&v<=.38,warn:v=>v>=.25,note:y=>MARGIN_NOTES[y].laborMargin},
+  {key:'marketingMargin',label:'Marketing Margin',fmt:fmtP,target:'10–20%',pass:v=>v>=.10&&v<=.20,warn:v=>v<.25,note:y=>MARGIN_NOTES[y].marketingMargin},
+  {key:'overheadMargin',label:'Overhead Margin',fmt:fmtP,target:'3–8%',pass:v=>v>=.03&&v<=.09,warn:v=>v<.12,note:y=>MARGIN_NOTES[y].overheadMargin},
+  {key:'netMargin',label:'Net Operating Margin',fmt:fmtP,target:'> 50%',pass:v=>v>=.50,warn:v=>v>=.35,note:y=>MARGIN_NOTES[y].netMargin},
+  {key:'cac',label:'Customer Acquisition Cost',fmt:fmtD,target:'< 25% FE',pass:v=>v<val('fePrice')*.25,warn:v=>v<val('fePrice')*.35,note:y=>MARGIN_NOTES[y].cac},
+  {key:'ltv',label:'LTV (Lifetime Value)',fmt:fmtD,target:'—',pass:v=>true,warn:v=>true,note:y=>MARGIN_NOTES[y].ltv},
+  {key:'cacLtv',label:'CAC:LTV Ratio',fmt:v=>isNaN(v)?'N/A':v.toFixed(1)+':1',target:'> 3:1',pass:v=>v>=3,warn:v=>v>=2,note:y=>MARGIN_NOTES[y].cacLtv},
+  {key:'newClients',label:'New Clients / Month',fmt:fmtN,target:'—',pass:v=>true,warn:v=>true,note:y=>MARGIN_NOTES[y].newClients}
 ];
 
 function getStatus(m,v){if(isNaN(v))return'info';if(m.pass(v))return'pass';if(m.warn(v))return'warn';return'fail';}
@@ -995,21 +1128,65 @@ function renderKPIBand(){
 function renderTable(tbodyId,metrics){
   document.getElementById(tbodyId).innerHTML=metrics.map(m=>{
     const v=val(m.key);const st=getStatus(m,v);
+    const note=typeof m.note==='function'?m.note(activeYear):m.note;
     const dv=editMode?`<input class="edit-input" type="number" step="any" value="${isNaN(v)?'':v}" onchange="setOverride('${m.key}',this.value)">`:`<div class="m-val ${st}">${m.fmt(v)}</div>`;
-    return`<tr><td><div class="m-name">${m.label}</div><div class="m-target">${m.target}</div></td><td><div class="m-target">${m.target}</div></td><td>${dv}</td><td><span class="badge ${st}">${st.toUpperCase()}</span></td><td><div class="m-note">${m.note}</div></td></tr>`;
+    return`<tr><td><div class="m-name">${m.label}</div><div class="m-target">${m.target}</div></td><td><div class="m-target">${m.target}</div></td><td>${dv}</td><td><span class="badge ${st}">${st.toUpperCase()}</span></td><td><div class="m-note">${note}</div></td></tr>`;
+  }).join('');
+}
+
+const YOY_KEYS=[
+  {key:'adSpend',label:'Ad Spend',fmt:fmtD,higherBetter:true},
+  {key:'cpl',label:'CPL',fmt:fmtD,higherBetter:false},
+  {key:'showRate',label:'Show Rate',fmt:fmtP,higherBetter:true},
+  {key:'closeRate',label:'Close Rate',fmt:fmtP,higherBetter:true},
+  {key:'netMargin',label:'Net Margin',fmt:fmtP,higherBetter:true}
+];
+
+function renderYoY(){
+  const d25=DATA['2025'][period]||DATA['2025']['q1'];
+  const d26=DATA['2026'][period]||DATA['2026']['q1'];
+  document.getElementById('yoy-banner').innerHTML=YOY_KEYS.map(m=>{
+    const v25=(d25[m.key]===null||d25[m.key]===undefined)?NaN:d25[m.key];
+    const v26=(d26[m.key]===null||d26[m.key]===undefined)?NaN:d26[m.key];
+    let deltaHtml='';
+    if(!isNaN(v25)&&!isNaN(v26)&&v25!==0){
+      const pct=((v26-v25)/Math.abs(v25)*100);
+      const up=m.higherBetter?(pct>=0):(pct<=0);
+      const sign=pct>=0?'+':'';
+      deltaHtml=`<div class="yoy-delta ${up?'up':'dn'}">${sign}${pct.toFixed(0)}%</div>`;
+    }
+    return`<div class="yoy-cell">
+      <div class="yoy-label">${m.label}</div>
+      <div class="yoy-vals">
+        <span class="yoy-2025">${isNaN(v25)?'—':m.fmt(v25)}</span>
+        <span class="yoy-arrow">→</span>
+        <span class="yoy-2026">${isNaN(v26)?'—':m.fmt(v26)}</span>
+      </div>
+      ${deltaHtml}
+    </div>`;
   }).join('');
 }
 
 function renderAll(){
-  document.getElementById('period-col').textContent=DATA[period].label;
+  const d=DATA[activeYear][period];
+  const badge=activeYear==='2026'?'y2026':'y2025';
+  document.getElementById('period-col').innerHTML=`${d.label} <span class="year-badge ${badge}">${activeYear}</span>`;
   document.querySelectorAll('.pt').forEach(b=>b.classList.toggle('active',
     b.textContent==='Q1 Avg'?period==='q1':
     b.textContent==='January'?period==='jan':
     b.textContent==='February'?period==='feb':
     b.textContent==='March'&&period==='mar'));
+  document.getElementById('yt-2026').classList.toggle('active',activeYear==='2026');
+  document.getElementById('yt-2025').classList.toggle('active',activeYear==='2025');
   renderKPIBand();
   renderTable('ad-tbody',AD_METRICS);
   renderTable('margin-tbody',MARGIN_METRICS);
+  renderYoY();
+}
+
+function setYear(y){
+  activeYear=y;overrides={};
+  renderAll();
 }
 
 function setPeriod(p){

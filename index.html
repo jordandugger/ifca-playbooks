@@ -97,19 +97,15 @@
   .tool3-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .creative-card, .calc-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 28px 24px; color: inherit; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden; }
   .creative-card::before, .calc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-  .creative-card::before { background: rgba(232,119,34,0.4); }
-  .calc-card::before { background: var(--blue-real); }
-  .creative-card:not(.coming-soon):hover::before, .calc-card:not(.coming-soon):hover::before { background: var(--orange); }
-  .creative-card:not(.coming-soon):hover { border-color: rgba(232,119,34,0.25); background: rgba(255,255,255,0.05); transform: translateY(-3px); }
-  .calc-card:not(.coming-soon):hover { border-color: rgba(168,200,224,0.3); background: rgba(255,255,255,0.05); transform: translateY(-3px); }
+  .creative-card::before { background: rgba(255,255,255,0.07); }
+  .calc-card::before { background: rgba(255,255,255,0.07); }
   .creative-card.coming-soon, .calc-card.coming-soon { opacity: 0.42; cursor: default; }
   .tool-icon { font-size: 26px; }
   .tool-title { font-family: 'Bebas Neue'; font-size: 22px; color: white; letter-spacing: 0.5px; line-height: 1.05; }
   .tool-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.5; flex: 1; }
   .tool-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); margin-top: auto; }
   .tool-status { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.2); }
-  .tool-arrow { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 11px; color: rgba(255,255,255,0.3); transition: all 0.2s; }
-  .creative-card:not(.coming-soon):hover .tool-arrow, .calc-card:not(.coming-soon):hover .tool-arrow { border-color: var(--orange); color: var(--orange); background: rgba(232,119,34,0.1); }
+  .tool-arrow { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 11px; color: rgba(255,255,255,0.3); }
 
   /* FLOW DIAGRAM */
   .flow-diagram { margin: 28px 0 0; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 24px 28px; display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; }
@@ -350,7 +346,7 @@
       <div class="cc-header">
         <div class="cc-initials">LZ</div>
         <div class="cc-name">Lacey &amp; Zach</div>
-        <div class="cc-meta">~$84K/mo Revenue &nbsp;·&nbsp; CAC:LTV 7.1:1</div>
+        <div class="cc-meta">$3.53 CPL &nbsp;·&nbsp; CAC:LTV 7.1:1</div>
       </div>
       <div class="cc-strength">
         <span class="cc-strength-label">Biggest Strength</span>
@@ -464,7 +460,7 @@
     <div class="day-title">Workshop Series &amp; Resources</div>
     <div class="day-desc">Workshops, creative tools, calculators, AI training library, and bonus resources — all unlocking as we move through the agenda.</div>
   </div>
-  <div class="day-badge">● Day 2 Underway</div>
+  <div class="day-badge">⏳ Unlocks Tomorrow</div>
 </div>
 
 <!-- ══════════ 2 — WORKSHOPS ══════════ -->
@@ -477,13 +473,13 @@
     <div class="section-count">APRIL 2026 &nbsp;·&nbsp; CONFIDENTIAL</div>
   </div>
   <div class="workshops-grid stagger">
-    <a class="workshop-card" href="7f-workshops/ad-creative-workshop.html">
-      <div class="card-category"><span class="cat-pill live">● Live</span><span class="card-num">01</span></div>
+    <div class="workshop-card" style="cursor:default;opacity:0.55;">
+      <div class="card-category"><span class="cat-pill coming">⏳ Unlocks Tomorrow</span><span class="card-num">01</span></div>
       <div class="card-icon">🎯</div>
       <div class="card-title">Ad Creative<br>Process Workshop</div>
       <div class="card-desc">The full Andromeda era framework — Entity ID principle, hook and hold rate KPIs, kill rules, competitor intelligence, creative cadence, and live entity audit. The systematic creative machine behind $90K/month on Meta.</div>
-      <div class="card-meta"><span class="card-slides">22 SLIDES &nbsp;·&nbsp; 3.5 HRS</span><div class="card-arrow">→</div></div>
-    </a>
+      <div class="card-meta"><span class="card-slides">UNLOCKS TOMORROW</span><div class="card-arrow" style="opacity:.3;">→</div></div>
+    </div>
     <div class="workshop-card" style="cursor:default;opacity:0.55;">
       <div class="card-category"><span class="cat-pill coming">⏳ Unlocks Tomorrow</span><span class="card-num">02</span></div>
       <div class="card-icon">🤖</div>
@@ -506,18 +502,18 @@
     <div class="section-count">BUILD YOUR CREATIVE MACHINE</div>
   </div>
   <div class="tool3-grid stagger">
-    <a class="creative-card" href="ad-creative-tools/creative-swipe-brief-builder.html">
+    <div class="creative-card coming-soon">
       <div class="tool-icon">🔍</div>
       <div class="tool-title">Creative Swipe Brief Builder</div>
       <div class="tool-desc">Paste your competitor intelligence report — the AI parses every hook, format, and angle, maps the white space, and outputs shoot-ready entity briefs. Start here.</div>
-      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
-    </a>
-    <a class="creative-card" href="ad-creative-tools/entity-audit-worksheet.html">
+      <div class="tool-footer"><span class="tool-status">⏳ Unlocks Tomorrow</span><div class="tool-arrow">→</div></div>
+    </div>
+    <div class="creative-card coming-soon">
       <div class="tool-icon">🗂️</div>
       <div class="tool-title">Entity Audit Worksheet</div>
       <div class="tool-desc">Map your current ad library by format, hook type, and emotion. Instantly see how many real entities you have vs. how many ads — and exactly what gaps to fill next.</div>
-      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
-    </a>
+      <div class="tool-footer"><span class="tool-status">⏳ Unlocks Tomorrow</span><div class="tool-arrow">→</div></div>
+    </div>
     <div class="creative-card coming-soon">
       <div class="tool-icon">📅</div>
       <div class="tool-title">Weekly Creative Brief</div>
@@ -551,24 +547,24 @@
     <div class="section-count">RUN THE NUMBERS DAILY</div>
   </div>
   <div class="tool3-grid stagger">
-    <a class="calc-card" href="interactive-calculators/data-constraints-tracker.html">
+    <div class="calc-card coming-soon">
       <div class="tool-icon">📊</div>
       <div class="tool-title">Data Constraints Snapshot</div>
       <div class="tool-desc">Monthly input form — CPL, cost per call, close rate, ROAS — outputs a full constraint diagnosis with ranked priorities and recommended actions. Start here — know your bottleneck before you touch budget.</div>
-      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
-    </a>
-    <a class="calc-card" href="interactive-calculators/budget-scale-planner.html">
+      <div class="tool-footer"><span class="tool-status">⏳ Unlocks Tomorrow</span><div class="tool-arrow">→</div></div>
+    </div>
+    <div class="calc-card coming-soon">
       <div class="tool-icon">💸</div>
       <div class="tool-title">Budget &amp; Scale Planner</div>
       <div class="tool-desc">Input your monthly budget and get the exact campaign structure, new creatives per week, rotation cadence, and the Launch 50 / Run 10 plan. Know how to allocate every dollar.</div>
-      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
-    </a>
-    <a class="calc-card" href="interactive-calculators/kpi-calculator.html">
+      <div class="tool-footer"><span class="tool-status">⏳ Unlocks Tomorrow</span><div class="tool-arrow">→</div></div>
+    </div>
+    <div class="calc-card coming-soon">
       <div class="tool-icon">🎯</div>
       <div class="tool-title">Ad Testing KPI Calculator</div>
       <div class="tool-desc">Input your offer price and get your exact CAC max, cost per qualified call target, hook rate thresholds, and kill rules for new vs. existing ads. The math behind every testing decision.</div>
-      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
-    </a>
+      <div class="tool-footer"><span class="tool-status">⏳ Unlocks Tomorrow</span><div class="tool-arrow">→</div></div>
+    </div>
   </div>
 </section>
 

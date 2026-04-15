@@ -417,7 +417,66 @@
       .section-header { flex-wrap: wrap; }
       .section-divider { display: none; }
     }
-  </style>
+  
+    /* ── QUIZ EXAMPLE SECTION ── */
+    .quiz-example-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 64px;
+    }
+    .quiz-example-card {
+      position: relative;
+      background: linear-gradient(145deg, rgba(30,58,82,0.9), rgba(16,34,54,0.95));
+      border: 1px solid rgba(232,119,34,0.25);
+      border-radius: 16px;
+      padding: 28px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      overflow: hidden;
+    }
+    .quiz-example-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--orange), rgba(232,119,34,0.3));
+    }
+    .quiz-example-icon { font-size: 32px; line-height: 1; }
+    .quiz-example-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--orange);
+    }
+    .quiz-example-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      line-height: 1.1;
+    }
+    .quiz-example-desc {
+      font-size: 13.5px;
+      color: var(--white-60);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .quiz-example-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--orange);
+      text-decoration: none;
+      margin-top: 4px;
+    }
+    .quiz-example-link::after { content: '→'; font-size: 14px; }
+    .quiz-example-link:hover { text-decoration: underline; }
+</style>
 </head>
 <body>
 
@@ -552,7 +611,26 @@
 
   </div>
 
-  <!-- ââ SECTION 3: READY-TO-GO TOOLKIT ââ -->
+  <!-- ── SECTION 3: MICRO LEAD MAGNET QUIZ ── -->
+    <div class="section-header">
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div class="section-eyebrow">AI-Built Tools</div>
+        <div class="section-title">Micro Lead Magnet Quiz</div>
+      </div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="quiz-example-grid">
+      <!-- Hormone Quiz Example -->
+      <div class="quiz-example-card">
+        <div class="quiz-example-icon">✨</div>
+        <div class="quiz-example-label">Example Quiz</div>
+        <div class="quiz-example-title">The 2-Minute Hormone Quiz</div>
+        <div class="quiz-example-desc">A fully built micro lead magnet quiz — 5 questions that identify a client's hormone type and deliver a personalized result with tailored action steps.</div>
+        <a class="quiz-example-link" href="hormone-quiz.html" target="_blank">Check out the hormone quiz example here</a>
+      </div>
+    </div>
+
+    <!-- ── SECTION 4: READY-TO-GO TOOLKIT ── -->
   <div class="section-header">
     <div style="display:flex;flex-direction:column;gap:4px;">
       <div class="section-eyebrow">Advanced Systems</div>

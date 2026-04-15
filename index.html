@@ -97,15 +97,19 @@
   .tool3-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .creative-card, .calc-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 28px 24px; color: inherit; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden; }
   .creative-card::before, .calc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-  .creative-card::before { background: rgba(255,255,255,0.07); }
-  .calc-card::before { background: rgba(255,255,255,0.07); }
+  .creative-card::before { background: rgba(232,119,34,0.4); }
+  .calc-card::before { background: var(--blue-real); }
+  .creative-card:not(.coming-soon):hover::before, .calc-card:not(.coming-soon):hover::before { background: var(--orange); }
+  .creative-card:not(.coming-soon):hover { border-color: rgba(232,119,34,0.25); background: rgba(255,255,255,0.05); transform: translateY(-3px); }
+  .calc-card:not(.coming-soon):hover { border-color: rgba(168,200,224,0.3); background: rgba(255,255,255,0.05); transform: translateY(-3px); }
   .creative-card.coming-soon, .calc-card.coming-soon { opacity: 0.42; cursor: default; }
   .tool-icon { font-size: 26px; }
   .tool-title { font-family: 'Bebas Neue'; font-size: 22px; color: white; letter-spacing: 0.5px; line-height: 1.05; }
   .tool-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.5; flex: 1; }
   .tool-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); margin-top: auto; }
   .tool-status { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.2); }
-  .tool-arrow { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 11px; color: rgba(255,255,255,0.3); }
+  .tool-arrow { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 11px; color: rgba(255,255,255,0.3); transition: all 0.2s; }
+  .creative-card:not(.coming-soon):hover .tool-arrow, .calc-card:not(.coming-soon):hover .tool-arrow { border-color: var(--orange); color: var(--orange); background: rgba(232,119,34,0.1); }
 
   /* FLOW DIAGRAM */
   .flow-diagram { margin: 28px 0 0; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 24px 28px; display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; }
@@ -146,7 +150,9 @@
   .bonus-section { background: linear-gradient(180deg, transparent, rgba(214,228,240,0.015), transparent); }
   .bonus-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
   .bonus-card { background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 24px 22px; color: inherit; display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden; }
-  .bonus-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.07); }
+  .bonus-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--blue-real); transition: background 0.2s; }
+  .bonus-card:not(.coming-soon):hover::before { background: var(--orange); }
+  .bonus-card:not(.coming-soon):hover { border-color: rgba(168,200,224,0.25); background: rgba(255,255,255,0.04); transform: translateY(-2px); }
   .bonus-card.coming-soon { opacity: 0.38; cursor: default; }
   .bonus-icon { font-size: 22px; }
   .bonus-title { font-family: 'Bebas Neue'; font-size: 19px; color: white; letter-spacing: 0.5px; line-height: 1.05; }
@@ -193,14 +199,21 @@
   .mini-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 4px; }
   .mini-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
   .mini-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 20px 18px; color: inherit; display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden; }
-  .mini-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.06); }
+  .mini-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(232,119,34,0.35); transition: background 0.2s; }
+  .mini-card:not(.cs):hover::before { background: var(--orange); }
+  .mini-card:not(.cs):hover { border-color: rgba(232,119,34,0.2); background: rgba(255,255,255,0.05); transform: translateY(-2px); }
+  .mini-card.navy-top::before { background: rgba(168,200,224,0.35); }
+  .mini-card.navy-top:not(.cs):hover::before { background: var(--blue-mid); }
+  .mini-card.gray-top::before { background: rgba(255,255,255,0.1); }
   .mini-card.cs { opacity: 0.38; cursor: default; }
   .mc-icon { font-size: 20px; }
   .mc-title { font-family: 'Bebas Neue'; font-size: 17px; color: white; line-height: 1.1; letter-spacing: 0.5px; }
   .mc-desc { font-size: 11px; color: rgba(255,255,255,0.42); line-height: 1.5; flex: 1; }
   .mc-foot { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: auto; }
   .mc-status { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.18); }
-  .mc-arr { width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 10px; color: rgba(255,255,255,0.25); }
+  .mc-status.live { color: #86efac; }
+  .mc-arr { width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 10px; color: rgba(255,255,255,0.25); transition: all 0.2s; }
+  .mini-card:not(.cs):hover .mc-arr { border-color: var(--orange); color: var(--orange); background: rgba(232,119,34,0.1); }
 
   /* AI WORKSHOP BANNER — locked */
   .ai-workshop-banner { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 24px 28px; margin-bottom: 36px; display: flex; align-items: center; justify-content: space-between; gap: 20px; opacity: 0.42; cursor: default; }
@@ -233,6 +246,19 @@
   .stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:0.28s; }
   .stagger.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay:0.35s; }
   .stagger.visible > *:nth-child(7) { opacity:1; transform:none; transition-delay:0.42s; }
+
+  /* AI WORKSHOP BANNER — live */
+  .ai-workshop-banner-live {
+    background: linear-gradient(135deg, rgba(232,119,34,0.1) 0%, rgba(232,119,34,0.04) 100%);
+    border: 1px solid rgba(232,119,34,0.2); border-radius: 14px;
+    padding: 24px 28px; margin-bottom: 36px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    text-decoration: none; color: inherit; transition: all 0.2s;
+  }
+  .ai-workshop-banner-live:hover { border-color: rgba(232,119,34,0.4); background: linear-gradient(135deg, rgba(232,119,34,0.14) 0%, rgba(232,119,34,0.06) 100%); transform: translateY(-2px); }
+  .aib-pill-live { font-family: 'DM Mono'; font-size: 9px; color: #86efac; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); padding: 4px 10px; border-radius: 20px; letter-spacing: 1px; white-space: nowrap; }
+  .aib-arr-live { width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(232,119,34,0.3); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--orange); }
+  .ai-workshop-banner-live .aib-label { color: var(--orange); }
 </style>
 </head>
 <body>
@@ -460,7 +486,7 @@
     <div class="day-title">Workshop Series &amp; Resources</div>
     <div class="day-desc">Workshops, creative tools, calculators, AI training library, and bonus resources — all unlocking as we move through the agenda.</div>
   </div>
-  <div class="day-badge">⏳ Unlocks Tomorrow</div>
+  <div class="day-badge">● All Resources Live</div>
 </div>
 
 <!-- ══════════ 2 — WORKSHOPS ══════════ -->
@@ -473,20 +499,20 @@
     <div class="section-count">APRIL 2026 &nbsp;·&nbsp; CONFIDENTIAL</div>
   </div>
   <div class="workshops-grid stagger">
-    <div class="workshop-card" style="cursor:default;opacity:0.55;">
-      <div class="card-category"><span class="cat-pill coming">⏳ Unlocks Tomorrow</span><span class="card-num">01</span></div>
+    <a class="workshop-card" href="7f-workshops/ad-creative-workshop.html">
+      <div class="card-category"><span class="cat-pill live">● Live</span><span class="card-num">01</span></div>
       <div class="card-icon">🎯</div>
       <div class="card-title">Ad Creative<br>Process Workshop</div>
       <div class="card-desc">The full Andromeda era framework — Entity ID principle, hook and hold rate KPIs, kill rules, competitor intelligence, creative cadence, and live entity audit. The systematic creative machine behind $90K/month on Meta.</div>
-      <div class="card-meta"><span class="card-slides">UNLOCKS TOMORROW</span><div class="card-arrow" style="opacity:.3;">→</div></div>
-    </div>
-    <div class="workshop-card" style="cursor:default;opacity:0.55;">
-      <div class="card-category"><span class="cat-pill coming">⏳ Unlocks Tomorrow</span><span class="card-num">02</span></div>
+      <div class="card-meta"><span class="card-slides">22 SLIDES &nbsp;·&nbsp; 3.5 HRS</span><div class="card-arrow">→</div></div>
+    </a>
+    <a class="workshop-card" href="7f-workshops/agentic-ai-workshop.html">
+      <div class="card-category"><span class="cat-pill live">● Live</span><span class="card-num">02</span></div>
       <div class="card-icon">🤖</div>
       <div class="card-title">Agentic AI<br>Workshop</div>
       <div class="card-desc">How to integrate the new wave of agentic AI tools into your business to save time, cut costs, and remove yourself from low-leverage work — across research, content, client operations, and ad production.</div>
-      <div class="card-meta"><span class="card-slides">UNLOCKS TOMORROW</span><div class="card-arrow" style="opacity:.3;">→</div></div>
-    </div>
+      <div class="card-meta"><span class="card-slides">COMING SOON</span><div class="card-arrow">→</div></div>
+    </a>
   </div>
 </section>
 
@@ -502,18 +528,18 @@
     <div class="section-count">BUILD YOUR CREATIVE MACHINE</div>
   </div>
   <div class="tool3-grid stagger">
-    <div class="creative-card coming-soon">
+    <a class="creative-card" href="ad-creative-tools/creative-swipe-brief-builder.html">
       <div class="tool-icon">🔍</div>
       <div class="tool-title">Creative Swipe Brief Builder</div>
       <div class="tool-desc">Paste your competitor intelligence report — the AI parses every hook, format, and angle, maps the white space, and outputs shoot-ready entity briefs. Start here.</div>
-      <div class="tool-footer"><span class="tool-status">⏳ Unlocks Tomorrow</span><div class="tool-arrow">→</div></div>
-    </div>
-    <div class="creative-card coming-soon">
+      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
+    </a>
+    <a class="creative-card" href="ad-creative-tools/entity-audit-worksheet.html">
       <div class="tool-icon">🗂️</div>
       <div class="tool-title">Entity Audit Worksheet</div>
       <div class="tool-desc">Map your current ad library by format, hook type, and emotion. Instantly see how many real entities you have vs. how many ads — and exactly what gaps to fill next.</div>
-      <div class="tool-footer"><span class="tool-status">⏳ Unlocks Tomorrow</span><div class="tool-arrow">→</div></div>
-    </div>
+      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
+    </a>
     <div class="creative-card coming-soon">
       <div class="tool-icon">📅</div>
       <div class="tool-title">Weekly Creative Brief</div>
@@ -547,24 +573,24 @@
     <div class="section-count">RUN THE NUMBERS DAILY</div>
   </div>
   <div class="tool3-grid stagger">
-    <div class="calc-card coming-soon">
+    <a class="calc-card" href="interactive-calculators/data-constraints-tracker.html">
       <div class="tool-icon">📊</div>
       <div class="tool-title">Data Constraints Snapshot</div>
       <div class="tool-desc">Monthly input form — CPL, cost per call, close rate, ROAS — outputs a full constraint diagnosis with ranked priorities and recommended actions. Start here — know your bottleneck before you touch budget.</div>
-      <div class="tool-footer"><span class="tool-status">⏳ Unlocks Tomorrow</span><div class="tool-arrow">→</div></div>
-    </div>
-    <div class="calc-card coming-soon">
+      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
+    </a>
+    <a class="calc-card" href="interactive-calculators/budget-scale-planner.html">
       <div class="tool-icon">💸</div>
       <div class="tool-title">Budget &amp; Scale Planner</div>
       <div class="tool-desc">Input your monthly budget and get the exact campaign structure, new creatives per week, rotation cadence, and the Launch 50 / Run 10 plan. Know how to allocate every dollar.</div>
-      <div class="tool-footer"><span class="tool-status">⏳ Unlocks Tomorrow</span><div class="tool-arrow">→</div></div>
-    </div>
-    <div class="calc-card coming-soon">
+      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
+    </a>
+    <a class="calc-card" href="interactive-calculators/kpi-calculator.html">
       <div class="tool-icon">🎯</div>
       <div class="tool-title">Ad Testing KPI Calculator</div>
       <div class="tool-desc">Input your offer price and get your exact CAC max, cost per qualified call target, hook rate thresholds, and kill rules for new vs. existing ads. The math behind every testing decision.</div>
-      <div class="tool-footer"><span class="tool-status">⏳ Unlocks Tomorrow</span><div class="tool-arrow">→</div></div>
-    </div>
+      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
+    </a>
   </div>
 </section>
 
@@ -580,47 +606,47 @@
     <div class="section-count">14 MINI-TRAININGS &nbsp;·&nbsp; SELF-PACED</div>
   </div>
 
-  <div class="ai-workshop-banner reveal">
+  <a class="ai-workshop-banner-live reveal" href="7f-workshops/agentic-ai-workshop.html">
     <div class="aib-left">
       <div class="aib-icon">🤖</div>
       <div>
-        <div class="aib-label">Workshop &nbsp;·&nbsp; Unlocks Tomorrow</div>
+        <div class="aib-label">Live Workshop &nbsp;·&nbsp; 15 Slides</div>
         <div class="aib-title">AI Integration Workshop — The Full Session</div>
         <div class="aib-desc">The high-level overview: LLMs vs. Agents, the three-domain framework, live demos, and how to prioritize your first build.</div>
       </div>
     </div>
     <div class="aib-right">
-      <span class="aib-pill">⏳ Unlocks Tomorrow</span>
-      <div class="aib-arr">→</div>
+      <span class="aib-pill-live">● Live</span>
+      <div class="aib-arr-live">→</div>
     </div>
-  </div>
+  </a>
 
   <div class="ai-cat-label">Getting Started</div>
   <div class="mini-grid stagger">
-    <div class="mini-card cs"><div class="mc-icon">🚀</div><div class="mc-title">Getting Started with Claude</div><div class="mc-desc">Plans, models, interface orientation, and the five things to set up before your first real work session.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">🔄</div><div class="mc-title">Migrating from ChatGPT to Claude</div><div class="mc-desc">What's different, what carries over, and how to move your prompts, workflows, and context without starting from zero.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">⚡</div><div class="mc-title">Optimizing &amp; Saving Claude Usage</div><div class="mc-desc">Why tokens run out faster than you expect, the model selection lever, and 10 habits that can double your effective daily budget.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+    <a class="mini-card" href="ai-tools/getting-started-with-claude.html"><div class="mc-icon">🚀</div><div class="mc-title">Getting Started with Claude</div><div class="mc-desc">Plans, models, interface orientation, and the five things to set up before your first real work session.</div><div class="mc-foot"><span class="mc-status live">● Live</span><div class="mc-arr">→</div></div></a>
+    <a class="mini-card" href="ai-tools/migrating-from-chatgpt.html"><div class="mc-icon">🔄</div><div class="mc-title">Migrating from ChatGPT to Claude</div><div class="mc-desc">What's different, what carries over, and how to move your prompts, workflows, and context without starting from zero.</div><div class="mc-foot"><span class="mc-status live">● Live</span><div class="mc-arr">→</div></div></a>
+    <a class="mini-card" href="ai-tools/saving-claude-usage.html"><div class="mc-icon">⚡</div><div class="mc-title">Optimizing &amp; Saving Claude Usage</div><div class="mc-desc">Why tokens run out faster than you expect, the model selection lever, and 10 habits that can double your effective daily budget.</div><div class="mc-foot"><span class="mc-status live">● Live</span><div class="mc-arr">→</div></div></a>
     <div class="mini-card cs"><div class="mc-icon">🎨</div><div class="mc-title">How Artifacts Work</div><div class="mc-desc">What artifacts are, when Claude creates them, and how to use the Publish trick for long iterative builds.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
   </div>
 
   <div class="ai-cat-label">Marketing</div>
   <div class="mini-grid stagger">
-    <div class="mini-card cs"><div class="mc-icon">📊</div><div class="mc-title">Claude Instagram Audit</div><div class="mc-desc">Paste your IG URL and get a full audit: bio, content mix, hooks, engagement gaps, and a prioritized optimization report.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">🧠</div><div class="mc-title">Micro Lead Magnet Quizzes</div><div class="mc-desc">Build a free interactive HTML quiz in 30 minutes using Claude — hosted on GitHub for $0/month, with 70–85% completion rates vs. PDF downloads.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">🎨</div><div class="mc-title">Creating Canva Designs in Claude</div><div class="mc-desc">Design carousels, graphics, and presentations using Claude's Canva connector — no manual design required.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">📱</div><div class="mc-title">Posting to Instagram from Claude</div><div class="mc-desc">The CoWork + Zapier pipeline: approve content in Notion, auto-schedule to IG. Your VA approves, Claude publishes.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+    <a class="mini-card" href="ai-tools/instagram-audit.html"><div class="mc-icon">📊</div><div class="mc-title">Claude Instagram Audit</div><div class="mc-desc">Paste your IG URL and get a full audit: bio, content mix, hooks, engagement gaps, and a prioritized optimization report.</div><div class="mc-foot"><span class="mc-status live">● Live</span><div class="mc-arr">→</div></div></a>
+    <a class="mini-card" href="ai-tools/micro-lead-magnet-quiz.html"><div class="mc-icon">🧠</div><div class="mc-title">Micro Lead Magnet Quizzes</div><div class="mc-desc">Build a free interactive HTML quiz in 30 minutes using Claude — hosted on GitHub for $0/month, with 70–85% completion rates vs. PDF downloads.</div><div class="mc-foot"><span class="mc-status live">● Live</span><div class="mc-arr">→</div></div></a>
+    <a class="mini-card" href="ai-tools/canva-designs-in-claude.html"><div class="mc-icon">🎨</div><div class="mc-title">Creating Canva Designs in Claude</div><div class="mc-desc">Design carousels, graphics, and presentations using Claude's Canva connector — no manual design required.</div><div class="mc-foot"><span class="mc-status live">● Live</span><div class="mc-arr">→</div></div></a>
+    <a class="mini-card" href="ai-tools/posting-to-instagram.html"><div class="mc-icon">📱</div><div class="mc-title">Posting to Instagram from Claude</div><div class="mc-desc">The CoWork + Zapier pipeline: approve content in Notion, auto-schedule to IG. Your VA approves, Claude publishes.</div><div class="mc-foot"><span class="mc-status live">● Live</span><div class="mc-arr">→</div></div></a>
   </div>
 
   <div class="ai-cat-label navy-cat">Sales &amp; Automation</div>
   <div class="mini-grid cols-3 stagger">
-    <div class="mini-card cs"><div class="mc-icon">💬</div><div class="mc-title">Claude ManyChat Automations</div><div class="mc-desc">Build DM qualification flows that score leads, route hot prospects to booking, and send unqualified leads to nurture — zero closer time wasted.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">🔁</div><div class="mc-title">Comment Response Automation</div><div class="mc-desc">Auto-respond to IG comments using ManyChat triggers and Claude-generated replies — keeps your content alive without manual monitoring.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+    <a class="mini-card" href="ai-tools/manychat-automations.html"><div class="mc-icon">💬</div><div class="mc-title">Claude ManyChat Automations</div><div class="mc-desc">Build DM qualification flows that score leads, route hot prospects to booking, and send unqualified leads to nurture — zero closer time wasted.</div><div class="mc-foot"><span class="mc-status live">● Live</span><div class="mc-arr">→</div></div></a>
+    <a class="mini-card" href="ai-tools/comment-response-automation.html"><div class="mc-icon">🔁</div><div class="mc-title">Comment Response Automation</div><div class="mc-desc">Auto-respond to IG comments using ManyChat triggers and Claude-generated replies — keeps your content alive without manual monitoring.</div><div class="mc-foot"><span class="mc-status live">● Live</span><div class="mc-arr">→</div></div></a>
     <div class="mini-card cs"><div class="mc-icon">📋</div><div class="mc-title">Pre-Call Brief Builder</div><div class="mc-desc">Lead submits form → Claude generates a full pre-call brief: background, pain points, likely objections, recommended angle.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
   </div>
 
   <div class="ai-cat-label gray-cat">Advanced Builds</div>
   <div class="mini-grid stagger">
-    <div class="mini-card cs"><div class="mc-icon">🔍</div><div class="mc-title">Manus + Claude + Foreplay</div><div class="mc-desc">The competitor intelligence research stack. 30 minutes to a 30-page brief with ad hooks, angles, and white space mapped.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+    <a class="mini-card" href="ai-tools/module-01-manus-claude-foreplay.html"><div class="mc-icon">🔍</div><div class="mc-title">Manus + Claude + Foreplay</div><div class="mc-desc">The competitor intelligence research stack. 30 minutes to a 30-page brief with ad hooks, angles, and white space mapped.</div><div class="mc-foot"><span class="mc-status live">● Live — 15 Slides</span><div class="mc-arr">→</div></div></a>
     <div class="mini-card cs"><div class="mc-icon">🎨</div><div class="mc-title">Figma AI + Carousel Automation</div><div class="mc-desc">Automated carousel image generation in batch — 10 minutes per batch. Fully hands-off visual production at scale.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
     <div class="mini-card cs"><div class="mc-icon">⚙️</div><div class="mc-title">GHL + Claude Code Integration</div><div class="mc-desc">Connect GoHighLevel to Claude Code for automated page builds, funnel updates, and CRM workflow automation.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
     <div class="mini-card cs"><div class="mc-icon">💻</div><div class="mc-title">Claude Code + GitHub Pages</div><div class="mc-desc">Build and deploy custom HTML tools, dashboards, and mini-training pages using Claude Code and free GitHub hosting.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
@@ -667,18 +693,18 @@
     <div class="section-count">REFERENCE &amp; DEEP DIVES</div>
   </div>
   <div class="bonus-grid stagger">
-    <div class="bonus-card coming-soon">
+    <a class="bonus-card" href="bonus/show-rate-optimization.html">
       <div class="bonus-icon">🔁</div>
       <div class="bonus-title">Show Rate Optimization Training</div>
       <div class="bonus-desc">TY page structure, pre-call LNS sequences, calendar strategy, and the benchmarks behind a 70%+ show rate. Based on Jeremy Haynes' framework.</div>
-      <div class="bonus-status">⏳ Unlocks Tomorrow</div>
-    </div>
-    <div class="bonus-card coming-soon">
+      <div class="bonus-status live">● Live</div>
+    </a>
+    <a class="bonus-card" href="bonus/mof-bof-ad-training.html">
       <div class="bonus-icon">🎯</div>
       <div class="bonus-title">MOF &amp; BOF Ad Strategy Training</div>
       <div class="bonus-desc">The full middle and bottom-of-funnel ad playbook — warm audience retargeting, short-form VSL funnels, AI UGC cloning with Arcads, and the ROAS-first KPI framework that stops you from killing ads that are actually making money.</div>
-      <div class="bonus-status">⏳ Unlocks Tomorrow</div>
-    </div>
+      <div class="bonus-status live">● Live — 14 Slides</div>
+    </a>
     <div class="bonus-card coming-soon">
       <div class="bonus-icon">📈</div>
       <div class="bonus-title">Offer &amp; Pricing Deep Dive</div>

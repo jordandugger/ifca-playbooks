@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFCA Playbooks — Cancún Legacy Workshop Landing Page v1</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1E3A5F; --navy-dark: #102236; --navy-mid: #1a3352; --navy-light: #2A4F7F;
+    --orange: #E87722; --orange-light: #F09040; --orange-dim: rgba(232,119,34,0.15);
+    --blue-light: #D6E4F0; --blue-mid: #A8C8E0; --blue-real: #4A7FA5;
+    --white: #FFFFFF; --gray-400: #94A3B8; --gray-500: #64748B; --gray-600: #475569;
+    --green: #22c55e; --green-bg: rgba(34,197,94,0.1);
+    --purple: #a78bfa; --purple-dim: rgba(167,139,250,0.12);
+    --gold: #F59E0B; --gold-dim: rgba(245,158,11,0.12);
+    --teal: #2DD4BF; --teal-dim: rgba(45,212,191,0.1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--navy-dark); color: var(--white); overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
+
+  /* HEADER */
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 48px; height: 64px; display: flex; align-items: center; justify-content: space-between; background: rgba(16,34,54,0.90); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .header-logo { display: flex; align-items: center; gap: 12px; }
+  .logo-mark { font-family: 'Bebas Neue'; font-size: 22px; color: var(--orange); letter-spacing: 3px; }
+  .logo-divider { width: 1px; height: 20px; background: rgba(255,255,255,0.15); }
+  .logo-sub { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 2px; text-transform: uppercase; }
+  nav { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  nav a { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.4); text-decoration: none; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; }
+  nav a:hover { color: var(--orange); }
+  .nav-badge { background: var(--orange); color: white; font-family: 'DM Mono'; font-size: 9px; padding: 4px 10px; border-radius: 4px; letter-spacing: 1px; }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 48px 80px; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(232,119,34,0.08) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 20% 80%, rgba(30,58,95,0.6) 0%, transparent 70%), linear-gradient(160deg, var(--navy-dark) 0%, #0d1e30 100%); }
+  .hero-bg::after { content: ''; position: absolute; top: 0; right: 15%; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent, rgba(232,119,34,0.2), transparent); transform: rotate(8deg) translateX(50px); }
+  .hero-content { position: relative; z-index: 2; max-width: 900px; }
+  .hero-eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; animation: fadeUp 0.6s ease both; }
+  .eyebrow-line { width: 40px; height: 2px; background: var(--orange); }
+  .eyebrow-text { font-family: 'DM Mono'; font-size: 11px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; }
+  .hero-title { font-family: 'Bebas Neue'; font-size: clamp(72px, 10vw, 130px); line-height: 0.88; color: white; margin-bottom: 8px; animation: fadeUp 0.6s ease 0.1s both; }
+  .hero-title .accent { color: var(--orange); font-family: 'Instrument Serif'; font-style: italic; font-size: 0.9em; }
+  .hero-subtitle { font-size: 16px; color: var(--blue-light); line-height: 1.65; max-width: 580px; margin-top: 20px; opacity: 0.8; animation: fadeUp 0.6s ease 0.2s both; }
+  .hero-stats { display: flex; gap: 40px; margin-top: 48px; animation: fadeUp 0.6s ease 0.3s both; flex-wrap: wrap; }
+  .hero-stat { display: flex; flex-direction: column; gap: 4px; }
+  .stat-num { font-family: 'Bebas Neue'; font-size: 42px; color: var(--orange); line-height: 1; }
+  .stat-label { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 1px; text-transform: uppercase; }
+  .hero-divider { width: 1px; height: 50px; background: rgba(255,255,255,0.1); align-self: center; }
+  .scroll-hint { position: absolute; bottom: 40px; left: 48px; display: flex; align-items: center; gap: 10px; animation: fadeUp 0.6s ease 0.5s both; }
+  .scroll-hint span { font-family: 'DM Mono'; font-size: 9px; color: rgba(255,255,255,0.2); letter-spacing: 2px; text-transform: uppercase; }
+  .scroll-line { width: 30px; height: 1px; background: rgba(255,255,255,0.15); position: relative; overflow: hidden; }
+  .scroll-line::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--orange); animation: scrollPulse 2s ease-in-out infinite; }
+
+  /* DAY BANNERS */
+  .day-banner { margin: 0 48px; padding: 24px 32px; border-radius: 14px; display: flex; align-items: center; gap: 20px; }
+  .day-banner.day1 { background: linear-gradient(135deg, rgba(245,158,11,0.1) 0%, rgba(245,158,11,0.04) 100%); border: 1px solid rgba(245,158,11,0.25); }
+  .day-banner.day2 { background: linear-gradient(135deg, rgba(232,119,34,0.07) 0%, rgba(232,119,34,0.02) 100%); border: 1px solid rgba(232,119,34,0.15); }
+  .day-pip { font-family: 'Bebas Neue'; font-size: 48px; line-height: 1; letter-spacing: 1px; flex-shrink: 0; }
+  .day-banner.day1 .day-pip { color: var(--gold); }
+  .day-banner.day2 .day-pip { color: rgba(232,119,34,0.6); }
+  .day-info { display: flex; flex-direction: column; gap: 3px; }
+  .day-eyebrow { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; }
+  .day-banner.day1 .day-eyebrow { color: rgba(245,158,11,0.55); }
+  .day-banner.day2 .day-eyebrow { color: rgba(232,119,34,0.45); }
+  .day-title { font-family: 'Bebas Neue'; font-size: 26px; color: white; letter-spacing: 1px; line-height: 1; }
+  .day-desc { font-size: 13px; color: rgba(255,255,255,0.38); line-height: 1.5; margin-top: 2px; max-width: 560px; }
+  .day-badge { margin-left: auto; flex-shrink: 0; font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; }
+  .day-banner.day1 .day-badge { color: var(--gold); background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25); }
+  .day-banner.day2 .day-badge { color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); }
+
+  /* SECTIONS */
+  section { padding: 80px 48px; position: relative; }
+  .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .section-label { font-family: 'DM Mono'; font-size: 10px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .section-title { font-family: 'Bebas Neue'; font-size: 48px; color: white; line-height: 1; letter-spacing: 1px; }
+  .section-count { font-family: 'DM Mono'; font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 1px; }
+  .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent); margin: 0 48px; }
+
+  /* WORKSHOP CARDS */
+  .workshops-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .workshop-card { background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 32px 32px 28px; display: flex; flex-direction: column; gap: 14px; text-decoration: none; color: inherit; position: relative; overflow: hidden; transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease; }
+  .workshop-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--orange), var(--orange-light)); }
+  .card-category { display: flex; align-items: center; justify-content: space-between; }
+  .cat-pill { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; }
+  .cat-pill.coming { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.2); }
+  .card-num { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.15); }
+  .card-icon { font-size: 32px; }
+  .card-title { font-family: 'Bebas Neue'; font-size: 32px; color: white; line-height: 1.0; letter-spacing: 0.5px; }
+  .card-desc { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; flex: 1; }
+  .card-meta { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .card-slides { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.25); }
+  .card-arrow { width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 12px; color: rgba(255,255,255,0.3); }
+
+  /* TOOL GRID */
+  .tool3-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .creative-card, .calc-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 28px 24px; color: inherit; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden; }
+  .creative-card::before, .calc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .creative-card::before { background: rgba(232,119,34,0.4); }
+  .calc-card::before { background: var(--blue-real); }
+  .creative-card:not(.coming-soon):hover::before, .calc-card:not(.coming-soon):hover::before { background: var(--orange); }
+  .creative-card:not(.coming-soon):hover { border-color: rgba(232,119,34,0.25); background: rgba(255,255,255,0.05); transform: translateY(-3px); }
+  .calc-card:not(.coming-soon):hover { border-color: rgba(168,200,224,0.3); background: rgba(255,255,255,0.05); transform: translateY(-3px); }
+  .creative-card.coming-soon, .calc-card.coming-soon { opacity: 0.42; cursor: default; }
+  .tool-icon { font-size: 26px; }
+  .tool-title { font-family: 'Bebas Neue'; font-size: 22px; color: white; letter-spacing: 0.5px; line-height: 1.05; }
+  .tool-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.5; flex: 1; }
+  .tool-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); margin-top: auto; }
+  .tool-status { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+  .tool-arrow { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 11px; color: rgba(255,255,255,0.3); transition: all 0.2s; }
+  .creative-card:not(.coming-soon):hover .tool-arrow, .calc-card:not(.coming-soon):hover .tool-arrow { border-color: var(--orange); color: var(--orange); background: rgba(232,119,34,0.1); }
+
+  /* FLOW DIAGRAM */
+  .flow-diagram { margin: 28px 0 0; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 24px 28px; display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; }
+  .flow-intro { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 18px; text-align: center; width: 100%; }
+  .flow-nodes { display: flex; align-items: center; gap: 0; flex-wrap: wrap; justify-content: center; width: 100%; }
+  .flow-node { display: flex; flex-direction: column; align-items: center; gap: 6px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px 18px; min-width: 150px; text-align: center; }
+  .flow-node.source { border-color: rgba(74,127,165,0.3); background: rgba(74,127,165,0.06); }
+  .flow-node.tool { border-color: rgba(232,119,34,0.25); background: rgba(232,119,34,0.06); }
+  .fn-step { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--orange); }
+  .fn-name { font-family: 'Bebas Neue'; font-size: 15px; color: white; letter-spacing: 0.5px; line-height: 1.1; }
+  .fn-sub { font-size: 10px; color: rgba(255,255,255,0.35); line-height: 1.4; }
+  .flow-arrow-node { font-size: 18px; color: rgba(255,255,255,0.15); margin: 0 8px; flex-shrink: 0; }
+  .flow-output { display: flex; flex-direction: column; align-items: center; gap: 4px; background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; padding: 14px 18px; min-width: 150px; text-align: center; }
+  .fo-step { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: #86efac; }
+  .fo-name { font-family: 'Bebas Neue'; font-size: 15px; color: white; letter-spacing: 0.5px; }
+  .fo-sub { font-size: 10px; color: rgba(255,255,255,0.35); line-height: 1.4; }
+
+  /* AI TOOLS */
+  .ai-tools-section { background: linear-gradient(180deg, transparent, rgba(232,119,34,0.025), transparent); }
+  .agent-section { padding: 0 48px 80px; }
+  .agent-inner { background: linear-gradient(135deg, rgba(167,139,250,0.05) 0%, rgba(167,139,250,0.02) 100%); border: 1px solid rgba(167,139,250,0.15); border-radius: 20px; padding: 40px 40px 36px; position: relative; overflow: hidden; }
+  .agent-inner::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--purple), rgba(167,139,250,0.3)); }
+  .agent-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 28px; gap: 20px; }
+  .agent-label { font-family: 'DM Mono'; font-size: 10px; color: var(--purple); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .agent-title { font-family: 'Bebas Neue'; font-size: 36px; color: white; line-height: 1; letter-spacing: 1px; }
+  .agent-subtitle { font-size: 13px; color: rgba(255,255,255,0.4); max-width: 520px; line-height: 1.55; margin-top: 6px; }
+  .agent-badge { font-family: 'DM Mono'; font-size: 10px; color: var(--purple); background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.2); padding: 5px 14px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; margin-top: 4px; }
+  .agent-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .agent-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(167,139,250,0.15); border-radius: 14px; padding: 24px 22px; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden; }
+  .agent-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: rgba(167,139,250,0.3); }
+  .agent-card.coming-soon { opacity: 0.45; cursor: default; }
+  .agent-card-icon { font-size: 22px; }
+  .agent-card-title { font-family: 'Bebas Neue'; font-size: 20px; color: white; line-height: 1.05; letter-spacing: 0.5px; }
+  .agent-card-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.5; flex: 1; }
+  .agent-card-status { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-top: 4px; }
+
+  /* BONUS */
+  .bonus-section { background: linear-gradient(180deg, transparent, rgba(214,228,240,0.015), transparent); }
+  .bonus-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .bonus-card { background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 24px 22px; color: inherit; display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden; }
+  .bonus-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.07); }
+  .bonus-card.coming-soon { opacity: 0.38; cursor: default; }
+  .bonus-icon { font-size: 22px; }
+  .bonus-title { font-family: 'Bebas Neue'; font-size: 19px; color: white; letter-spacing: 0.5px; line-height: 1.05; }
+  .bonus-desc { font-size: 12px; color: rgba(255,255,255,0.38); line-height: 1.45; flex: 1; }
+  .bonus-status { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.18); margin-top: 4px; }
+
+  /* CLIENT AUDITS */
+  .client-section { background: linear-gradient(180deg, transparent, rgba(245,158,11,0.02), transparent); }
+  .client-section .section-label { color: var(--gold); }
+  .client-section .section-header { border-bottom-color: rgba(245,158,11,0.15); }
+  .client-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .client-card { background: rgba(255,255,255,0.025); border: 1px solid rgba(245,158,11,0.12); border-radius: 16px; padding: 0; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: all 0.25s; position: relative; overflow: hidden; }
+  .client-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: rgba(245,158,11,0.3); transition: background 0.25s; }
+  .client-card:hover::before { background: var(--gold); }
+  .client-card:hover { border-color: rgba(245,158,11,0.3); background: rgba(255,255,255,0.04); transform: translateY(-3px); }
+  .cc-header { padding: 20px 20px 14px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .cc-initials { width: 40px; height: 40px; border-radius: 50%; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.25); font-family: 'Bebas Neue'; font-size: 16px; color: var(--gold); display: flex; align-items: center; justify-content: center; letter-spacing: 1px; margin-bottom: 12px; }
+  .cc-name { font-family: 'Bebas Neue'; font-size: 20px; color: white; letter-spacing: 0.5px; line-height: 1.0; margin-bottom: 3px; }
+  .cc-meta { font-family: 'DM Mono'; font-size: 9px; color: rgba(255,255,255,0.3); letter-spacing: 1px; text-transform: uppercase; }
+  .cc-strength { padding: 10px 20px 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .cc-strength-label { display: block; font-family: 'DM Mono'; font-size: 9px; color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; }
+  .cc-strength-val { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.45; }
+  .cc-resources { padding: 10px 20px 14px; display: flex; flex-direction: column; gap: 5px; border-top: 1px solid rgba(255,255,255,0.04); margin-top: auto; }
+  .cc-resource { font-size: 11px; color: rgba(255,255,255,0.3); display: flex; align-items: center; gap: 6px; }
+  .cc-resource.available { color: rgba(245,158,11,0.7); }
+  .cc-resource.available::before { content: '●'; font-size: 7px; color: var(--gold); }
+  .cc-resource.unavailable::before { content: '○'; font-size: 7px; color: rgba(255,255,255,0.2); }
+  .cc-resource.tracker { color: var(--teal); background: var(--teal-dim); border: 1px solid rgba(45,212,191,0.2); border-radius: 5px; padding: 5px 9px; margin-top: 4px; font-weight: 600; letter-spacing: 0.02em; transition: background 0.2s, border-color 0.2s; justify-content: space-between; }
+  .cc-resource.tracker::before { content: '📊'; font-size: 10px; flex-shrink: 0; }
+  .cc-resource.tracker a { color: inherit; text-decoration: none; flex: 1; }
+  .cc-resource.tracker::after { content: '↗'; font-size: 10px; opacity: 0.6; flex-shrink: 0; }
+  .client-card:hover .cc-resource.tracker { background: rgba(45,212,191,0.15); border-color: rgba(45,212,191,0.4); }
+  .cc-footer { padding: 10px 20px 14px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; }
+  .cc-open { font-family: 'DM Mono'; font-size: 9px; color: rgba(255,255,255,0.25); letter-spacing: 1px; text-transform: uppercase; }
+  .cc-arrow { font-size: 12px; color: rgba(255,255,255,0.2); transition: all 0.2s; }
+  .client-card:hover .cc-arrow { color: var(--gold); }
+
+  /* AI MINI CARDS */
+  .ai-cat-label { font-family: 'DM Mono'; font-size: 10px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; display: flex; align-items: center; gap: 10px; margin-bottom: 16px; margin-top: 40px; }
+  .ai-cat-label:first-child { margin-top: 0; }
+  .ai-cat-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
+  .ai-cat-label.navy-cat { color: var(--blue-mid); }
+  .ai-cat-label.gray-cat { color: rgba(255,255,255,0.3); }
+  .mini-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 4px; }
+  .mini-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .mini-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 20px 18px; color: inherit; display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden; }
+  .mini-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.06); }
+  .mini-card.cs { opacity: 0.38; cursor: default; }
+  .mc-icon { font-size: 20px; }
+  .mc-title { font-family: 'Bebas Neue'; font-size: 17px; color: white; line-height: 1.1; letter-spacing: 0.5px; }
+  .mc-desc { font-size: 11px; color: rgba(255,255,255,0.42); line-height: 1.5; flex: 1; }
+  .mc-foot { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: auto; }
+  .mc-status { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.18); }
+  .mc-arr { width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 10px; color: rgba(255,255,255,0.25); }
+
+  /* AI WORKSHOP BANNER — locked */
+  .ai-workshop-banner { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 24px 28px; margin-bottom: 36px; display: flex; align-items: center; justify-content: space-between; gap: 20px; opacity: 0.42; cursor: default; }
+  .aib-left { display: flex; align-items: center; gap: 18px; }
+  .aib-icon { font-size: 28px; }
+  .aib-label { font-family: 'DM Mono'; font-size: 9px; color: rgba(255,255,255,0.3); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+  .aib-title { font-family: 'Bebas Neue'; font-size: 24px; color: white; letter-spacing: 1px; line-height: 1; }
+  .aib-desc { font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 4px; }
+  .aib-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+  .aib-pill { font-family: 'DM Mono'; font-size: 9px; color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px; letter-spacing: 1px; white-space: nowrap; }
+  .aib-arr { width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 14px; color: rgba(255,255,255,0.2); }
+
+  /* FOOTER */
+  footer { padding: 40px 48px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; }
+  .footer-left { display: flex; flex-direction: column; gap: 6px; }
+  .footer-logo { font-family: 'Bebas Neue'; font-size: 24px; color: var(--orange); letter-spacing: 3px; }
+  .footer-sub { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.2); letter-spacing: 1px; }
+  .footer-right { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.15); letter-spacing: 1px; text-align: right; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes scrollPulse { 0% { left: -100%; } 100% { left: 100%; } }
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .stagger > * { opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease, transform 0.4s ease; }
+  .stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:0s; }
+  .stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:0.07s; }
+  .stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:0.14s; }
+  .stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:0.21s; }
+  .stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:0.28s; }
+  .stagger.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay:0.35s; }
+  .stagger.visible > *:nth-child(7) { opacity:1; transform:none; transition-delay:0.42s; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-logo">
+    <div class="logo-mark">IFCA</div>
+    <div class="logo-divider"></div>
+    <div class="logo-sub">Playbooks</div>
+  </div>
+  <nav>
+    <a href="#clients">Client Audits</a>
+    <a href="#workshops">Workshops</a>
+    <a href="#creative-tools">Creative Tools</a>
+    <a href="#calculators">Calculators</a>
+    <a href="#ai-tools">AI Training</a>
+    <a href="#bonus">Bonus</a>
+    <span class="nav-badge">APRIL 2026</span>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="eyebrow-line"></div>
+      <div class="eyebrow-text">Seven-Figure Client Retreat &nbsp;·&nbsp; Impact Fitness Coaching Academy</div>
+    </div>
+    <div class="hero-title">IFCA<br><span class="accent">Playbooks</span></div>
+    <div class="hero-subtitle">Every workshop, tool, and framework from the 7-Figure Retreat — workshops, interactive calculators, creative production tools, AI modules, bonus resources, and individual client audits.</div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="stat-num">7</div><div class="stat-label">Client Audits</div></div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat"><div class="stat-num">2</div><div class="stat-label">Workshops</div></div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat"><div class="stat-num">3</div><div class="stat-label">Creative AI Tools</div></div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat"><div class="stat-num">14</div><div class="stat-label">AI Mini-Trainings</div></div>
+    </div>
+  </div>
+  <div class="scroll-hint"><div class="scroll-line"></div><span>Scroll to explore</span></div>
+</div>
+
+<!-- ══════════ DAY 1 BANNER ══════════ -->
+<div class="day-banner day1 reveal">
+  <div class="day-pip">DAY 1</div>
+  <div class="day-info">
+    <div class="day-eyebrow">April 2026 &nbsp;·&nbsp; Cancún</div>
+    <div class="day-title">Student Constraint Hot Seats</div>
+    <div class="day-desc">Individual business audits, data deep-dives, and constraint diagnosis for each client. Your personal hub is live below.</div>
+  </div>
+  <div class="day-badge">● Live Now</div>
+</div>
+
+<!-- ══════════ 1 — CLIENT AUDITS ══════════ -->
+<section id="clients" class="client-section">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">Seven-Figure Cancún &nbsp;·&nbsp; April 2026</div>
+      <div class="section-title">Client Audits</div>
+    </div>
+    <div class="section-count">APRIL 2026 RETREAT</div>
+  </div>
+  <div class="client-grid stagger">
+
+    <a class="client-card" href="client-audits/alycia-israel/index.html">
+      <div class="cc-header">
+        <div class="cc-initials">AI</div>
+        <div class="cc-name">Alycia Israel</div>
+        <div class="cc-meta">$956K Revenue &nbsp;·&nbsp; CAC:LTV 5:1</div>
+      </div>
+      <div class="cc-strength">
+        <span class="cc-strength-label">Biggest Strength</span>
+        <span class="cc-strength-val">How to scale a DM lead magnet to 57% YoY growth — and how to build entity diversity before you hit the ceiling</span>
+      </div>
+      <div class="cc-resources">
+        <div class="cc-resource available">Complete Business Audit</div>
+        <div class="cc-resource available">Data Snapshot</div>
+        <div class="cc-resource available">Revenue Equilibrium</div>
+        <div class="cc-resource available">Creative Intelligence Report</div>
+        <div class="cc-resource available">Constraint Diagnosis</div>
+        <div class="cc-resource unavailable">90-Day Priority Action Plan &nbsp;<em style="font-size:9px;color:rgba(255,255,255,0.25);font-style:normal;">In Progress</em></div>
+      </div>
+      <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
+    </a>
+
+    <a class="client-card" href="client-audits/vanessa-omar/index.html">
+      <div class="cc-header">
+        <div class="cc-initials">VO</div>
+        <div class="cc-name">Vanessa &amp; Omar</div>
+        <div class="cc-meta">$2.35M Revenue &nbsp;·&nbsp; CAC:LTV 9.2:1</div>
+      </div>
+      <div class="cc-strength">
+        <span class="cc-strength-label">Biggest Strength</span>
+        <span class="cc-strength-val">How to build a $2M+ coaching brand almost entirely on organic — and what it looks like to unlock paid ads on top of it</span>
+      </div>
+      <div class="cc-resources">
+        <div class="cc-resource available">Complete Business Audit</div>
+        <div class="cc-resource available">Data Snapshot</div>
+        <div class="cc-resource available">Revenue Equilibrium</div>
+        <div class="cc-resource available">Creative Intelligence Report</div>
+        <div class="cc-resource available">Constraint Diagnosis</div>
+        <div class="cc-resource unavailable">90-Day Priority Action Plan &nbsp;<em style="font-size:9px;color:rgba(255,255,255,0.25);font-style:normal;">In Progress</em></div>
+      </div>
+      <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
+    </a>
+
+    <a class="client-card" href="client-audits/lacey-zach/index.html">
+      <div class="cc-header">
+        <div class="cc-initials">LZ</div>
+        <div class="cc-name">Lacey &amp; Zach</div>
+        <div class="cc-meta">$3.53 CPL &nbsp;·&nbsp; CAC:LTV 7.1:1</div>
+      </div>
+      <div class="cc-strength">
+        <span class="cc-strength-label">Biggest Strength</span>
+        <span class="cc-strength-val">How to create viral ad creative that proves demand — and what to fix when viral traffic breaks your sales system</span>
+      </div>
+      <div class="cc-resources">
+        <div class="cc-resource available">Complete Business Audit</div>
+        <div class="cc-resource available">Data Snapshot</div>
+        <div class="cc-resource available">Revenue Equilibrium</div>
+        <div class="cc-resource available">Creative Intelligence Report</div>
+        <div class="cc-resource available">Constraint Diagnosis</div>
+        <div class="cc-resource unavailable">90-Day Priority Action Plan &nbsp;<em style="font-size:9px;color:rgba(255,255,255,0.25);font-style:normal;">In Progress</em></div>
+      </div>
+      <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
+    </a>
+
+    <a class="client-card" href="client-audits/lindsey-mathews/index.html">
+      <div class="cc-header">
+        <div class="cc-initials">LM</div>
+        <div class="cc-name">Lindsey Mathews</div>
+        <div class="cc-meta">~$85K/mo Revenue &nbsp;·&nbsp; CAC:LTV 4:1</div>
+      </div>
+      <div class="cc-strength">
+        <span class="cc-strength-label">Biggest Strength</span>
+        <span class="cc-strength-val">How to scale to $1M+ with paid ads as the primary acquisition channel — and how to manage creative refresh at high spend levels</span>
+      </div>
+      <div class="cc-resources">
+        <div class="cc-resource available">Complete Business Audit</div>
+        <div class="cc-resource available">Data Snapshot</div>
+        <div class="cc-resource available">Revenue Equilibrium</div>
+        <div class="cc-resource available">Creative Intelligence Report</div>
+        <div class="cc-resource available">Constraint Diagnosis</div>
+        <div class="cc-resource unavailable">90-Day Priority Action Plan &nbsp;<em style="font-size:9px;color:rgba(255,255,255,0.25);font-style:normal;">In Progress</em></div>
+      </div>
+      <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
+    </a>
+
+    <a class="client-card" href="client-audits/april-arthur/index.html">
+      <div class="cc-header">
+        <div class="cc-initials">AA</div>
+        <div class="cc-name">April &amp; Arthur</div>
+        <div class="cc-meta">~$93K/mo Revenue &nbsp;·&nbsp; CAC:LTV 10.6:1</div>
+      </div>
+      <div class="cc-strength">
+        <span class="cc-strength-label">Biggest Strength</span>
+        <span class="cc-strength-val">Best CPL in the cohort at $0.94 — how to build a dual-funnel ad system with elite unit economics and a 10:1 CAC:LTV</span>
+      </div>
+      <div class="cc-resources">
+        <div class="cc-resource available">Complete Business Audit</div>
+        <div class="cc-resource available">Data Snapshot</div>
+        <div class="cc-resource available">Revenue Equilibrium</div>
+        <div class="cc-resource available">Creative Intelligence Report</div>
+        <div class="cc-resource available">Constraint Diagnosis</div>
+        <div class="cc-resource unavailable">90-Day Priority Action Plan &nbsp;<em style="font-size:9px;color:rgba(255,255,255,0.25);font-style:normal;">In Progress</em></div>
+      </div>
+      <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
+    </a>
+
+    <a class="client-card" href="client-audits/amy-jo/index.html">
+      <div class="cc-header">
+        <div class="cc-initials">AJ</div>
+        <div class="cc-name">Amy Jo Palmquest</div>
+        <div class="cc-meta">~$26K/mo Revenue &nbsp;·&nbsp; CAC:LTV ~5:1</div>
+      </div>
+      <div class="cc-strength">
+        <span class="cc-strength-label">Biggest Strength</span>
+        <span class="cc-strength-val">58% profit margins with a $1.36 CPL — how to run a lean, high-margin coaching business with elite unit economics at lower volume</span>
+      </div>
+      <div class="cc-resources">
+        <div class="cc-resource available">Complete Business Audit</div>
+        <div class="cc-resource available">Data Snapshot</div>
+        <div class="cc-resource available">Revenue Equilibrium</div>
+        <div class="cc-resource available">Creative Intelligence Report</div>
+        <div class="cc-resource available">Constraint Diagnosis</div>
+        <div class="cc-resource unavailable">90-Day Priority Action Plan &nbsp;<em style="font-size:9px;color:rgba(255,255,255,0.25);font-style:normal;">In Progress</em></div>
+      </div>
+      <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
+    </a>
+
+    <a class="client-card" href="client-audits/emily-etni/index.html">
+      <div class="cc-header">
+        <div class="cc-initials">EE</div>
+        <div class="cc-name">Emily &amp; Etni</div>
+        <div class="cc-meta">$332K Revenue &nbsp;·&nbsp; CAC:LTV 4.2:1</div>
+      </div>
+      <div class="cc-strength">
+        <span class="cc-strength-label">Biggest Strength</span>
+        <span class="cc-strength-val">Nearly 3× revenue growth in a single year — how to go from $117K to $332K and what the ad creative evolution looked like</span>
+      </div>
+      <div class="cc-resources">
+        <div class="cc-resource available">Complete Business Audit</div>
+        <div class="cc-resource available">Data Snapshot</div>
+        <div class="cc-resource available">Revenue Equilibrium</div>
+        <div class="cc-resource available">Creative Intelligence Report</div>
+        <div class="cc-resource available">Constraint Diagnosis</div>
+        <div class="cc-resource unavailable">90-Day Priority Action Plan &nbsp;<em style="font-size:9px;color:rgba(255,255,255,0.25);font-style:normal;">In Progress</em></div>
+      </div>
+      <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
+    </a>
+
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════ DAY 2–3 BANNER ══════════ -->
+<div class="day-banner day2 reveal">
+  <div class="day-pip">DAYS 2–3</div>
+  <div class="day-info">
+    <div class="day-eyebrow">April 2026 &nbsp;·&nbsp; Cancún</div>
+    <div class="day-title">Workshop Series &amp; Resources</div>
+    <div class="day-desc">Workshops, creative tools, calculators, AI training library, and bonus resources — all unlocking as we move through the agenda.</div>
+  </div>
+  <div class="day-badge">● Day 2 Underway</div>
+</div>
+
+<!-- ══════════ 2 — WORKSHOPS ══════════ -->
+<section id="workshops">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">Seven-Figure Retreat</div>
+      <div class="section-title">Workshop Series</div>
+    </div>
+    <div class="section-count">APRIL 2026 &nbsp;·&nbsp; CONFIDENTIAL</div>
+  </div>
+  <div class="workshops-grid stagger">
+    <a class="workshop-card" href="7f-workshops/ad-creative-workshop.html">
+      <div class="card-category"><span class="cat-pill live">● Live</span><span class="card-num">01</span></div>
+      <div class="card-icon">🎯</div>
+      <div class="card-title">Ad Creative<br>Process Workshop</div>
+      <div class="card-desc">The full Andromeda era framework — Entity ID principle, hook and hold rate KPIs, kill rules, competitor intelligence, creative cadence, and live entity audit. The systematic creative machine behind $90K/month on Meta.</div>
+      <div class="card-meta"><span class="card-slides">22 SLIDES &nbsp;·&nbsp; 3.5 HRS</span><div class="card-arrow">→</div></div>
+    </a>
+    <div class="workshop-card" style="cursor:default;opacity:0.55;">
+      <div class="card-category"><span class="cat-pill coming">⏳ Unlocks Tomorrow</span><span class="card-num">02</span></div>
+      <div class="card-icon">🤖</div>
+      <div class="card-title">Agentic AI<br>Workshop</div>
+      <div class="card-desc">How to integrate the new wave of agentic AI tools into your business to save time, cut costs, and remove yourself from low-leverage work — across research, content, client operations, and ad production.</div>
+      <div class="card-meta"><span class="card-slides">UNLOCKS TOMORROW</span><div class="card-arrow" style="opacity:.3;">→</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════ 3 — AD CREATIVE TOOLS ══════════ -->
+<section id="creative-tools">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">Creative Intelligence Flow</div>
+      <div class="section-title">Ad Creative Tools</div>
+    </div>
+    <div class="section-count">3-TOOL SYSTEM &nbsp;·&nbsp; ALL LIVE</div>
+  </div>
+  <div class="tool3-grid stagger">
+    <a class="creative-card" href="ad-creative-tools/creative-swipe-brief-builder.html">
+      <div class="tool-icon">🔍</div>
+      <div class="tool-title">Creative Swipe Brief Builder</div>
+      <div class="tool-desc">Paste your competitor intelligence report — the AI parses every hook, format, and angle, maps the white space, and outputs shoot-ready entity briefs. Start here.</div>
+      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
+    </a>
+    <a class="creative-card" href="ad-creative-tools/entity-audit-worksheet.html">
+      <div class="tool-icon">🗂️</div>
+      <div class="tool-title">Entity Audit Worksheet</div>
+      <div class="tool-desc">Map your current ad library by format, hook type, and emotion. Instantly see how many real entities you have vs. how many ads — and exactly what gaps to fill next.</div>
+      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
+    </a>
+    <a class="creative-card" href="ad-creative-tools/weekly-creative-brief.html">
+      <div class="tool-icon">📋</div>
+      <div class="tool-title">Weekly Creative Brief</div>
+      <div class="tool-desc">Dump your Swipe Brief output, Entity Audit, KPI data, and spend level into one box. The AI builds a fully scripted shoot plan — concept map, prioritized shoot cards, verbatim hooks, filming notes, and refinement prompts to iterate live in Claude. Step 3 of 3.</div>
+      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
+    </a>
+  </div>
+  <div class="flow-diagram reveal">
+    <div class="flow-intro">The Creative Intelligence Flow — how all four steps connect inside your Claude Project</div>
+    <div class="flow-nodes">
+      <div class="flow-node source"><div class="fn-step">Foundation</div><div class="fn-name">Claude<br>Project Setup</div><div class="fn-sub">Data constraints +<br>copy kit + intel report</div></div>
+      <div class="flow-arrow-node">→</div>
+      <div class="flow-node tool"><div class="fn-step">Step 1</div><div class="fn-name">Swipe Brief<br>Builder</div><div class="fn-sub">Intel report → AI<br>maps entity gaps</div></div>
+      <div class="flow-arrow-node">→</div>
+      <div class="flow-node tool"><div class="fn-step">Step 2</div><div class="fn-name">Entity Audit<br>Worksheet</div><div class="fn-sub">Map your live library<br>→ find real gaps</div></div>
+      <div class="flow-arrow-node">→</div>
+      <div class="flow-node tool"><div class="fn-step">Step 3</div><div class="fn-name">Weekly Creative<br>Brief</div><div class="fn-sub">Dump all data →<br>scripted shoot plan</div></div>
+      <div class="flow-arrow-node">→</div>
+      <div class="flow-output"><div class="fo-step">Step 4</div><div class="fo-name">Film &amp; Launch</div><div class="fo-sub">Measure → feed back in<br>→ brief gets smarter</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════ 4 — INTERACTIVE CALCULATORS ══════════ -->
+<section id="calculators">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">Ad Performance Tools</div>
+      <div class="section-title">Interactive Calculators &amp; Trackers</div>
+    </div>
+    <div class="section-count">RUN THE NUMBERS DAILY</div>
+  </div>
+  <div class="tool3-grid stagger">
+    <a class="calc-card" href="interactive-calculators/data-constraints-tracker.html">
+      <div class="tool-icon">📊</div>
+      <div class="tool-title">Data Constraints Snapshot</div>
+      <div class="tool-desc">Monthly input form — CPL, cost per call, close rate, ROAS — outputs a full constraint diagnosis with ranked priorities and recommended actions. Start here — know your bottleneck before you touch budget.</div>
+      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
+    </a>
+    <a class="calc-card" href="interactive-calculators/budget-scale-planner.html">
+      <div class="tool-icon">💸</div>
+      <div class="tool-title">Budget &amp; Scale Planner</div>
+      <div class="tool-desc">Input your monthly budget and get the exact campaign structure, new creatives per week, rotation cadence, and the Launch 50 / Run 10 plan. Know how to allocate every dollar.</div>
+      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
+    </a>
+    <a class="calc-card" href="interactive-calculators/kpi-calculator.html">
+      <div class="tool-icon">🎯</div>
+      <div class="tool-title">Ad Testing KPI Calculator</div>
+      <div class="tool-desc">Input your offer price and get your exact CAC max, cost per qualified call target, hook rate thresholds, and kill rules for new vs. existing ads. The math behind every testing decision.</div>
+      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
+    </a>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════ 5 — AI TRAINING LIBRARY ══════════ -->
+<section id="ai-tools" class="ai-tools-section">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">AI Integration Workshop</div>
+      <div class="section-title">AI Training Library</div>
+    </div>
+    <div class="section-count">14 MINI-TRAININGS &nbsp;·&nbsp; SELF-PACED</div>
+  </div>
+
+  <div class="ai-workshop-banner reveal">
+    <div class="aib-left">
+      <div class="aib-icon">🤖</div>
+      <div>
+        <div class="aib-label">Workshop &nbsp;·&nbsp; Unlocks Tomorrow</div>
+        <div class="aib-title">AI Integration Workshop — The Full Session</div>
+        <div class="aib-desc">The high-level overview: LLMs vs. Agents, the three-domain framework, live demos, and how to prioritize your first build.</div>
+      </div>
+    </div>
+    <div class="aib-right">
+      <span class="aib-pill">⏳ Unlocks Tomorrow</span>
+      <div class="aib-arr">→</div>
+    </div>
+  </div>
+
+  <div class="ai-cat-label">Getting Started</div>
+  <div class="mini-grid stagger">
+    <div class="mini-card cs"><div class="mc-icon">🚀</div><div class="mc-title">Getting Started with Claude</div><div class="mc-desc">Plans, models, interface orientation, and the five things to set up before your first real work session.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+    <div class="mini-card cs"><div class="mc-icon">🔄</div><div class="mc-title">Migrating from ChatGPT to Claude</div><div class="mc-desc">What's different, what carries over, and how to move your prompts, workflows, and context without starting from zero.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+    <div class="mini-card cs"><div class="mc-icon">⚡</div><div class="mc-title">Optimizing &amp; Saving Claude Usage</div><div class="mc-desc">Why tokens run out faster than you expect, the model selection lever, and 10 habits that can double your effective daily budget.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+    <div class="mini-card cs"><div class="mc-icon">🎨</div><div class="mc-title">How Artifacts Work</div><div class="mc-desc">What artifacts are, when Claude creates them, and how to use the Publish trick for long iterative builds.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
+  </div>
+
+  <div class="ai-cat-label">Marketing</div>
+  <div class="mini-grid stagger">
+    <div class="mini-card cs"><div class="mc-icon">📊</div><div class="mc-title">Claude Instagram Audit</div><div class="mc-desc">Paste your IG URL and get a full audit: bio, content mix, hooks, engagement gaps, and a prioritized optimization report.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+    <div class="mini-card cs"><div class="mc-icon">🧠</div><div class="mc-title">Micro Lead Magnet Quizzes</div><div class="mc-desc">Build a free interactive HTML quiz in 30 minutes using Claude — hosted on GitHub for $0/month, with 70–85% completion rates vs. PDF downloads.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+    <div class="mini-card cs"><div class="mc-icon">🎨</div><div class="mc-title">Creating Canva Designs in Claude</div><div class="mc-desc">Design carousels, graphics, and presentations using Claude's Canva connector — no manual design required.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+    <div class="mini-card cs"><div class="mc-icon">📱</div><div class="mc-title">Posting to Instagram from Claude</div><div class="mc-desc">The CoWork + Zapier pipeline: approve content in Notion, auto-schedule to IG. Your VA approves, Claude publishes.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+  </div>
+
+  <div class="ai-cat-label navy-cat">Sales &amp; Automation</div>
+  <div class="mini-grid cols-3 stagger">
+    <div class="mini-card cs"><div class="mc-icon">💬</div><div class="mc-title">Claude ManyChat Automations</div><div class="mc-desc">Build DM qualification flows that score leads, route hot prospects to booking, and send unqualified leads to nurture — zero closer time wasted.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+    <div class="mini-card cs"><div class="mc-icon">🔁</div><div class="mc-title">Comment Response Automation</div><div class="mc-desc">Auto-respond to IG comments using ManyChat triggers and Claude-generated replies — keeps your content alive without manual monitoring.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+    <div class="mini-card cs"><div class="mc-icon">📋</div><div class="mc-title">Pre-Call Brief Builder</div><div class="mc-desc">Lead submits form → Claude generates a full pre-call brief: background, pain points, likely objections, recommended angle.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
+  </div>
+
+  <div class="ai-cat-label gray-cat">Advanced Builds</div>
+  <div class="mini-grid stagger">
+    <div class="mini-card cs"><div class="mc-icon">🔍</div><div class="mc-title">Manus + Claude + Foreplay</div><div class="mc-desc">The competitor intelligence research stack. 30 minutes to a 30-page brief with ad hooks, angles, and white space mapped.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+    <div class="mini-card cs"><div class="mc-icon">🎨</div><div class="mc-title">Figma AI + Carousel Automation</div><div class="mc-desc">Automated carousel image generation in batch — 10 minutes per batch. Fully hands-off visual production at scale.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
+    <div class="mini-card cs"><div class="mc-icon">⚙️</div><div class="mc-title">GHL + Claude Code Integration</div><div class="mc-desc">Connect GoHighLevel to Claude Code for automated page builds, funnel updates, and CRM workflow automation.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
+    <div class="mini-card cs"><div class="mc-icon">💻</div><div class="mc-title">Claude Code + GitHub Pages</div><div class="mc-desc">Build and deploy custom HTML tools, dashboards, and mini-training pages using Claude Code and free GitHub hosting.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
+  </div>
+</section>
+
+<!-- ══════════ AGENT SKILLS ══════════ -->
+<div class="agent-section">
+  <div class="agent-inner reveal">
+    <div class="agent-header">
+      <div>
+        <div class="agent-label">Bonus Resource &nbsp;·&nbsp; AI Tools</div>
+        <div class="agent-title">Agent Skills &amp; Prompts Library</div>
+        <div class="agent-subtitle">Pre-built Claude skills and prompt collections that plug directly into your IFCA workflow. Install a skill inside a Claude Project — then call any repeatable task with a single command. No re-prompting required.</div>
+      </div>
+      <div class="agent-badge">EXPANDING</div>
+    </div>
+    <div class="agent-grid stagger">
+      <a class="agent-card coming-soon">
+        <div class="agent-card-icon">⚡</div>
+        <div class="agent-card-title">Skills Library</div>
+        <div class="agent-card-desc">Pre-built slash-command skills for hook generation, ad scripting, competitor analysis, content calendars, check-in responses, and more. Download and install directly into your Claude Project.</div>
+        <div class="agent-card-status">Coming Soon</div>
+      </a>
+      <a class="agent-card coming-soon">
+        <div class="agent-card-icon">📝</div>
+        <div class="agent-card-title">Prompts Library</div>
+        <div class="agent-card-desc">Curated prompt collection organized by use case — creative, research, offer optimization, content, sales, client ops. Copy, paste, run. No prompt engineering required.</div>
+        <div class="agent-card-status">Coming Soon</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ══════════ 6 — BONUS RESOURCES ══════════ -->
+<section id="bonus" class="bonus-section">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">Supplemental Training</div>
+      <div class="section-title">Bonus Resources</div>
+    </div>
+    <div class="section-count">REFERENCE &amp; DEEP DIVES</div>
+  </div>
+  <div class="bonus-grid stagger">
+    <div class="bonus-card coming-soon">
+      <div class="bonus-icon">🔁</div>
+      <div class="bonus-title">Show Rate Optimization Training</div>
+      <div class="bonus-desc">TY page structure, pre-call LNS sequences, calendar strategy, and the benchmarks behind a 70%+ show rate. Based on Jeremy Haynes' framework.</div>
+      <div class="bonus-status">⏳ Unlocks Tomorrow</div>
+    </div>
+    <div class="bonus-card coming-soon">
+      <div class="bonus-icon">🎯</div>
+      <div class="bonus-title">MOF &amp; BOF Ad Strategy Training</div>
+      <div class="bonus-desc">The full middle and bottom-of-funnel ad playbook — warm audience retargeting, short-form VSL funnels, AI UGC cloning with Arcads, and the ROAS-first KPI framework that stops you from killing ads that are actually making money.</div>
+      <div class="bonus-status">⏳ Unlocks Tomorrow</div>
+    </div>
+    <div class="bonus-card coming-soon">
+      <div class="bonus-icon">📈</div>
+      <div class="bonus-title">Offer &amp; Pricing Deep Dive</div>
+      <div class="bonus-desc">CAC/LTV math, front-end to back-end architecture, and why your offer price is the ceiling on your ad spend.</div>
+      <div class="bonus-status">Coming Soon</div>
+    </div>
+    <div class="bonus-card coming-soon">
+      <div class="bonus-icon">＋</div>
+      <div class="bonus-title">More Coming</div>
+      <div class="bonus-desc">Additional bonus training modules will be added as the resource library expands post-retreat.</div>
+      <div class="bonus-status">Coming Soon</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-logo">IFCA</div>
+    <div class="footer-sub">Impact Fitness Coaching Academy &nbsp;·&nbsp; ifca-playbooks &nbsp;·&nbsp; Confidential</div>
+  </div>
+  <div class="footer-right">Seven-Figure Client Retreat &nbsp;·&nbsp; April 2026<br>Jordan Dugger — Co-Founder &nbsp;·&nbsp; Cancún Legacy v1</div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal, .stagger');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

@@ -3,1876 +3,1009 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IFCA — Ad Creative Process Workshop</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>IFCA — 7-Figure Ad Creative Workshop</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy: #1E3A5F;
-    --navy-dark: #142845;
-    --navy-light: #2A4F7F;
-    --orange: #E87722;
-    --orange-light: #F09040;
-    --orange-pale: #FDF3E8;
-    --blue-light: #D6E4F0;
-    --blue-mid: #A8C8E0;
-    --white: #FFFFFF;
-    --off-white: #F8FAFC;
-    --gray-100: #F1F5F9;
-    --gray-200: #E2E8F0;
-    --gray-400: #94A3B8;
-    --gray-600: #475569;
-    --gray-800: #1E293B;
-    --text: #1A2840;
-    --text-muted: #4A6080;
-    --slide-w: 1100px;
-    --slide-h: 620px;
-  }
+:root {
+  --navy: #1E3A5F;
+  --navy-dark: #142845;
+  --navy-mid: #1a3356;
+  --navy-light: #2A4F7F;
+  --orange: #E87722;
+  --orange-light: #F09040;
+  --orange-pale: #FEF3E8;
+  --blue-light: #D6E4F0;
+  --blue-mid: #A8C8E0;
+  --white: #FFFFFF;
+  --off-white: #F8FAFC;
+  --gray-100: #F1F5F9;
+  --gray-200: #E2E8F0;
+  --gray-400: #94A3B8;
+  --gray-600: #475569;
+  --text: #1A2840;
+  --text-muted: #4A6080;
+  --green: #22C55E;
+  --green-dark: #16A34A;
+  --green-bg: rgba(34,197,94,0.07);
+  --green-border: rgba(34,197,94,0.25);
+  --red: #EF4444;
+  --red-dark: #DC2626;
+  --red-bg: rgba(239,68,68,0.06);
+  --red-border: rgba(239,68,68,0.2);
+  --slide-w: 1100px;
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+*{margin:0;padding:0;box-sizing:border-box;}
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: #0D1B2E;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-    gap: 16px;
-  }
+body {
+  font-family:'DM Sans',sans-serif;
+  background:#09121F;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-height:100vh;
+  padding:18px;
+  gap:12px;
+}
 
-  /* NAV BAR */
-  #nav {
-    width: var(--slide-w);
-    max-width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 16px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.1);
-  }
+/* ── NAV ─────────────────────────────── */
+#nav {
+  width:var(--slide-w);max-width:100%;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 16px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:10px;
+}
+#nav .logo{font-family:'Bebas Neue';font-size:17px;color:var(--orange);letter-spacing:2.5px;}
+#nav .controls{display:flex;align-items:center;gap:10px;}
+#nav button{
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  color:white;width:32px;height:32px;border-radius:7px;font-size:14px;
+  cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;
+}
+#nav button:hover{background:rgba(255,255,255,0.13);}
+#nav button:disabled{opacity:0.22;cursor:default;}
+#slide-counter{font-family:'DM Mono';font-size:12px;color:rgba(255,255,255,0.38);min-width:52px;text-align:center;}
+#prog-wrap{width:110px;height:2px;background:rgba(255,255,255,0.1);border-radius:1px;}
+#prog-fill{height:100%;background:var(--orange);border-radius:1px;transition:width 0.3s ease;}
 
-  #nav .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    color: var(--orange);
-    letter-spacing: 2px;
-  }
+/* ── TOC ─────────────────────────────── */
+#toc-bar{width:var(--slide-w);max-width:100%;display:flex;gap:3px;}
+.toc-dot{height:2px;flex:1;border-radius:1px;background:rgba(255,255,255,0.1);cursor:pointer;transition:background 0.2s;min-width:14px;}
+.toc-dot.active{background:var(--orange);}
+.toc-dot:hover{background:rgba(255,255,255,0.3);}
 
-  #nav .controls {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+/* ── STAGE ───────────────────────────── */
+#stage{
+  width:var(--slide-w);max-width:100%;
+  aspect-ratio:16/9;
+  position:relative;border-radius:12px;overflow:hidden;
+  box-shadow:0 32px 72px rgba(0,0,0,0.65);
+}
+.slide{position:absolute;inset:0;display:none;}
+.slide.active{display:flex;}
 
-  #nav button {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: white;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.15s;
-    display: flex; align-items: center; justify-content: center;
-  }
-  #nav button:hover { background: rgba(255,255,255,0.15); }
-  #nav button:disabled { opacity: 0.3; cursor: default; }
+#hint{font-family:'DM Mono';font-size:10px;color:rgba(255,255,255,0.18);letter-spacing:1px;}
 
-  #slide-counter {
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    color: rgba(255,255,255,0.5);
-    min-width: 60px;
-    text-align: center;
-  }
+/* ══════════════════════════════════════
+   LAYOUT PRIMITIVES
+══════════════════════════════════════ */
 
-  /* SLIDE TOC */
-  #toc-bar {
-    width: var(--slide-w);
-    max-width: 100%;
-    display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
-  }
+/* Standard light content slide */
+.cs{flex-direction:column;background:var(--off-white);}
+.sh{
+  background:var(--navy);padding:16px 44px;
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.sh h2{font-family:'Bebas Neue';font-size:26px;color:white;letter-spacing:1px;}
+.sh .tag{font-family:'DM Mono';font-size:10px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;}
+.sb{flex:1;padding:20px 44px;display:flex;flex-direction:column;gap:11px;overflow:hidden;}
+.sf{
+  background:var(--navy-dark);padding:6px 44px;
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.sf span{font-family:'DM Mono';font-size:9px;color:rgba(255,255,255,0.22);letter-spacing:1px;text-transform:uppercase;}
+.sf .sn{color:var(--orange);opacity:0.6;}
 
-  .toc-dot {
-    height: 4px;
-    flex: 1;
-    border-radius: 2px;
-    background: rgba(255,255,255,0.15);
-    cursor: pointer;
-    transition: background 0.2s;
-    min-width: 20px;
-  }
-  .toc-dot.active { background: var(--orange); }
-  .toc-dot:hover { background: rgba(255,255,255,0.4); }
+/* Dark slide */
+.ds{flex-direction:column;background:var(--navy-dark);}
+.ds .sh{background:rgba(0,0,0,0.3);}
+.ds .sf{background:rgba(0,0,0,0.3);}
 
-  /* SLIDE STAGE */
-  #stage {
-    width: var(--slide-w);
-    max-width: 100%;
-    aspect-ratio: 16/9;
-    position: relative;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 40px 80px rgba(0,0,0,0.5);
-  }
+/* ══════════════════════════════════════
+   REUSABLE COMPONENTS
+══════════════════════════════════════ */
 
-  .slide {
-    position: absolute;
-    inset: 0;
-    display: none;
-    background: var(--white);
-  }
-  .slide.active { display: flex; }
+.callout{
+  background:var(--navy);border-left:3px solid var(--orange);
+  border-radius:0 8px 8px 0;padding:11px 16px;flex-shrink:0;
+}
+.callout p{font-size:12.5px;color:var(--blue-light);line-height:1.6;font-style:italic;}
+.callout strong{color:var(--orange);font-style:normal;}
+.callout.light{background:var(--orange-pale);border-left-color:var(--orange);}
+.callout.light p{color:var(--text);}
 
-  /* ── SLIDE LAYOUTS ── */
+.dt{width:100%;border-collapse:collapse;font-size:12px;}
+.dt th{background:var(--navy);color:white;padding:8px 11px;text-align:left;font-weight:500;font-size:11px;letter-spacing:0.4px;}
+.dt th:first-child{border-radius:5px 0 0 0;}.dt th:last-child{border-radius:0 5px 0 0;}
+.dt td{padding:7px 11px;border-bottom:1px solid var(--gray-200);color:var(--text);line-height:1.4;vertical-align:top;}
+.dt tr:nth-child(even) td{background:var(--gray-100);}
+.dt tr:last-child td{border-bottom:none;}
 
-  /* COVER */
-  .cover {
-    flex-direction: column;
-    background: var(--navy-dark);
-    overflow: hidden;
-  }
-  .cover-top {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 60px 70px 40px;
-    position: relative;
-  }
-  .cover-top::before {
-    content: '';
-    position: absolute;
-    right: -60px; top: -60px;
-    width: 400px; height: 400px;
-    border-radius: 50%;
-    background: rgba(232, 119, 34, 0.08);
-    pointer-events: none;
-  }
-  .cover-top::after {
-    content: '';
-    position: absolute;
-    right: 40px; top: 40px;
-    width: 200px; height: 200px;
-    border-radius: 50%;
-    border: 1px solid rgba(232, 119, 34, 0.2);
-    pointer-events: none;
-  }
-  .cover-eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 3px;
-    color: var(--orange);
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-  .cover-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 74px;
-    line-height: 0.95;
-    color: var(--white);
-    letter-spacing: 2px;
-    margin-bottom: 20px;
-  }
-  .cover-title span { color: var(--orange); }
-  .cover-subtitle {
-    font-size: 16px;
-    color: var(--blue-mid);
-    font-weight: 300;
-    max-width: 480px;
-    line-height: 1.6;
-  }
-  .cover-bottom {
-    background: var(--orange);
-    padding: 18px 70px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .cover-bottom .host {
-    font-size: 13px;
-    color: white;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-  }
-  .cover-bottom .retreat {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: rgba(255,255,255,0.75);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
+.pill{display:inline-block;padding:1px 8px;border-radius:99px;font-size:10px;font-weight:600;letter-spacing:0.4px;text-transform:uppercase;}
+.pill.or{background:rgba(232,119,34,0.15);color:var(--orange);}
+.pill.nv{background:rgba(30,58,95,0.12);color:var(--navy);}
+.pill.gn{background:rgba(34,197,94,0.12);color:var(--green-dark);}
+.pill.rd{background:rgba(239,68,68,0.12);color:var(--red-dark);}
 
-  /* SECTION DIVIDER */
-  .section-divider {
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    background: var(--navy);
-    padding: 0 70px;
-    position: relative;
-    overflow: hidden;
-  }
-  .section-divider::before {
-    content: '';
-    position: absolute;
-    left: -100px; bottom: -100px;
-    width: 500px; height: 500px;
-    border-radius: 50%;
-    background: rgba(232,119,34,0.06);
-  }
-  .section-divider::after {
-    content: '';
-    position: absolute;
-    right: 60px; top: 60px;
-    width: 300px; height: 300px;
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 50%;
-  }
-  .section-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 120px;
-    color: rgba(255,255,255,0.05);
-    line-height: 1;
-    position: absolute;
-    right: 60px;
-    bottom: 20px;
-  }
-  .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 3px;
-    color: var(--orange);
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-  .section-heading {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 58px;
-    color: var(--white);
-    line-height: 1.05;
-    letter-spacing: 1px;
-    max-width: 600px;
-  }
-  .section-desc {
-    margin-top: 20px;
-    font-size: 15px;
-    color: var(--blue-mid);
-    max-width: 500px;
-    line-height: 1.6;
-    font-weight: 300;
-  }
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.four-col{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:9px;}
 
-  /* STANDARD CONTENT SLIDE */
-  .content-slide {
-    flex-direction: column;
-    background: var(--off-white);
-  }
-  .slide-header {
-    background: var(--navy);
-    padding: 22px 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .slide-header h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 30px;
-    color: var(--white);
-    letter-spacing: 1px;
-  }
-  .slide-header .section-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--orange);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-  .slide-body {
-    flex: 1;
-    padding: 28px 50px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    overflow: hidden;
-  }
-  .slide-footer {
-    background: var(--navy-dark);
-    padding: 8px 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .slide-footer span {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: rgba(255,255,255,0.3);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-  .slide-footer .slide-num {
-    color: var(--orange);
-    opacity: 0.7;
-  }
+.card{background:white;border-radius:9px;border:1px solid var(--gray-200);padding:13px 15px;}
+.card.or-left{border-left:3px solid var(--orange);}
+.card.nv-left{border-left:3px solid var(--navy);}
+.card.gn-left{border-left:3px solid var(--green-dark);}
+.card.or-top{border-top:3px solid var(--orange);}
+.card .ct{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:4px;}
+.card .cv{font-family:'Bebas Neue';font-size:32px;color:var(--navy);line-height:1;}
+.card .cd{font-size:11px;color:var(--text-muted);margin-top:2px;line-height:1.4;}
 
-  /* CALLOUT BOX */
-  .callout {
-    background: var(--navy);
-    border-left: 4px solid var(--orange);
-    border-radius: 0 8px 8px 0;
-    padding: 14px 20px;
-  }
-  .callout p {
-    font-size: 14px;
-    color: var(--blue-light);
-    line-height: 1.6;
-    font-style: italic;
-  }
-  .callout strong { color: var(--orange); font-style: normal; }
+.dark-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:9px;padding:13px 15px;}
+.dark-card .ct{font-family:'DM Mono';font-size:10px;color:var(--orange);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;}
+.dark-card .cv{font-family:'Bebas Neue';font-size:26px;color:white;line-height:1.1;margin-bottom:4px;}
+.dark-card .cd{font-size:11.5px;color:var(--blue-mid);line-height:1.55;}
 
-  /* TABLES */
-  .data-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
-  .data-table th {
-    background: var(--navy);
-    color: white;
-    padding: 10px 14px;
-    text-align: left;
-    font-weight: 500;
-    font-size: 12px;
-    letter-spacing: 0.5px;
-  }
-  .data-table th:first-child { border-radius: 6px 0 0 0; }
-  .data-table th:last-child { border-radius: 0 6px 0 0; }
-  .data-table td {
-    padding: 9px 14px;
-    border-bottom: 1px solid var(--gray-200);
-    color: var(--text);
-    line-height: 1.4;
-    vertical-align: top;
-  }
-  .data-table tr:nth-child(even) td { background: var(--gray-100); }
-  .data-table tr:last-child td { border-bottom: none; }
+.step-row{display:flex;gap:10px;align-items:flex-start;}
+.step-n{width:26px;height:26px;border-radius:50%;background:var(--navy);color:white;font-family:'Bebas Neue';font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.step-n.or{background:var(--orange);}
+.step-t{font-size:12.5px;font-weight:600;color:var(--navy);margin-bottom:2px;}
+.step-b{font-size:11.5px;color:var(--text-muted);line-height:1.5;}
 
-  /* METRIC CARDS */
-  .metric-grid {
-    display: grid;
-    gap: 12px;
-  }
-  .metric-grid.cols-2 { grid-template-columns: 1fr 1fr; }
-  .metric-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
-  .metric-grid.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.ws-item{display:flex;gap:9px;align-items:flex-start;padding:8px 11px;border-radius:7px;background:white;border:1px solid var(--gray-200);}
+.ws-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.ws-dot.gn{background:#22C55E;}.ws-dot.rd{background:#EF4444;}
+.ws-tx{font-size:11.5px;color:var(--text-muted);line-height:1.5;}
+.ws-tx strong{color:var(--text);}
 
-  .metric-card {
-    background: var(--white);
-    border-radius: 10px;
-    padding: 16px 18px;
-    border: 1px solid var(--gray-200);
-  }
-  .metric-card .m-label {
-    font-size: 11px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 500;
-    margin-bottom: 6px;
-  }
-  .metric-card .m-value {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 38px;
-    color: var(--navy);
-    line-height: 1;
-    letter-spacing: 1px;
-  }
-  .metric-card .m-desc {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 4px;
-    line-height: 1.4;
-  }
-  .metric-card.orange { border-top: 3px solid var(--orange); }
-  .metric-card.navy { border-top: 3px solid var(--navy); }
-  .metric-card.green { border-top: 3px solid #22C55E; }
-  .metric-card.red { border-top: 3px solid #EF4444; }
+/* Funnel cards */
+.fc{border-radius:9px;padding:13px 14px;}
+.fc.tof{background:rgba(30,58,95,0.07);border:1px solid rgba(30,58,95,0.18);}
+.fc.mof{background:rgba(232,119,34,0.07);border:1px solid rgba(232,119,34,0.22);}
+.fc.bof{background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.22);}
+.fc-s{font-family:'DM Mono';font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+.fc.tof .fc-s{color:var(--navy);}.fc.mof .fc-s{color:var(--orange);}.fc.bof .fc-s{color:var(--green-dark);}
+.fc-h{font-family:'Bebas Neue';font-size:18px;letter-spacing:0.5px;margin-bottom:6px;}
+.fc.tof .fc-h{color:var(--navy);}.fc.mof .fc-h{color:var(--orange);}.fc.bof .fc-h{color:var(--green-dark);}
+.fc-b{font-size:11px;color:var(--text-muted);line-height:1.55;}
+.fc-bg{font-family:'DM Mono';font-size:9px;margin-top:7px;padding:2px 7px;border-radius:99px;display:inline-block;}
+.fc.tof .fc-bg{background:rgba(30,58,95,0.1);color:var(--navy);}
+.fc.mof .fc-bg{background:rgba(232,119,34,0.14);color:var(--orange);}
+.fc.bof .fc-bg{background:rgba(34,197,94,0.1);color:var(--green-dark);}
 
-  /* TWO COL */
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    flex: 1;
-  }
-  .two-col .col-card {
-    background: var(--white);
-    border-radius: 10px;
-    padding: 18px 20px;
-    border: 1px solid var(--gray-200);
-  }
-  .col-card h4 {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--navy);
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid var(--orange);
-    display: inline-block;
-  }
+/* Kill cards */
+.kc{border-radius:9px;padding:14px 16px;}
+.kc.nw{background:var(--red-bg);border:1px solid var(--red-border);}
+.kc.wn{background:var(--green-bg);border:1px solid var(--green-border);}
+.kc-l{font-family:'DM Mono';font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px;}
+.kc.nw .kc-l{color:var(--red-dark);}.kc.wn .kc-l{color:var(--green-dark);}
+.kc-v{font-family:'Bebas Neue';font-size:28px;line-height:1;margin-bottom:5px;}
+.kc.nw .kc-v{color:var(--red-dark);}.kc.wn .kc-v{color:var(--green-dark);}
+.kc-b{font-size:11.5px;color:var(--text-muted);line-height:1.5;}
 
-  /* BULLET LIST */
-  .bullet-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .bullet-item {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    font-size: 14px;
-    color: var(--text);
-    line-height: 1.5;
-  }
-  .bullet-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--orange);
-    flex-shrink: 0;
-    margin-top: 6px;
-  }
-  .bullet-item strong { color: var(--navy); }
+/* Pipeline */
+.pipe{display:flex;align-items:stretch;gap:0;}
+.ps{flex:1;background:white;border:1px solid var(--gray-200);padding:14px 12px;position:relative;}
+.ps:first-child{border-radius:9px 0 0 9px;}.ps:last-child{border-radius:0 9px 9px 0;}
+.ps+.ps{border-left:none;}
+.ps::after{content:'→';position:absolute;right:-12px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--orange);font-weight:700;z-index:2;background:var(--off-white);padding:1px 2px;line-height:1;}
+.ps:last-child::after{display:none;}
+.ps-n{font-family:'DM Mono';font-size:9px;color:var(--orange);letter-spacing:1px;margin-bottom:4px;}
+.ps-t{font-family:'Bebas Neue';font-size:15px;color:var(--navy);letter-spacing:0.5px;margin-bottom:4px;}
+.ps-b{font-size:10.5px;color:var(--text-muted);line-height:1.5;}
+.ps-o{font-size:10px;color:var(--green-dark);font-weight:500;margin-top:5px;}
 
-  /* ENTITY GRID */
-  .entity-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-  .entity-card {
-    background: var(--white);
-    border-radius: 8px;
-    padding: 14px 16px;
-    border: 1px solid var(--gray-200);
-    border-top: 3px solid var(--navy);
-  }
-  .entity-card.orange-top { border-top-color: var(--orange); }
-  .entity-card .e-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--orange);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 4px;
-  }
-  .entity-card .e-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--navy);
-    margin-bottom: 6px;
-  }
-  .entity-card .e-body {
-    font-size: 12px;
-    color: var(--text-muted);
-    line-height: 1.5;
-  }
+/* Cadence cards */
+.cc{background:white;border:1px solid var(--gray-200);border-radius:9px;padding:13px 14px;}
+.cc.or-top{border-top:3px solid var(--orange);}
+.cc-f{font-family:'DM Mono';font-size:9px;letter-spacing:2px;color:var(--orange);text-transform:uppercase;margin-bottom:4px;}
+.cc-t{font-family:'Bebas Neue';font-size:21px;color:var(--navy);margin-bottom:7px;}
+.cc-i{font-size:11px;color:var(--text-muted);line-height:1.7;}
 
-  /* BADGE */
-  .badge {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-  }
-  .badge-orange { background: var(--orange-pale); color: var(--orange); }
-  .badge-navy { background: var(--blue-light); color: var(--navy); }
-  .badge-green { background: #DCFCE7; color: #166534; }
-  .badge-red { background: #FEE2E2; color: #991B1B; }
+/* Entity rows */
+.er{display:grid;grid-template-columns:24px 1fr 1fr 1fr 1fr;gap:0;border-radius:7px;overflow:hidden;margin-bottom:4px;border:1px solid var(--gray-200);}
+.er.hdr{background:var(--navy);border:none;}
+.ec{padding:7px 9px;font-size:11px;color:var(--text);border-right:1px solid var(--gray-200);line-height:1.4;}
+.ec:last-child{border-right:none;}
+.er.hdr .ec{color:rgba(255,255,255,0.6);font-size:9px;font-weight:600;letter-spacing:0.4px;text-transform:uppercase;border-right-color:rgba(255,255,255,0.07);}
+.er:nth-child(even) .ec{background:var(--gray-100);}
+.el{font-family:'Bebas Neue';font-size:16px;color:var(--orange);display:flex;align-items:center;justify-content:center;background:rgba(232,119,34,0.07);}
+.er.hdr .el{background:transparent;color:rgba(255,255,255,0.25);font-size:9px;}
 
-  /* HIGHLIGHT TEXT */
-  .highlight { color: var(--orange); font-weight: 600; }
-  .navy-text { color: var(--navy); font-weight: 600; }
+/* Lever cards */
+.lc{background:white;border:1px solid var(--gray-200);border-radius:9px;padding:13px 14px;}
+.lc-ic{font-size:18px;margin-bottom:5px;}
+.lc-n{font-family:'Bebas Neue';font-size:19px;color:var(--navy);letter-spacing:0.5px;margin-bottom:3px;}
+.lc-w{font-size:11px;color:var(--text-muted);margin-bottom:3px;line-height:1.4;}
+.lc-t{font-family:'DM Mono';font-size:9px;color:var(--orange);}
 
-  /* KPI ROW */
-  .kpi-row {
-    display: flex;
-    gap: 10px;
-  }
-  .kpi-block {
-    flex: 1;
-    background: var(--white);
-    border-radius: 10px;
-    padding: 14px 16px;
-    border: 1px solid var(--gray-200);
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .kpi-block .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 500; }
-  .kpi-block .kpi-val { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--navy); letter-spacing: 1px; line-height: 1; }
-  .kpi-block .kpi-sub { font-size: 12px; color: var(--text-muted); }
-  .kpi-block.orange { border-left: 4px solid var(--orange); }
-  .kpi-block.green { border-left: 4px solid #22C55E; }
-  .kpi-block.red { border-left: 4px solid #EF4444; }
+/* Quote */
+.qb{background:var(--navy);border-radius:9px;padding:16px 20px;position:relative;}
+.qb::before{content:'"';position:absolute;top:-5px;left:13px;font-family:'Bebas Neue';font-size:52px;color:var(--orange);line-height:1;opacity:0.3;}
+.qb p{font-size:13px;color:var(--blue-light);line-height:1.65;font-style:italic;padding-left:6px;}
+.qb .qa{font-size:10px;color:var(--orange);font-weight:600;margin-top:7px;padding-left:6px;}
 
-  /* PROCESS STEPS */
-  .step-list { display: flex; flex-direction: column; gap: 8px; }
-  .step-item {
-    display: flex; gap: 14px; align-items: flex-start;
-    background: var(--white);
-    border-radius: 8px;
-    padding: 11px 16px;
-    border: 1px solid var(--gray-200);
-  }
-  .step-num {
-    width: 26px; height: 26px;
-    border-radius: 50%;
-    background: var(--navy);
-    color: white;
-    font-size: 12px;
-    font-weight: 600;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .step-content { flex: 1; }
-  .step-content strong { font-size: 13px; color: var(--navy); display: block; margin-bottom: 2px; }
-  .step-content span { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+/* Band table */
+.bt{width:100%;border-collapse:collapse;}
+.bt th{background:var(--navy);color:white;padding:7px 10px;font-size:10px;text-align:left;font-weight:500;letter-spacing:0.4px;}
+.bt th:first-child{border-radius:5px 0 0 0;}.bt th:last-child{border-radius:0 5px 0 0;}
+.bt td{padding:7px 10px;font-size:11px;color:var(--text);border-bottom:1px solid var(--gray-200);vertical-align:top;line-height:1.4;}
+.bt tr:nth-child(even) td{background:var(--gray-100);}
+.bt-hl td{background:rgba(232,119,34,0.07)!important;border-left:3px solid var(--orange);}
 
-  /* FORMULA DISPLAY */
-  .formula-box {
-    background: var(--navy);
-    border-radius: 10px;
-    padding: 18px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .formula-part {
-    text-align: center;
-  }
-  .formula-part .f-val {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px;
-    color: var(--orange);
-    letter-spacing: 1px;
-    line-height: 1;
-  }
-  .formula-part .f-label {
-    font-size: 11px;
-    color: var(--blue-mid);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 2px;
-  }
-  .formula-op {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    color: rgba(255,255,255,0.3);
-  }
+/* Manus finding rows */
+.mf{display:flex;gap:10px;align-items:flex-start;padding:8px 11px;border-radius:7px;background:white;border:1px solid var(--gray-200);}
+.mf-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.mf-body{font-size:11.5px;color:var(--text-muted);line-height:1.5;}
+.mf-body strong{color:var(--text);}
 
-  /* SLIDE TRANSITION */
-  .slide { animation: fadeIn 0.2s ease; }
-  @keyframes fadeIn { from { opacity: 0.4; } to { opacity: 1; } }
+/* Stat highlight */
+.stat-row{display:flex;gap:10px;align-items:stretch;}
+.stat-box{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:9px;padding:14px 16px;flex:1;text-align:center;}
+.stat-val{font-family:'Bebas Neue';line-height:1;margin-bottom:4px;}
+.stat-lbl{font-family:'DM Mono';font-size:9px;color:var(--blue-mid);letter-spacing:1.5px;text-transform:uppercase;}
+.stat-sub{font-size:10.5px;color:var(--blue-mid);margin-top:3px;}
 
-  /* PROGRESS BAR */
-  #progress {
-    width: var(--slide-w);
-    max-width: 100%;
-    height: 2px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 2px;
-  }
-  #progress-fill {
-    height: 100%;
-    background: var(--orange);
-    border-radius: 2px;
-    transition: width 0.3s ease;
-  }
-
-  /* KEYBOARD HINT */
-  #hint {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: rgba(255,255,255,0.2);
-    letter-spacing: 1px;
-  }
-
-  /* IFRAME STYLE TABLE INSIDE SLIDE */
-  .compact-table { font-size: 12px; }
-  .compact-table th { padding: 8px 12px; font-size: 11px; }
-  .compact-table td { padding: 7px 12px; }
+/* Arrow connector */
+.arr{display:flex;align-items:center;justify-content:center;color:var(--orange);font-size:16px;font-weight:700;padding:0 3px;flex-shrink:0;}
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <div id="nav">
-  <div class="logo">IFCA</div>
+  <div class="logo">IFCA · Ad Creative Workshop</div>
   <div class="controls">
-    <button id="btn-prev" onclick="navigate(-1)" disabled>&#8592;</button>
-    <span id="slide-counter">1 / 22</span>
-    <button id="btn-next" onclick="navigate(1)">&#8594;</button>
+    <div id="prog-wrap"><div id="prog-fill" style="width:7.14%"></div></div>
+    <button id="btn-prev" onclick="nav(-1)" disabled>←</button>
+    <div id="slide-counter">1 / 14</div>
+    <button id="btn-next" onclick="nav(1)">→</button>
   </div>
 </div>
-
 <div id="toc-bar"></div>
-<div id="progress"><div id="progress-fill"></div></div>
 
 <div id="stage">
 
-<!-- ═══════════════════════════════════════════════
-     SLIDE 1 — COVER
-═══════════════════════════════════════════════ -->
-<div class="slide active cover" id="s1">
-  <div class="cover-top">
-    <div class="cover-eyebrow">Seven-Figure Client Retreat &bull; April 2026</div>
-    <div class="cover-title">AD <span>CREATIVE</span><br>PROCESS<br>WORKSHOP</div>
-    <div class="cover-subtitle">How to build a systematic, data-driven ad machine that wins on Meta's Andromeda algorithm — consistently.</div>
+<!-- ════════════════════════════════════
+     S1 — COVER
+════════════════════════════════════ -->
+<div class="slide active" id="s1" style="flex-direction:column;background:var(--navy-dark);overflow:hidden;position:relative;">
+  <div style="position:absolute;right:-70px;top:-70px;width:480px;height:480px;border-radius:50%;background:rgba(232,119,34,0.06);pointer-events:none;"></div>
+  <div style="position:absolute;right:50px;top:50px;width:220px;height:220px;border:1px solid rgba(232,119,34,0.14);border-radius:50%;pointer-events:none;"></div>
+  <div style="position:absolute;left:44px;bottom:18px;font-family:'Bebas Neue';font-size:180px;color:rgba(255,255,255,0.025);line-height:1;letter-spacing:-4px;pointer-events:none;">IFCA</div>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:56px 68px;position:relative;z-index:1;">
+    <div style="font-family:'DM Mono';font-size:10px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;margin-bottom:18px;">IFCA · Seven-Figure Client Retreat · April 2026</div>
+    <div style="font-family:'Bebas Neue';font-size:74px;line-height:0.92;color:white;letter-spacing:2px;margin-bottom:20px;">
+      7-FIGURE<br><span style="color:var(--orange);">AD CREATIVE</span><br>WORKSHOP
+    </div>
+    <div style="font-size:14px;color:var(--blue-mid);font-weight:300;max-width:480px;line-height:1.65;margin-bottom:28px;">
+      The complete system for building, testing, and scaling Meta ads — so your creative machine runs every week, not just when you feel like it.
+    </div>
+    <div style="display:flex;gap:22px;">
+      <div style="display:flex;align-items:center;gap:7px;"><div style="width:5px;height:5px;border-radius:50%;background:var(--orange);"></div><span style="font-size:12px;color:var(--blue-mid);">~45 Min Presentation</span></div>
+      <div style="display:flex;align-items:center;gap:7px;"><div style="width:5px;height:5px;border-radius:50%;background:var(--orange);"></div><span style="font-size:12px;color:var(--blue-mid);">Live Workshop Included</span></div>
+      <div style="display:flex;align-items:center;gap:7px;"><div style="width:5px;height:5px;border-radius:50%;background:var(--orange);"></div><span style="font-size:12px;color:var(--blue-mid);">14 Slides</span></div>
+    </div>
   </div>
-  <div class="cover-bottom">
-    <div class="host">Jordan Dugger &mdash; Co-Founder, IFCA</div>
-    <div class="retreat">Impact Fitness Coaching Academy &bull; Confidential</div>
+  <div style="background:var(--orange);padding:14px 68px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+    <div style="font-size:13px;color:white;font-weight:600;">Jordan Dugger · Co-Founder, IFCA</div>
+    <div style="font-family:'DM Mono';font-size:10px;color:rgba(255,255,255,0.65);letter-spacing:1.5px;text-transform:uppercase;">Confidential · Internal Use Only</div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     SLIDE 2 — AGENDA
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s2">
-  <div class="slide-header">
-    <h2>What We're Covering Today</h2>
-    <span class="section-tag">Agenda</span>
-  </div>
-  <div class="slide-body">
-    <div class="entity-grid" style="grid-template-columns: repeat(3, 1fr); gap: 10px;">
-      <div class="entity-card orange-top">
-        <div class="e-label">Section 1</div>
-        <div class="e-title">The Andromeda Era</div>
-        <div class="e-body">Why Meta's algorithm changed everything — and what it means for your creative strategy.</div>
+<!-- ════════════════════════════════════
+     S2 — STATE OF THE UNION
+════════════════════════════════════ -->
+<div class="slide ds" id="s2">
+  <div class="sh"><h2>State of the Union — What I Found</h2><span class="tag">Opening</span></div>
+  <div class="sb" style="flex-direction:row;gap:18px;">
+    <!-- Left -->
+    <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
+      <div style="font-family:'DM Mono';font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:2px;">3 Patterns Across Every Business in This Room</div>
+      <div class="dark-card">
+        <div class="ct">01 — Too Few True Entities</div>
+        <div class="cd">Every account has 10–20 ads live but 3–6 real entities. That's 1–2 lottery tickets, not 10. Running 15 hooks on the same concept body isn't testing — it's buying the same ticket over and over.</div>
       </div>
-      <div class="entity-card">
-        <div class="e-label">Section 2</div>
-        <div class="e-title">KPIs That Matter</div>
-        <div class="e-body">Hook rate, hold rate, cost per qualified call. The only numbers you need to make decisions.</div>
+      <div class="dark-card">
+        <div class="ct">02 — Your Best Creative Is Still on Organic</div>
+        <div class="cd">Almost everyone in this room has organic content outperforming their paid ads. Vanessa built $2.35M almost entirely on organic. The signal is in your feed. You just haven't systematized the amplification.</div>
       </div>
-      <div class="entity-card orange-top">
-        <div class="e-label">Section 3</div>
-        <div class="e-title">Competitor Intelligence</div>
-        <div class="e-body">How to mine the Meta Ad Library, organic swipe files, and adjacent industries for winning ideas.</div>
+      <div class="dark-card">
+        <div class="ct">03 — No Full Three-Layer Stack</div>
+        <div class="cd">TOF DM lead magnet is the only funnel running. MOF and BOF are completely missing. The warm audience you're paying to build every month is sitting there unmonetized.</div>
       </div>
-      <div class="entity-card">
-        <div class="e-label">Section 4</div>
-        <div class="e-title">The Ad Creation Flow</div>
-        <div class="e-body">The end-to-end system: from intelligence research to creative brief to shoot-ready entities. 70/30 rule in practice.</div>
-      </div>
-      <div class="entity-card orange-top">
-        <div class="e-label">Section 5</div>
-        <div class="e-title">Winning Variations & Cadence</div>
-        <div class="e-body">Hook Swap, Format Shift, Angle Shift. Daily / weekly / monthly production rhythm. Batch testing rules.</div>
-      </div>
-      <div class="entity-card">
-        <div class="e-label">Section 6</div>
-        <div class="e-title">Concepts vs. Entities</div>
-        <div class="e-body">Campaign structure, entity mapping, and the organic + ads flywheel that compounds over time.</div>
+      <div style="background:rgba(232,119,34,0.1);border:1px solid rgba(232,119,34,0.22);border-radius:8px;padding:11px 14px;">
+        <div style="font-size:12px;color:var(--white);line-height:1.6;font-style:italic;">"This isn't a room of struggling coaches. This is a room of high-revenue businesses with a specific, fixable leverage gap in their paid creative system. That's what today fixes."</div>
       </div>
     </div>
-    <div class="callout">
-      <p><strong>The goal:</strong> Leave today knowing exactly what to create next, where those ideas come from, and how to make sure every new ad is a genuinely new entity — not a near-duplicate burning your budget.</p>
-    </div>
-  </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">2</span></div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 3 — SECTION DIVIDER: ANDROMEDA
-═══════════════════════════════════════════════ -->
-<div class="slide section-divider" id="s3">
-  <div class="section-num">01</div>
-  <div class="section-label">Section 01</div>
-  <div class="section-heading">The<br>Andromeda<br>Era</div>
-  <div class="section-desc">Meta's AI backbone transformed how ads are matched, ranked, and delivered. Creative diversity is now the only targeting lever that matters.</div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 4 — ANDROMEDA: THE SHIFT
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s4">
-  <div class="slide-header">
-    <h2>The Core Shift: Creative IS Your Targeting</h2>
-    <span class="section-tag">Section 01 &mdash; Andromeda</span>
-  </div>
-  <div class="slide-body">
-    <div class="callout">
-      <p><strong>"Creative diversity is the new targeting."</strong> Meta's Andromeda engine reads your creative, not your audience. Feed it diverse angles, formats, and hooks — and it finds the right people for you.</p>
-    </div>
-    <div class="metric-grid cols-4">
-      <div class="metric-card orange">
-        <div class="m-label">Andromeda</div>
-        <div class="m-value" style="font-size:26px;">+8%</div>
-        <div class="m-desc">Ad quality improvement from personalized creative retrieval</div>
-      </div>
-      <div class="metric-card navy">
-        <div class="m-label">Lattice</div>
-        <div class="m-value" style="font-size:26px;">+12%</div>
-        <div class="m-desc">Ad quality from unified ranking across objectives & surfaces</div>
-      </div>
-      <div class="metric-card orange">
-        <div class="m-label">Sequence Learning</div>
-        <div class="m-value" style="font-size:26px;">+4%</div>
-        <div class="m-desc">Conversion lift from user journey prediction models</div>
-      </div>
-      <div class="metric-card navy">
-        <div class="m-label">MTIA Hardware</div>
-        <div class="m-value" style="font-size:26px;">10K&times;</div>
-        <div class="m-desc">Model complexity enabled by Meta's custom AI chips</div>
-      </div>
-    </div>
-    <div class="two-col" style="flex: 0; gap: 12px;">
-      <div class="col-card" style="padding: 14px 18px;">
-        <h4>Before Andromeda</h4>
-        <div class="bullet-list">
-          <div class="bullet-item"><div class="bullet-dot"></div><span>You targeted specific audiences manually</span></div>
-          <div class="bullet-item"><div class="bullet-dot"></div><span>Interest stacking and lookalikes did the work</span></div>
-          <div class="bullet-item"><div class="bullet-dot"></div><span>Creative was secondary to targeting precision</span></div>
+    <!-- Right -->
+    <div style="flex:0 0 290px;display:flex;flex-direction:column;gap:9px;">
+      <div style="font-family:'DM Mono';font-size:9px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase;margin-bottom:2px;">What You Leave With Today</div>
+      <div style="background:rgba(255,255,255,0.04);border-radius:9px;padding:16px 18px;flex:1;display:flex;flex-direction:column;gap:11px;">
+        <div class="step-row">
+          <div class="step-n or">1</div>
+          <div><div class="step-t" style="color:white;">A KPI Baseline</div><div class="step-b" style="color:var(--blue-mid);">Hook rate, hold rate, cost per qualified call, CAC. The 4 numbers that run the system.</div></div>
         </div>
-      </div>
-      <div class="col-card" style="padding: 14px 18px; border-top: 2px solid var(--orange);">
-        <h4>After Andromeda</h4>
-        <div class="bullet-list">
-          <div class="bullet-item"><div class="bullet-dot"></div><span>Algorithm reads the creative and finds the audience</span></div>
-          <div class="bullet-item"><div class="bullet-dot"></div><span>Broad + Advantage+ outperforms micro-targeting</span></div>
-          <div class="bullet-item"><div class="bullet-dot"></div><span><strong>Creative diversity = your targeting strategy</strong></span></div>
+        <div class="step-row">
+          <div class="step-n or">2</div>
+          <div><div class="step-t" style="color:white;">5 New Entities Mapped</div><div class="step-b" style="color:var(--blue-mid);">Built from your best concept using the variation framework. Ready to brief your team Monday.</div></div>
+        </div>
+        <div class="step-row">
+          <div class="step-n or">3</div>
+          <div><div class="step-t" style="color:white;">A Weekly Cadence</div><div class="step-b" style="color:var(--blue-mid);">The exact daily/weekly/monthly rhythm that keeps the machine running without guessing.</div></div>
+        </div>
+        <div class="step-row">
+          <div class="step-n or">4</div>
+          <div><div class="step-t" style="color:white;">The Intelligence Workflow</div><div class="step-b" style="color:var(--blue-mid);">Manus → Swipe Brief → Entity Worksheet → Creative Brief. Done in 2 hours flat, every week.</div></div>
         </div>
       </div>
     </div>
   </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">4</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">02</span></div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     SLIDE 5 — ENTITY ID PRINCIPLE
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s5">
-  <div class="slide-header">
-    <h2>The Entity ID Principle</h2>
-    <span class="section-tag">Section 01 &mdash; Andromeda</span>
-  </div>
-  <div class="slide-body">
-    <div class="callout" style="margin-bottom: 0;">
-      <p>Andromeda groups ads with similar content into clusters called <strong>Entity IDs</strong>. Each cluster gets ONE auction slot. <strong>12 ads with the same angle = 1 lottery ticket.</strong> 8 ads with genuinely different formats/angles = 8 lottery tickets.</p>
-    </div>
-    <div class="formula-box">
-      <div class="formula-part">
-        <div class="f-val">Hook Type</div>
-        <div class="f-label">Curiosity / Pain / Result / Identity / Interrupt</div>
-      </div>
-      <div class="formula-op">+</div>
-      <div class="formula-part">
-        <div class="f-val">Format Bucket</div>
-        <div class="f-label">Talking Head / Skit / B-Roll / VSL / Interview</div>
-      </div>
-      <div class="formula-op">+</div>
-      <div class="formula-part">
-        <div class="f-val">Angle / Emotion</div>
-        <div class="f-label">Fear / Frustration / Desire / Hope</div>
-      </div>
-      <div class="formula-op">=</div>
-      <div class="formula-part">
-        <div class="f-val" style="color: #4ADE80;">New Entity</div>
-        <div class="f-label">New auction slot for Meta</div>
-      </div>
-    </div>
-    <div class="two-col" style="flex: 0;">
-      <div class="col-card" style="background: #FEF2F2; border-color: #FECACA; padding: 14px 18px;">
-        <h4 style="border-color: #EF4444; color: #991B1B;">❌ Same Entity (Waste)</h4>
-        <div class="bullet-list">
-          <div class="bullet-item"><div class="bullet-dot" style="background:#EF4444;"></div><span>Same format + same emotion + different words</span></div>
-          <div class="bullet-item"><div class="bullet-dot" style="background:#EF4444;"></div><span>10 talking-head variations on the same angle</span></div>
-          <div class="bullet-item"><div class="bullet-dot" style="background:#EF4444;"></div><span>Meta picks one, ignores the other 9</span></div>
+<!-- ════════════════════════════════════
+     S3 — ALYCIA CASE STUDY
+════════════════════════════════════ -->
+<div class="slide" id="s3" style="display:none;flex-direction:column;background:var(--navy-dark);overflow:hidden;position:relative;">
+  <div style="position:absolute;right:-50px;top:-50px;width:400px;height:400px;border-radius:50%;background:rgba(232,119,34,0.05);pointer-events:none;"></div>
+  <div class="sh" style="background:rgba(0,0,0,0.3);"><h2>The Proof of Concept</h2><span class="tag">Case Study</span></div>
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:0;overflow:hidden;position:relative;z-index:1;">
+    <!-- Left -->
+    <div style="padding:24px 36px;display:flex;flex-direction:column;justify-content:center;gap:12px;border-right:1px solid rgba(255,255,255,0.05);">
+      <div style="font-family:'DM Mono';font-size:10px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;">Alycia Israel · Functional Health Coach</div>
+      <div style="font-family:'Bebas Neue';font-size:44px;color:white;line-height:0.95;letter-spacing:1px;">$15/DAY<br><span style="color:var(--orange);">→ $90K/MO</span></div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="background:rgba(255,255,255,0.05);border-radius:7px;padding:10px 13px;border-left:2px solid rgba(255,255,255,0.12);">
+          <div style="font-size:9px;color:var(--blue-mid);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;">The Situation</div>
+          <div style="font-size:12px;color:var(--blue-light);line-height:1.55;">$300–400K/year purely on organic. No ads. Growth stalled. Convinced her niche was different and ads wouldn't work.</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.05);border-radius:7px;padding:10px 13px;border-left:2px solid var(--orange);">
+          <div style="font-size:9px;color:var(--orange);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;">What She Did</div>
+          <div style="font-size:12px;color:var(--blue-light);line-height:1.55;">Started at $15/day. Let the data lead. Scaled $1.5K → $3K → $7K/month. DM lead magnet became the whole engine.</div>
+        </div>
+        <div style="background:rgba(34,197,94,0.07);border-radius:7px;padding:10px 13px;border-left:2px solid var(--green);">
+          <div style="font-size:9px;color:var(--green-dark);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;">The Result</div>
+          <div style="font-size:12px;color:var(--blue-light);line-height:1.55;">$90K/month. Consistent. No more hoping for DMs. Just content, strategy, and a system running in the background.</div>
         </div>
       </div>
-      <div class="col-card" style="background: #F0FDF4; border-color: #BBF7D0; padding: 14px 18px;">
-        <h4 style="border-color: #22C55E; color: #166534;">✓ New Entity (Win)</h4>
-        <div class="bullet-list">
-          <div class="bullet-item"><div class="bullet-dot" style="background:#22C55E;"></div><span>Different format + different emotion + new hook type</span></div>
-          <div class="bullet-item"><div class="bullet-dot" style="background:#22C55E;"></div><span>Each ad = new lottery ticket in Meta's auction</span></div>
-          <div class="bullet-item"><div class="bullet-dot" style="background:#22C55E;"></div><span>8 real entities beats 80 near-duplicates</span></div>
+    </div>
+    <!-- Right -->
+    <div style="padding:24px 36px;display:flex;flex-direction:column;justify-content:center;gap:14px;">
+      <div style="background:rgba(232,119,34,0.1);border:1px solid rgba(232,119,34,0.22);border-radius:10px;padding:18px 20px;position:relative;">
+        <div style="font-family:'Bebas Neue';font-size:50px;color:var(--orange);opacity:0.2;position:absolute;top:-6px;left:12px;line-height:1;">"</div>
+        <p style="font-size:13.5px;color:white;line-height:1.65;font-style:italic;padding-left:5px;">I was so stubborn — I wanted to be good enough to not need paid ads. But the DM lead magnet one crushes for me. It's the bread and butter. Everything else is accessories.</p>
+        <div style="font-size:10px;color:var(--orange);font-weight:600;margin-top:8px;padding-left:5px;">— Alycia Israel</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border-radius:9px;padding:16px 18px;">
+        <div style="font-family:'DM Mono';font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:9px;">Why This Matters for This Room</div>
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <div style="font-size:12px;color:var(--blue-light);line-height:1.5;">→ <strong style="color:white;">Some of you are Alycia 2 years ago</strong> — great organic, resisting ads, ceiling approaching.</div>
+          <div style="font-size:12px;color:var(--blue-light);line-height:1.5;">→ <strong style="color:white;">Some of you are Alycia right now</strong> — one funnel, one angle, and it's starting to slow.</div>
+          <div style="font-size:12px;color:var(--blue-light);line-height:1.5;">→ <strong style="color:var(--orange);">Alycia is also now hitting a ceiling on that single funnel — which is exactly what Section 3 today fixes.</strong></div>
         </div>
       </div>
     </div>
   </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">5</span></div>
+  <div class="sf" style="background:rgba(0,0,0,0.3);"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">03</span></div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     SLIDE 6 — SECTION DIVIDER: KPIs
-═══════════════════════════════════════════════ -->
-<div class="slide section-divider" id="s6">
-  <div class="section-num">02</div>
-  <div class="section-label">Section 02</div>
-  <div class="section-heading">KPIs<br>That<br>Actually Matter</div>
-  <div class="section-desc">Hook rate, hold rate, cost per qualified call. The only metrics you need to make fast, confident decisions on every ad you run.</div>
+<!-- ════════════════════════════════════
+     S4 — ANDROMEDA ERA
+════════════════════════════════════ -->
+<div class="slide cs" id="s4">
+  <div class="sh"><h2>The Andromeda Era — Why Everything Changed</h2><span class="tag">Section 01</span></div>
+  <div class="sb" style="flex-direction:row;gap:16px;">
+    <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
+      <div style="background:var(--navy-dark);border-radius:9px;padding:16px 18px;">
+        <div style="font-family:'DM Mono';font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;">Jordan's Experience — Q1 2026</div>
+        <div style="font-size:12.5px;color:var(--blue-light);line-height:1.65;">"At the start of this year I was still making ads the old way — new concepts, 15 hooks on the same body. What I didn't understand yet is that in Andromeda, <strong style="color:var(--orange);">that's not testing. That's buying 1 lottery ticket 15 different ways.</strong>"</div>
+      </div>
+      <!-- Stat row -->
+      <div class="stat-row">
+        <div class="stat-box">
+          <div class="stat-val" style="font-size:28px;color:#EF4444;">$29→$74</div>
+          <div class="stat-lbl">Cost Per Lead</div>
+          <div class="stat-sub">CPL more than doubled Q1 2026</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" style="font-size:28px;color:#EF4444;">$350→$525</div>
+          <div class="stat-lbl">Cost Per Call</div>
+          <div class="stat-sub">2025 avg → Q1 2026 peak</div>
+        </div>
+        <div class="stat-box" style="border-color:rgba(34,197,94,0.25);background:rgba(34,197,94,0.06);">
+          <div class="stat-val" style="font-size:28px;color:var(--green-dark);">→ $360</div>
+          <div class="stat-lbl">Cost Per Call Now</div>
+          <div class="stat-sub">Late Mar–Apr after the shift</div>
+        </div>
+      </div>
+      <div class="callout" style="flex-shrink:0;">
+        <p><strong>"Meta doesn't read your audience anymore. It reads your creative.</strong> Your hook is your bid. Your entity diversity is your targeting. Creative diversity IS the new targeting."</p>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
+      <div style="font-family:'DM Mono';font-size:9px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:2px;">The Entity ID Principle</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="background:var(--red-bg);border:1px solid var(--red-border);border-radius:8px;padding:11px 13px;">
+          <div style="font-size:10px;color:var(--red-dark);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;">❌ Old Approach</div>
+          <div style="font-size:11.5px;color:var(--text-muted);line-height:1.5;">15 hooks, same concept body<br>= 1 entity cluster<br>= <strong>1 lottery ticket</strong></div>
+        </div>
+        <div style="background:var(--green-bg);border:1px solid var(--green-border);border-radius:8px;padding:11px 13px;">
+          <div style="font-size:10px;color:var(--green-dark);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;">✓ Andromeda Way</div>
+          <div style="font-size:11.5px;color:var(--text-muted);line-height:1.5;">8 genuinely different ads<br>= 8 entity clusters<br>= <strong>8 lottery tickets</strong></div>
+        </div>
+      </div>
+      <div style="font-family:'DM Mono';font-size:9px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px;">What Makes a True Entity — All 4 Must Differ</div>
+      <table class="dt">
+        <thead><tr><th>Element</th><th>What It Means</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Format</strong></td><td>Delivery mechanism</td><td>Talking head / B-roll / text overlay / skit / carousel</td></tr>
+          <tr><td><strong>Hook</strong></td><td>First 3 seconds — entirely different opener</td><td>Not a caption swap — a new verbal open</td></tr>
+          <tr><td><strong>Emotion</strong></td><td>The feeling it triggers</td><td>Fear / desire / proof / identity / curiosity</td></tr>
+          <tr><td><strong>Presenter</strong></td><td>Who delivers it</td><td>You / client / partner / UGC creator</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">04</span></div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     SLIDE 7 — HOOK & HOLD RATE
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s7">
-  <div class="slide-header">
-    <h2>The Two Creative Diagnostic Metrics</h2>
-    <span class="section-tag">Section 02 &mdash; KPIs</span>
-  </div>
-  <div class="slide-body">
-    <div class="two-col" style="flex: 0; gap: 14px;">
-      <div class="col-card" style="border-top: 3px solid var(--orange);">
-        <h4>Hook Rate</h4>
-        <div style="font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">3-sec views ÷ Impressions</div>
-        <div class="kpi-row" style="gap: 8px; margin-bottom: 12px;">
-          <div style="flex:1; text-align:center; padding: 8px; background: #FEE2E2; border-radius: 6px;">
-            <div style="font-size: 11px; color: #991B1B; font-weight: 600;">POOR</div>
-            <div style="font-size: 20px; font-weight: 700; color: #991B1B;">&lt;15%</div>
-          </div>
-          <div style="flex:1; text-align:center; padding: 8px; background: #FEF9C3; border-radius: 6px;">
-            <div style="font-size: 11px; color: #854D0E; font-weight: 600;">OK</div>
-            <div style="font-size: 20px; font-weight: 700; color: #854D0E;">15-25%</div>
-          </div>
-          <div style="flex:1; text-align:center; padding: 8px; background: #DCFCE7; border-radius: 6px;">
-            <div style="font-size: 11px; color: #166534; font-weight: 600;">TARGET</div>
-            <div style="font-size: 20px; font-weight: 700; color: #166534;">25%+</div>
-          </div>
-        </div>
-        <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">Andromeda deprioritizes ads below 15% immediately. Fitness content benchmarks higher — always aim above 25%.</div>
+<!-- ════════════════════════════════════
+     S5 — MANUS INTELLIGENCE
+════════════════════════════════════ -->
+<div class="slide cs" id="s5">
+  <div class="sh"><h2>Manus — The Intelligence Advantage</h2><span class="tag">Section 02</span></div>
+  <div class="sb" style="flex-direction:row;gap:16px;">
+    <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
+      <div style="background:var(--navy-dark);border-radius:9px;padding:14px 16px;">
+        <div style="font-family:'DM Mono';font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">What Manus Does</div>
+        <div style="font-size:12px;color:var(--blue-mid);line-height:1.6;">Deep-dive intelligence research — your organic, your paid, your competitors, adjacent industries — at a level that would have taken a team of analysts weeks. I've already run this for every person in this room. <strong style="color:white;">If you run it on your own account with full access, it goes even deeper.</strong></div>
       </div>
-      <div class="col-card" style="border-top: 3px solid var(--navy);">
-        <h4>Hold Rate (30s)</h4>
-        <div style="font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">30-sec views ÷ Total views</div>
-        <div class="kpi-row" style="gap: 8px; margin-bottom: 12px;">
-          <div style="flex:1; text-align:center; padding: 8px; background: #FEE2E2; border-radius: 6px;">
-            <div style="font-size: 11px; color: #991B1B; font-weight: 600;">POOR</div>
-            <div style="font-size: 20px; font-weight: 700; color: #991B1B;">&lt;15%</div>
-          </div>
-          <div style="flex:1; text-align:center; padding: 8px; background: #FEF9C3; border-radius: 6px;">
-            <div style="font-size: 11px; color: #854D0E; font-weight: 600;">OK</div>
-            <div style="font-size: 20px; font-weight: 700; color: #854D0E;">15-20%</div>
-          </div>
-          <div style="flex:1; text-align:center; padding: 8px; background: #DCFCE7; border-radius: 6px;">
-            <div style="font-size: 11px; color: #166534; font-weight: 600;">TARGET</div>
-            <div style="font-size: 20px; font-weight: 700; color: #166534;">20%+</div>
-          </div>
-        </div>
-        <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">Low hook rate = top-of-funnel problem. Low hold rate = body problem. Fix the re-hook at 10-12s and move CTA to 30-45s.</div>
+      <div style="font-family:'DM Mono';font-size:9px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;">5 Sources Manus Pulls</div>
+      <table class="dt">
+        <thead><tr><th>Source</th><th>Why It Matters</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Your top winning paid ads</strong></td><td>Protect and iterate these first — proven signal already in your account</td></tr>
+          <tr><td><strong>Your top winning organic</strong></td><td>Your best content = your next ad scripts. Already tested at zero cost.</td></tr>
+          <tr><td><strong>Competitor top paid ads</strong></td><td>30+ day active = spending money = working. These are the hooks to study.</td></tr>
+          <tr><td><strong>Competitor top organic</strong></td><td>Angles being tested for free before promoting — early signal of what's next</td></tr>
+          <tr><td><strong>Adjacent industries</strong> <span class="pill or">telehealth · peptide · functional med</span></td><td>Same dream outcome, different mechanism. Bigger budgets, more testing. Free data.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="flex:0 0 295px;display:flex;flex-direction:column;gap:9px;">
+      <div style="font-family:'DM Mono';font-size:9px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;">What I Found Across This Cohort (April 2026)</div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="mf"><div class="mf-dot" style="background:var(--red);"></div><div class="mf-body"><strong>"Biology vs. Willpower" reframe is saturated.</strong> Every competitor in this niche is running this angle. It's crowded. The white space is mechanism-specific hooks.</div></div>
+        <div class="mf"><div class="mf-dot" style="background:var(--red);"></div><div class="mf-body"><strong>The competitive set is visually homogenous.</strong> Talking head + static only, across the board. Non-talking-head formats are almost uncontested.</div></div>
+        <div class="mf"><div class="mf-dot" style="background:var(--green);"></div><div class="mf-body"><strong>Adjacent industries are ahead of you.</strong> Telehealth and peptide brands targeting the same avatar have already run the tests. Read their winners.</div></div>
+        <div class="mf"><div class="mf-dot" style="background:var(--green);"></div><div class="mf-body"><strong>Nobody is running BOF.</strong> Zero proof ads with mechanism explanation, zero retargeting stacks — across every competitor we analyzed. Entire market is TOF only.</div></div>
+      </div>
+      <div class="callout">
+        <p><strong>"Your competitors published a roadmap of where not to go and where the white space is.</strong> We just needed Manus to read it."</p>
       </div>
     </div>
-    <div class="callout">
-      <p><strong>Diagnostic rule:</strong> Low hook rate = rewrite the first 3 seconds only. Low hold rate = add a re-hook at 10-12 seconds AND move the CTA earlier. They are different problems with different fixes.</p>
-    </div>
-    <div style="background: var(--navy); border-radius: 8px; padding: 14px 20px; display: flex; align-items: center; gap: 20px;">
-      <div style="font-family: 'Bebas Neue'; font-size: 22px; color: var(--orange); white-space: nowrap;">Re-Hook Rule</div>
-      <div style="font-size: 13px; color: var(--blue-light); line-height: 1.5;">Every script must include a mandatory <strong style="color:var(--orange);">re-hook at 10-12 seconds</strong> to recover nearly-scrolled viewers. This alone can double your hold rate on existing winning ads.</div>
-    </div>
   </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">7</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">05</span></div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     SLIDE 8 — BUSINESS KPIs
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s8">
-  <div class="slide-header">
-    <h2>Working Backwards From Profit</h2>
-    <span class="section-tag">Section 02 &mdash; KPIs</span>
-  </div>
-  <div class="slide-body">
-    <div class="formula-box" style="margin-bottom: 4px; flex: 0;">
-      <div class="formula-part">
-        <div class="f-val">Offer Price</div>
-        <div class="f-label">e.g. $4,500</div>
+<!-- ════════════════════════════════════
+     S6 — KPI FRAMEWORK
+════════════════════════════════════ -->
+<div class="slide cs" id="s6">
+  <div class="sh"><h2>KPI Framework — What to Measure When Testing</h2><span class="tag">Section 03</span></div>
+  <div class="sb" style="flex-direction:row;gap:16px;">
+    <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
+      <div style="font-family:'DM Mono';font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;">4 Numbers That Tell You Everything</div>
+      <table class="dt">
+        <thead><tr><th>KPI</th><th>Target</th><th>What It Tells You</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Hook Rate</strong></td><td><span class="pill gn">25%+</span></td><td>Scroll-stop — winning the first 3 seconds</td></tr>
+          <tr><td><strong>Hold Rate</strong></td><td><span class="pill gn">20%+</span></td><td>Content depth — are they staying past the hook?</td></tr>
+          <tr><td><strong>Cost Per Qualified Call</strong></td><td><span class="pill nv">≤ ⅓ CAC</span></td><td>Funnel efficiency — is the system converting?</td></tr>
+          <tr><td><strong>CAC</strong></td><td><span class="pill nv">≤ 25% Offer Price</span></td><td>Business math — can you afford to grow?</td></tr>
+        </tbody>
+      </table>
+      <div style="font-family:'DM Mono';font-size:9px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px;">Also Set Before You Launch Anything</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
+        <div style="background:white;border:1px solid var(--gray-200);border-radius:7px;padding:8px 11px;font-size:11.5px;color:var(--text-muted);">📞 Target cost per call</div>
+        <div style="background:white;border:1px solid var(--gray-200);border-radius:7px;padding:8px 11px;font-size:11.5px;color:var(--text-muted);">🎯 Cost per qualified call</div>
+        <div style="background:white;border:1px solid var(--gray-200);border-radius:7px;padding:8px 11px;font-size:11.5px;color:var(--text-muted);">📈 Front-end ROAS target</div>
+        <div style="background:white;border:1px solid var(--gray-200);border-radius:7px;padding:8px 11px;font-size:11.5px;color:var(--text-muted);">💰 Total revenue per campaign</div>
       </div>
-      <div class="formula-op">&times;</div>
-      <div class="formula-part">
-        <div class="f-val">25%</div>
-        <div class="f-label">Max CAC = 4x ROAS floor</div>
-      </div>
-      <div class="formula-op">=</div>
-      <div class="formula-part">
-        <div class="f-val">$1,125</div>
-        <div class="f-label">Max customer acquisition cost</div>
-      </div>
-      <div class="formula-op">&divide;</div>
-      <div class="formula-part">
-        <div class="f-val">3</div>
-        <div class="f-label">Expected close rate from qualified calls</div>
-      </div>
-      <div class="formula-op">=</div>
-      <div class="formula-part">
-        <div class="f-val" style="color: #4ADE80;">$375</div>
-        <div class="f-label">Max cost per qualified call</div>
+      <div class="callout" style="flex-shrink:0;">
+        <p><strong>"If you don't have targets before you launch, you don't have a system.</strong> You have anxiety dressed up as a strategy."</p>
       </div>
     </div>
-    <div class="metric-grid cols-3" style="flex: 0;">
-      <div class="metric-card orange">
-        <div class="m-label">Cost Per Qualified Call</div>
-        <div class="m-value">&frac13; CAC</div>
-        <div class="m-desc">Track this FIRST. Qualified = you extended an offer. 1 in 3 should close.</div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
+      <div style="font-family:'DM Mono';font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;">Kill Rules</div>
+      <div class="two-col">
+        <div class="kc nw">
+          <div class="kc-l">New Ad</div>
+          <div class="kc-v">2× KPI<br>Before Kill</div>
+          <div class="kc-b">Target cost per call = $100? Spend <strong>$200 minimum</strong> before cutting. You're buying data.</div>
+        </div>
+        <div class="kc wn">
+          <div class="kc-l">Existing Winner</div>
+          <div class="kc-v">3× KPI<br>Before Kill</div>
+          <div class="kc-b">Already produced calls + sales? Bad week ≠ bad ad. <strong>Don't panic-kill a performer.</strong></div>
+        </div>
       </div>
-      <div class="metric-card navy">
-        <div class="m-label">CAC Maximum</div>
-        <div class="m-value">25%</div>
-        <div class="m-desc">Of offer price. 4x ROAS floor. If LTV &gt; front-end, calculate on CAC:LTV instead.</div>
-      </div>
-      <div class="metric-card orange">
-        <div class="m-label">Lead to Book Rate</div>
-        <div class="m-value">3–5%</div>
-        <div class="m-desc">DM lead magnet benchmark. Below 3% = messaging or follow-up problem.</div>
-      </div>
-    </div>
-    <div style="background: var(--navy); border-radius: 10px; padding: 12px 20px; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; flex: 0;">
-      <div style="text-align: center;">
-        <div style="font-size: 11px; color: var(--orange); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Step 1</div>
-        <div style="font-size: 12px; color: white; font-weight: 500; margin-bottom: 3px;">Set your KPIs</div>
-        <div style="font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.5;">No targets = no system. Know your cost per call target before you touch anything.</div>
-      </div>
-      <div style="text-align: center; border-left: 1px solid rgba(255,255,255,0.1);">
-        <div style="font-size: 11px; color: var(--orange); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Step 2</div>
-        <div style="font-size: 12px; color: white; font-weight: 500; margin-bottom: 3px;">Hit KPIs? Don't touch it</div>
-        <div style="font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.5;">Most people kill winners by trying to make them better. If it's working, leave it alone.</div>
-      </div>
-      <div style="text-align: center; border-left: 1px solid rgba(255,255,255,0.1);">
-        <div style="font-size: 11px; color: var(--orange); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Step 3</div>
-        <div style="font-size: 12px; color: white; font-weight: 500; margin-bottom: 3px;">To scale — duplicate</div>
-        <div style="font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.5;">Duplicate the winner with same spend and same setup. Instant call volume double without touching the original.</div>
-      </div>
-      <div style="text-align: center; border-left: 1px solid rgba(255,255,255,0.1);">
-        <div style="font-size: 11px; color: var(--orange); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Step 4</div>
-        <div style="font-size: 12px; color: white; font-weight: 500; margin-bottom: 3px;">When it falls — new entity</div>
-        <div style="font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.5;">Don't panic. Same audience, slightly different angle or entity. Refresh creative, not structure.</div>
+      <div style="font-family:'DM Mono';font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-top:2px;">The Scaling Playbook</div>
+      <div style="background:var(--navy-dark);border-radius:9px;padding:14px 16px;display:flex;flex-direction:column;gap:7px;">
+        <div style="display:flex;gap:9px;align-items:flex-start;">
+          <div style="background:var(--orange);color:white;font-family:'Bebas Neue';font-size:13px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+          <div style="font-size:11.5px;color:var(--blue-light);">Set KPIs → Launch → Hit targets → <strong style="color:var(--orange);">Don't touch it.</strong></div>
+        </div>
+        <div style="display:flex;gap:9px;align-items:flex-start;">
+          <div style="background:var(--orange);color:white;font-family:'Bebas Neue';font-size:13px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+          <div style="font-size:11.5px;color:var(--blue-light);"><strong style="color:white;">Duplicate, don't edit.</strong> Same setup, same audience, more budget = double call volume instantly.</div>
+        </div>
+        <div style="display:flex;gap:9px;align-items:flex-start;">
+          <div style="background:var(--orange);color:white;font-family:'Bebas Neue';font-size:13px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+          <div style="font-size:11.5px;color:var(--blue-light);">Falls out of KPI? Same audience → <strong style="color:white;">new creative angle.</strong> Don't rebuild the machine.</div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,0.07);padding-top:7px;font-family:'DM Mono';font-size:10px;color:var(--orange);letter-spacing:1px;">SET → RINSE → RUN → REPEAT</div>
       </div>
     </div>
   </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">8</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">06</span></div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     SLIDE 8B — 4 HOOK TYPES
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s8b">
-  <div class="slide-header">
-    <h2>The 4 Hook Types — Use All Four on Every Ad</h2>
-    <span class="section-tag">Section 02 &mdash; KPIs</span>
-  </div>
-  <div class="slide-body">
-    <div class="callout" style="flex: 0;">
-      <p>Most coaches use only one hook type — the verbal hook. <strong>There are actually four distinct hook layers</strong> in every ad. Using all four is the fastest single upgrade you can make to hook rate. — Aaron Martinez</p>
-    </div>
-    <div class="entity-grid" style="grid-template-columns: 1fr 1fr; gap: 12px; flex: 1;">
-      <div class="entity-card orange-top" style="padding: 16px 18px;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-          <div class="e-label">Hook Type 01 — Most Important</div>
-          <span class="badge badge-orange" style="font-size: 10px;">TEST 10 VERSIONS</span>
-        </div>
-        <div class="e-title">Banner Text Hook</div>
-        <div class="e-body">The text overlay at the top of the video. Tells viewers what they stand to gain before they've committed to watching. <strong>We have never had a video without banner text outperform one that has it.</strong> Test 10 different banner text versions per ad.</div>
+<!-- ════════════════════════════════════
+     S7 — CONCEPTS VS ENTITIES
+════════════════════════════════════ -->
+<div class="slide cs" id="s7">
+  <div class="sh"><h2>Concepts vs. Entities — The Architecture</h2><span class="tag">Section 04</span></div>
+  <div class="sb" style="gap:10px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;flex-shrink:0;">
+      <div style="background:var(--navy-dark);border-radius:9px;padding:12px 16px;">
+        <div style="font-family:'DM Mono';font-size:9px;color:var(--blue-mid);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Concept</div>
+        <div style="font-family:'Bebas Neue';font-size:21px;color:white;letter-spacing:0.5px;margin-bottom:3px;">A Buying Reason</div>
+        <div style="font-size:11.5px;color:var(--blue-mid);line-height:1.5;">The "why someone would hire you." One concept should spawn 3–5 real entities — not 5 versions of the same thing.</div>
       </div>
-      <div class="entity-card" style="padding: 16px 18px; border-top: 3px solid var(--navy);">
-        <div class="e-label">Hook Type 02</div>
-        <div class="e-title">Verbal Hook</div>
-        <div class="e-body">The first words out of your mouth — the opening line or sentence. What most people think of as "the hook." Non-negotiable, but only one of four layers. Your opening line must name the problem, outcome, or pattern interrupt within the first 3 seconds.</div>
-      </div>
-      <div class="entity-card" style="padding: 16px 18px; border-top: 3px solid var(--navy);">
-        <div class="e-label">Hook Type 03</div>
-        <div class="e-title">What's Happening Hook (Visual)</div>
-        <div class="e-body">A physical object, action, or visual element that adds intrigue before you say a word — a document, a prop, a before/after image on screen. Adds a second layer of curiosity for viewers who are watching muted or skimming. Doesn't require expensive production.</div>
-      </div>
-      <div class="entity-card orange-top" style="padding: 16px 18px;">
-        <div class="e-label">Hook Type 04</div>
-        <div class="e-title">Caption Hook</div>
-        <div class="e-body">The ad copy above the video. Gives scrollers who pause on text a reason to click play. Usually pulled directly from your video script with minor edits. More people read captions than most coaches realize — especially on desktop and in the feed.</div>
+      <div style="background:rgba(232,119,34,0.08);border:1px solid rgba(232,119,34,0.22);border-radius:9px;padding:12px 16px;">
+        <div style="font-family:'DM Mono';font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">Entity</div>
+        <div style="font-family:'Bebas Neue';font-size:21px;color:var(--navy);letter-spacing:0.5px;margin-bottom:3px;">A Unique Execution</div>
+        <div style="font-size:11.5px;color:var(--text-muted);line-height:1.5;">Unique combo of <strong>format + hook + emotion + presenter</strong>. Each one is a separate lottery ticket in the Andromeda auction.</div>
       </div>
     </div>
+    <div style="font-family:'DM Mono';font-size:9px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;flex-shrink:0;">Example — 1 Concept → 5 Real Entities · "Coaches can reach $10K/month without working more hours"</div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:3px;overflow:hidden;">
+      <div class="er hdr">
+        <div class="ec el">#</div>
+        <div class="ec">Format</div>
+        <div class="ec">Hook Style</div>
+        <div class="ec">Presenter</div>
+        <div class="ec">Emotion</div>
+      </div>
+      <div class="er">
+        <div class="ec el">A</div>
+        <div class="ec"><strong>Talking Head</strong></div>
+        <div class="ec">Frustration / confession — "I almost quit before I figured this out"</div>
+        <div class="ec">You</div>
+        <div class="ec"><span class="pill nv">Relatability</span></div>
+      </div>
+      <div class="er">
+        <div class="ec el">B</div>
+        <div class="ec"><strong>B-Roll + Text Overlay</strong></div>
+        <div class="ec">Desire / outcome — what a $10K month actually looks like day-to-day</div>
+        <div class="ec">No presenter</div>
+        <div class="ec"><span class="pill or">Aspiration</span></div>
+      </div>
+      <div class="er">
+        <div class="ec el">C</div>
+        <div class="ec"><strong>Skit / Character</strong></div>
+        <div class="ec">Humor / contrast — chaotic morning vs. system morning</div>
+        <div class="ec">You</div>
+        <div class="ec"><span class="pill nv" style="color:#7C3AED;background:rgba(124,58,237,0.1);">Levity</span></div>
+      </div>
+      <div class="er">
+        <div class="ec el">D</div>
+        <div class="ec"><strong>Talking Head</strong></div>
+        <div class="ec">Empathy / hope — "If you're exhausted by this business, this is for you"</div>
+        <div class="ec">Partner / team</div>
+        <div class="ec"><span class="pill nv">Trust</span></div>
+      </div>
+      <div class="er">
+        <div class="ec el">E</div>
+        <div class="ec"><strong>Client Testimonial</strong></div>
+        <div class="ec">Mechanism proof — client explains WHY it worked, not just that it worked</div>
+        <div class="ec">Client</div>
+        <div class="ec"><span class="pill gn">Validation</span></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;flex-shrink:0;">
+      <div class="card or-top"><div class="ct">Minimum Library</div><div class="cv">10–15</div><div class="cd">Genuinely distinct entities running simultaneously</div></div>
+      <div class="card or-top"><div class="ct">Format Buckets</div><div class="cv">4–5</div><div class="cd">Talking head, B-roll, testimonial, text overlay, skit/UGC</div></div>
+      <div class="card or-top"><div class="ct">Funnel Stages Covered</div><div class="cv">3 Min</div><div class="cd">At least one active entity per TOF / MOF / BOF</div></div>
+    </div>
   </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">8b</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">07</span></div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     SLIDE 9 — KILL RULES
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s9">
-  <div class="slide-header">
-    <h2>Ad Kill Rules — When to Pull the Plug</h2>
-    <span class="section-tag">Section 02 &mdash; KPIs</span>
-  </div>
-  <div class="slide-body">
-    <div class="metric-grid cols-2" style="flex: 0;">
-      <div class="metric-card red" style="padding: 18px 20px;">
-        <div class="m-label">New Ad Kill Threshold</div>
-        <div class="m-value">2&times; KPI</div>
-        <div class="m-desc">Spend 2x your cost per KPI target before killing a new ad. Target $375/call? Spend $750 first.</div>
+<!-- ════════════════════════════════════
+     S8 — THREE-LAYER STACK
+════════════════════════════════════ -->
+<div class="slide cs" id="s8">
+  <div class="sh"><h2>Holistic Ad Strategy — The Three-Layer Stack</h2><span class="tag">Section 05</span></div>
+  <div class="sb" style="gap:11px;">
+    <div class="callout" style="flex-shrink:0;">
+      <p><strong>"One funnel isn't a strategy. It's a ceiling."</strong> Almost everyone here is running TOF DM lead magnet only. That's what Alycia was doing when she hit her Q4 wall. The warm audience you're paying to build every month is sitting there unmonetized. This is the fix.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;flex:1;">
+      <div class="fc tof">
+        <div class="fc-s">TOF · Cold Traffic</div>
+        <div class="fc-h">Build the Audience</div>
+        <div class="fc-b">
+          <strong style="color:var(--navy);">Follower / Profile Visit Ad</strong> — best organic content promoted. Builds the MOF/BOF audience you'll convert. $1–2/follower target.<br><br>
+          <strong style="color:var(--navy);">DM Lead Magnet</strong> — keyword-triggered freebie, email capture, starts conversation. $5–10 CPL target. This is the engine.<br><br>
+          <strong style="color:var(--navy);">Educational Content Ad</strong> — identity, pain, or bold perspective. Not an offer. Builds trust with cold audiences at scale.
+        </div>
+        <div class="fc-bg">60–70% of Budget</div>
       </div>
-      <div class="metric-card orange" style="padding: 18px 20px;">
-        <div class="m-label">Existing Winner Kill Threshold</div>
-        <div class="m-value">3&times; KPI</div>
-        <div class="m-desc">Give proven winners more room. A bad week ≠ a dead ad. 3x protects winners from premature cuts.</div>
+      <div class="fc mof">
+        <div class="fc-s">MOF · Warm Audience</div>
+        <div class="fc-h">Warm the Pipeline</div>
+        <div class="fc-b">
+          <strong style="color:var(--orange);">Lead Magnet Retarget</strong> — same offer, warmer audience. Run 50/50 cold + warm split. Higher-intent converts differently.<br><br>
+          <strong style="color:var(--orange);">Belief-Breaking Testimonial</strong> — addresses "I've tried everything" with social proof + mechanism. Followers, video viewers, profile visitors.<br><br>
+          <strong style="color:var(--orange);">Engagement Retarget ($5–10/day)</strong> — anyone who engaged in last 30–90 days. Dramatically shortens cash conversion cycle.
+        </div>
+        <div class="fc-bg">15–20% of Budget</div>
+      </div>
+      <div class="fc bof">
+        <div class="fc-s">BOF · Hot Audience</div>
+        <div class="fc-h">Convert the Ready</div>
+        <div class="fc-b">
+          <strong style="color:var(--green-dark);">Short-Form VSL → Booking Page</strong> — ad acts as the pitch. Cold lead to sale in 48hrs when niche is specific enough.<br><br>
+          <strong style="color:var(--green-dark);">Direct Offer DM Ad</strong> — warm-only. Direct invitation. Only works when trust is already established from TOF/MOF exposure.<br><br>
+          <strong style="color:var(--green-dark);">Mechanism Testimonial</strong> — client explains WHY it worked, not just that it worked. This is what converts skeptics.
+        </div>
+        <div class="fc-bg">15–20% of Budget</div>
       </div>
     </div>
-    <table class="data-table compact-table" style="flex: 1;">
-      <thead>
-        <tr>
-          <th>Scenario</th>
-          <th>Action</th>
-          <th>Logic</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Hook rate under 15%</strong></td>
-          <td><span class="badge badge-orange">Kill or Fix Hook Only</span></td>
-          <td>The body may be fine. Swap the first 3 seconds only. Keep the same script body.</td>
-        </tr>
-        <tr>
-          <td><strong>Good hook rate, low hold rate</strong></td>
-          <td><span class="badge badge-navy">Don't Kill — Fix Body</span></td>
-          <td>Add re-hook at 10-12s. Move CTA to 30-45s. These are different problems, not death sentences.</td>
-        </tr>
-        <tr>
-          <td><strong>New ad, 2x KPI spend, no result</strong></td>
-          <td><span class="badge badge-red">Kill It</span></td>
-          <td>Don't keep burning budget hoping it turns around. Make a new entity, not a variation.</td>
-        </tr>
-        <tr>
-          <td><strong>Winner struggling for 1 week</strong></td>
-          <td><span class="badge badge-navy">Wait — 3x Threshold</span></td>
-          <td>One bad week doesn't kill a winner. Give it room before pausing.</td>
-        </tr>
-      </tbody>
-    </table>
-    <div style="background: var(--orange); border-radius: 8px; padding: 12px 20px;">
-      <div style="font-size: 13px; color: white; font-weight: 500;">⚙️ &nbsp; Critical setting: Turn OFF Audience Network and Facebook Marketplace placements in Placement Controls. Do it once — it applies to all future ads automatically.</div>
+    <div style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:7px;padding:9px 13px;flex-shrink:0;">
+      <span style="font-size:11.5px;color:var(--text-muted);"><strong style="color:var(--green-dark);">Key insight:</strong> TOF builds the audience. BOF monetizes it. If you're only running TOF, you're generating warm leads every month and leaving them on the table.</span>
     </div>
   </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">9</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">08</span></div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     SLIDE 10 — SECTION DIVIDER: COMPETITOR INTEL
-═══════════════════════════════════════════════ -->
-<div class="slide section-divider" id="s10">
-  <div class="section-num">03</div>
-  <div class="section-label">Section 03</div>
-  <div class="section-heading">Competitor<br>Intelligence</div>
-  <div class="section-desc">The fastest creative research is watching what competitors are spending money on consistently. 30+ days of spend = proof of concept.</div>
+<!-- ════════════════════════════════════
+     S9 — ORGANIC + ADS FLYWHEEL
+════════════════════════════════════ -->
+<div class="slide cs" id="s9">
+  <div class="sh"><h2>Organic + Ads — The Flywheel</h2><span class="tag">Section 06</span></div>
+  <div class="sb" style="flex-direction:row;gap:16px;">
+    <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
+      <div class="callout">
+        <p><strong>"You're already doing the testing. Stop giving the winners away for free."</strong> When a reel hits 100K views, the algorithm just told you what the market wants to buy. That's your next ad. You're doing the R&D — ads are just the distribution budget.</p>
+      </div>
+      <table class="dt">
+        <thead><tr><th>Organic Format</th><th>The Signal</th><th>The Action</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>F1 — Top Performer</strong><br><span style="font-size:10px;color:var(--text-muted);">Viral / high engagement</span></td>
+            <td>Algorithm confirmed market demand</td>
+            <td><span class="pill gn">Promote Now</span><br><span style="font-size:10px;">Zero production cost. Test as paid today.</span></td>
+          </tr>
+          <tr>
+            <td><strong>F2 — Good Engagement, Weak Reach</strong><br><span style="font-size:10px;color:var(--text-muted);">Content resonates, distribution is ceiling</span></td>
+            <td>Message works — reach is the problem</td>
+            <td><span class="pill or">Small Budget Boost</span><br><span style="font-size:10px;">Find scale ceiling before full spend.</span></td>
+          </tr>
+          <tr>
+            <td><strong>F3 — Untested Angles</strong><br><span style="font-size:10px;color:var(--text-muted);">Ideas not yet proven</span></td>
+            <td>Free R&D opportunity</td>
+            <td><span class="pill nv">Test Organic First</span><br><span style="font-size:10px;">Only promote organic winners. Never guess with budget.</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="flex:0 0 285px;display:flex;flex-direction:column;gap:9px;">
+      <div style="font-family:'DM Mono';font-size:9px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;">Organic Only vs. Ads Only vs. Both</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="background:var(--red-bg);border:1px solid var(--red-border);border-radius:8px;padding:10px 12px;">
+          <div style="font-size:10px;font-weight:600;color:var(--red-dark);margin-bottom:3px;">Organic Only</div>
+          <div style="font-size:11.5px;color:var(--text-muted);line-height:1.5;">Capped by reach. Great content, invisible audience. Growth stalls. This is where Alycia was — and where several of you are right now.</div>
+        </div>
+        <div style="background:var(--red-bg);border:1px solid var(--red-border);border-radius:8px;padding:10px 12px;">
+          <div style="font-size:10px;font-weight:600;color:var(--red-dark);margin-bottom:3px;">Ads Without Organic</div>
+          <div style="font-size:11.5px;color:var(--text-muted);line-height:1.5;">Cold leads who don't trust you yet. High CPA. Ad does all the heavy lifting — and it's expensive when trust isn't pre-built.</div>
+        </div>
+        <div style="background:var(--green-bg);border:1px solid var(--green-border);border-radius:8px;padding:10px 12px;">
+          <div style="font-size:10px;font-weight:600;color:var(--green-dark);margin-bottom:3px;">✓ Both Together</div>
+          <div style="font-size:11.5px;color:var(--text-muted);line-height:1.5;">Organic warms the audience. Ads scale it. This combination 3Xs lead flow. Every coach in this room at $100K+/month is doing both, strategically.</div>
+        </div>
+      </div>
+      <div class="callout">
+        <p>Your ads drive the first impression. <strong>Your organic content closes the deal.</strong></p>
+      </div>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">09</span></div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     SLIDE 11 — THREE RESEARCH SOURCES
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s11">
-  <div class="slide-header">
-    <h2>Three Research Sources — Layer All Three</h2>
-    <span class="section-tag">Section 03 &mdash; Competitor Intelligence</span>
-  </div>
-  <div class="slide-body">
-    <div class="entity-grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
-      <div class="entity-card orange-top" style="padding: 18px 20px;">
-        <div class="e-label">Source 1</div>
-        <div class="e-title">Competitor Organic</div>
-        <div class="e-body" style="margin-bottom: 10px;">Instagram, TikTok, YouTube — filter by most viewed in the last 90 days.</div>
-        <div style="border-top: 1px solid var(--gray-200); padding-top: 10px;">
-          <div style="font-size: 11px; font-weight: 600; color: var(--navy); margin-bottom: 6px;">Extract:</div>
-          <div class="bullet-list">
-            <div class="bullet-item" style="font-size: 12px;"><div class="bullet-dot" style="width:6px;height:6px;"></div>Top hooks on 50K+ view posts</div>
-            <div class="bullet-item" style="font-size: 12px;"><div class="bullet-dot" style="width:6px;height:6px;"></div>Format choices and posting cadence</div>
-            <div class="bullet-item" style="font-size: 12px;"><div class="bullet-dot" style="width:6px;height:6px;"></div>Comment patterns — what resonates</div>
-          </div>
+<!-- ════════════════════════════════════
+     S10 — WINNING VARIATION FRAMEWORK
+════════════════════════════════════ -->
+<div class="slide cs" id="s10">
+  <div class="sh"><h2>Winning Variation Framework — Iterate Without Killing What's Working</h2><span class="tag">Section 07</span></div>
+  <div class="sb" style="flex-direction:row;gap:16px;">
+    <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
+      <div style="font-family:'DM Mono';font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;">Read the Ad Before You Touch It — 4 Questions First</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div class="step-row">
+          <div class="step-n">1</div>
+          <div><div class="step-t">What format is it?</div><div class="step-b">What delivery mechanism is earning the media buy? Protect it when you iterate.</div></div>
+        </div>
+        <div class="step-row">
+          <div class="step-n">2</div>
+          <div><div class="step-t">What emotion does the hook trigger?</div><div class="step-b">That's the real reason it's winning. Protect that emotion in every variation.</div></div>
+        </div>
+        <div class="step-row">
+          <div class="step-n">3</div>
+          <div><div class="step-t">What funnel stage is responding?</div><div class="step-b">TOF cold vs. MOF retarget — don't mix signals. Same creative to both dilutes both.</div></div>
+        </div>
+        <div class="step-row">
+          <div class="step-n">4</div>
+          <div><div class="step-t">Where does hold rate drop off?</div><div class="step-b">That tells you what to change vs. what to protect. High hook rate + low hold = fix the body, not the hook.</div></div>
         </div>
       </div>
-      <div class="entity-card" style="padding: 18px 20px; border-top: 3px solid var(--navy);">
-        <div class="e-label">Source 2</div>
-        <div class="e-title">Meta Ad Library</div>
-        <div class="e-body" style="margin-bottom: 10px;">facebook.com/ads/library — search competitor brand name or niche keywords.</div>
-        <div style="border-top: 1px solid var(--gray-200); padding-top: 10px;">
-          <div style="font-size: 11px; font-weight: 600; color: var(--navy); margin-bottom: 6px;">Filter for:</div>
-          <div class="bullet-list">
-            <div class="bullet-item" style="font-size: 12px;"><div class="bullet-dot" style="width:6px;height:6px;"></div><strong>30+ days running</strong> = spending money</div>
-            <div class="bullet-item" style="font-size: 12px;"><div class="bullet-dot" style="width:6px;height:6px;"></div>60+ days = confirmed scaling</div>
-            <div class="bullet-item" style="font-size: 12px;"><div class="bullet-dot" style="width:6px;height:6px;"></div>90+ days = cash cow concept</div>
-          </div>
-        </div>
-      </div>
-      <div class="entity-card orange-top" style="padding: 18px 20px;">
-        <div class="e-label">Source 3</div>
-        <div class="e-title">Adjacent Industries</div>
-        <div class="e-body" style="margin-bottom: 10px;">Non-competing brands that reach your same avatar — business coaches, real estate, high-ticket SaaS.</div>
-        <div style="border-top: 1px solid var(--gray-200); padding-top: 10px;">
-          <div style="font-size: 11px; font-weight: 600; color: var(--navy); margin-bottom: 6px;">Why it works:</div>
-          <div class="bullet-list">
-            <div class="bullet-item" style="font-size: 12px;"><div class="bullet-dot" style="width:6px;height:6px;"></div>Hook structures your niche hasn't tested</div>
-            <div class="bullet-item" style="font-size: 12px;"><div class="bullet-dot" style="width:6px;height:6px;"></div>Fresh emotional angles = new entities</div>
-            <div class="bullet-item" style="font-size: 12px;"><div class="bullet-dot" style="width:6px;height:6px;"></div>Zero competition on the format</div>
-          </div>
-        </div>
+      <div class="callout" style="flex-shrink:0;">
+        <p><strong>"If hook rate is 35% but hold rate is 12% — don't change the hook.</strong> The problem is in the body. Most coaches change the wrong variable and kill the winner."</p>
       </div>
     </div>
-    <div class="callout">
-      <p><strong>Key principle:</strong> Don't copy — deconstruct. Identify the structure and emotional trigger that's working, then write a version in your authentic voice and story. The intelligence is in the framework, not the words.</p>
+    <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
+      <div style="font-family:'DM Mono';font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;">The 4 Variation Levers — Change Only ONE at a Time</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div class="lc"><div class="lc-ic">🪝</div><div class="lc-n">Hook Swap</div><div class="lc-w">First 3 seconds only — same body, new verbal opener</div><div class="lc-t">⏱ 30 min turnaround</div></div>
+        <div class="lc"><div class="lc-ic">🎬</div><div class="lc-n">Format Shift</div><div class="lc-w">Talking head → B-roll → text overlay → skit</div><div class="lc-t">⏱ 1–2 hrs production</div></div>
+        <div class="lc"><div class="lc-ic">🎯</div><div class="lc-n">Angle Shift</div><div class="lc-w">Fear → desire → curiosity → proof → identity</div><div class="lc-t">⏱ 1 hr scripting</div></div>
+        <div class="lc"><div class="lc-ic">🎤</div><div class="lc-n">Presenter Swap</div><div class="lc-w">You → client → partner → team → UGC creator</div><div class="lc-t">⏱ Film day required</div></div>
+      </div>
+      <div style="background:var(--navy-dark);border-radius:9px;padding:13px 15px;">
+        <div style="font-family:'DM Mono';font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;">Ashton's Batch Hack — Launch 50, Run 10</div>
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+          <div style="background:rgba(255,255,255,0.06);border-radius:5px;padding:5px 9px;font-size:11px;color:var(--blue-light);">Batch all concepts</div>
+          <span class="arr">→</span>
+          <div style="background:rgba(255,255,255,0.06);border-radius:5px;padding:5px 9px;font-size:11px;color:var(--blue-light);">Launch 50</div>
+          <span class="arr">→</span>
+          <div style="background:rgba(255,255,255,0.06);border-radius:5px;padding:5px 9px;font-size:11px;color:var(--blue-light);">Kill 40 immediately</div>
+          <span class="arr">→</span>
+          <div style="background:rgba(255,255,255,0.06);border-radius:5px;padding:5px 9px;font-size:11px;color:var(--blue-light);">Run 10 active</div>
+          <span class="arr">→</span>
+          <div style="background:rgba(232,119,34,0.14);border:1px solid rgba(232,119,34,0.28);border-radius:5px;padding:5px 9px;font-size:11px;color:var(--orange);">Loser dies → turn one of 40 back on</div>
+        </div>
+        <div style="font-size:11px;color:var(--blue-mid);margin-top:7px;">No learning phase reset. Plan creative a month out. Most underused tactic available right now.</div>
+      </div>
     </div>
   </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">11</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">10</span></div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     SLIDE 12 — SWIPE FILE PROCESS
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s12">
-  <div class="slide-header">
-    <h2>Building Your Creative Intelligence Swipe File</h2>
-    <span class="section-tag">Section 03 &mdash; Competitor Intelligence</span>
-  </div>
-  <div class="slide-body">
-    <div class="step-list">
-      <div class="step-item">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <strong>Identify 3-5 direct competitors actively running ads</strong>
-          <span>Confirm in Meta Ad Library — must have active paid campaigns. Prioritize competitors 1-2 levels above your current revenue.</span>
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <strong>For every ad running 30+ days, record 6 things</strong>
-          <span>Hook (first 3 seconds exact), format bucket, emotional driver, duration, CTA keyword, how long it's been running.</span>
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <strong>Build your Creative Gap Map</strong>
-          <span>List every format bucket competitors ARE using heavily. Then list every bucket they're NOT using. The gaps are your opportunity — virgin entities in your niche.</span>
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">4</div>
-        <div class="step-content">
-          <strong>Write your adapted version</strong>
-          <span>Take the structural framework, not the words. What emotion is it triggering? What problem is it naming? Write that in your voice, with your story, for your avatar.</span>
-        </div>
+<!-- ════════════════════════════════════
+     S11 — COMPETITOR INTELLIGENCE
+════════════════════════════════════ -->
+<div class="slide cs" id="s11">
+  <div class="sh"><h2>Competitor Intelligence — How We Use Manus</h2><span class="tag">Section 08</span></div>
+  <div class="sb" style="flex-direction:row;gap:16px;">
+    <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
+      <table class="dt">
+        <thead><tr><th>Source</th><th>What to Extract</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Your top winning paid ads</strong></td><td>Protect and iterate first — proven signal already in your account</td></tr>
+          <tr><td><strong>Your top winning organic</strong></td><td>Best content = next ad scripts. Already tested at zero cost.</td></tr>
+          <tr><td><strong>Competitor paid (30+ days active)</strong></td><td>Hook verbatim (word for word) · Format · Emotional driver · CTA path</td></tr>
+          <tr><td><strong>Competitor organic</strong></td><td>Angles being tested free before promoting — early signal of what's next</td></tr>
+          <tr><td><strong>Adjacent: telehealth, peptide, functional med</strong></td><td>Same dream outcome, bigger budgets, more tests done. Read their winners.</td></tr>
+        </tbody>
+      </table>
+      <div class="callout">
+        <p><strong>"A telehealth company is selling the same dream you are</strong> — energy, body composition, metabolic health — through a different mechanism. They've already spent millions testing. Go find what's working and adapt it."</p>
       </div>
     </div>
-    <div class="two-col" style="flex: 0; gap: 12px;">
-      <div class="col-card" style="padding: 14px 18px;">
-        <h4>What to Record Per Ad</h4>
-        <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
-          <span class="badge badge-navy">Hook (first 3s)</span>
-          <span class="badge badge-orange">Format bucket</span>
-          <span class="badge badge-navy">Emotion/angle</span>
-          <span class="badge badge-orange">Duration</span>
-          <span class="badge badge-navy">CTA keyword</span>
-          <span class="badge badge-orange">Days running</span>
-        </div>
-      </div>
-      <div class="col-card" style="padding: 14px 18px; background: var(--orange-pale); border-color: var(--orange);">
-        <h4 style="border-color: var(--navy);">Adjacent Industries to Mine</h4>
-        <div style="font-size: 12px; color: var(--text-muted); line-height: 1.7;">Business/entrepreneurship coaches &bull; Real estate investing &bull; High-ticket SaaS &bull; Mindset/personal development &bull; Dietitians & RDs</div>
+    <div style="flex:0 0 290px;display:flex;flex-direction:column;gap:9px;">
+      <div style="font-family:'DM Mono';font-size:9px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;">White Space Map — This Niche, April 2026</div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="ws-item"><div class="ws-dot rd"></div><div class="ws-tx"><strong>CROWDED:</strong> "Biology vs. Willpower" reframe — every competitor running this angle. Do not lead with it.</div></div>
+        <div class="ws-item"><div class="ws-dot rd"></div><div class="ws-tx"><strong>CROWDED:</strong> Talking head + static only — entire competitive set looks identical. Visually homogenous.</div></div>
+        <div class="ws-item"><div class="ws-dot gn"></div><div class="ws-tx"><strong>OPEN:</strong> Mechanism-specific hooks — the HOW behind your method, not just the WHAT.</div></div>
+        <div class="ws-item"><div class="ws-dot gn"></div><div class="ws-tx"><strong>OPEN:</strong> BOF proof ads with mechanism explanation — almost nobody running this anywhere.</div></div>
+        <div class="ws-item"><div class="ws-dot gn"></div><div class="ws-tx"><strong>OPEN:</strong> Non-talking-head formats — skit, UGC, carousel, text overlay — massively underused.</div></div>
+        <div class="ws-item"><div class="ws-dot gn"></div><div class="ws-tx"><strong>OPEN:</strong> Full TOF/MOF/BOF stack — entire market is TOF only. The whole retargeting layer is uncontested.</div></div>
       </div>
     </div>
   </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">12</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">11</span></div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     SLIDE 13 — AI-ASSISTED RESEARCH (NEW)
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s13">
-  <div class="slide-header">
-    <h2>3.4 — AI-Assisted Intelligence: The Manus Research Prompt</h2>
-    <span class="section-tag">Section 03 &mdash; Competitor Intelligence</span>
-  </div>
-  <div class="slide-body" style="gap: 10px;">
-    <div style="background: var(--navy); border-radius: 10px; padding: 14px 20px; flex: 0;">
-      <div style="font-size: 12px; color: var(--orange); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">The old way vs. the new way</div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-        <div>
-          <div style="font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Manual research (old way)</div>
-          <div style="font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.7;">2–4 hours clicking through Ad Library tabs, copying hooks into a spreadsheet, missing half the library, forgetting what you found last month.</div>
-        </div>
-        <div>
-          <div style="font-size: 11px; color: var(--orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Manus AI prompt (new way)</div>
-          <div style="font-size: 12px; color: rgba(255,255,255,0.85); line-height: 1.7;">One prompt. Manus browses your Instagram, your ad library, 5–8 competitors, and adjacent industries — and delivers a structured intelligence report in one session.</div>
-        </div>
+<!-- ════════════════════════════════════
+     S12 — INTELLIGENCE WORKFLOW
+════════════════════════════════════ -->
+<div class="slide cs" id="s12">
+  <div class="sh"><h2>The Intelligence Workflow — Research to Brief</h2><span class="tag">Section 09</span></div>
+  <div class="sb" style="gap:12px;">
+    <div class="callout" style="flex-shrink:0;">
+      <p>You already have your intelligence report. <strong>The live workshop today runs through steps 2–4 using your actual data, your actual mechanism, and your actual competitors.</strong> By the time you leave, you'll have 5 entities briefed and ready to produce.</p>
+    </div>
+    <div class="pipe" style="flex-shrink:0;">
+      <div class="ps">
+        <div class="ps-n">STEP 01</div>
+        <div class="ps-t">Manus Intelligence Report</div>
+        <div class="ps-b">Pull your top winning paid + organic. Pull competitor top paid + organic. Pull adjacent industries (telehealth, peptide, functional medicine).</div>
+        <div class="ps-o">→ Hook bank · Format audit · White space map</div>
+      </div>
+      <div class="ps">
+        <div class="ps-n">STEP 02</div>
+        <div class="ps-t">Swipe Brief Builder (Claude)</div>
+        <div class="ps-b">Paste your Manus report into your Claude Marketing Project. Claude ranks angles, identifies gaps, finds what nobody in your niche is running.</div>
+        <div class="ps-o">→ Ranked swipe file · Top 3 angles to test</div>
+      </div>
+      <div class="ps">
+        <div class="ps-n">STEP 03</div>
+        <div class="ps-t">Entity Worksheet</div>
+        <div class="ps-b">Map your best concept. Apply the 4 variation levers. Assign format + hook + emotion + presenter. Tag each entity TOF / MOF / BOF.</div>
+        <div class="ps-o">→ 5 ready-to-brief entities with full specs</div>
+      </div>
+      <div class="ps">
+        <div class="ps-n">STEP 04</div>
+        <div class="ps-t">Creative Brief</div>
+        <div class="ps-b">Hook · Format · Body structure · CTA · Banner text. Send to editor, AI script generator, or film yourself.</div>
+        <div class="ps-o">→ Brief Mon · Film Tue · Launch Wed</div>
       </div>
     </div>
-    <div class="two-col" style="flex: 1; gap: 10px;">
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        <div style="font-size: 11px; font-weight: 600; color: var(--navy); text-transform: uppercase; letter-spacing: 1px;">What the prompt audits (5 phases)</div>
-        <div class="step-list" style="gap: 6px;">
-          <div class="step-item" style="padding: 8px 10px;">
-            <div class="step-num" style="width: 22px; height: 22px; font-size: 11px; flex-shrink: 0;">1</div>
-            <div class="step-content" style="gap: 1px;">
-              <strong style="font-size: 12px;">Brand & Offer Intelligence</strong>
-              <span style="font-size: 11px;">Bio, mechanism, avatar, differentiator framework, Old Way vs. New Way</span>
-            </div>
-          </div>
-          <div class="step-item" style="padding: 8px 10px;">
-            <div class="step-num" style="width: 22px; height: 22px; font-size: 11px; flex-shrink: 0;">2</div>
-            <div class="step-content" style="gap: 1px;">
-              <strong style="font-size: 12px;">Organic Content Audit</strong>
-              <span style="font-size: 11px;">Top 10–15 reels + 5–10 carousels from last 4 months, ranked by performance, with ad creative potential rating</span>
-            </div>
-          </div>
-          <div class="step-item" style="padding: 8px 10px;">
-            <div class="step-num" style="width: 22px; height: 22px; font-size: 11px; flex-shrink: 0;">3</div>
-            <div class="step-content" style="gap: 1px;">
-              <strong style="font-size: 12px;">Your Ad Library Audit</strong>
-              <span style="font-size: 11px;">Full inventory of all your ads — run duration, entity diversity score, identified winners</span>
-            </div>
-          </div>
-          <div class="step-item" style="padding: 8px 10px;">
-            <div class="step-num" style="width: 22px; height: 22px; font-size: 11px; flex-shrink: 0;">4</div>
-            <div class="step-content" style="gap: 1px;">
-              <strong style="font-size: 12px;">Competitor + Adjacent Intelligence</strong>
-              <span style="font-size: 11px;">5–8 direct competitors + 3–5 adjacent industry brands — hooks, formats, gaps, steal file</span>
-            </div>
-          </div>
-          <div class="step-item" style="padding: 8px 10px;">
-            <div class="step-num" style="width: 22px; height: 22px; font-size: 11px; flex-shrink: 0;">5</div>
-            <div class="step-content" style="gap: 1px;">
-              <strong style="font-size: 12px;">30-Day Creative Roadmap</strong>
-              <span style="font-size: 11px;">10–15 prioritized new entity concepts with format, hook direction, and funnel stage</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 8px;">
-        <div style="font-size: 11px; font-weight: 600; color: var(--navy); text-transform: uppercase; letter-spacing: 1px;">How to use it</div>
-        <div style="background: var(--orange-pale); border: 1px solid var(--orange); border-radius: 8px; padding: 12px 14px; flex: 1;">
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; gap: 8px; align-items: flex-start;">
-              <div style="background: var(--orange); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; margin-top: 1px;">1</div>
-              <div style="font-size: 12px; color: var(--text); line-height: 1.5;">Fill in the <strong>10 client fields</strong> at the top of the prompt — your IG handle, niche, avatar, offer, funnel type, and Facebook Page ID</div>
-            </div>
-            <div style="display: flex; gap: 8px; align-items: flex-start;">
-              <div style="background: var(--orange); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; margin-top: 1px;">2</div>
-              <div style="font-size: 12px; color: var(--text); line-height: 1.5;">Paste into <strong>Manus</strong> and let it run — 15–30 minutes for a full report</div>
-            </div>
-            <div style="display: flex; gap: 8px; align-items: flex-start;">
-              <div style="background: var(--orange); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; margin-top: 1px;">3</div>
-              <div style="font-size: 12px; color: var(--text); line-height: 1.5;">Download and <strong>upload the report into Claude</strong> as a project knowledge file — then brief your creative team directly from it</div>
-            </div>
-            <div style="display: flex; gap: 8px; align-items: flex-start;">
-              <div style="background: var(--orange); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; margin-top: 1px;">4</div>
-              <div style="font-size: 12px; color: var(--text); line-height: 1.5;"><strong>Re-run every 60–90 days</strong> or any time you hit a creative plateau</div>
-            </div>
-          </div>
-        </div>
-        <div style="background: var(--gray-100); border-radius: 8px; padding: 10px 12px; border-left: 3px solid var(--navy);">
-          <div style="font-size: 11px; font-weight: 600; color: var(--navy); margin-bottom: 3px;">Where to find the prompt</div>
-          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">IFCA Accelerator Resource Library → AI Tools Module → <strong>"Competitor Intelligence Prompt (Manus)"</strong></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">13</span></div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE — SECTION DIVIDER: AD CREATION FLOW
-═══════════════════════════════════════════════ -->
-<div class="slide section-divider" id="s_flow_div">
-  <div class="section-num">04</div>
-  <div class="section-label">Section 04</div>
-  <div class="section-heading">The Ad<br>Creation<br>Flow</div>
-  <div class="section-desc">Where do your next ads come from? 70% from iterating proven winners. 30% from testing new concepts. Here's the end-to-end system.</div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE — AD CREATION FLOW: 5 SOURCE BUCKETS
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s_flow_sources">
-  <div class="slide-header">
-    <h2>The 5 Source Buckets — Where Every Ad Idea Comes From</h2>
-    <span class="section-tag">Section 04 &mdash; Ad Creation Flow</span>
-  </div>
-  <div class="slide-body" style="gap: 10px;">
-    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; flex: 0;">
-      <div style="background: var(--navy); border-radius: 10px; padding: 14px 12px; text-align: center; border-bottom: 3px solid var(--orange);">
-        <div style="font-family: 'Bebas Neue'; font-size: 26px; color: var(--orange);">01</div>
-        <div style="font-size: 12px; font-weight: 600; color: white; margin: 4px 0 6px;">Your Winning Ads</div>
-        <div style="font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.5;">Your own top-spending ads — run duration = proof of concept. These are your highest-confidence source.</div>
-      </div>
-      <div style="background: var(--navy); border-radius: 10px; padding: 14px 12px; text-align: center; border-bottom: 3px solid var(--orange);">
-        <div style="font-family: 'Bebas Neue'; font-size: 26px; color: var(--orange);">02</div>
-        <div style="font-size: 12px; font-weight: 600; color: white; margin: 4px 0 6px;">Your Winning Content</div>
-        <div style="font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.5;">Top-performing organic reels and carousels from the last 4 months. Market has voted — turn winners into paid entities.</div>
-      </div>
-      <div style="background: var(--navy); border-radius: 10px; padding: 14px 12px; text-align: center; border-bottom: 3px solid rgba(255,255,255,0.2);">
-        <div style="font-family: 'Bebas Neue'; font-size: 26px; color: rgba(255,255,255,0.4);">03</div>
-        <div style="font-size: 12px; font-weight: 600; color: white; margin: 4px 0 6px;">Competitor Winning Ads</div>
-        <div style="font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.5;">Meta Ad Library — ads running 30+ days are spending money. Deconstruct the structure, not the words.</div>
-      </div>
-      <div style="background: var(--navy); border-radius: 10px; padding: 14px 12px; text-align: center; border-bottom: 3px solid rgba(255,255,255,0.2);">
-        <div style="font-family: 'Bebas Neue'; font-size: 26px; color: rgba(255,255,255,0.4);">04</div>
-        <div style="font-size: 12px; font-weight: 600; color: white; margin: 4px 0 6px;">Adjacent Winning Ads</div>
-        <div style="font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.5;">Non-competing brands reaching your same avatar. Hook structures your niche has never tested = zero competition on the format.</div>
-      </div>
-      <div style="background: var(--navy); border-radius: 10px; padding: 14px 12px; text-align: center; border-bottom: 3px solid rgba(255,255,255,0.2);">
-        <div style="font-family: 'Bebas Neue'; font-size: 26px; color: rgba(255,255,255,0.4);">05</div>
-        <div style="font-size: 12px; font-weight: 600; color: white; margin: 4px 0 6px;">Competitor Winning Content</div>
-        <div style="font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.5;">Their organic top performers — 50K+ view reels reveal what angles the market responds to before they're paying to promote it.</div>
-      </div>
-    </div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 0;">
-      <div style="background: var(--orange-pale); border: 1px solid var(--orange); border-radius: 10px; padding: 14px 18px;">
-        <div style="font-size: 11px; color: var(--orange); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">70% of what you create</div>
-        <div style="font-size: 13px; color: var(--text); font-weight: 500; margin-bottom: 4px;">Entity variations of proven winning concepts</div>
-        <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">Sources 01 and 02 feed this bucket. You already know these concepts work — your job is to create genuinely new entities (different format + emotion + hook) from them. Most of your weekly budget lives here.</div>
-      </div>
-      <div style="background: var(--gray-100); border: 1px solid var(--gray-200); border-radius: 10px; padding: 14px 18px;">
-        <div style="font-size: 11px; color: var(--navy); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">30% of what you create</div>
-        <div style="font-size: 13px; color: var(--text); font-weight: 500; margin-bottom: 4px;">Testing brand-new concepts</div>
-        <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">Sources 03, 04, and 05 feed this bucket. Competitor and adjacent intelligence reveals angles, formats, and emotional triggers your niche hasn't tested. This is how you find the next winner.</div>
-      </div>
-    </div>
-    <div class="callout" style="flex: 0;">
-      <p><strong>The mistake most people make:</strong> They start with a blank page — plug in their offer and ask Claude to write ads. That creates 100% new concepts with zero proof of market demand. The system above inverts that. Start with what's already working, then create diverse entities from it.</p>
-    </div>
-  </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">—</span></div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE — AD CREATION FLOW: THE FLOWCHART
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s_flow_chart">
-  <div class="slide-header">
-    <h2>The End-to-End Ad Creation System</h2>
-    <span class="section-tag">Section 04 &mdash; Ad Creation Flow</span>
-  </div>
-  <div class="slide-body" style="gap: 8px;">
-    <div style="display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr 40px 1fr; align-items: center; gap: 0; flex: 0;">
-
-      <!-- Step 1 -->
-      <div style="background: var(--navy); border-radius: 10px; padding: 14px 16px; border-top: 3px solid var(--orange);">
-        <div style="font-size: 10px; color: var(--orange); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Step 01</div>
-        <div style="font-size: 13px; font-weight: 600; color: white; margin-bottom: 6px;">Competitor Research → Intelligence Report</div>
-        <div style="font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.5;">Run the Manus AI prompt. Audit your own ads, your organic, 5–8 direct competitors, and 3–5 adjacent industries. Output: structured report with hooks, formats, gaps, and white space.</div>
-        <div style="margin-top: 8px; font-size: 10px; color: var(--orange); font-weight: 600;">TOOL: Manus Intelligence Prompt</div>
-      </div>
-      <div style="text-align: center; font-size: 20px; color: var(--orange); font-weight: 700;">→</div>
-
-      <!-- Step 2 -->
-      <div style="background: var(--navy); border-radius: 10px; padding: 14px 16px; border-top: 3px solid var(--orange);">
-        <div style="font-size: 10px; color: var(--orange); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Step 02</div>
-        <div style="font-size: 13px; font-weight: 600; color: white; margin-bottom: 6px;">Creative Swipe Brief Builder</div>
-        <div style="font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.5;">Upload your intelligence report. The AI parses it and extracts: catalogued competitor hooks by type, format buckets in use, emotional angles, and — critically — the <strong style="color:var(--orange);">white space nobody's running</strong>.</div>
-        <div style="margin-top: 8px; font-size: 10px; color: rgba(255,255,255,0.4);">← UPLOAD intel report here</div>
-      </div>
-      <div style="text-align: center; font-size: 20px; color: var(--orange); font-weight: 700;">→</div>
-
-      <!-- Step 3 -->
-      <div style="background: var(--off-white); border-radius: 10px; padding: 14px 16px; border-top: 3px solid var(--navy);">
-        <div style="font-size: 10px; color: var(--navy); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Step 03</div>
-        <div style="font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 6px;">Entity Audit Worksheet</div>
-        <div style="font-size: 11px; color: var(--text-muted); line-height: 1.5;">Map every current active ad against Format Bucket / Hook Type / Emotion. Surfaces the gaps — which buckets are you missing? This prevents you from creating new "entities" you already have.</div>
-        <div style="margin-top: 8px; font-size: 10px; color: var(--navy); font-weight: 600;">← WHAT DO YOU CURRENTLY HAVE?</div>
-      </div>
-      <div style="text-align: center; font-size: 20px; color: var(--orange); font-weight: 700;">→</div>
-
-      <!-- Step 4 -->
-      <div style="background: var(--orange); border-radius: 10px; padding: 14px 16px;">
-        <div style="font-size: 10px; color: rgba(255,255,255,0.7); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Step 04 — Output</div>
-        <div style="font-size: 13px; font-weight: 600; color: white; margin-bottom: 6px;">Weekly Creative Brief</div>
-        <div style="font-size: 11px; color: rgba(255,255,255,0.85); line-height: 1.5;">Pre-filled from audit gaps + swipe insights. Shoot-ready: 3–5 entities each with hook written out, format bucket, emotion, re-hook suggestion, and proof point prompt.</div>
-        <div style="margin-top: 8px; font-size: 10px; color: rgba(255,255,255,0.7); font-weight: 600;">← WHAT DO YOU SHOOT NEXT WEEK?</div>
-      </div>
-    </div>
-
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; flex: 0;">
-      <div style="background: var(--gray-100); border-radius: 8px; padding: 12px 14px; border-left: 3px solid var(--orange);">
-        <div style="font-size: 11px; font-weight: 600; color: var(--navy); margin-bottom: 3px;">Swipe Brief Builder</div>
-        <div style="font-size: 11px; color: var(--text-muted); line-height: 1.5;">The intelligence layer. Powered by Claude API — not just a form. Parses your research report and identifies what nobody in your market is running.</div>
-      </div>
-      <div style="background: var(--gray-100); border-radius: 8px; padding: 12px 14px; border-left: 3px solid var(--navy);">
-        <div style="font-size: 11px; font-weight: 600; color: var(--navy); margin-bottom: 3px;">Entity Audit Worksheet</div>
-        <div style="font-size: 11px; color: var(--text-muted); line-height: 1.5;">The inventory layer. Shows you what you have so the brief only fills real gaps — not gaps you've already covered and forgotten about.</div>
-      </div>
-      <div style="background: var(--orange-pale); border-radius: 8px; padding: 12px 14px; border-left: 3px solid var(--orange);">
-        <div style="font-size: 11px; font-weight: 600; color: var(--navy); margin-bottom: 3px;">Weekly Creative Brief</div>
-        <div style="font-size: 11px; color: var(--text-muted); line-height: 1.5;">The production layer. Every field is pre-filled. Filmmaker or editor can execute without a 30-minute briefing call.</div>
-      </div>
-    </div>
-
-    <div class="callout" style="flex: 0;">
-      <p><strong>Live demo:</strong> We're going to walk through this flow live using a real student example — pulling top performers, mapping entities, and building the next week's brief together right now.</p>
-    </div>
-  </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">—</span></div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE — SECTION DIVIDER: WINNING VARIATIONS (renumbered)
-═══════════════════════════════════════════════ -->
-<div class="slide section-divider" id="s14">
-  <div class="section-num">05</div>
-  <div class="section-label">Section 05</div>
-  <div class="section-heading">Making<br>Winning<br>Variations</div>
-  <div class="section-desc">Most coaches make the same mistake: take a winner and change the words. Same angle. Same entity. Budget cannibalizes. Neither wins.</div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 14 — FOUR VARIATION TYPES
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s15">
-  <div class="slide-header">
-    <h2>The Four Valid Variation Types</h2>
-    <span class="section-tag">Section 05 &mdash; Winning Variations</span>
-  </div>
-  <div class="slide-body">
-    <div class="entity-grid" style="grid-template-columns: 1fr 1fr; gap: 12px; grid-template-rows: auto auto;">
-      <div class="entity-card" style="padding: 16px 18px;">
-        <div class="e-label">Type 01 — Limited Value</div>
-        <div class="e-title">Hook Swap</div>
-        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px; line-height: 1.5;">Change only the first 3 seconds. Same body, proof, and CTA. <strong style="color:#991B1B;">Same entity bucket</strong> — useful for hook rate testing only, not true entity expansion.</div>
-        <div style="display: flex; gap: 6px;">
-          <span class="badge badge-navy">What changes: Hook only</span>
-          <span class="badge" style="background:#FEE2E2; color:#991B1B;">Entity: Same</span>
-        </div>
-      </div>
-      <div class="entity-card orange-top" style="padding: 16px 18px;">
-        <div class="e-label">Type 02 — High Value</div>
-        <div class="e-title">Format Shift</div>
-        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px; line-height: 1.5;">Change the entire format — talking head to skit, B-roll to interview. Keep the core message and proof. <strong style="color:#166534;">True new entity</strong> — this is what you want for Andromeda diversity.</div>
-        <div style="display: flex; gap: 6px;">
-          <span class="badge badge-orange">What changes: Format bucket</span>
-          <span class="badge badge-green">Entity: New</span>
-        </div>
-      </div>
-      <div class="entity-card orange-top" style="padding: 16px 18px;">
-        <div class="e-label">Type 03 — High Value</div>
-        <div class="e-title">Angle Shift</div>
-        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px; line-height: 1.5;">Change the core emotion — fear to desire, or frustration to hope. Different problem, different avatar pain point. <strong style="color:#166534;">True new entity</strong> — different emotional driver = different entity ID.</div>
-        <div style="display: flex; gap: 6px;">
-          <span class="badge badge-orange">What changes: Emotion + angle</span>
-          <span class="badge badge-green">Entity: New</span>
-        </div>
-      </div>
-      <div class="entity-card" style="padding: 16px 18px;">
-        <div class="e-label">Type 04 — High Value</div>
-        <div class="e-title">Presenter Swap</div>
-        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px; line-height: 1.5;">Change who delivers the ad — you to your partner, or add a client testimonial. Same message structure, fresh face. <strong style="color:#166534;">True new entity</strong> — different person = different creative signal.</div>
-        <div style="display: flex; gap: 6px;">
-          <span class="badge badge-navy">What changes: Presenter</span>
-          <span class="badge badge-green">Entity: New</span>
-        </div>
-      </div>
-    </div>
-    <div class="callout">
-      <p><strong>The Creative Refresh SOP:</strong> Never edit a live winning ad. Editing the ad ID resets all micro-learning. Instead: <strong>duplicate the winner</strong>, modify only what you need, launch as a new ad inside the same ad set.</p>
-    </div>
-  </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">15</span></div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 15 — SECTION DIVIDER: CADENCE
-═══════════════════════════════════════════════ -->
-<div class="slide section-divider" id="s16">
-  <div class="section-num">06</div>
-  <div class="section-label">Section 06</div>
-  <div class="section-heading">The Weekly<br>Creative<br>Cadence</div>
-  <div class="section-desc">Coaches who win long-term don't just make great ads. They build a machine that consistently produces diverse, tested creative every single week.</div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 16 — CADENCE FRAMEWORK
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s17">
-  <div class="slide-header">
-    <h2>Daily, Weekly, Monthly — Your Creative Rhythm</h2>
-    <span class="section-tag">Section 06 &mdash; Creative Cadence</span>
-  </div>
-  <div class="slide-body">
-    <table class="data-table" style="flex: 0;">
-      <thead>
-        <tr>
-          <th style="width: 120px;">Frequency</th>
-          <th>Action</th>
-          <th>Goal</th>
-          <th style="width: 120px;">Time</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="badge badge-orange">Daily</span></td>
-          <td>Check hook rate and hold rate. Kill ads at 2x KPI with no result. <strong>Do not touch winners.</strong></td>
-          <td>Stop bleeding on dead ads. Protect winners.</td>
-          <td style="font-family: 'DM Mono'; font-size: 12px;">10-15 min</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-navy">Weekly</span></td>
-          <td>Drop 2-3 genuinely new entities. Pull 1-2 hooks from competitor research. Review comments on top performers.</td>
-          <td>Sustain entity diversity. Feed Andromeda fresh creative.</td>
-          <td style="font-family: 'DM Mono'; font-size: 12px;">2-3 hours</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-green">Monthly</span></td>
-          <td>Drop 10-20 new creative concepts. Full entity audit of your library. Review competitor swipe file.</td>
-          <td>Reset fatigue safely. Identify format and angle gaps.</td>
-          <td style="font-family: 'DM Mono'; font-size: 12px;">Half day</td>
-        </tr>
-        <tr>
-          <td><span class="badge" style="background: var(--blue-light); color: var(--navy-dark); font-weight: 600;">Quarterly</span></td>
-          <td>Full creative strategy reset. New angles based on offer evolution, testimonials, and market feedback.</td>
-          <td>Stay ahead of algorithm fatigue. Evolve with the market.</td>
-          <td style="font-family: 'DM Mono'; font-size: 12px;">Full day</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="formula-box" style="flex: 0; padding: 16px 24px;">
-      <div class="formula-part">
-        <div class="f-val">70%</div>
-        <div class="f-label">Budget on proven winners</div>
-      </div>
-      <div class="formula-op">+</div>
-      <div class="formula-part">
-        <div class="f-val">30%</div>
-        <div class="f-label">Budget on new entity tests</div>
-      </div>
-      <div class="formula-op">=</div>
-      <div class="formula-part">
-        <div class="f-val" style="color: #4ADE80;">Scale</div>
-        <div class="f-label">Compound creative learning</div>
-      </div>
-    </div>
-    <div class="callout">
-      <p><strong>Batch rule:</strong> Launch new tests in weekly batches, not daily drips. Meta's algorithm prefers stable learning periods over constant micro-changes. One weekly batch drop is better than 7 individual daily adds.</p>
-    </div>
-  </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">17</span></div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 17 — ENTITY TARGETS
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s18">
-  <div class="slide-header">
-    <h2>Minimum Active Entity Targets</h2>
-    <span class="section-tag">Section 06 &mdash; Creative Cadence</span>
-  </div>
-  <div class="slide-body">
-    <div class="metric-grid cols-3" style="flex: 0;">
-      <div class="metric-card orange">
-        <div class="m-label">Total Active Entities</div>
-        <div class="m-value">10-15</div>
-        <div class="m-desc">At any given time. Genuinely distinct — not near-duplicates.</div>
-      </div>
-      <div class="metric-card navy">
-        <div class="m-label">New Entities Per Week</div>
-        <div class="m-value">2-3</div>
-        <div class="m-desc">Minimum. Real entities — different format + emotion + hook type.</div>
-      </div>
-      <div class="metric-card orange">
-        <div class="m-label">Format Buckets Covered</div>
-        <div class="m-value">6+</div>
-        <div class="m-desc">Of the 8 core format types. Any uncovered bucket is a missed lottery ticket.</div>
-      </div>
-    </div>
-    <table class="data-table compact-table">
-      <thead>
-        <tr>
-          <th>Format Bucket</th>
-          <th>Min. Active</th>
-          <th>What to Check</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Talking head / Founder selfie</strong></td>
-          <td><span class="badge badge-orange">2-3</span></td>
-          <td>Different hooks, different emotions — not just rewording</td>
-        </tr>
-        <tr>
-          <td><strong>Skit / Character / Pattern interrupt</strong></td>
-          <td><span class="badge badge-orange">2-3</span></td>
-          <td>Is there humor or unexpected format in rotation?</td>
-        </tr>
-        <tr>
-          <td><strong>B-roll + stacked text</strong></td>
-          <td><span class="badge badge-navy">2-3</span></td>
-          <td>Lifestyle footage + text overlay. Works muted. High reach.</td>
-        </tr>
-        <tr>
-          <td><strong>VSL-style / Story-based</strong></td>
-          <td><span class="badge badge-navy">1-2</span></td>
-          <td>Longer format for warm audiences and BOF retargeting</td>
-        </tr>
-        <tr>
-          <td><strong>Interview / Podcast clip</strong></td>
-          <td><span class="badge badge-navy">1-2</span></td>
-          <td>Native feel, lowest ad resistance, great for cold traffic</td>
-        </tr>
-        <tr>
-          <td><strong>Client testimonial / Social proof</strong></td>
-          <td><span class="badge badge-navy">1-2</span></td>
-          <td>Real client, emotional result — name + number + timeframe</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">18</span></div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 18 — SECTION DIVIDER: CONCEPTS & ENTITIES
-═══════════════════════════════════════════════ -->
-<div class="slide section-divider" id="s19">
-  <div class="section-num">07</div>
-  <div class="section-label">Section 07</div>
-  <div class="section-heading">Concepts<br>vs.<br>Entities</div>
-  <div class="section-desc">One concept can spawn 3-5 distinct entities. You need both levels of thinking to build a diversified, scalable creative library.</div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 19 — CONCEPT TO ENTITY HIERARCHY
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s20">
-  <div class="slide-header">
-    <h2>The Concept → Entity Hierarchy</h2>
-    <span class="section-tag">Section 07 &mdash; Concepts vs. Entities</span>
-  </div>
-  <div class="slide-body">
-    <div style="background: var(--navy); border-radius: 10px; padding: 14px 20px; margin-bottom: 4px;">
-      <div style="font-family: 'DM Mono'; font-size: 11px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px;">CONCEPT (The Big Idea)</div>
-      <div style="font-size: 14px; color: var(--white); font-weight: 500;">"Fitness coaches are trading time for money because they don't have a system to get clients consistently."</div>
-    </div>
-    <div class="entity-grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
-      <div class="entity-card orange-top" style="padding: 14px 16px;">
-        <div class="e-label">Entity A — Talking Head</div>
-        <div class="e-title">Jordan, direct to camera, frustration angle</div>
-        <div class="e-body">Hook: "If you're still waiting for referrals as a fitness coach, you have a system problem." CTA at 35s. Emotion: frustration.</div>
-      </div>
-      <div class="entity-card" style="padding: 14px 16px; border-top: 3px solid var(--navy);">
-        <div class="e-label">Entity B — Skit</div>
-        <div class="e-title">Jordan as the "struggling coach" character, humor angle</div>
-        <div class="e-body">[Jordan in gym clothes, staring at phone] "Day 47 of posting for free... still nothing." CTA at 40s. Emotion: humor + recognition.</div>
-      </div>
-      <div class="entity-card orange-top" style="padding: 14px 16px;">
-        <div class="e-label">Entity C — B-Roll + Text</div>
-        <div class="e-title">Lifestyle footage + result-lead hook, desire angle</div>
-        <div class="e-body">Hook: "She went from $2K to $18K/month in 90 days." Body: system breakdown with text overlay. CTA at 30s. Emotion: desire.</div>
-      </div>
-      <div class="entity-card" style="padding: 14px 16px; border-top: 3px solid var(--navy);">
-        <div class="e-label">Entity D — Erin Version</div>
-        <div class="e-title">Same concept, empathy-forward presenter, hope angle</div>
-        <div class="e-body">Hook: "I used to wake up at 5am, train 12 clients, and still not know where next month's rent was coming from." Emotion: vulnerability to hope.</div>
-      </div>
-    </div>
-    <div class="callout">
-      <p><strong>The rule:</strong> One concept should birth at least 3-4 real entities across different format buckets and emotional drivers. If you can only think of one entity from a concept, you haven't mapped it far enough.</p>
-    </div>
-  </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">20</span></div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 20 — ORGANIC + ADS FLYWHEEL
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s21">
-  <div class="slide-header">
-    <h2>The Organic + Ads Flywheel</h2>
-    <span class="section-tag">Section 07 &mdash; Concepts vs. Entities</span>
-  </div>
-  <div class="slide-body">
-    <div class="callout">
-      <p><strong>You cannot grow an online coaching business in 2026 with just ads.</strong> People come in through ads — then they go binge your organic content before they work with you. Ask yourself: if someone saw my ad and visited my profile, <strong>would they buy from me?</strong></p>
-    </div>
-    <div class="metric-grid cols-3" style="flex: 0;">
-      <div class="metric-card orange" style="padding: 16px 18px;">
-        <div class="m-label">F1 — B-Roll Lifestyle</div>
-        <div class="m-value" style="font-size: 26px;">Reach</div>
-        <div class="m-desc">Highest views, lowest friction. Dual-use: organic reach AND paid ad entity. Film once, use both places.</div>
-      </div>
-      <div class="metric-card navy" style="padding: 16px 18px;">
-        <div class="m-label">F2 — Selfie Rant</div>
-        <div class="m-value" style="font-size: 26px;">Trust</div>
-        <div class="m-desc">Raw, direct-to-camera. Coach-to-coach energy. Top-performing F2 organic clips become paid talking head entities.</div>
-      </div>
-      <div class="metric-card orange" style="padding: 16px 18px;">
-        <div class="m-label">F3 — Educational</div>
-        <div class="m-value" style="font-size: 26px;">Authority</div>
-        <div class="m-desc">Demonstrative, expertise-led. Builds warm retargeting audiences — the highest-quality BOF pool.</div>
-      </div>
-    </div>
-    <div style="background: var(--navy); border-radius: 10px; padding: 16px 24px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; text-align: center;">
+    <div style="background:var(--navy-dark);border-radius:9px;padding:16px 20px;flex-shrink:0;display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center;">
       <div>
-        <div style="font-family: 'Bebas Neue'; font-size: 18px; color: var(--orange);">Ads drive</div>
-        <div style="font-size: 13px; color: var(--blue-light);">First impression + cold traffic</div>
+        <div style="font-family:'DM Mono';font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px;">The Claude Marketing Project — Ongoing</div>
+        <div style="font-size:12px;color:var(--blue-light);line-height:1.6;">Connect your Instagram + Facebook ad library to a Claude project with your mechanism, avatar, and copy kit baked in. Run the swipe brief prompt weekly and it generates your next 5 entity angles automatically. Stop starting from scratch every week.</div>
       </div>
-      <div style="border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.1);">
-        <div style="font-family: 'Bebas Neue'; font-size: 18px; color: var(--orange);">Organic closes</div>
-        <div style="font-size: 13px; color: var(--blue-light);">Profile binge builds trust before the call</div>
-      </div>
-      <div>
-        <div style="font-family: 'Bebas Neue'; font-size: 18px; color: var(--orange);">Both compound</div>
-        <div style="font-size: 13px; color: var(--blue-light);">Organic builds warm retargeting pool for BOF</div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="background:rgba(255,255,255,0.05);border-radius:7px;padding:8px 11px;font-size:11.5px;color:var(--blue-mid);">🔗 Connect IG + FB Ad Library to project</div>
+        <div style="background:rgba(255,255,255,0.05);border-radius:7px;padding:8px 11px;font-size:11.5px;color:var(--blue-mid);">📋 Paste Manus report once as project knowledge</div>
+        <div style="background:rgba(255,255,255,0.05);border-radius:7px;padding:8px 11px;font-size:11.5px;color:var(--blue-mid);">🤖 Run "swipe brief" prompt weekly for new angles</div>
+        <div style="background:rgba(255,255,255,0.05);border-radius:7px;padding:8px 11px;font-size:11.5px;color:var(--blue-mid);">✍️ Generate entity briefs in your exact voice</div>
       </div>
     </div>
   </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">21</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">12</span></div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     SLIDE 21 — LIVE EXERCISE
-═══════════════════════════════════════════════ -->
-<div class="slide content-slide" id="s22">
-  <div class="slide-header">
-    <h2>Live Exercise — Build Your Next Creative Brief</h2>
-    <span class="section-tag">Workshop Activity</span>
-  </div>
-  <div class="slide-body">
-    <div class="callout" style="flex: 0;">
-      <p><strong>Goal:</strong> Leave today with a specific brief for your next 2 new entities. Not variations — real entities with different format bucket, hook type, and emotional angle.</p>
-    </div>
-    <table class="data-table compact-table" style="flex: 1;">
+<!-- ════════════════════════════════════
+     S13 — TESTING BY BUDGET + CADENCE
+════════════════════════════════════ -->
+<div class="slide cs" id="s13">
+  <div class="sh"><h2>Testing by Budget + The Weekly Cadence</h2><span class="tag">Section 10</span></div>
+  <div class="sb" style="gap:11px;">
+    <table class="bt" style="flex-shrink:0;">
       <thead>
-        <tr>
-          <th>Brief Element</th>
-          <th>Entity #1</th>
-          <th>Entity #2</th>
-        </tr>
+        <tr><th>Monthly Spend</th><th>Structure</th><th>New Entities/Week</th><th>Rotation</th><th>Priority at This Band</th></tr>
       </thead>
       <tbody>
-        <tr>
-          <td><strong>Format Bucket</strong></td>
-          <td style="color: var(--gray-400); font-style: italic;">e.g. Talking head</td>
-          <td style="color: var(--gray-400); font-style: italic;">e.g. B-roll + text</td>
-        </tr>
-        <tr>
-          <td><strong>Hook Type</strong></td>
-          <td style="color: var(--gray-400); font-style: italic;">e.g. Pain callout</td>
-          <td style="color: var(--gray-400); font-style: italic;">e.g. Result lead</td>
-        </tr>
-        <tr>
-          <td><strong>Core Emotion</strong></td>
-          <td style="color: var(--gray-400); font-style: italic;">Fear / Frustration / Desire / Hope</td>
-          <td style="color: var(--gray-400); font-style: italic;">Fear / Frustration / Desire / Hope</td>
-        </tr>
-        <tr>
-          <td><strong>Opening Hook (exact words)</strong></td>
-          <td style="color: var(--gray-400); font-style: italic;">Write it out</td>
-          <td style="color: var(--gray-400); font-style: italic;">Write it out</td>
-        </tr>
-        <tr>
-          <td><strong>Re-hook at 10-12 seconds</strong></td>
-          <td style="color: var(--gray-400); font-style: italic;">What brings them back?</td>
-          <td style="color: var(--gray-400); font-style: italic;">What brings them back?</td>
-        </tr>
-        <tr>
-          <td><strong>Proof Point</strong></td>
-          <td style="color: var(--gray-400); font-style: italic;">Name + number + timeframe</td>
-          <td style="color: var(--gray-400); font-style: italic;">Name + number + timeframe</td>
-        </tr>
-        <tr>
-          <td><strong>CTA Keyword</strong></td>
-          <td style="color: var(--gray-400); font-style: italic;">Comment / DM trigger word</td>
-          <td style="color: var(--gray-400); font-style: italic;">Comment / DM trigger word</td>
-        </tr>
-        <tr>
-          <td><strong>Why this is a new entity</strong></td>
-          <td style="color: var(--gray-400); font-style: italic;">How does it differ from current ads?</td>
-          <td style="color: var(--gray-400); font-style: italic;">How does it differ from current ads?</td>
-        </tr>
+        <tr><td><strong>$500–$2K</strong></td><td>1 campaign, 1 ad set, 8–10 ads</td><td>2–3 new/week</td><td>Rotate every 7–10 days</td><td><span class="pill nv">Hook diversity first · TOF only</span></td></tr>
+        <tr><td><strong>$2K–$5K</strong></td><td>1–2 campaigns, test + scale split</td><td>4–5 new/week</td><td>1 test + 1 scale campaign</td><td><span class="pill or">Add your first BOF entity</span></td></tr>
+        <tr class="bt-hl"><td><strong>$5K–$15K</strong></td><td>2–3 campaigns, 15–25 ads</td><td>8–12 new/week</td><td>Retire fatigued every 5 days, 30+ hook library</td><td><span class="pill or">Full TOF/MOF/BOF · Entity audit mandatory</span></td></tr>
+        <tr><td><strong>$15K+</strong></td><td>Test + Scale + Retarget simultaneously</td><td>Creative = full-time role</td><td>Weekly entity audit mandatory</td><td><span class="pill gn">Dedicated creative role required</span></td></tr>
       </tbody>
     </table>
-  </div>
-  <div class="slide-footer"><span>IFCA &bull; Ad Creative Process Workshop</span><span class="slide-num">22</span></div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     SLIDE 22 — CLOSE
-═══════════════════════════════════════════════ -->
-<div class="slide cover" id="s23" style="flex-direction: column; justify-content: center; background: var(--navy-dark);">
-  <div style="padding: 60px 70px; position: relative; z-index: 1;">
-    <div class="cover-eyebrow" style="margin-bottom: 24px;">Key Takeaways</div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 32px;">
-      <div style="background: rgba(255,255,255,0.05); border-radius: 10px; padding: 16px 18px; border-left: 3px solid var(--orange);">
-        <div style="font-size: 12px; color: var(--orange); font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px;">01 — Entity First</div>
-        <div style="font-size: 13px; color: var(--blue-light); line-height: 1.5;">Creative diversity is the only targeting lever. Different format + emotion + hook = new entity = new lottery ticket. Use all 4 hook types on every ad.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:9px;flex:1;">
+      <div class="cc">
+        <div class="cc-f">Daily</div>
+        <div class="cc-t">10 Min</div>
+        <div class="cc-i">✓ Check hook + hold rate<br>✓ Kill at 2× KPI. No exceptions.<br>✓ Don't touch winners<br>✓ Log data. No emotional decisions.</div>
       </div>
-      <div style="background: rgba(255,255,255,0.05); border-radius: 10px; padding: 16px 18px; border-left: 3px solid var(--orange);">
-        <div style="font-size: 12px; color: var(--orange); font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px;">02 — KPIs That Matter</div>
-        <div style="font-size: 13px; color: var(--blue-light); line-height: 1.5;">Hook rate 25%+. Hold rate 20%+. Cost per qualified call = ⅓ CAC. Hit KPIs? Don't touch it — duplicate to scale. When it falls, new entity, not new tweaks.</div>
+      <div class="cc or-top">
+        <div class="cc-f">Weekly</div>
+        <div class="cc-t">2–3 Hrs</div>
+        <div class="cc-i">✓ Drop 2–3 new entities<br>✓ Pull competitor hooks from Ad Library<br>✓ Review comments for angles<br>✓ Run swipe brief in Claude<br>✓ Confirm all 3 layers active</div>
       </div>
-      <div style="background: rgba(255,255,255,0.05); border-radius: 10px; padding: 16px 18px; border-left: 3px solid var(--orange);">
-        <div style="font-size: 12px; color: var(--orange); font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px;">03 — Follow the Flow</div>
-        <div style="font-size: 13px; color: var(--blue-light); line-height: 1.5;">Intelligence Report → Swipe Brief Builder → Entity Audit → Weekly Brief. 70% entity variations of proven winners. 30% new concepts from competitor and adjacent research.</div>
+      <div class="cc">
+        <div class="cc-f">Monthly</div>
+        <div class="cc-t">Half Day</div>
+        <div class="cc-i">✓ 10–20 new concepts<br>✓ Full entity audit — true count, not ad count<br>✓ Competitor swipe via Manus<br>✓ Confirm TOF/MOF/BOF all covered<br>✓ Review testimonials for angles</div>
       </div>
-      <div style="background: rgba(255,255,255,0.05); border-radius: 10px; padding: 16px 18px; border-left: 3px solid var(--orange);">
-        <div style="font-size: 12px; color: var(--orange); font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px;">04 — Build the Machine</div>
-        <div style="font-size: 13px; color: var(--blue-light); line-height: 1.5;">Daily check-ins. Weekly batch tests. Monthly entity audit. 70/30 budget split. Organic feeds the paid flywheel. Use Manus Intelligence Prompt every 60–90 days to refresh the research.</div>
+      <div class="cc">
+        <div class="cc-f">Quarterly</div>
+        <div class="cc-t">Full Day</div>
+        <div class="cc-i">✓ Creative strategy reset<br>✓ New angles from client results<br>✓ Mechanism audit — still sharp?<br>✓ Adjacent industry deep dive<br>✓ New Manus run</div>
       </div>
     </div>
-    <div style="background: var(--orange); border-radius: 10px; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between;">
-      <div>
-        <div style="font-family: 'Bebas Neue'; font-size: 26px; color: white; letter-spacing: 1px;">Next Step: Build Your Brief</div>
-        <div style="font-size: 13px; color: rgba(255,255,255,0.85);">Your 2 new entity briefs from today's exercise are your deliverable for next week's creative batch.</div>
+    <div style="background:rgba(232,119,34,0.07);border:1px solid rgba(232,119,34,0.18);border-radius:8px;padding:10px 14px;flex-shrink:0;">
+      <span style="font-size:12px;color:var(--text-muted);"><strong style="color:var(--text);">QC even if you have a media buyer:</strong> Do I know my hook rate + hold rate? Have I set kill thresholds for every active ad? Are 3 true entity types running? Are all 3 funnel layers active? Did 2–3 new entities launch this week? Have I reviewed the intel report in the last 30 days?</span>
+    </div>
+  </div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">13</span></div>
+</div>
+
+<!-- ════════════════════════════════════
+     S14 — LIVE WORKSHOP TRANSITION
+════════════════════════════════════ -->
+<div class="slide" id="s14" style="display:none;flex-direction:column;background:var(--navy);overflow:hidden;position:relative;">
+  <div style="position:absolute;right:-80px;top:-80px;width:520px;height:520px;border-radius:50%;background:rgba(232,119,34,0.05);pointer-events:none;"></div>
+  <div style="position:absolute;left:52px;bottom:24px;font-family:'Bebas Neue';font-size:190px;color:rgba(255,255,255,0.03);line-height:1;letter-spacing:-5px;pointer-events:none;">LIVE</div>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:46px 66px;position:relative;z-index:1;gap:22px;">
+    <div>
+      <div style="font-family:'DM Mono';font-size:10px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;margin-bottom:12px;">Now We Build Yours</div>
+      <div style="font-family:'Bebas Neue';font-size:56px;color:white;line-height:1;letter-spacing:1px;">Live Workshop<br><span style="color:var(--orange);">— 45 Minutes</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+      <div style="background:rgba(255,255,255,0.05);border-radius:9px;padding:16px 18px;border-left:3px solid var(--orange);">
+        <div style="font-family:'DM Mono';font-size:9px;color:var(--orange);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px;">Exercise 01 · 10 Min</div>
+        <div style="font-family:'Bebas Neue';font-size:21px;color:white;margin-bottom:5px;">Entity Audit</div>
+        <div style="font-size:11.5px;color:var(--blue-mid);line-height:1.55;">Count your true entities using the format + hook + emotion + presenter test. Not ad count — entity count. Most of you will find 2–4, not 8–10. That's the moment.</div>
       </div>
-      <div style="font-family: 'Bebas Neue'; font-size: 40px; color: rgba(255,255,255,0.2);">IFCA</div>
+      <div style="background:rgba(255,255,255,0.05);border-radius:9px;padding:16px 18px;border-left:3px solid var(--orange);">
+        <div style="font-family:'DM Mono';font-size:9px;color:var(--orange);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px;">Exercise 02 · 15 Min</div>
+        <div style="font-family:'Bebas Neue';font-size:21px;color:white;margin-bottom:5px;">Intel → Swipe Brief</div>
+        <div style="font-size:11.5px;color:var(--blue-mid);line-height:1.55;">Take your Manus report. Feed into Claude with the swipe brief prompt. Identify your top 3 crowded angles to avoid and 3 white-space angles to test. This is your brief seed.</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.05);border-radius:9px;padding:16px 18px;border-left:3px solid var(--orange);">
+        <div style="font-family:'DM Mono';font-size:9px;color:var(--orange);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px;">Exercise 03 · 20 Min</div>
+        <div style="font-family:'Bebas Neue';font-size:21px;color:white;margin-bottom:5px;">Concept → 5 Entities</div>
+        <div style="font-size:11.5px;color:var(--blue-mid);line-height:1.55;">Pick your one best concept. Apply the 4 levers. Build the entity table — format, hook, presenter, emotion, funnel stage. Pull hook language from your copy kit + swipe brief.</div>
+      </div>
+    </div>
+    <div style="background:var(--orange);border-radius:9px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-family:'Bebas Neue';font-size:22px;color:white;letter-spacing:1px;">Before You Leave — Your 3 Deliverables</div>
+        <div style="font-size:12.5px;color:rgba(255,255,255,0.88);">5 entities mapped &amp; briefed &nbsp;·&nbsp; 1 white-space angle identified &nbsp;·&nbsp; 1 KPI you're checking tomorrow morning</div>
+      </div>
+      <div style="font-family:'Bebas Neue';font-size:46px;color:rgba(255,255,255,0.2);line-height:1;flex-shrink:0;padding-left:16px;">→</div>
     </div>
   </div>
 </div>
 
 </div><!-- end #stage -->
 
-<div id="hint">← → arrow keys to navigate</div>
+<div id="hint">← → arrow keys to navigate &nbsp;·&nbsp; click dots to jump</div>
 
 <script>
 const slides = document.querySelectorAll('.slide');
 const total = slides.length;
-let current = 0;
+let cur = 0;
 
 const tocBar = document.getElementById('toc-bar');
 slides.forEach((_, i) => {
-  const dot = document.createElement('div');
-  dot.className = 'toc-dot' + (i === 0 ? ' active' : '');
-  dot.onclick = () => goTo(i);
-  tocBar.appendChild(dot);
+  const d = document.createElement('div');
+  d.className = 'toc-dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  tocBar.appendChild(d);
 });
 
 function update() {
-  slides.forEach((s, i) => s.classList.toggle('active', i === current));
-  document.querySelectorAll('.toc-dot').forEach((d, i) => d.classList.toggle('active', i === current));
-  document.getElementById('slide-counter').textContent = (current + 1) + ' / ' + total;
-  document.getElementById('btn-prev').disabled = current === 0;
-  document.getElementById('btn-next').disabled = current === total - 1;
-  document.getElementById('progress-fill').style.width = ((current + 1) / total * 100) + '%';
+  slides.forEach((s, i) => { s.style.display = 'none'; s.classList.remove('active'); });
+  slides[cur].style.display = 'flex';
+  slides[cur].classList.add('active');
+  document.querySelectorAll('.toc-dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+  document.getElementById('slide-counter').textContent = (cur + 1) + ' / ' + total;
+  document.getElementById('btn-prev').disabled = cur === 0;
+  document.getElementById('btn-next').disabled = cur === total - 1;
+  document.getElementById('prog-fill').style.width = ((cur + 1) / total * 100) + '%';
 }
 
-function navigate(dir) {
-  current = Math.max(0, Math.min(total - 1, current + dir));
-  update();
-}
-
-function goTo(i) {
-  current = i;
-  update();
-}
+function nav(dir) { cur = Math.max(0, Math.min(total - 1, cur + dir)); update(); }
+function goTo(i) { cur = i; update(); }
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
-  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nav(1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   nav(-1);
   if (e.key === 'Home') goTo(0);
-  if (e.key === 'End') goTo(total - 1);
+  if (e.key === 'End')  goTo(total - 1);
 });
+
+update();
 </script>
 </body>
 </html>

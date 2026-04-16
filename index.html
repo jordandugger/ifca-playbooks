@@ -199,6 +199,8 @@
   .mini-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 20px 18px; color: inherit; display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden; }
   .mini-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.06); }
   .mini-card.cs { opacity: 0.38; cursor: default; }
+  .mini-card:not(.cs):hover { border-color: rgba(34,197,94,0.25); background: rgba(255,255,255,0.05); transform: translateY(-2px); cursor: pointer; }
+  .mini-card:not(.cs)::before { background: rgba(34,197,94,0.25); }
   .mc-icon { font-size: 20px; }
   .mc-title { font-family: 'Bebas Neue'; font-size: 17px; color: white; line-height: 1.1; letter-spacing: 0.5px; }
   .mc-desc { font-size: 11px; color: rgba(255,255,255,0.42); line-height: 1.5; flex: 1; }
@@ -276,7 +278,7 @@
       <div class="hero-divider"></div>
       <div class="hero-stat"><div class="stat-num">3</div><div class="stat-label">Creative AI Tools</div></div>
       <div class="hero-divider"></div>
-      <div class="hero-stat"><div class="stat-num">14</div><div class="stat-label">AI Mini-Trainings</div></div>
+      <div class="hero-stat"><div class="stat-num">9</div><div class="stat-label">AI Mini-Trainings</div></div>
     </div>
   </div>
   <div class="scroll-hint"><div class="scroll-line"></div><span>Scroll to explore</span></div>
@@ -506,7 +508,7 @@
     <div class="section-count">3-TOOL SYSTEM &nbsp;·&nbsp; ALL LIVE</div>
   </div>
   <div class="tool3-grid stagger">
-    <a class="creative-card" href="ad-creative-tools/creative-swipe-brief-builder.html">
+    <a class="creative-card" href="ad-creative-tools/creative-intelligence-flow.html">
       <div class="tool-icon">🔍</div>
       <div class="tool-title">Creative Swipe Brief Builder</div>
       <div class="tool-desc">Paste your competitor intelligence report — the AI parses every hook, format, and angle, maps the white space, and outputs shoot-ready entity briefs. Start here.</div>
@@ -583,53 +585,53 @@
       <div class="section-label">AI Integration Workshop</div>
       <div class="section-title">AI Training Library</div>
     </div>
-    <div class="section-count">14 MINI-TRAININGS &nbsp;·&nbsp; SELF-PACED</div>
+    <div class="section-count">9 LIVE &nbsp;·&nbsp; MORE COMING</div>
   </div>
 
-  <div class="ai-workshop-banner reveal">
+  <a class="ai-workshop-banner reveal" href="ai-tools/agentic-ai-workshop.html" style="opacity:1;cursor:pointer;text-decoration:none;display:flex;transition:border-color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='rgba(167,139,250,0.35)';this.style.background='rgba(167,139,250,0.06)'" onmouseout="this.style.borderColor='';this.style.background=''">
     <div class="aib-left">
       <div class="aib-icon">🤖</div>
       <div>
-        <div class="aib-label">Workshop &nbsp;·&nbsp; Unlocks Tomorrow</div>
+        <div class="aib-label">Workshop &nbsp;·&nbsp; AI Tools</div>
         <div class="aib-title">AI Integration Workshop — The Full Session</div>
         <div class="aib-desc">The high-level overview: LLMs vs. Agents, the three-domain framework, live demos, and how to prioritize your first build.</div>
       </div>
     </div>
     <div class="aib-right">
-      <span class="aib-pill">⏳ Unlocks Tomorrow</span>
-      <div class="aib-arr">→</div>
+      <span class="aib-pill" style="color:var(--purple);background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.25);">● Live</span>
+      <div class="aib-arr" style="color:var(--purple);border-color:rgba(167,139,250,0.3);">→</div>
     </div>
-  </div>
+  </a>
 
   <div class="ai-cat-label">Getting Started</div>
   <div class="mini-grid stagger">
-    <div class="mini-card cs"><div class="mc-icon">🚀</div><div class="mc-title">Getting Started with Claude</div><div class="mc-desc">Plans, models, interface orientation, and the five things to set up before your first real work session.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">🔄</div><div class="mc-title">Migrating from ChatGPT to Claude</div><div class="mc-desc">What's different, what carries over, and how to move your prompts, workflows, and context without starting from zero.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">⚡</div><div class="mc-title">Optimizing &amp; Saving Claude Usage</div><div class="mc-desc">Why tokens run out faster than you expect, the model selection lever, and 10 habits that can double your effective daily budget.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+    <a class="mini-card" href="ai-tools/getting-started-claude.html" style="text-decoration:none;color:inherit;"><div class="mc-icon">🚀</div><div class="mc-title">Getting Started with Claude</div><div class="mc-desc">Plans, models, interface orientation, and the five things to set up before your first real work session.</div><div class="mc-foot"><span class="mc-status" style="color:var(--green);">● Live</span><div class="mc-arr" style="border-color:rgba(34,197,94,0.3);color:var(--green);">→</div></div></a>
+    <a class="mini-card" href="ai-tools/migrating-from-chatgpt.html" style="text-decoration:none;color:inherit;"><div class="mc-icon">🔄</div><div class="mc-title">Migrating from ChatGPT to Claude</div><div class="mc-desc">What's different, what carries over, and how to move your prompts, workflows, and context without starting from zero.</div><div class="mc-foot"><span class="mc-status" style="color:var(--green);">● Live</span><div class="mc-arr" style="border-color:rgba(34,197,94,0.3);color:var(--green);">→</div></div></a>
+    <div class="mini-card cs"><div class="mc-icon">⚡</div><div class="mc-title">Optimizing &amp; Saving Claude Usage</div><div class="mc-desc">Why tokens run out faster than you expect, the model selection lever, and 10 habits that can double your effective daily budget.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
     <div class="mini-card cs"><div class="mc-icon">🎨</div><div class="mc-title">How Artifacts Work</div><div class="mc-desc">What artifacts are, when Claude creates them, and how to use the Publish trick for long iterative builds.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
   </div>
 
   <div class="ai-cat-label">Marketing</div>
   <div class="mini-grid stagger">
-    <div class="mini-card cs"><div class="mc-icon">📊</div><div class="mc-title">Claude Instagram Audit</div><div class="mc-desc">Paste your IG URL and get a full audit: bio, content mix, hooks, engagement gaps, and a prioritized optimization report.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">🧠</div><div class="mc-title">Micro Lead Magnet Quizzes</div><div class="mc-desc">Build a free interactive HTML quiz in 30 minutes using Claude — hosted on GitHub for $0/month, with 70–85% completion rates vs. PDF downloads.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">🎨</div><div class="mc-title">Creating Canva Designs in Claude</div><div class="mc-desc">Design carousels, graphics, and presentations using Claude's Canva connector — no manual design required.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">📱</div><div class="mc-title">Posting to Instagram from Claude</div><div class="mc-desc">The CoWork + Zapier pipeline: approve content in Notion, auto-schedule to IG. Your VA approves, Claude publishes.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+    <a class="mini-card" href="ai-tools/instagram-audit.html" style="text-decoration:none;color:inherit;"><div class="mc-icon">📊</div><div class="mc-title">Claude Instagram Audit</div><div class="mc-desc">Paste your IG URL and get a full audit: bio, content mix, hooks, engagement gaps, and a prioritized optimization report.</div><div class="mc-foot"><span class="mc-status" style="color:var(--green);">● Live</span><div class="mc-arr" style="border-color:rgba(34,197,94,0.3);color:var(--green);">→</div></div></a>
+    <a class="mini-card" href="ai-tools/hormone-quiz.html" style="text-decoration:none;color:inherit;"><div class="mc-icon">🧠</div><div class="mc-title">Micro Lead Magnet Quizzes</div><div class="mc-desc">Build a free interactive HTML quiz in 30 minutes using Claude — hosted on GitHub for $0/month, with 70–85% completion rates vs. PDF downloads.</div><div class="mc-foot"><span class="mc-status" style="color:var(--green);">● Live</span><div class="mc-arr" style="border-color:rgba(34,197,94,0.3);color:var(--green);">→</div></div></a>
+    <a class="mini-card" href="ai-tools/canva-designs-claude.html" style="text-decoration:none;color:inherit;"><div class="mc-icon">🎨</div><div class="mc-title">Creating Canva Designs in Claude</div><div class="mc-desc">Design carousels, graphics, and presentations using Claude's Canva connector — no manual design required.</div><div class="mc-foot"><span class="mc-status" style="color:var(--green);">● Live</span><div class="mc-arr" style="border-color:rgba(34,197,94,0.3);color:var(--green);">→</div></div></a>
+    <a class="mini-card" href="ai-tools/posting-to-instagram.html" style="text-decoration:none;color:inherit;"><div class="mc-icon">📱</div><div class="mc-title">Posting to Instagram from Claude</div><div class="mc-desc">The CoWork + Zapier pipeline: approve content in Notion, auto-schedule to IG. Your VA approves, Claude publishes.</div><div class="mc-foot"><span class="mc-status" style="color:var(--green);">● Live</span><div class="mc-arr" style="border-color:rgba(34,197,94,0.3);color:var(--green);">→</div></div></a>
   </div>
 
   <div class="ai-cat-label navy-cat">Sales &amp; Automation</div>
   <div class="mini-grid cols-3 stagger">
-    <div class="mini-card cs"><div class="mc-icon">💬</div><div class="mc-title">Claude ManyChat Automations</div><div class="mc-desc">Build DM qualification flows that score leads, route hot prospects to booking, and send unqualified leads to nurture — zero closer time wasted.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">🔁</div><div class="mc-title">Comment Response Automation</div><div class="mc-desc">Auto-respond to IG comments using ManyChat triggers and Claude-generated replies — keeps your content alive without manual monitoring.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+    <a class="mini-card" href="ai-tools/manychat-automations.html" style="text-decoration:none;color:inherit;"><div class="mc-icon">💬</div><div class="mc-title">Claude ManyChat Automations</div><div class="mc-desc">Build DM qualification flows that score leads, route hot prospects to booking, and send unqualified leads to nurture — zero closer time wasted.</div><div class="mc-foot"><span class="mc-status" style="color:var(--green);">● Live</span><div class="mc-arr" style="border-color:rgba(34,197,94,0.3);color:var(--green);">→</div></div></a>
+    <a class="mini-card" href="ai-tools/comment-response-automation.html" style="text-decoration:none;color:inherit;"><div class="mc-icon">🔁</div><div class="mc-title">Comment Response Automation</div><div class="mc-desc">Auto-respond to IG comments using ManyChat triggers and Claude-generated replies — keeps your content alive without manual monitoring.</div><div class="mc-foot"><span class="mc-status" style="color:var(--green);">● Live</span><div class="mc-arr" style="border-color:rgba(34,197,94,0.3);color:var(--green);">→</div></div></a>
     <div class="mini-card cs"><div class="mc-icon">📋</div><div class="mc-title">Pre-Call Brief Builder</div><div class="mc-desc">Lead submits form → Claude generates a full pre-call brief: background, pain points, likely objections, recommended angle.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
   </div>
 
   <div class="ai-cat-label gray-cat">Advanced Builds</div>
   <div class="mini-grid stagger">
-    <div class="mini-card cs"><div class="mc-icon">🔍</div><div class="mc-title">Manus + Claude + Foreplay</div><div class="mc-desc">The competitor intelligence research stack. 30 minutes to a 30-page brief with ad hooks, angles, and white space mapped.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
+    <a class="mini-card" href="ai-tools/manus-claude-flowplay.html" style="text-decoration:none;color:inherit;"><div class="mc-icon">🔍</div><div class="mc-title">Manus + Claude + Foreplay</div><div class="mc-desc">The competitor intelligence research stack. 30 minutes to a 30-page brief with ad hooks, angles, and white space mapped.</div><div class="mc-foot"><span class="mc-status" style="color:var(--green);">● Live</span><div class="mc-arr" style="border-color:rgba(34,197,94,0.3);color:var(--green);">→</div></div></a>
+    <a class="mini-card" href="ai-tools/claude-skill-cowork.html" style="text-decoration:none;color:inherit;"><div class="mc-icon">⚡</div><div class="mc-title">Claude Skill Co-Work</div><div class="mc-desc">Install pre-built slash-command skills into your Claude Project — call any repeatable task with a single command. Hook generation, ad scripting, competitor analysis, and more.</div><div class="mc-foot"><span class="mc-status" style="color:var(--green);">● Live</span><div class="mc-arr" style="border-color:rgba(34,197,94,0.3);color:var(--green);">→</div></div></a>
     <div class="mini-card cs"><div class="mc-icon">🎨</div><div class="mc-title">Figma AI + Carousel Automation</div><div class="mc-desc">Automated carousel image generation in batch — 10 minutes per batch. Fully hands-off visual production at scale.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
     <div class="mini-card cs"><div class="mc-icon">⚙️</div><div class="mc-title">GHL + Claude Code Integration</div><div class="mc-desc">Connect GoHighLevel to Claude Code for automated page builds, funnel updates, and CRM workflow automation.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">💻</div><div class="mc-title">Claude Code + GitHub Pages</div><div class="mc-desc">Build and deploy custom HTML tools, dashboards, and mini-training pages using Claude Code and free GitHub hosting.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
   </div>
 </section>
 

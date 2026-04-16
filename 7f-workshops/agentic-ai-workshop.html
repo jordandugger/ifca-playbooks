@@ -1,3 +1,4 @@
+ai-integration-workshop.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -557,62 +558,129 @@
 ═══════════════════════════════════════════════ -->
 <div class="slide content-slide" id="s8b">
   <div class="slide-header">
-    <h2>Live Demo — Build a Lead Magnet in 30 Minutes</h2>
-    <span class="section-tag">Domain 01 &mdash; Marketing</span>
+    <h2>Live Demo — The Hormone Quiz Funnel</h2>
+    <span class="section-tag">Domain 01 &mdash; Marketing · Live Build</span>
   </div>
-  <div class="slide-body" style="gap: 10px;">
-    <div class="callout" style="flex: 0;">
-      <p>"I'm going to show you something I built in about 30 minutes that has more persuasive power than any PDF lead magnet you've ever made. It's a quiz. Not a Google Form — an actual beautiful, interactive page that lives on the internet for free. The only tools I used were Claude and a free GitHub account."</p>
+  <div class="slide-body" style="gap: 8px;">
+
+    <!-- Top: Facilitator quote + live URL -->
+    <div style="display: grid; grid-template-columns: 1fr auto; gap: 12px; flex: 0; align-items: stretch;">
+      <div class="callout" style="margin: 0;">
+        <p>"I'm going to show you something I built in <strong>30 minutes</strong> with more persuasive power than any PDF lead magnet you've ever made. One conversation with Claude. One free GitHub account. Here's the live URL — let me click through it."</p>
+      </div>
+      <a href="https://jordandugger.github.io/Hormone-quiz.html/" target="_blank" style="background: var(--orange); border-radius: 10px; padding: 14px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; gap: 4px; min-width: 160px; flex-shrink: 0;">
+        <div style="font-size: 20px;">🔗</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 14px; color: white; letter-spacing: 1px; text-align: center;">Open Live Demo</div>
+        <div style="font-family: 'DM Mono'; font-size: 9px; color: rgba(255,255,255,0.8); letter-spacing: 0.5px; text-align: center;">jordandugger.github.io</div>
+      </a>
     </div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 1;">
+
+    <!-- Middle: Three columns -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; flex: 1;">
+
+      <!-- Col 1: Why quizzes win -->
       <div style="display: flex; flex-direction: column; gap: 8px;">
-        <div style="background: var(--white); border-radius: 10px; padding: 16px 18px; border: 1px solid var(--gray-200); border-top: 3px solid var(--orange);">
-          <div style="font-size: 12px; font-weight: 600; color: var(--navy); margin-bottom: 10px;">Why Quizzes Beat PDFs</div>
+        <div style="background: var(--white); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--gray-200); border-top: 3px solid var(--orange);">
+          <div style="font-size: 11px; font-weight: 600; color: var(--navy); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Why Quizzes Beat PDFs</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 8px;">
+            <div style="background: #FEE2E2; border-radius: 6px; padding: 8px 10px; text-align: center;">
+              <div style="font-family: 'Bebas Neue'; font-size: 22px; color: #991B1B; line-height: 1;">20–30%</div>
+              <div style="font-size: 10px; color: #991B1B; font-weight: 600;">PDF opens it</div>
+            </div>
+            <div style="background: #DCFCE7; border-radius: 6px; padding: 8px 10px; text-align: center;">
+              <div style="font-family: 'Bebas Neue'; font-size: 22px; color: #166534; line-height: 1;">70–85%</div>
+              <div style="font-size: 10px; color: #166534; font-weight: 600;">Quiz finishes</div>
+            </div>
+          </div>
           <div class="bullet-list">
-            <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size:12px;"><strong>PDF download:</strong> zero commitment. 20–30% ever open it.</span></div>
-            <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size:12px;"><strong>Quiz answer 1 of 5:</strong> they're committed. 70–85% finish.</span></div>
-            <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size:12px;"><strong>The result page</strong> is your pitch — and it doesn't feel like one.</span></div>
-            <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size:12px;"><strong>GitHub hosting = $0/month.</strong> The URL never expires.</span></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size:11px;">Answer Q1 → they're committed, they want the result</span></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size:11px;">Result page is your pitch — feels like help, not sales</span></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size:11px;">GitHub hosting = $0/month. URL never expires.</span></div>
           </div>
         </div>
-        <div style="background: var(--white); border-radius: 10px; padding: 16px 18px; border: 1px solid var(--gray-200);">
-          <div style="font-size: 12px; font-weight: 600; color: var(--navy); margin-bottom: 8px;">The Formula (Don't Deviate)</div>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <div style="background: var(--orange-pale); border: 1px solid rgba(232,119,34,0.3); border-radius: 6px; padding: 6px 12px; font-size: 11px; font-weight: 600; color: var(--orange);">5 Questions Max</div>
-            <div style="background: var(--orange-pale); border: 1px solid rgba(232,119,34,0.3); border-radius: 6px; padding: 6px 12px; font-size: 11px; font-weight: 600; color: var(--orange);">3 Result Types</div>
-            <div style="background: var(--orange-pale); border: 1px solid rgba(232,119,34,0.3); border-radius: 6px; padding: 6px 12px; font-size: 11px; font-weight: 600; color: var(--orange);">Multiple Choice Only</div>
-            <div style="background: var(--orange-pale); border: 1px solid rgba(232,119,34,0.3); border-radius: 6px; padding: 6px 12px; font-size: 11px; font-weight: 600; color: var(--orange);">One CTA on Result Page</div>
+        <!-- GHL note -->
+        <div style="background: var(--gray-100); border-radius: 8px; padding: 10px 14px; border: 1px solid var(--gray-200);">
+          <div style="font-size: 10px; font-weight: 600; color: var(--navy); margin-bottom: 4px;">GHL Users: Best Approach</div>
+          <div class="bullet-list">
+            <div class="bullet-item"><div class="bullet-dot" style="background: #22C55E;"></div><span style="font-size:11px;"><strong>Host on GitHub</strong> → iframe embed inside GHL page</span></div>
+            <div class="bullet-item"><div class="bullet-dot" style="background: #EF4444;"></div><span style="font-size:11px;"><strong>Don't paste raw HTML</strong> into GHL — JS breaks</span></div>
           </div>
-          <div style="margin-top: 10px; font-size: 12px; color: var(--text-muted); line-height: 1.5;">Title rule: <strong style="color:var(--navy);">sounds like something your client Googles at 11pm.</strong> "Why Are You Always Tired?" converts. "Health Quiz" does not.</div>
         </div>
       </div>
+
+      <!-- Col 2: The formula -->
       <div style="display: flex; flex-direction: column; gap: 8px;">
-        <div style="background: var(--navy); border-radius: 10px; padding: 18px; flex: 1;">
-          <div style="font-family: 'Bebas Neue'; font-size: 16px; color: var(--orange); letter-spacing: 1px; margin-bottom: 10px;">Live Exercise — 10 Minutes</div>
-          <div class="step-list">
-            <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 8px 12px;">
-              <div class="step-num" style="background: var(--orange); width:22px; height:22px; font-size:10px;">1</div>
-              <div class="step-content"><strong style="color:white; font-size:12px;">Choose your quiz title</strong><span style="color:var(--blue-mid); font-size:11px;">Pick from the idea bank or write one that fits your niche</span></div>
+        <div style="background: var(--white); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--gray-200); flex: 0;">
+          <div style="font-size: 11px; font-weight: 600; color: var(--navy); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">The Formula — Don't Deviate</div>
+          <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 8px;">
+            <div style="background: var(--orange-pale); border: 1px solid rgba(232,119,34,0.25); border-radius: 5px; padding: 5px 10px; font-size: 11px; font-weight: 600; color: var(--orange);">5 questions max</div>
+            <div style="background: var(--orange-pale); border: 1px solid rgba(232,119,34,0.25); border-radius: 5px; padding: 5px 10px; font-size: 11px; font-weight: 600; color: var(--orange);">3 result types</div>
+            <div style="background: var(--orange-pale); border: 1px solid rgba(232,119,34,0.25); border-radius: 5px; padding: 5px 10px; font-size: 11px; font-weight: 600; color: var(--orange);">Multiple choice only</div>
+            <div style="background: var(--orange-pale); border: 1px solid rgba(232,119,34,0.25); border-radius: 5px; padding: 5px 10px; font-size: 11px; font-weight: 600; color: var(--orange);">One CTA on result page</div>
+          </div>
+          <div style="font-size: 11px; color: var(--text-muted); line-height: 1.5; border-top: 1px solid var(--gray-200); padding-top: 8px;"><strong style="color:var(--navy);">Title rule:</strong> sounds like something your client Googles at 11pm. <em>"Why Are You Always Tired?"</em> converts. <em>"Health Quiz"</em> does not.</div>
+        </div>
+        <!-- Before/after cost -->
+        <div style="background: var(--navy); border-radius: 10px; padding: 14px 16px; flex: 1;">
+          <div style="font-size: 11px; font-weight: 600; color: var(--orange); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">The Old Way vs. New Way</div>
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px;">
+              <span style="color: rgba(255,255,255,0.4);">Designer</span><span style="color: #fca5a5; font-family:'DM Mono';">$500</span>
             </div>
-            <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 8px 12px;">
-              <div class="step-num" style="background: var(--orange); width:22px; height:22px; font-size:10px;">2</div>
-              <div class="step-content"><strong style="color:white; font-size:12px;">Fill in the prompt template</strong><span style="color:var(--blue-mid); font-size:11px;">Your specialty, 3 result type names, booking link</span></div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px;">
+              <span style="color: rgba(255,255,255,0.4);">Quiz platform/month</span><span style="color: #fca5a5; font-family:'DM Mono';">$50/mo</span>
             </div>
-            <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 8px 12px;">
-              <div class="step-num" style="background: var(--orange); width:22px; height:22px; font-size:10px;">3</div>
-              <div class="step-content"><strong style="color:white; font-size:12px;">Paste into Claude → run it</strong><span style="color:var(--blue-mid); font-size:11px;">Working first draft in ~60 seconds</span></div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px;">
+              <span style="color: rgba(255,255,255,0.4);">Developer (when it breaks)</span><span style="color: #fca5a5; font-family:'DM Mono';">$200</span>
             </div>
-            <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 8px 12px;">
-              <div class="step-num" style="background: var(--orange); width:22px; height:22px; font-size:10px;">4</div>
-              <div class="step-content"><strong style="color:white; font-size:12px;">Write one follow-up prompt</strong><span style="color:var(--blue-mid); font-size:11px;">Brand color, testimonial, or podcast embed</span></div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px;">
+              <span style="color: rgba(255,255,255,0.4);">Timeline</span><span style="color: #fca5a5; font-family:'DM Mono';">2–3 weeks</span>
+            </div>
+            <div style="height: 1px; background: rgba(255,255,255,0.08); margin: 6px 0;"></div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px;">
+              <span style="color: rgba(255,255,255,0.5);">Claude prompt</span><span style="color: #86efac; font-family:'DM Mono'; font-weight:600;">$0</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px;">
+              <span style="color: rgba(255,255,255,0.5);">GitHub Pages hosting</span><span style="color: #86efac; font-family:'DM Mono'; font-weight:600;">$0 forever</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px;">
+              <span style="color: rgba(255,255,255,0.5);">Total time</span><span style="color: #86efac; font-family:'DM Mono'; font-weight:600;">30 minutes</span>
             </div>
           </div>
         </div>
-        <div style="background: var(--orange); border-radius: 8px; padding: 12px 16px; flex: 0;">
-          <div style="font-size: 12px; color: white; line-height: 1.5;"><strong>Full guide in your resource library:</strong> Master prompt template, quiz idea bank by niche, GitHub hosting steps, and the live demo quiz at hormone-quiz.html</div>
+      </div>
+
+      <!-- Col 3: Live exercise -->
+      <div style="background: var(--navy); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;">
+        <div style="font-family: 'Bebas Neue'; font-size: 16px; color: var(--orange); letter-spacing: 1px;">Live Exercise — Do This Now</div>
+        <div class="step-list" style="gap: 6px;">
+          <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 7px 11px;">
+            <div class="step-num" style="background: var(--orange); width:20px; height:20px; font-size:10px; flex-shrink:0;">1</div>
+            <div class="step-content"><strong style="color:white; font-size:11px;">Pick your quiz title</strong><span style="color:var(--blue-mid); font-size:10px;">From the idea bank in your mini-training, or write one that fits your niche</span></div>
+          </div>
+          <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 7px 11px;">
+            <div class="step-num" style="background: var(--orange); width:20px; height:20px; font-size:10px; flex-shrink:0;">2</div>
+            <div class="step-content"><strong style="color:white; font-size:11px;">Fill in the prompt template</strong><span style="color:var(--blue-mid); font-size:10px;">Your specialty, 3 result type names, your booking link</span></div>
+          </div>
+          <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 7px 11px;">
+            <div class="step-num" style="background: var(--orange); width:20px; height:20px; font-size:10px; flex-shrink:0;">3</div>
+            <div class="step-content"><strong style="color:white; font-size:11px;">Open Claude → paste → run</strong><span style="color:var(--blue-mid); font-size:10px;">Working first draft in ~60 seconds</span></div>
+          </div>
+          <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 7px 11px;">
+            <div class="step-num" style="background: var(--orange); width:20px; height:20px; font-size:10px; flex-shrink:0;">4</div>
+            <div class="step-content"><strong style="color:white; font-size:11px;">One follow-up prompt</strong><span style="color:var(--blue-mid); font-size:10px;">Brand color, your logo, or embed a podcast episode</span></div>
+          </div>
+          <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 7px 11px;">
+            <div class="step-num" style="background: var(--orange); width:20px; height:20px; font-size:10px; flex-shrink:0;">5</div>
+            <div class="step-content"><strong style="color:white; font-size:11px;">Push to GitHub Pages</strong><span style="color:var(--blue-mid); font-size:10px;">5-step walkthrough in your mini-training — live URL in 60 seconds</span></div>
+          </div>
+        </div>
+        <div style="background: var(--orange); border-radius: 6px; padding: 8px 12px; margin-top: auto;">
+          <div style="font-size: 11px; color: white; line-height: 1.4;">"The skill isn't coding. <strong>The skill is knowing what to ask for.</strong> Claude builds it — you direct the strategy."</div>
         </div>
       </div>
     </div>
+
   </div>
   <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">8B</span></div>
 </div>

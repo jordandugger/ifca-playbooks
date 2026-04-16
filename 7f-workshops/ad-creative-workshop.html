@@ -267,9 +267,9 @@ body {
 <div id="nav">
   <div class="logo">IFCA · Ad Creative Workshop</div>
   <div class="controls">
-    <div id="prog-wrap"><div id="prog-fill" style="width:7.14%"></div></div>
+    <div id="prog-wrap"><div id="prog-fill" style="width:6.67%"></div></div>
     <button id="btn-prev" onclick="nav(-1)" disabled>←</button>
-    <div id="slide-counter">1 / 14</div>
+    <div id="slide-counter">1 / 15</div>
     <button id="btn-next" onclick="nav(1)">→</button>
   </div>
 </div>
@@ -305,9 +305,77 @@ body {
 </div>
 
 <!-- ════════════════════════════════════
-     S2 — STATE OF THE UNION
+     S2 — BANDLER / FIREHOSE
 ════════════════════════════════════ -->
-<div class="slide ds" id="s2">
+<div class="slide" id="s2" style="display:none;flex-direction:column;background:var(--navy-dark);overflow:hidden;position:relative;">
+  <!-- BG elements -->
+  <div style="position:absolute;right:-60px;bottom:-60px;width:440px;height:440px;border-radius:50%;background:rgba(232,119,34,0.05);pointer-events:none;"></div>
+  <div style="position:absolute;left:44px;bottom:16px;font-family:'Bebas Neue';font-size:170px;color:rgba(255,255,255,0.025);line-height:1;letter-spacing:-4px;pointer-events:none;">NLP</div>
+
+  <div class="sh" style="background:rgba(0,0,0,0.3);">
+    <h2>Before We Dive In — Set Your Expectations</h2>
+    <span class="tag">Framing</span>
+  </div>
+
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:0;overflow:hidden;position:relative;z-index:1;">
+    <!-- Left: The Bandler quote + framing -->
+    <div style="padding:26px 38px;display:flex;flex-direction:column;justify-content:center;gap:14px;border-right:1px solid rgba(255,255,255,0.05);">
+      <div style="font-family:'DM Mono';font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;">The Richard Bandler Principle</div>
+      <div style="background:rgba(232,119,34,0.1);border:1px solid rgba(232,119,34,0.22);border-radius:10px;padding:18px 20px;position:relative;">
+        <div style="font-family:'Bebas Neue';font-size:50px;color:var(--orange);opacity:0.2;position:absolute;top:-6px;left:12px;line-height:1;">"</div>
+        <p style="font-size:13px;color:white;line-height:1.7;font-style:italic;padding-left:5px;">Absorbing just 30% of high-level training is more valuable than 100% of slow-drip content.</p>
+        <div style="font-size:10px;color:var(--orange);font-weight:600;margin-top:8px;padding-left:5px;">— Richard Bandler, Co-founder of NLP</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:11px 14px;border-left:2px solid var(--orange);">
+          <div style="font-size:12px;color:var(--blue-light);line-height:1.6;">This workshop moves <strong style="color:white;">fast</strong>. Think of it like a mental HIIT session. Speed = momentum. Momentum = results.</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:11px 14px;border-left:2px solid rgba(255,255,255,0.15);">
+          <div style="font-size:12px;color:var(--blue-light);line-height:1.6;">You didn't become a great coach from reading a textbook. You became great by <strong style="color:white;">coaching</strong>. Same principle applies here.</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:11px 14px;border-left:2px solid rgba(255,255,255,0.15);">
+          <div style="font-size:12px;color:var(--blue-light);line-height:1.6;">If you feel overwhelmed — <strong style="color:white;">that's a good sign.</strong> It means you're learning something that separates you from 99% of the industry.</div>
+        </div>
+      </div>
+    </div>
+    <!-- Right: What this is / isn't + the one job -->
+    <div style="padding:26px 38px;display:flex;flex-direction:column;justify-content:center;gap:12px;">
+      <div style="font-family:'DM Mono';font-size:9px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase;">This Workshop Is a Firehose. Here's How to Use It.</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <div style="color:var(--red);font-size:14px;flex-shrink:0;margin-top:1px;">✗</div>
+          <div style="font-size:12px;color:var(--blue-mid);line-height:1.5;">Don't try to memorize everything — that's not the goal</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <div style="color:var(--red);font-size:14px;flex-shrink:0;margin-top:1px;">✗</div>
+          <div style="font-size:12px;color:var(--blue-mid);line-height:1.5;">Don't pause to go deep on every concept — keep moving</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <div style="color:var(--green);font-size:14px;flex-shrink:0;margin-top:1px;">✓</div>
+          <div style="font-size:12px;color:var(--blue-light);line-height:1.5;"><strong style="color:white;">Listen for the one thing</strong> that applies to your biggest constraint right now. That's what you implement this week.</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <div style="color:var(--green);font-size:14px;flex-shrink:0;margin-top:1px;">✓</div>
+          <div style="font-size:12px;color:var(--blue-light);line-height:1.5;"><strong style="color:white;">Your audit doc + intelligence report</strong> are in front of you. Use them during the live workshop at the end.</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <div style="color:var(--green);font-size:14px;flex-shrink:0;margin-top:1px;">✓</div>
+          <div style="font-size:12px;color:var(--blue-light);line-height:1.5;"><strong style="color:white;">Implement one system for 30 days</strong> before you try to layer more on top.</div>
+        </div>
+      </div>
+      <div style="background:var(--orange);border-radius:9px;padding:14px 18px;margin-top:4px;">
+        <div style="font-family:'Bebas Neue';font-size:20px;color:white;letter-spacing:0.5px;margin-bottom:4px;">Your One Job Right Now</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.9);line-height:1.6;">Identify the single constraint costing you the most right now. Every framework in this deck is a solution to one. Your only job is to find which one maps to yours.</div>
+      </div>
+    </div>
+  </div>
+  <div class="sf" style="background:rgba(0,0,0,0.3);"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">03</span></div>
+</div>
+
+<!-- ════════════════════════════════════
+     S3 — STATE OF THE UNION
+════════════════════════════════════ -->
+<div class="slide ds" id="s3">
   <div class="sh"><h2>State of the Union — What I Found</h2><span class="tag">Opening</span></div>
   <div class="sb" style="flex-direction:row;gap:18px;">
     <!-- Left -->
@@ -352,13 +420,13 @@ body {
       </div>
     </div>
   </div>
-  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">02</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">03</span></div>
 </div>
 
 <!-- ════════════════════════════════════
      S3 — ALYCIA CASE STUDY
 ════════════════════════════════════ -->
-<div class="slide" id="s3" style="display:none;flex-direction:column;background:var(--navy-dark);overflow:hidden;position:relative;">
+<div class="slide" id="s4" style="display:none;flex-direction:column;background:var(--navy-dark);overflow:hidden;position:relative;">
   <div style="position:absolute;right:-50px;top:-50px;width:400px;height:400px;border-radius:50%;background:rgba(232,119,34,0.05);pointer-events:none;"></div>
   <div class="sh" style="background:rgba(0,0,0,0.3);"><h2>The Proof of Concept</h2><span class="tag">Case Study</span></div>
   <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:0;overflow:hidden;position:relative;z-index:1;">
@@ -398,13 +466,13 @@ body {
       </div>
     </div>
   </div>
-  <div class="sf" style="background:rgba(0,0,0,0.3);"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">03</span></div>
+  <div class="sf" style="background:rgba(0,0,0,0.3);"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">04</span></div>
 </div>
 
 <!-- ════════════════════════════════════
      S4 — ANDROMEDA ERA
 ════════════════════════════════════ -->
-<div class="slide cs" id="s4">
+<div class="slide cs" id="s5">
   <div class="sh"><h2>The Andromeda Era — Why Everything Changed</h2><span class="tag">Section 01</span></div>
   <div class="sb" style="flex-direction:row;gap:16px;">
     <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
@@ -458,13 +526,13 @@ body {
       </table>
     </div>
   </div>
-  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">04</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">05</span></div>
 </div>
 
 <!-- ════════════════════════════════════
      S5 — MANUS INTELLIGENCE
 ════════════════════════════════════ -->
-<div class="slide cs" id="s5">
+<div class="slide cs" id="s6">
   <div class="sh"><h2>Manus — The Intelligence Advantage</h2><span class="tag">Section 02</span></div>
   <div class="sb" style="flex-direction:row;gap:16px;">
     <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
@@ -497,13 +565,13 @@ body {
       </div>
     </div>
   </div>
-  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">05</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">06</span></div>
 </div>
 
 <!-- ════════════════════════════════════
      S6 — KPI FRAMEWORK
 ════════════════════════════════════ -->
-<div class="slide cs" id="s6">
+<div class="slide cs" id="s7">
   <div class="sh"><h2>KPI Framework — What to Measure When Testing</h2><span class="tag">Section 03</span></div>
   <div class="sb" style="flex-direction:row;gap:16px;">
     <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
@@ -560,13 +628,13 @@ body {
       </div>
     </div>
   </div>
-  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">06</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">07</span></div>
 </div>
 
 <!-- ════════════════════════════════════
      S7 — CONCEPTS VS ENTITIES
 ════════════════════════════════════ -->
-<div class="slide cs" id="s7">
+<div class="slide cs" id="s8">
   <div class="sh"><h2>Concepts vs. Entities — The Architecture</h2><span class="tag">Section 04</span></div>
   <div class="sb" style="gap:10px;">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;flex-shrink:0;">
@@ -632,13 +700,13 @@ body {
       <div class="card or-top"><div class="ct">Funnel Stages Covered</div><div class="cv">3 Min</div><div class="cd">At least one active entity per TOF / MOF / BOF</div></div>
     </div>
   </div>
-  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">07</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">08</span></div>
 </div>
 
 <!-- ════════════════════════════════════
      S8 — THREE-LAYER STACK
 ════════════════════════════════════ -->
-<div class="slide cs" id="s8">
+<div class="slide cs" id="s9">
   <div class="sh"><h2>Holistic Ad Strategy — The Three-Layer Stack</h2><span class="tag">Section 05</span></div>
   <div class="sb" style="gap:11px;">
     <div class="callout" style="flex-shrink:0;">
@@ -680,13 +748,13 @@ body {
       <span style="font-size:11.5px;color:var(--text-muted);"><strong style="color:var(--green-dark);">Key insight:</strong> TOF builds the audience. BOF monetizes it. If you're only running TOF, you're generating warm leads every month and leaving them on the table.</span>
     </div>
   </div>
-  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">08</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">09</span></div>
 </div>
 
 <!-- ════════════════════════════════════
      S9 — ORGANIC + ADS FLYWHEEL
 ════════════════════════════════════ -->
-<div class="slide cs" id="s9">
+<div class="slide cs" id="s10">
   <div class="sh"><h2>Organic + Ads — The Flywheel</h2><span class="tag">Section 06</span></div>
   <div class="sb" style="flex-direction:row;gap:16px;">
     <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
@@ -735,13 +803,13 @@ body {
       </div>
     </div>
   </div>
-  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">09</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">10</span></div>
 </div>
 
 <!-- ════════════════════════════════════
      S10 — WINNING VARIATION FRAMEWORK
 ════════════════════════════════════ -->
-<div class="slide cs" id="s10">
+<div class="slide cs" id="s11">
   <div class="sh"><h2>Winning Variation Framework — Iterate Without Killing What's Working</h2><span class="tag">Section 07</span></div>
   <div class="sb" style="flex-direction:row;gap:16px;">
     <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
@@ -793,13 +861,13 @@ body {
       </div>
     </div>
   </div>
-  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">10</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">11</span></div>
 </div>
 
 <!-- ════════════════════════════════════
      S11 — COMPETITOR INTELLIGENCE
 ════════════════════════════════════ -->
-<div class="slide cs" id="s11">
+<div class="slide cs" id="s12">
   <div class="sh"><h2>Competitor Intelligence — How We Use Manus</h2><span class="tag">Section 08</span></div>
   <div class="sb" style="flex-direction:row;gap:16px;">
     <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
@@ -829,13 +897,13 @@ body {
       </div>
     </div>
   </div>
-  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">11</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">12</span></div>
 </div>
 
 <!-- ════════════════════════════════════
      S12 — INTELLIGENCE WORKFLOW
 ════════════════════════════════════ -->
-<div class="slide cs" id="s12">
+<div class="slide cs" id="s13">
   <div class="sh"><h2>The Intelligence Workflow — Research to Brief</h2><span class="tag">Section 09</span></div>
   <div class="sb" style="gap:12px;">
     <div class="callout" style="flex-shrink:0;">
@@ -880,13 +948,13 @@ body {
       </div>
     </div>
   </div>
-  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">12</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">13</span></div>
 </div>
 
 <!-- ════════════════════════════════════
      S13 — TESTING BY BUDGET + CADENCE
 ════════════════════════════════════ -->
-<div class="slide cs" id="s13">
+<div class="slide cs" id="s14">
   <div class="sh"><h2>Testing by Budget + The Weekly Cadence</h2><span class="tag">Section 10</span></div>
   <div class="sb" style="gap:11px;">
     <table class="bt" style="flex-shrink:0;">
@@ -926,13 +994,13 @@ body {
       <span style="font-size:12px;color:var(--text-muted);"><strong style="color:var(--text);">QC even if you have a media buyer:</strong> Do I know my hook rate + hold rate? Have I set kill thresholds for every active ad? Are 3 true entity types running? Are all 3 funnel layers active? Did 2–3 new entities launch this week? Have I reviewed the intel report in the last 30 days?</span>
     </div>
   </div>
-  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">13</span></div>
+  <div class="sf"><span>IFCA · 7-Figure Ad Creative Workshop</span><span class="sn">14</span></div>
 </div>
 
 <!-- ════════════════════════════════════
      S14 — LIVE WORKSHOP TRANSITION
 ════════════════════════════════════ -->
-<div class="slide" id="s14" style="display:none;flex-direction:column;background:var(--navy);overflow:hidden;position:relative;">
+<div class="slide" id="s15" style="display:none;flex-direction:column;background:var(--navy);overflow:hidden;position:relative;">
   <div style="position:absolute;right:-80px;top:-80px;width:520px;height:520px;border-radius:50%;background:rgba(232,119,34,0.05);pointer-events:none;"></div>
   <div style="position:absolute;left:52px;bottom:24px;font-family:'Bebas Neue';font-size:190px;color:rgba(255,255,255,0.03);line-height:1;letter-spacing:-5px;pointer-events:none;">LIVE</div>
   <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:46px 66px;position:relative;z-index:1;gap:22px;">

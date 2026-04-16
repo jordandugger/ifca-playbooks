@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creating Micro Lead Magnet Quizzes with Claude — IFCA AI Workshop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #1E3A5F;
+  --navy-dk:   #111e2e;
+  --navy-card: #172840;
+  --navy-mid:  #1e3050;
+  --orange:    #E87722;
+  --orange-lt: #f08c3a;
+  --sky:       #c8ddef;
+  --sky-dim:   #8faabf;
+  --white:     #ffffff;
+  --g200:      #cdd8e4;
+  --g400:      #7b97b3;
+  --g600:      #445e78;
+  --green:     #22c97a;
+  --green-bg:  rgba(34,201,122,.09);
+  --yellow:    #f5c23a;
+  --yellow-bg: rgba(245,194,58,.09);
+  --red:       #e8403e;
+  --red-bg:    rgba(232,64,62,.09);
+  --ff-d:      'Barlow Condensed', sans-serif;
+  --ff-b:      'DM Sans', sans-serif;
+  --ff-m:      'DM Mono', monospace;
+  --t:         0.22s ease;
+  --r:         10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--ff-b);background:var(--navy-dk);color:var(--white);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.5}
+.page{position:relative;z-index:1}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(160deg,#0d1a28 0%,#1a3050 60%,#0d1a28 100%);
+  padding:64px 24px 56px;text-align:center;
+  position:relative;overflow:hidden;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.hero::after{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(232,119,34,.12) 0%,transparent 65%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(232,119,34,.12);border:1px solid rgba(232,119,34,.3);color:var(--orange-lt);font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:24px}
+.hero h1{font-family:var(--ff-d);font-weight:900;font-size:clamp(38px,7vw,72px);line-height:.92;text-transform:uppercase;letter-spacing:-.01em;color:var(--white);margin-bottom:6px}
+.hero h1 em{font-style:italic;color:var(--orange);display:block;font-size:.85em}
+.hero-rule{width:40px;height:3px;background:var(--orange);margin:22px auto;border-radius:2px}
+.hero-sub{font-family:var(--ff-b);font-size:clamp(14px,2vw,17px);color:var(--sky);line-height:1.7;max-width:520px;margin:0 auto}
+
+/* ── SECTIONS ── */
+.section{padding:52px 24px}
+.section + .section{border-top:1px solid rgba(255,255,255,.06)}
+.section-label{font-family:var(--ff-d);font-weight:700;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+.section-title{font-family:var(--ff-d);font-weight:900;font-size:clamp(26px,4vw,38px);text-transform:uppercase;letter-spacing:.02em;line-height:1.05;color:var(--white);margin-bottom:12px}
+.section-desc{font-family:var(--ff-b);font-size:15px;color:var(--sky);line-height:1.7;margin-bottom:32px;max-width:640px}
+
+/* ── CONCEPT CARD ── */
+.concept-card{
+  background:var(--navy-card);border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--r);padding:28px 28px;margin-bottom:16px;
+  display:flex;gap:20px;align-items:flex-start;
+  transition:border-color var(--t);
+}
+.concept-card:hover{border-color:rgba(232,119,34,.3)}
+.cc-num{
+  font-family:var(--ff-d);font-weight:900;font-size:42px;
+  color:rgba(232,119,34,.2);line-height:1;flex-shrink:0;min-width:44px;
+  transition:color var(--t);
+}
+.concept-card:hover .cc-num{color:rgba(232,119,34,.5)}
+.cc-body{}
+.cc-title{font-family:var(--ff-d);font-weight:800;font-size:20px;text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin-bottom:6px;line-height:1.1}
+.cc-desc{font-family:var(--ff-b);font-size:14px;color:var(--sky);line-height:1.65}
+
+/* ── QUIZ IDEAS TABLE ── */
+.quiz-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+@media(max-width:520px){.quiz-grid{grid-template-columns:1fr}}
+.quiz-idea{
+  background:var(--navy-card);border:1px solid rgba(255,255,255,.07);
+  border-radius:8px;padding:18px 20px;
+  border-left:3px solid;
+  transition:transform var(--t),border-color var(--t);
+}
+.quiz-idea:hover{transform:translateY(-2px)}
+.qi-1{border-left-color:var(--orange)}
+.qi-2{border-left-color:var(--green)}
+.qi-3{border-left-color:var(--yellow)}
+.qi-4{border-left-color:#b784e0}
+.qi-5{border-left-color:#60c0e0}
+.qi-title{font-family:var(--ff-d);font-weight:800;font-size:16px;letter-spacing:.03em;color:var(--white);margin-bottom:5px;line-height:1.2}
+.qi-why{font-family:var(--ff-b);font-size:12.5px;color:var(--sky-dim);line-height:1.5}
+
+/* ── PROMPT BOX ── */
+.prompt-box{
+  background:var(--navy-card);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--r);overflow:hidden;
+  margin-bottom:24px;
+}
+.pb-header{
+  background:rgba(255,255,255,.04);
+  padding:12px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.pb-label{font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--g400)}
+.copy-btn{
+  background:rgba(232,119,34,.15);border:1px solid rgba(232,119,34,.3);
+  color:var(--orange-lt);font-family:var(--ff-d);font-weight:700;font-size:10px;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:5px 12px;border-radius:4px;cursor:pointer;
+  transition:background var(--t);border:none;
+}
+.copy-btn:hover{background:rgba(232,119,34,.25)}
+.copy-btn.copied{background:var(--green-bg);color:var(--green)}
+.pb-content{
+  padding:20px 24px;
+  font-family:var(--ff-m);font-size:13px;
+  color:var(--sky);line-height:1.75;
+  white-space:pre-wrap;word-break:break-word;
+}
+.pb-content .highlight{color:var(--orange-lt);font-weight:500}
+.pb-content .placeholder{color:var(--yellow);background:rgba(245,194,58,.08);padding:1px 4px;border-radius:3px}
+
+/* ── STEPS ── */
+.steps{display:flex;flex-direction:column;gap:0}
+.step{
+  display:flex;gap:20px;align-items:flex-start;
+  padding:24px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  position:relative;
+}
+.step:last-child{border-bottom:none}
+.step-left{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:0}
+.step-num{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,var(--orange),var(--orange-lt));
+  font-family:var(--ff-d);font-weight:900;font-size:18px;
+  color:white;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;box-shadow:0 2px 12px rgba(232,119,34,.35);
+}
+.step-line{width:2px;flex:1;min-height:20px;background:rgba(255,255,255,.07);margin-top:4px}
+.step:last-child .step-line{display:none}
+.step-body{flex:1;padding-top:6px}
+.step-title{font-family:var(--ff-d);font-weight:800;font-size:20px;text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin-bottom:6px;line-height:1.1}
+.step-desc{font-family:var(--ff-b);font-size:14px;color:var(--sky);line-height:1.65;margin-bottom:0}
+.step-code{
+  margin-top:12px;background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);border-radius:6px;
+  padding:12px 16px;font-family:var(--ff-m);font-size:12.5px;
+  color:var(--sky-dim);line-height:1.6;
+}
+.step-code .val{color:var(--orange-lt)}
+.step-tag{
+  display:inline-block;margin-top:10px;
+  background:var(--green-bg);color:var(--green);
+  font-family:var(--ff-d);font-weight:700;font-size:10px;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 10px;border-radius:3px;
+}
+
+/* ── GOOD VS BAD TABLE ── */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+@media(max-width:520px){.compare-grid{grid-template-columns:1fr}}
+.compare-col{background:var(--navy-card);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);overflow:hidden}
+.compare-header{padding:12px 18px;font-family:var(--ff-d);font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:.06em}
+.good-header{background:var(--green-bg);color:var(--green);border-bottom:1px solid rgba(34,201,122,.15)}
+.bad-header{background:var(--red-bg);color:var(--red);border-bottom:1px solid rgba(232,64,62,.15)}
+.compare-row{display:flex;align-items:flex-start;gap:10px;padding:11px 18px;border-bottom:1px solid rgba(255,255,255,.04);font-family:var(--ff-b);font-size:13px;color:var(--sky);line-height:1.5}
+.compare-row:last-child{border-bottom:none}
+.cr-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+
+/* ── TRAFFIC GRID ── */
+.traffic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:520px){.traffic-grid{grid-template-columns:1fr 1fr}}
+.traffic-card{
+  background:var(--navy-card);border:1px solid rgba(255,255,255,.07);
+  border-radius:8px;padding:18px 16px;text-align:center;
+}
+.tc-icon{font-size:26px;margin-bottom:8px;display:block}
+.tc-name{font-family:var(--ff-d);font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--white);margin-bottom:5px}
+.tc-how{font-family:var(--ff-b);font-size:12px;color:var(--sky-dim);line-height:1.5}
+
+/* ── DEMO CTA ── */
+.demo-block{
+  background:linear-gradient(145deg,#1a3050,var(--navy-card));
+  border:1px solid rgba(232,119,34,.2);
+  border-radius:14px;padding:40px 36px;text-align:center;
+  position:relative;overflow:hidden;
+  margin-bottom:24px;
+}
+.demo-block::after{content:'';position:absolute;bottom:-60px;right:-60px;width:250px;height:250px;background:radial-gradient(circle,rgba(232,119,34,.12) 0%,transparent 65%);pointer-events:none}
+.demo-eyebrow{font-family:var(--ff-d);font-weight:700;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+.demo-title{font-family:var(--ff-d);font-weight:900;font-size:clamp(24px,4vw,36px);text-transform:uppercase;letter-spacing:.02em;line-height:1;color:var(--white);margin-bottom:12px}
+.demo-desc{font-family:var(--ff-b);font-size:15px;color:var(--sky);line-height:1.7;max-width:440px;margin:0 auto 26px}
+.demo-link{
+  display:inline-flex;align-items:center;gap:9px;
+  background:var(--orange);color:white;text-decoration:none;
+  font-family:var(--ff-d);font-weight:800;font-size:16px;letter-spacing:.06em;text-transform:uppercase;
+  padding:17px 32px;border-radius:8px;
+  transition:background var(--t),transform var(--t),box-shadow var(--t);
+  box-shadow:0 4px 22px rgba(232,119,34,.4);
+}
+.demo-link:hover{background:var(--orange-lt);transform:translateY(-2px);box-shadow:0 8px 32px rgba(232,119,34,.5)}
+.demo-link .arrow{transition:transform var(--t)}
+.demo-link:hover .arrow{transform:translateX(4px)}
+
+/* ── TAKEAWAY CARD ── */
+.takeaway{
+  background:rgba(232,119,34,.07);
+  border:1px solid rgba(232,119,34,.18);
+  border-radius:var(--r);padding:28px 30px;
+  margin-bottom:16px;
+}
+.takeaway-label{font-family:var(--ff-d);font-weight:700;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+.takeaway-text{font-family:var(--ff-b);font-size:16px;color:var(--white);line-height:1.7;font-style:italic}
+
+/* Footer */
+.footer{background:var(--navy-dk);border-top:1px solid rgba(255,255,255,.05);padding:24px;text-align:center}
+.footer p{font-family:var(--ff-b);font-size:12px;color:var(--g600)}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.an{animation:fadeUp .4s ease both}
+.a1{animation-delay:.05s}.a2{animation-delay:.15s}.a3{animation-delay:.25s}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">⚡ IFCA AI Workshop · Module</div>
+  <h1>Creating Micro<em>Lead Magnet Quizzes</em></h1>
+  <div class="hero-rule"></div>
+  <p class="hero-sub">How to build beautiful, interactive HTML quizzes with Claude in under 30 minutes — and host them free on GitHub as permanent traffic assets for your coaching business.</p>
+</div>
+
+<!-- SECTION 1: WHY -->
+<div class="section">
+  <div class="wrap">
+    <div class="section-label">The Concept</div>
+    <div class="section-title">Why Quizzes Beat PDFs Every Time</div>
+    <p class="section-desc">A PDF lead magnet is something people download and never open. A quiz is something people finish because they want to know their result. That difference — completion vs. abandonment — is the entire game in lead generation.</p>
+
+    <div class="concept-card">
+      <div class="cc-num">01</div>
+      <div class="cc-body">
+        <div class="cc-title">It Feels Personal</div>
+        <div class="cc-desc">They get <em>their</em> result — not generic info. The moment someone reads "The Stressed & Depleted Type" and thinks "that's literally me," you've built more trust than a 10-page PDF ever could. Personalization = perceived value.</div>
+      </div>
+    </div>
+    <div class="concept-card">
+      <div class="cc-num">02</div>
+      <div class="cc-body">
+        <div class="cc-title">It Creates a Micro-Commitment</div>
+        <div class="cc-desc">Someone who answers 5 questions has invested 2 minutes. They want the payoff. Completion rates on well-designed quizzes run 70–85% — versus 20–30% for a PDF that requires a download and an open. More completions = more people who see your CTA.</div>
+      </div>
+    </div>
+    <div class="concept-card">
+      <div class="cc-num">03</div>
+      <div class="cc-body">
+        <div class="cc-title">The Result Page Does Your Selling</div>
+        <div class="cc-desc">After someone gets their personalized result, they're in the most receptive state possible. That's where your booking link lives. It doesn't feel like a pitch — it feels like a natural next step. This is the highest-leverage placement for any CTA in your marketing.</div>
+      </div>
+    </div>
+    <div class="concept-card">
+      <div class="cc-num">04</div>
+      <div class="cc-body">
+        <div class="cc-title">It's Free to Host Forever</div>
+        <div class="cc-desc">No Kajabi. No Squarespace. No monthly fees. One HTML file on GitHub Pages = a live URL you can run ads to, put in your bio, send in emails, and DM to leads — permanently, for free. This is the new standard for creating resources.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: QUIZ IDEAS -->
+<div class="section">
+  <div class="wrap">
+    <div class="section-label">Step 1 — Choose Your Concept</div>
+    <div class="section-title">Proven Quiz Ideas for Health &amp; Fitness Coaches</div>
+    <p class="section-desc">The best quiz titles sound like something your ideal client Googles at 11pm. They're specific, pain-driven, and hint at a surprising answer. Here are five that convert:</p>
+
+    <div class="quiz-grid">
+      <div class="quiz-idea qi-1">
+        <div class="qi-title">Why Are You Always Tired?</div>
+        <div class="qi-why">Universal pain. Every woman 30–55 relates. Routes to 3 hormone types. <strong style="color:var(--orange-lt)">Best for: functional health coaches</strong></div>
+      </div>
+      <div class="quiz-idea qi-2">
+        <div class="qi-title">What's Your #1 Gut Health Saboteur?</div>
+        <div class="qi-why">Specific and searchable. Strong for coaches working with IBS, bloating, and inflammation. <strong style="color:var(--sage-lt,#a8c5ac)">Best for: gut health coaches</strong></div>
+      </div>
+      <div class="quiz-idea qi-3">
+        <div class="qi-title">What's Killing Your Metabolism?</div>
+        <div class="qi-why">Contrarian hook — implies their effort isn't the problem, their approach is. <strong style="color:var(--yellow)">Best for: weight loss coaches</strong></div>
+      </div>
+      <div class="quiz-idea qi-4">
+        <div class="qi-title">What's Your Hormone Type?</div>
+        <div class="qi-why">Identity-based result. Highly shareable. Works for broad female wellness audiences. <strong style="color:#b784e0">Best for: women's health coaches</strong></div>
+      </div>
+      <div class="quiz-idea qi-5">
+        <div class="qi-title">Is Your Diet Actually Working for Your Body?</div>
+        <div class="qi-why">Challenges existing behavior without blame. Opens the door to a new approach. <strong style="color:#60c0e0">Best for: nutrition coaches</strong></div>
+      </div>
+      <div class="quiz-idea" style="border-left-color:var(--terra,#c4714a)">
+        <div class="qi-title">Why Can't I Lose Weight? (It's Not What You Think)</div>
+        <div class="qi-why">Curiosity + contrarian hook. The parenthetical creates a pattern interrupt that stops the scroll. <strong style="color:#e89060">Best for: fitness coaches</strong></div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <div class="takeaway-label">The Rule</div>
+      <div class="takeaway-text">"Your quiz title should sound like something your ideal client would Google at 11pm when they're frustrated and can't sleep."</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: THE PROMPT -->
+<div class="section">
+  <div class="wrap">
+    <div class="section-label">Step 2 — Write Your Claude Prompt</div>
+    <div class="section-title">The Exact Prompt Template</div>
+    <p class="section-desc">This is the entire prompt. Copy it, swap in your details, paste it into Claude. You'll have a working first draft in under 2 minutes. The yellow text is what you customize.</p>
+
+    <div class="prompt-box">
+      <div class="pb-header">
+        <span class="pb-label">Claude Prompt — Copy &amp; Customize</span>
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy Prompt</button>
+      </div>
+      <div class="pb-content" id="prompt-text">I'm a <span class="placeholder">[your specialty]</span> coach who helps <span class="placeholder">[your target client]</span> achieve <span class="placeholder">[your core result]</span>.
+
+I want to build a free interactive HTML quiz called <span class="placeholder">"[Your Quiz Title] — The 2-Minute Quiz"</span> to use as a lead magnet.
+
+<span class="highlight">Here's how it should work:</span>
+
+The quiz asks 5 simple multiple choice questions about their symptoms, habits, and lifestyle. Based on their answers, it diagnoses one of three types:
+
+1. <span class="placeholder">[Type 1 Name]</span> — <span class="placeholder">[brief description]</span>
+2. <span class="placeholder">[Type 2 Name]</span> — <span class="placeholder">[brief description]</span>
+3. <span class="placeholder">[Type 3 Name]</span> — <span class="placeholder">[brief description]</span>
+
+<span class="highlight">Each result page should:</span>
+- Name their type with a bold, empowering headline
+- Give 3–4 sentences explaining what's actually going on (science-adjacent, not clinical)
+- Include one specific action they can take this week
+- Have a CTA button that says "Book Your Free <span class="placeholder">[Audit/Clarity/Strategy]</span> Call"
+  linking to: <span class="placeholder">[YOUR BOOKING LINK]</span>
+- Feel warm, empowering, and personalized — not like a generic blog post
+
+<span class="highlight">Design requirements:</span>
+- Single self-contained HTML file (no external files needed)
+- Clean, modern design using <span class="placeholder">[your brand colors or aesthetic — e.g. warm creams, sage green, terracotta]</span>
+- Mobile friendly with a progress bar
+- Smooth animated transitions between questions
+- No data collection — purely informational
+
+Build the complete working HTML file.</div>
+    </div>
+
+    <div class="concept-card" style="margin-bottom:0">
+      <div class="cc-num" style="font-size:30px">💡</div>
+      <div class="cc-body">
+        <div class="cc-title">Pro Tip: The 3-Type Structure</div>
+        <div class="cc-desc">Always build 3 result types — not 2, not 5. Two feels binary and unsophisticated. Five is too many to write compelling copy for. Three gives people a result that feels specific enough to be accurate without being so niche it alienates half your audience.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: ITERATE -->
+<div class="section">
+  <div class="wrap">
+    <div class="section-label">Step 3 — Refine With Follow-Ups</div>
+    <div class="section-title">How to Polish It in 10 Minutes</div>
+    <p class="section-desc">Claude produces a working first draft. Then just describe what you want changed in plain English. Each follow-up takes 30 seconds to type.</p>
+
+    <div class="prompt-box">
+      <div class="pb-header">
+        <span class="pb-label">Example Follow-Up Prompts</span>
+      </div>
+      <div class="pb-content"><span class="highlight">Brand & Design:</span>
+"Make the background color #FAF6F0 (warm cream) and use terracotta (#C4714A) as the accent color"
+"Add my logo at the top — here's the image" [attach image]
+"The font feels too modern — make it more elegant using a serif font"
+
+<span class="highlight">Content:</span>
+"On each result page, add these two podcast episodes as recommended listening" [paste links]
+"Add a short testimonial quote below the result type — something like [paste quote]"
+"Make the result descriptions more empathetic — less clinical, more like talking to a friend"
+
+<span class="highlight">Function:</span>
+"Add a retake quiz button at the bottom of results"
+"Make the progress bar show the question number prominently"
+"Add a short intro screen before question 1 that sets context"</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5: GITHUB -->
+<div class="section">
+  <div class="wrap">
+    <div class="section-label">Step 4 — Host It Free on GitHub</div>
+    <div class="section-title">Live on the Internet in 5 Minutes</div>
+    <p class="section-desc">GitHub Pages hosts static HTML files for free, forever. No server. No monthly fee. Here's the exact process:</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num">1</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-title">Create a Free GitHub Account</div>
+          <div class="step-desc">Go to <strong style="color:var(--orange-lt)">github.com</strong> → Sign up → Use your Gmail or any email. It's completely free. No credit card.</div>
+          <span class="step-tag">✓ One-time setup</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num">2</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-title">Create a New Repository</div>
+          <div class="step-desc">Click the green <strong style="color:var(--orange-lt)">New</strong> button → Name it something clean like <code style="font-family:var(--ff-m);color:var(--sky-dim)">hormone-quiz</code> or <code style="font-family:var(--ff-m);color:var(--sky-dim)">metabolism-quiz</code> → Hit Create Repository.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num">3</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-title">Add Your HTML File</div>
+          <div class="step-desc">Click <strong style="color:var(--orange-lt)">Add File → Create New File</strong> → Name it exactly <strong style="color:var(--orange-lt)">index.html</strong> → Paste your entire HTML code from Claude → Click Commit Changes.</div>
+          <div class="step-code">⚠️  The filename must be <span class="val">index.html</span> — not quiz.html or anything else. GitHub Pages looks for this exact name.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num">4</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-title">Enable GitHub Pages</div>
+          <div class="step-desc">Go to <strong style="color:var(--orange-lt)">Settings → Pages</strong> → Under Source, select <strong style="color:var(--orange-lt)">Deploy from a branch</strong> → Select <strong style="color:var(--orange-lt)">main</strong> branch → <strong style="color:var(--orange-lt)">/ (root)</strong> → Save.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num">5</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-title">Get Your Live URL</div>
+          <div class="step-desc">Wait 60 seconds and refresh the Pages settings. GitHub gives you a live URL at:</div>
+          <div class="step-code">https://<span class="val">yourusername</span>.github.io/<span class="val">hormone-quiz</span></div>
+          <span class="step-tag">✓ Share anywhere — free forever</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 6: TRAFFIC -->
+<div class="section">
+  <div class="wrap">
+    <div class="section-label">Step 5 — Drive Traffic</div>
+    <div class="section-title">Where to Use Your Quiz</div>
+    <p class="section-desc">Once it's live, here are the six best placements — each one a different audience touchpoint that funnels into the same booking call.</p>
+
+    <div class="traffic-grid">
+      <div class="traffic-card">
+        <span class="tc-icon">📱</span>
+        <div class="tc-name">Instagram Bio</div>
+        <div class="tc-how">Replace your Linktree with the direct quiz URL. Cleaner, more compelling CTA.</div>
+      </div>
+      <div class="traffic-card">
+        <span class="tc-icon">🎬</span>
+        <div class="tc-name">Reels CTA</div>
+        <div class="tc-how">"Comment TIRED and I'll send you the free quiz" → ManyChat DM automation delivers the link.</div>
+      </div>
+      <div class="traffic-card">
+        <span class="tc-icon">📣</span>
+        <div class="tc-name">Meta Ads</div>
+        <div class="tc-how">Run $5–$10/day: "Take the free 2-minute hormone quiz →". Cold traffic loves a quiz CTA.</div>
+      </div>
+      <div class="traffic-card">
+        <span class="tc-icon">📧</span>
+        <div class="tc-name">Email List</div>
+        <div class="tc-how">Send to your list as a free resource. Re-engages cold subscribers with something interactive.</div>
+      </div>
+      <div class="traffic-card">
+        <span class="tc-icon">🎙️</span>
+        <div class="tc-name">Podcast</div>
+        <div class="tc-how">Mention it at the end of every episode as a free tool. Add it to show notes with the URL.</div>
+      </div>
+      <div class="traffic-card">
+        <span class="tc-icon">💬</span>
+        <div class="tc-name">DM Conversations</div>
+        <div class="tc-how">Drop the link in DMs when someone describes their symptoms. Instant value delivery.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 7: GOOD VS BAD -->
+<div class="section">
+  <div class="wrap">
+    <div class="section-label">Quality Check</div>
+    <div class="section-title">What Makes a Great Quiz vs. a Bad One</div>
+    <p class="section-desc">Most quiz lead magnets fail for the same predictable reasons. Here's the exact checklist to make sure yours doesn't.</p>
+
+    <div class="compare-grid">
+      <div class="compare-col">
+        <div class="compare-header good-header">✓ Great Quiz</div>
+        <div class="compare-row"><span class="cr-icon">✅</span>5 questions maximum — people finish it</div>
+        <div class="compare-row"><span class="cr-icon">✅</span>Multiple choice only — zero friction</div>
+        <div class="compare-row"><span class="cr-icon">✅</span>Result feels personally accurate</div>
+        <div class="compare-row"><span class="cr-icon">✅</span>One clear CTA on the result page</div>
+        <div class="compare-row"><span class="cr-icon">✅</span>Title is a felt pain or curiosity hook</div>
+        <div class="compare-row"><span class="cr-icon">✅</span>3 result types — specific but inclusive</div>
+        <div class="compare-row"><span class="cr-icon">✅</span>Result includes one action to take this week</div>
+      </div>
+      <div class="compare-col">
+        <div class="compare-header bad-header">✗ Bad Quiz</div>
+        <div class="compare-row"><span class="cr-icon">❌</span>15+ questions — people abandon it</div>
+        <div class="compare-row"><span class="cr-icon">❌</span>Open text fields — too much effort</div>
+        <div class="compare-row"><span class="cr-icon">❌</span>Generic result anyone could get</div>
+        <div class="compare-row"><span class="cr-icon">❌</span>Three CTAs competing for attention</div>
+        <div class="compare-row"><span class="cr-icon">❌</span>Title is generic ("Health Quiz")</div>
+        <div class="compare-row"><span class="cr-icon">❌</span>2 types (binary) or 6+ types (overwhelming)</div>
+        <div class="compare-row"><span class="cr-icon">❌</span>Result just ends with no next step</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 8: LIVE DEMO -->
+<div class="section">
+  <div class="wrap">
+    <div class="section-label">Live Workshop Demo</div>
+    <div class="section-title">The Hormone Quiz — Live Example</div>
+    <p class="section-desc">This is the exact quiz built live during the AI Integration Workshop. One Claude conversation. One GitHub account. Live URL in under 30 minutes. Use it as your reference point — then build your own below.</p>
+
+    <div class="demo-block">
+      <div class="demo-eyebrow">Workshop Live Demo · Hormone Health Coach</div>
+      <div class="demo-title">Why Are You Always Tired?<br>The 2-Minute Hormone Quiz</div>
+      <p class="demo-desc">5 questions. 3 result types. Personalized insights. Booking CTA wired directly to a GHL calendar. Built exactly the way this training teaches.</p>
+      <a href="hormone-quiz.html" target="_blank" class="demo-link">Take the Live Demo Quiz <span class="arrow">→</span></a>
+    </div>
+
+    <div class="takeaway">
+      <div class="takeaway-label">The Big Takeaway</div>
+      <div class="takeaway-text">"The old way: $500 to a designer, $50/month to host it, $200 to a developer when it breaks. The new way: describe what you want in plain English, Claude writes the code, GitHub hosts it free, you're live in under 30 minutes. The skill isn't coding — it's knowing what to ask for."</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 9: GHL INTEGRATION -->
+<div class="section">
+  <div class="wrap">
+    <div class="section-label">Step 6 — Connect to Go High Level</div>
+    <div class="section-title">Wire Every Quiz CTA Back Into GHL</div>
+    <p class="section-desc">Your quiz lives on GitHub Pages, but your leads need to flow back into your GHL pipeline. Here are the three ways to wire it — from simplest to most automated.</p>
+
+    <div class="concept-card">
+      <div class="cc-num" style="color:rgba(34,201,122,.3)">A</div>
+      <div class="cc-body">
+        <div class="cc-title">Option 1 — Direct Calendar Link (Simplest)</div>
+        <div class="cc-desc">In your Claude prompt, the CTA button links directly to your <strong style="color:var(--orange-lt)">GHL booking calendar URL</strong> (e.g. <code style="font-family:var(--ff-m);font-size:12px;color:var(--sky-dim)">go.yoursite.com/call</code>). When someone clicks "Book Your Free Call," they land on your GHL calendar and book directly. GHL creates the contact automatically on booking. Zero extra setup required — this is the default and what the live demo uses.</div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <div class="cc-num" style="color:rgba(34,201,122,.3)">B</div>
+      <div class="cc-body">
+        <div class="cc-title">Option 2 — GHL Opt-In Form Embed (Captures Email Before Booking)</div>
+        <div class="cc-desc">Instead of linking directly to the calendar, link to a <strong style="color:var(--orange-lt)">GHL landing page with an opt-in form</strong>. The form captures name + email first, adds them to a pipeline or list, triggers your email nurture sequence, then redirects to the booking calendar. Best for building your list in parallel with booking calls.<br><br>
+        <strong style="color:var(--white)">How to set up:</strong> In GHL, create a simple funnel step with just a name + email form. Set the redirect URL to your calendar. Use that funnel URL as your quiz CTA link.</div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <div class="cc-num" style="color:rgba(34,201,122,.3)">C</div>
+      <div class="cc-body">
+        <div class="cc-title">Option 3 — Result-Specific GHL Pipelines (Most Powerful)</div>
+        <div class="cc-desc">Build a <strong style="color:var(--orange-lt)">different GHL funnel URL for each result type</strong>. Each result page CTA links to a different opt-in page with messaging tailored to that type — e.g. the "Stressed & Depleted" result links to a page that says "We have a specific protocol for your type." GHL tags the contact with their result type automatically based on which funnel they came through.<br><br>
+        <strong style="color:var(--white)">Why this is powerful:</strong> Your closers know the lead's result type before they dial. They can reference it on the call: "I saw you identified as the Stressed & Depleted type — that's actually the most common one we see, and it has the clearest fix." Instant rapport, faster close.</div>
+      </div>
+    </div>
+
+    <div class="prompt-box">
+      <div class="pb-header">
+        <span class="pb-label">Claude Prompt — Add Result-Specific GHL Links</span>
+      </div>
+      <div class="pb-content">The quiz is built. Now I want each result page to link to a different booking URL depending on which result the person gets.
+
+Result 1 (<span class="placeholder">[Type 1 Name]</span>) → CTA links to: <span class="placeholder">[GHL Funnel URL 1]</span>
+Result 2 (<span class="placeholder">[Type 2 Name]</span>) → CTA links to: <span class="placeholder">[GHL Funnel URL 2]</span>
+Result 3 (<span class="placeholder">[Type 3 Name]</span>) → CTA links to: <span class="placeholder">[GHL Funnel URL 3]</span>
+
+Update the HTML so each result page CTA button points to the correct URL for that result type.
+Keep everything else exactly the same.</div>
+    </div>
+
+    <div class="takeaway">
+      <div class="takeaway-label">GHL Integration Rule</div>
+      <div class="takeaway-text">"Don't paste raw HTML into GHL's page builder — it strips the JavaScript and the interactivity breaks. The right move is host on GitHub Pages, then use GHL for the funnel pages the CTA links to. Best of both worlds: beautiful interactive quiz + full GHL pipeline automation."</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 10: MULTI-MARKET EXAMPLES -->
+<div class="section">
+  <div class="wrap">
+    <div class="section-label">Your Niche Applied</div>
+    <div class="section-title">Quiz Examples Across Coaching Markets</div>
+    <p class="section-desc">The quiz format works in any coaching niche. Here's exactly how to adapt the same structure — 5 questions, 3 types, one booking CTA — to different markets. These are ready-to-customize starting points.</p>
+
+    <div style="display:grid;gap:14px;margin-bottom:24px">
+
+      <div style="background:var(--navy-card);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);overflow:hidden">
+        <div style="background:rgba(232,119,34,.08);border-bottom:1px solid rgba(232,119,34,.15);padding:14px 22px;display:flex;align-items:center;justify-content:space-between">
+          <div style="font-family:var(--ff-d);font-weight:800;font-size:16px;text-transform:uppercase;letter-spacing:.04em;color:var(--white)">Weight Loss &amp; Metabolism</div>
+          <div style="font-family:var(--ff-m);font-size:10px;color:var(--orange);letter-spacing:.1em">Fitness Coaches</div>
+        </div>
+        <div style="padding:18px 22px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <div style="font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-bottom:6px">Quiz Title</div>
+            <div style="font-family:var(--ff-b);font-size:14px;color:var(--white);margin-bottom:12px">"What's Actually Killing Your Metabolism?"</div>
+            <div style="font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-bottom:6px">3 Result Types</div>
+            <div style="font-family:var(--ff-b);font-size:13px;color:var(--sky);line-height:1.7">1. The Undereater — your body's in survival mode<br>2. The Overtrained — cortisol is the problem<br>3. The Hidden Blocker — hormones or gut at play</div>
+          </div>
+          <div>
+            <div style="font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-bottom:6px">GHL Pipeline Tag</div>
+            <div style="font-family:var(--ff-b);font-size:13px;color:var(--sky);margin-bottom:12px">Tag lead with result type → closer references on call → "Most undereaters we work with see results in 6 weeks once we fix this one thing"</div>
+            <div style="font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-bottom:6px">CTA</div>
+            <div style="font-family:var(--ff-b);font-size:13px;color:var(--sky)">"Book Your Free Metabolism Audit Call"</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--navy-card);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);overflow:hidden">
+        <div style="background:rgba(96,192,224,.07);border-bottom:1px solid rgba(96,192,224,.15);padding:14px 22px;display:flex;align-items:center;justify-content:space-between">
+          <div style="font-family:var(--ff-d);font-weight:800;font-size:16px;text-transform:uppercase;letter-spacing:.04em;color:var(--white)">Business &amp; Mindset Coaching</div>
+          <div style="font-family:var(--ff-m);font-size:10px;color:#60c0e0;letter-spacing:.1em">Performance Coaches</div>
+        </div>
+        <div style="padding:18px 22px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <div style="font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-bottom:6px">Quiz Title</div>
+            <div style="font-family:var(--ff-b);font-size:14px;color:var(--white);margin-bottom:12px">"What's Holding Your Business Back at This Level?"</div>
+            <div style="font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-bottom:6px">3 Result Types</div>
+            <div style="font-family:var(--ff-b);font-size:13px;color:var(--sky);line-height:1.7">1. The Identity Ceiling — your beliefs cap your revenue<br>2. The Systems Gap — execution without infrastructure<br>3. The Offer Problem — wrong mechanism for this market</div>
+          </div>
+          <div>
+            <div style="font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-bottom:6px">GHL Pipeline Tag</div>
+            <div style="font-family:var(--ff-b);font-size:13px;color:var(--sky);margin-bottom:12px">Tag by constraint type → route to appropriate VSL or pre-call sequence → closer already knows the diagnosis</div>
+            <div style="font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-bottom:6px">CTA</div>
+            <div style="font-family:var(--ff-b);font-size:13px;color:var(--sky)">"Book Your Free Revenue Ceiling Audit"</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--navy-card);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);overflow:hidden">
+        <div style="background:rgba(183,132,224,.07);border-bottom:1px solid rgba(183,132,224,.15);padding:14px 22px;display:flex;align-items:center;justify-content:space-between">
+          <div style="font-family:var(--ff-d);font-weight:800;font-size:16px;text-transform:uppercase;letter-spacing:.04em;color:var(--white)">Relationship &amp; Life Coaching</div>
+          <div style="font-family:var(--ff-m);font-size:10px;color:#b784e0;letter-spacing:.1em">Life &amp; Relationship Coaches</div>
+        </div>
+        <div style="padding:18px 22px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <div style="font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-bottom:6px">Quiz Title</div>
+            <div style="font-family:var(--ff-b);font-size:14px;color:var(--white);margin-bottom:12px">"Why Do You Keep Attracting the Same Relationship?"</div>
+            <div style="font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-bottom:6px">3 Result Types</div>
+            <div style="font-family:var(--ff-b);font-size:13px;color:var(--sky);line-height:1.7">1. The Anxious Attacher — chasing connection<br>2. The Avoidant — independence as armor<br>3. The People Pleaser — approval-seeking at the root</div>
+          </div>
+          <div>
+            <div style="font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-bottom:6px">GHL Pipeline Tag</div>
+            <div style="font-family:var(--ff-b);font-size:13px;color:var(--sky);margin-bottom:12px">Attachment style tag feeds into a nurture sequence tailored to each type before the discovery call</div>
+            <div style="font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-bottom:6px">CTA</div>
+            <div style="font-family:var(--ff-b);font-size:13px;color:var(--sky)">"Book Your Free Clarity Session"</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--navy-card);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);overflow:hidden">
+        <div style="background:rgba(245,194,58,.07);border-bottom:1px solid rgba(245,194,58,.15);padding:14px 22px;display:flex;align-items:center;justify-content:space-between">
+          <div style="font-family:var(--ff-d);font-weight:800;font-size:16px;text-transform:uppercase;letter-spacing:.04em;color:var(--white)">Financial Coaching</div>
+          <div style="font-family:var(--ff-m);font-size:10px;color:var(--yellow);letter-spacing:.1em">Wealth &amp; Finance Coaches</div>
+        </div>
+        <div style="padding:18px 22px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <div style="font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-bottom:6px">Quiz Title</div>
+            <div style="font-family:var(--ff-b);font-size:14px;color:var(--white);margin-bottom:12px">"What's Your #1 Money Block Right Now?"</div>
+            <div style="font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-bottom:6px">3 Result Types</div>
+            <div style="font-family:var(--ff-b);font-size:13px;color:var(--sky);line-height:1.7">1. The Scarcity Mindset — earning but not keeping<br>2. The Undercharger — trading time at discount rates<br>3. The Spender — lifestyle inflation eating growth</div>
+          </div>
+          <div>
+            <div style="font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-bottom:6px">GHL Pipeline Tag</div>
+            <div style="font-family:var(--ff-b);font-size:13px;color:var(--sky);margin-bottom:12px">Tag drives personalized pre-call email with the specific framework for their block type — warms the lead before the call</div>
+            <div style="font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-bottom:6px">CTA</div>
+            <div style="font-family:var(--ff-b);font-size:13px;color:var(--sky)">"Book Your Free Wealth Strategy Call"</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="takeaway">
+      <div class="takeaway-label">The Pattern</div>
+      <div class="takeaway-text">"Same structure every time — pain-based title, 5 questions, 3 result types that feel eerily accurate, one booking CTA. The only thing that changes is the niche. Build one, learn the format, then your second takes 15 minutes."</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 11: CLAUDE PROJECT SETUP -->
+<div class="section">
+  <div class="wrap">
+    <div class="section-label">Do It Right — Inside a Claude Project</div>
+    <div class="section-title">Build Your Quiz Inside a Claude Project</div>
+    <p class="section-desc">Building your quiz inside a Claude Project instead of a regular chat gives you persistent context — Claude remembers your brand, niche, GHL links, and color palette across every session. You never re-explain yourself.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num">1</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-title">Create a New Project in Claude</div>
+          <div class="step-desc">Go to <strong style="color:var(--orange-lt)">Claude.ai → Projects → New Project</strong>. Name it something like "Lead Magnet Quizzes" or "[Your Brand] — Marketing Assets."</div>
+          <span class="step-tag">✓ Takes 30 seconds</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num">2</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-title">Set Your Project Instructions</div>
+          <div class="step-desc">Click <strong style="color:var(--orange-lt)">Edit Project Instructions</strong> and paste in your brand context so Claude knows your niche, voice, and offer without you explaining it every time.</div>
+          <div class="step-code">You are helping me build marketing assets for my coaching business.
+
+My niche: <span class="val">[your specialty and target client]</span>
+My core offer: <span class="val">[offer name + price + what they get]</span>
+My GHL booking link: <span class="val">[your booking URL]</span>
+My brand colors: <span class="val">[hex codes or color descriptions]</span>
+My tone: <span class="val">[e.g. warm, direct, science-backed, empowering]</span>
+
+When I ask you to build something, apply this context automatically.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num">3</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-title">Upload Your Knowledge Files</div>
+          <div class="step-desc">Add files to the Project that Claude can reference — your brand voice doc, testimonials, your mechanism or methodology doc, and any past content. Claude uses these to write in your exact voice.</div>
+          <span class="step-tag">✓ Do this once — leverage forever</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num">4</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-title">Run the Quiz Prompt Inside the Project</div>
+          <div class="step-desc">Now paste the master prompt from Section 3. Because your GHL link, brand colors, and niche are already in the Project, you only need to fill in the quiz title and result types — Claude fills the rest automatically.</div>
+          <span class="step-tag">✓ First draft in under 2 minutes</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num">5</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <div class="step-title">Iterate and Build Your Second Quiz in the Same Project</div>
+          <div class="step-desc">Your second quiz takes 10 minutes because Claude already has all your context. Just say: <strong style="color:var(--orange-lt)">"Build me another quiz for [new topic]. Same brand style, same GHL link."</strong> Claude does the rest. Build 3 quizzes = 3 permanent cold traffic entry points into your funnel.</div>
+          <span class="step-tag">✓ Compound leverage — each quiz is a permanent asset</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-card" style="margin-top:8px">
+      <div class="cc-num" style="font-size:30px">💡</div>
+      <div class="cc-body">
+        <div class="cc-title">The Compound Asset Strategy</div>
+        <div class="cc-desc">Build 3 quizzes targeting 3 different entry-level pains your ICP has. Run $5–$10/day Meta ads to each. You now have 3 cold traffic entry points, each funneling into your GHL pipeline with different result-type tags. Your closers get pre-qualified leads who've already self-identified their problem. Close rates go up. CPL stays low. The assets run forever with no monthly fees.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>© Impact Fitness Coaching Academy · IFCA AI Workshop — Creating Micro Lead Magnet Quizzes with Claude</p>
+</div>
+</div>
+
+<script>
+function copyPrompt(btn) {
+  const raw = `I'm a [your specialty] coach who helps [your target client] achieve [your core result].
+
+I want to build a free interactive HTML quiz called "[Your Quiz Title] — The 2-Minute Quiz" to use as a lead magnet.
+
+Here's how it should work:
+
+The quiz asks 5 simple multiple choice questions about their symptoms, habits, and lifestyle. Based on their answers, it diagnoses one of three types:
+
+1. [Type 1 Name] — [brief description]
+2. [Type 2 Name] — [brief description]
+3. [Type 3 Name] — [brief description]
+
+Each result page should:
+- Name their type with a bold, empowering headline
+- Give 3–4 sentences explaining what's actually going on (science-adjacent, not clinical)
+- Include one specific action they can take this week
+- Have a CTA button that says "Book Your Free [Audit/Clarity/Strategy] Call"
+  linking to: [YOUR BOOKING LINK]
+- Feel warm, empowering, and personalized — not like a generic blog post
+
+Design requirements:
+- Single self-contained HTML file (no external files needed)
+- Clean, modern design using [your brand colors or aesthetic]
+- Mobile friendly with a progress bar
+- Smooth animated transitions between questions
+- No data collection — purely informational
+
+Build the complete working HTML file.`;
+
+  navigator.clipboard.writeText(raw).then(() => {
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy Prompt';
+      btn.classList.remove('copied');
+    }, 2500);
+  });
+}
+</script>
+</body>
+</html>

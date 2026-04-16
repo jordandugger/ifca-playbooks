@@ -1,720 +1,1077 @@
+ai-integration-workshop.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IFCA Playbooks — Cancún Legacy Workshop Landing Page v1</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>IFCA — AI Integration Workshop</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #1E3A5F; --navy-dark: #102236; --navy-mid: #1a3352; --navy-light: #2A4F7F;
-    --orange: #E87722; --orange-light: #F09040; --orange-dim: rgba(232,119,34,0.15);
-    --blue-light: #D6E4F0; --blue-mid: #A8C8E0; --blue-real: #4A7FA5;
-    --white: #FFFFFF; --gray-400: #94A3B8; --gray-500: #64748B; --gray-600: #475569;
-    --green: #22c55e; --green-bg: rgba(34,197,94,0.1);
-    --purple: #a78bfa; --purple-dim: rgba(167,139,250,0.12);
-    --gold: #F59E0B; --gold-dim: rgba(245,158,11,0.12);
-    --teal: #2DD4BF; --teal-dim: rgba(45,212,191,0.1);
+    --navy: #1E3A5F;
+    --navy-dark: #142845;
+    --navy-light: #2A4F7F;
+    --orange: #E87722;
+    --orange-light: #F09040;
+    --orange-pale: #FDF3E8;
+    --blue-light: #D6E4F0;
+    --blue-mid: #A8C8E0;
+    --white: #FFFFFF;
+    --off-white: #F8FAFC;
+    --gray-100: #F1F5F9;
+    --gray-200: #E2E8F0;
+    --gray-400: #94A3B8;
+    --gray-600: #475569;
+    --gray-800: #1E293B;
+    --text: #1A2840;
+    --text-muted: #4A6080;
+    --slide-w: 1100px;
+    --slide-h: 620px;
   }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--navy-dark); color: var(--white); overflow-x: hidden; }
-  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
 
-  /* HEADER */
-  header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 48px; height: 64px; display: flex; align-items: center; justify-content: space-between; background: rgba(16,34,54,0.90); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06); }
-  .header-logo { display: flex; align-items: center; gap: 12px; }
-  .logo-mark { font-family: 'Bebas Neue'; font-size: 22px; color: var(--orange); letter-spacing: 3px; }
-  .logo-divider { width: 1px; height: 20px; background: rgba(255,255,255,0.15); }
-  .logo-sub { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 2px; text-transform: uppercase; }
-  nav { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-  nav a { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.4); text-decoration: none; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; }
-  nav a:hover { color: var(--orange); }
-  .nav-badge { background: var(--orange); color: white; font-family: 'DM Mono'; font-size: 9px; padding: 4px 10px; border-radius: 4px; letter-spacing: 1px; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #0D1B2E;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    gap: 16px;
+  }
 
-  /* HERO */
-  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 48px 80px; position: relative; overflow: hidden; }
-  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(232,119,34,0.08) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 20% 80%, rgba(30,58,95,0.6) 0%, transparent 70%), linear-gradient(160deg, var(--navy-dark) 0%, #0d1e30 100%); }
-  .hero-bg::after { content: ''; position: absolute; top: 0; right: 15%; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent, rgba(232,119,34,0.2), transparent); transform: rotate(8deg) translateX(50px); }
-  .hero-content { position: relative; z-index: 2; max-width: 900px; }
-  .hero-eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; animation: fadeUp 0.6s ease both; }
-  .eyebrow-line { width: 40px; height: 2px; background: var(--orange); }
-  .eyebrow-text { font-family: 'DM Mono'; font-size: 11px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; }
-  .hero-title { font-family: 'Bebas Neue'; font-size: clamp(72px, 10vw, 130px); line-height: 0.88; color: white; margin-bottom: 8px; animation: fadeUp 0.6s ease 0.1s both; }
-  .hero-title .accent { color: var(--orange); font-family: 'Instrument Serif'; font-style: italic; font-size: 0.9em; }
-  .hero-subtitle { font-size: 16px; color: var(--blue-light); line-height: 1.65; max-width: 580px; margin-top: 20px; opacity: 0.8; animation: fadeUp 0.6s ease 0.2s both; }
-  .hero-stats { display: flex; gap: 40px; margin-top: 48px; animation: fadeUp 0.6s ease 0.3s both; flex-wrap: wrap; }
-  .hero-stat { display: flex; flex-direction: column; gap: 4px; }
-  .stat-num { font-family: 'Bebas Neue'; font-size: 42px; color: var(--orange); line-height: 1; }
-  .stat-label { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 1px; text-transform: uppercase; }
-  .hero-divider { width: 1px; height: 50px; background: rgba(255,255,255,0.1); align-self: center; }
-  .scroll-hint { position: absolute; bottom: 40px; left: 48px; display: flex; align-items: center; gap: 10px; animation: fadeUp 0.6s ease 0.5s both; }
-  .scroll-hint span { font-family: 'DM Mono'; font-size: 9px; color: rgba(255,255,255,0.2); letter-spacing: 2px; text-transform: uppercase; }
-  .scroll-line { width: 30px; height: 1px; background: rgba(255,255,255,0.15); position: relative; overflow: hidden; }
-  .scroll-line::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--orange); animation: scrollPulse 2s ease-in-out infinite; }
+  #nav {
+    width: var(--slide-w);
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  #nav .logo { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--orange); letter-spacing: 2px; }
+  #nav .controls { display: flex; align-items: center; gap: 12px; }
+  #nav button {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white; width: 36px; height: 36px;
+    border-radius: 8px; font-size: 16px; cursor: pointer;
+    transition: all 0.15s; display: flex; align-items: center; justify-content: center;
+  }
+  #nav button:hover { background: rgba(255,255,255,0.15); }
+  #nav button:disabled { opacity: 0.3; cursor: default; }
+  #slide-counter { font-family: 'DM Mono', monospace; font-size: 13px; color: rgba(255,255,255,0.5); min-width: 60px; text-align: center; }
 
-  /* DAY BANNERS */
-  .day-banner { margin: 0 48px; padding: 24px 32px; border-radius: 14px; display: flex; align-items: center; gap: 20px; }
-  .day-banner.day1 { background: linear-gradient(135deg, rgba(245,158,11,0.1) 0%, rgba(245,158,11,0.04) 100%); border: 1px solid rgba(245,158,11,0.25); }
-  .day-banner.day2 { background: linear-gradient(135deg, rgba(232,119,34,0.07) 0%, rgba(232,119,34,0.02) 100%); border: 1px solid rgba(232,119,34,0.15); }
-  .day-pip { font-family: 'Bebas Neue'; font-size: 48px; line-height: 1; letter-spacing: 1px; flex-shrink: 0; }
-  .day-banner.day1 .day-pip { color: var(--gold); }
-  .day-banner.day2 .day-pip { color: rgba(232,119,34,0.6); }
-  .day-info { display: flex; flex-direction: column; gap: 3px; }
-  .day-eyebrow { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; }
-  .day-banner.day1 .day-eyebrow { color: rgba(245,158,11,0.55); }
-  .day-banner.day2 .day-eyebrow { color: rgba(232,119,34,0.45); }
-  .day-title { font-family: 'Bebas Neue'; font-size: 26px; color: white; letter-spacing: 1px; line-height: 1; }
-  .day-desc { font-size: 13px; color: rgba(255,255,255,0.38); line-height: 1.5; margin-top: 2px; max-width: 560px; }
-  .day-badge { margin-left: auto; flex-shrink: 0; font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; }
-  .day-banner.day1 .day-badge { color: var(--gold); background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25); }
-  .day-banner.day2 .day-badge { color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); }
+  #toc-bar { width: var(--slide-w); max-width: 100%; display: flex; gap: 4px; flex-wrap: wrap; }
+  .toc-dot { height: 4px; flex: 1; border-radius: 2px; background: rgba(255,255,255,0.15); cursor: pointer; transition: background 0.2s; min-width: 20px; }
+  .toc-dot.active { background: var(--orange); }
+  .toc-dot:hover { background: rgba(255,255,255,0.4); }
 
-  /* SECTIONS */
-  section { padding: 80px 48px; position: relative; }
-  .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-  .section-label { font-family: 'DM Mono'; font-size: 10px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
-  .section-title { font-family: 'Bebas Neue'; font-size: 48px; color: white; line-height: 1; letter-spacing: 1px; }
-  .section-count { font-family: 'DM Mono'; font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 1px; }
-  .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent); margin: 0 48px; }
+  #stage { width: var(--slide-w); max-width: 100%; aspect-ratio: 16/9; position: relative; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.5); }
 
-  /* WORKSHOP CARDS */
-  .workshops-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .workshop-card { background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 32px 32px 28px; display: flex; flex-direction: column; gap: 14px; text-decoration: none; color: inherit; position: relative; overflow: hidden; transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease; }
-  .workshop-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--orange), var(--orange-light)); }
-  .card-category { display: flex; align-items: center; justify-content: space-between; }
-  .cat-pill { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; }
-  .cat-pill.coming { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.2); }
-  .card-num { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.15); }
-  .card-icon { font-size: 32px; }
-  .card-title { font-family: 'Bebas Neue'; font-size: 32px; color: white; line-height: 1.0; letter-spacing: 0.5px; }
-  .card-desc { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; flex: 1; }
-  .card-meta { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.06); }
-  .card-slides { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.25); }
-  .card-arrow { width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 12px; color: rgba(255,255,255,0.3); }
+  .slide { position: absolute; inset: 0; display: none; background: var(--white); animation: fadeIn 0.2s ease; }
+  .slide.active { display: flex; }
+  @keyframes fadeIn { from { opacity: 0.4; } to { opacity: 1; } }
 
-  /* TOOL GRID */
-  .tool3-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .creative-card, .calc-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 28px 24px; color: inherit; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden; }
-  .creative-card::before, .calc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-  .creative-card::before { background: rgba(232,119,34,0.4); }
-  .calc-card::before { background: var(--blue-real); }
-  .creative-card:not(.coming-soon):hover::before, .calc-card:not(.coming-soon):hover::before { background: var(--orange); }
-  .creative-card:not(.coming-soon):hover { border-color: rgba(232,119,34,0.25); background: rgba(255,255,255,0.05); transform: translateY(-3px); }
-  .calc-card:not(.coming-soon):hover { border-color: rgba(168,200,224,0.3); background: rgba(255,255,255,0.05); transform: translateY(-3px); }
-  .creative-card.coming-soon, .calc-card.coming-soon { opacity: 0.42; cursor: default; }
-  .tool-icon { font-size: 26px; }
-  .tool-title { font-family: 'Bebas Neue'; font-size: 22px; color: white; letter-spacing: 0.5px; line-height: 1.05; }
-  .tool-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.5; flex: 1; }
-  .tool-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); margin-top: auto; }
-  .tool-status { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.2); }
-  .tool-arrow { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 11px; color: rgba(255,255,255,0.3); transition: all 0.2s; }
-  .creative-card:not(.coming-soon):hover .tool-arrow, .calc-card:not(.coming-soon):hover .tool-arrow { border-color: var(--orange); color: var(--orange); background: rgba(232,119,34,0.1); }
+  /* COVER */
+  .cover { flex-direction: column; background: var(--navy-dark); overflow: hidden; }
+  .cover-top { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 60px 70px 40px; position: relative; }
+  .cover-top::before { content: ''; position: absolute; right: -60px; top: -60px; width: 400px; height: 400px; border-radius: 50%; background: rgba(232,119,34,0.08); pointer-events: none; }
+  .cover-top::after { content: ''; position: absolute; right: 40px; top: 40px; width: 200px; height: 200px; border-radius: 50%; border: 1px solid rgba(232,119,34,0.2); pointer-events: none; }
+  .cover-eyebrow { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 3px; color: var(--orange); text-transform: uppercase; margin-bottom: 16px; }
+  .cover-title { font-family: 'Bebas Neue', sans-serif; font-size: 74px; line-height: 0.95; color: var(--white); letter-spacing: 2px; margin-bottom: 20px; }
+  .cover-title span { color: var(--orange); }
+  .cover-subtitle { font-size: 16px; color: var(--blue-mid); font-weight: 300; max-width: 520px; line-height: 1.6; }
+  .cover-bottom { background: var(--orange); padding: 18px 70px; display: flex; align-items: center; justify-content: space-between; }
+  .cover-bottom .host { font-size: 13px; color: white; font-weight: 500; letter-spacing: 0.5px; }
+  .cover-bottom .retreat { font-family: 'DM Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.75); letter-spacing: 1px; text-transform: uppercase; }
 
-  /* FLOW DIAGRAM */
-  .flow-diagram { margin: 28px 0 0; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 24px 28px; display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; }
-  .flow-intro { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 18px; text-align: center; width: 100%; }
-  .flow-nodes { display: flex; align-items: center; gap: 0; flex-wrap: wrap; justify-content: center; width: 100%; }
-  .flow-node { display: flex; flex-direction: column; align-items: center; gap: 6px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px 18px; min-width: 150px; text-align: center; }
-  .flow-node.source { border-color: rgba(74,127,165,0.3); background: rgba(74,127,165,0.06); }
-  .flow-node.tool { border-color: rgba(232,119,34,0.25); background: rgba(232,119,34,0.06); }
-  .fn-step { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--orange); }
-  .fn-name { font-family: 'Bebas Neue'; font-size: 15px; color: white; letter-spacing: 0.5px; line-height: 1.1; }
-  .fn-sub { font-size: 10px; color: rgba(255,255,255,0.35); line-height: 1.4; }
-  .flow-arrow-node { font-size: 18px; color: rgba(255,255,255,0.15); margin: 0 8px; flex-shrink: 0; }
-  .flow-output { display: flex; flex-direction: column; align-items: center; gap: 4px; background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; padding: 14px 18px; min-width: 150px; text-align: center; }
-  .fo-step { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: #86efac; }
-  .fo-name { font-family: 'Bebas Neue'; font-size: 15px; color: white; letter-spacing: 0.5px; }
-  .fo-sub { font-size: 10px; color: rgba(255,255,255,0.35); line-height: 1.4; }
+  /* SECTION DIVIDER */
+  .section-divider { flex-direction: column; justify-content: center; align-items: flex-start; background: var(--navy); padding: 0 70px; position: relative; overflow: hidden; }
+  .section-divider::before { content: ''; position: absolute; left: -100px; bottom: -100px; width: 500px; height: 500px; border-radius: 50%; background: rgba(232,119,34,0.06); }
+  .section-divider::after { content: ''; position: absolute; right: 60px; top: 60px; width: 300px; height: 300px; border: 1px solid rgba(255,255,255,0.06); border-radius: 50%; }
+  .section-num { font-family: 'Bebas Neue', sans-serif; font-size: 120px; color: rgba(255,255,255,0.05); line-height: 1; position: absolute; right: 60px; bottom: 20px; }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 3px; color: var(--orange); text-transform: uppercase; margin-bottom: 16px; }
+  .section-heading { font-family: 'Bebas Neue', sans-serif; font-size: 58px; color: var(--white); line-height: 1.05; letter-spacing: 1px; max-width: 600px; }
+  .section-desc { margin-top: 20px; font-size: 15px; color: var(--blue-mid); max-width: 500px; line-height: 1.6; font-weight: 300; }
 
-  /* AI TOOLS */
-  .ai-tools-section { background: linear-gradient(180deg, transparent, rgba(232,119,34,0.025), transparent); }
-  .agent-section { padding: 0 48px 80px; }
-  .agent-inner { background: linear-gradient(135deg, rgba(167,139,250,0.05) 0%, rgba(167,139,250,0.02) 100%); border: 1px solid rgba(167,139,250,0.15); border-radius: 20px; padding: 40px 40px 36px; position: relative; overflow: hidden; }
-  .agent-inner::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--purple), rgba(167,139,250,0.3)); }
-  .agent-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 28px; gap: 20px; }
-  .agent-label { font-family: 'DM Mono'; font-size: 10px; color: var(--purple); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
-  .agent-title { font-family: 'Bebas Neue'; font-size: 36px; color: white; line-height: 1; letter-spacing: 1px; }
-  .agent-subtitle { font-size: 13px; color: rgba(255,255,255,0.4); max-width: 520px; line-height: 1.55; margin-top: 6px; }
-  .agent-badge { font-family: 'DM Mono'; font-size: 10px; color: var(--purple); background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.2); padding: 5px 14px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; margin-top: 4px; }
-  .agent-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-  .agent-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(167,139,250,0.15); border-radius: 14px; padding: 24px 22px; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden; }
-  .agent-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: rgba(167,139,250,0.3); }
-  .agent-card.coming-soon { opacity: 0.45; cursor: default; }
-  .agent-card-icon { font-size: 22px; }
-  .agent-card-title { font-family: 'Bebas Neue'; font-size: 20px; color: white; line-height: 1.05; letter-spacing: 0.5px; }
-  .agent-card-desc { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.5; flex: 1; }
-  .agent-card-status { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-top: 4px; }
+  /* CONTENT SLIDE */
+  .content-slide { flex-direction: column; background: var(--off-white); }
+  .slide-header { background: var(--navy); padding: 22px 50px; display: flex; align-items: center; justify-content: space-between; }
+  .slide-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: var(--white); letter-spacing: 1px; }
+  .slide-header .section-tag { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; }
+  .slide-body { flex: 1; padding: 28px 50px; display: flex; flex-direction: column; gap: 14px; overflow: hidden; }
+  .slide-footer { background: var(--navy-dark); padding: 8px 50px; display: flex; align-items: center; justify-content: space-between; }
+  .slide-footer span { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 1px; text-transform: uppercase; }
+  .slide-footer .slide-num { color: var(--orange); opacity: 0.7; }
 
-  /* BONUS */
-  .bonus-section { background: linear-gradient(180deg, transparent, rgba(214,228,240,0.015), transparent); }
-  .bonus-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-  .bonus-card { background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 24px 22px; color: inherit; display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden; }
-  .bonus-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.07); }
-  .bonus-card.coming-soon { opacity: 0.38; cursor: default; }
-  .bonus-icon { font-size: 22px; }
-  .bonus-title { font-family: 'Bebas Neue'; font-size: 19px; color: white; letter-spacing: 0.5px; line-height: 1.05; }
-  .bonus-desc { font-size: 12px; color: rgba(255,255,255,0.38); line-height: 1.45; flex: 1; }
-  .bonus-status { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.18); margin-top: 4px; }
+  /* CALLOUT */
+  .callout { background: var(--navy); border-left: 4px solid var(--orange); border-radius: 0 8px 8px 0; padding: 14px 20px; }
+  .callout p { font-size: 14px; color: var(--blue-light); line-height: 1.6; font-style: italic; }
+  .callout strong { color: var(--orange); font-style: normal; }
 
-  /* CLIENT AUDITS */
-  .client-section { background: linear-gradient(180deg, transparent, rgba(245,158,11,0.02), transparent); }
-  .client-section .section-label { color: var(--gold); }
-  .client-section .section-header { border-bottom-color: rgba(245,158,11,0.15); }
-  .client-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-  .client-card { background: rgba(255,255,255,0.025); border: 1px solid rgba(245,158,11,0.12); border-radius: 16px; padding: 0; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: all 0.25s; position: relative; overflow: hidden; }
-  .client-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: rgba(245,158,11,0.3); transition: background 0.25s; }
-  .client-card:hover::before { background: var(--gold); }
-  .client-card:hover { border-color: rgba(245,158,11,0.3); background: rgba(255,255,255,0.04); transform: translateY(-3px); }
-  .cc-header { padding: 20px 20px 14px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-  .cc-initials { width: 40px; height: 40px; border-radius: 50%; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.25); font-family: 'Bebas Neue'; font-size: 16px; color: var(--gold); display: flex; align-items: center; justify-content: center; letter-spacing: 1px; margin-bottom: 12px; }
-  .cc-name { font-family: 'Bebas Neue'; font-size: 20px; color: white; letter-spacing: 0.5px; line-height: 1.0; margin-bottom: 3px; }
-  .cc-meta { font-family: 'DM Mono'; font-size: 9px; color: rgba(255,255,255,0.3); letter-spacing: 1px; text-transform: uppercase; }
-  .cc-strength { padding: 10px 20px 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-  .cc-strength-label { display: block; font-family: 'DM Mono'; font-size: 9px; color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; }
-  .cc-strength-val { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.45; }
-  .cc-resources { padding: 10px 20px 14px; display: flex; flex-direction: column; gap: 5px; border-top: 1px solid rgba(255,255,255,0.04); margin-top: auto; }
-  .cc-resource { font-size: 11px; color: rgba(255,255,255,0.3); display: flex; align-items: center; gap: 6px; }
-  .cc-resource.available { color: rgba(245,158,11,0.7); }
-  .cc-resource.available::before { content: '●'; font-size: 7px; color: var(--gold); }
-  .cc-resource.unavailable::before { content: '○'; font-size: 7px; color: rgba(255,255,255,0.2); }
-  .cc-resource.tracker { color: var(--teal); background: var(--teal-dim); border: 1px solid rgba(45,212,191,0.2); border-radius: 5px; padding: 5px 9px; margin-top: 4px; font-weight: 600; letter-spacing: 0.02em; transition: background 0.2s, border-color 0.2s; justify-content: space-between; }
-  .cc-resource.tracker::before { content: '📊'; font-size: 10px; flex-shrink: 0; }
-  .cc-resource.tracker a { color: inherit; text-decoration: none; flex: 1; }
-  .cc-resource.tracker::after { content: '↗'; font-size: 10px; opacity: 0.6; flex-shrink: 0; }
-  .client-card:hover .cc-resource.tracker { background: rgba(45,212,191,0.15); border-color: rgba(45,212,191,0.4); }
-  .cc-footer { padding: 10px 20px 14px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; }
-  .cc-open { font-family: 'DM Mono'; font-size: 9px; color: rgba(255,255,255,0.25); letter-spacing: 1px; text-transform: uppercase; }
-  .cc-arrow { font-size: 12px; color: rgba(255,255,255,0.2); transition: all 0.2s; }
-  .client-card:hover .cc-arrow { color: var(--gold); }
+  /* TWO COL */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; }
+  .two-col .col-card { background: var(--white); border-radius: 10px; padding: 18px 20px; border: 1px solid var(--gray-200); }
+  .col-card h4 { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid var(--orange); display: inline-block; }
 
-  /* AI MINI CARDS */
-  .ai-cat-label { font-family: 'DM Mono'; font-size: 10px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; display: flex; align-items: center; gap: 10px; margin-bottom: 16px; margin-top: 40px; }
-  .ai-cat-label:first-child { margin-top: 0; }
-  .ai-cat-label::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
-  .ai-cat-label.navy-cat { color: var(--blue-mid); }
-  .ai-cat-label.gray-cat { color: rgba(255,255,255,0.3); }
-  .mini-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 4px; }
-  .mini-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
-  .mini-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 20px 18px; color: inherit; display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden; }
-  .mini-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.06); }
-  .mini-card.cs { opacity: 0.38; cursor: default; }
-  .mc-icon { font-size: 20px; }
-  .mc-title { font-family: 'Bebas Neue'; font-size: 17px; color: white; line-height: 1.1; letter-spacing: 0.5px; }
-  .mc-desc { font-size: 11px; color: rgba(255,255,255,0.42); line-height: 1.5; flex: 1; }
-  .mc-foot { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: auto; }
-  .mc-status { font-family: 'DM Mono'; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.18); }
-  .mc-arr { width: 22px; height: 22px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 10px; color: rgba(255,255,255,0.25); }
+  /* ENTITY GRID */
+  .entity-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .entity-card { background: var(--white); border-radius: 8px; padding: 14px 16px; border: 1px solid var(--gray-200); border-top: 3px solid var(--navy); }
+  .entity-card.orange-top { border-top-color: var(--orange); }
+  .entity-card .e-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+  .entity-card .e-title { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+  .entity-card .e-body { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
 
-  /* AI WORKSHOP BANNER — locked */
-  .ai-workshop-banner { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 24px 28px; margin-bottom: 36px; display: flex; align-items: center; justify-content: space-between; gap: 20px; opacity: 0.42; cursor: default; }
-  .aib-left { display: flex; align-items: center; gap: 18px; }
-  .aib-icon { font-size: 28px; }
-  .aib-label { font-family: 'DM Mono'; font-size: 9px; color: rgba(255,255,255,0.3); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
-  .aib-title { font-family: 'Bebas Neue'; font-size: 24px; color: white; letter-spacing: 1px; line-height: 1; }
-  .aib-desc { font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 4px; }
-  .aib-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
-  .aib-pill { font-family: 'DM Mono'; font-size: 9px; color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px; letter-spacing: 1px; white-space: nowrap; }
-  .aib-arr { width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 14px; color: rgba(255,255,255,0.2); }
+  /* METRIC CARDS */
+  .metric-grid { display: grid; gap: 12px; }
+  .metric-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .metric-grid.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .metric-card { background: var(--white); border-radius: 10px; padding: 16px 18px; border: 1px solid var(--gray-200); }
+  .metric-card .m-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 500; margin-bottom: 6px; }
+  .metric-card .m-value { font-family: 'Bebas Neue', sans-serif; font-size: 38px; color: var(--navy); line-height: 1; letter-spacing: 1px; }
+  .metric-card .m-desc { font-size: 12px; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
+  .metric-card.orange { border-top: 3px solid var(--orange); }
+  .metric-card.navy { border-top: 3px solid var(--navy); }
+  .metric-card.green { border-top: 3px solid #22C55E; }
 
-  /* FOOTER */
-  footer { padding: 40px 48px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; }
-  .footer-left { display: flex; flex-direction: column; gap: 6px; }
-  .footer-logo { font-family: 'Bebas Neue'; font-size: 24px; color: var(--orange); letter-spacing: 3px; }
-  .footer-sub { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.2); letter-spacing: 1px; }
-  .footer-right { font-family: 'DM Mono'; font-size: 10px; color: rgba(255,255,255,0.15); letter-spacing: 1px; text-align: right; }
+  /* STEP LIST */
+  .step-list { display: flex; flex-direction: column; gap: 8px; }
+  .step-item { display: flex; gap: 14px; align-items: flex-start; background: var(--white); border-radius: 8px; padding: 11px 16px; border: 1px solid var(--gray-200); }
+  .step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--navy); color: white; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-num.orange { background: var(--orange); }
+  .step-content { flex: 1; }
+  .step-content strong { font-size: 13px; color: var(--navy); display: block; margin-bottom: 2px; }
+  .step-content span { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
 
-  /* ANIMATIONS */
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes scrollPulse { 0% { left: -100%; } 100% { left: 100%; } }
-  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .stagger > * { opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease, transform 0.4s ease; }
-  .stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:0s; }
-  .stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:0.07s; }
-  .stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:0.14s; }
-  .stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:0.21s; }
-  .stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:0.28s; }
-  .stagger.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay:0.35s; }
-  .stagger.visible > *:nth-child(7) { opacity:1; transform:none; transition-delay:0.42s; }
+  /* BULLET LIST */
+  .bullet-list { display: flex; flex-direction: column; gap: 8px; }
+  .bullet-item { display: flex; gap: 12px; align-items: flex-start; font-size: 13px; color: var(--text); line-height: 1.5; }
+  .bullet-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); flex-shrink: 0; margin-top: 5px; }
+  .bullet-item strong { color: var(--navy); }
+
+  /* BADGE */
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; }
+  .badge-orange { background: var(--orange-pale); color: var(--orange); }
+  .badge-navy { background: var(--blue-light); color: var(--navy); }
+  .badge-green { background: #DCFCE7; color: #166534; }
+
+  /* FORMULA BOX */
+  .formula-box { background: var(--navy); border-radius: 10px; padding: 18px 24px; display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .formula-part { text-align: center; }
+  .formula-part .f-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--orange); letter-spacing: 1px; line-height: 1; }
+  .formula-part .f-label { font-size: 11px; color: var(--blue-mid); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+  .formula-op { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: rgba(255,255,255,0.3); }
+
+  /* KPI BLOCK */
+  .kpi-row { display: flex; gap: 10px; }
+  .kpi-block { flex: 1; background: var(--white); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--gray-200); display: flex; flex-direction: column; gap: 4px; }
+  .kpi-block .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 500; }
+  .kpi-block .kpi-val { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--navy); letter-spacing: 1px; line-height: 1; }
+  .kpi-block .kpi-sub { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+  .kpi-block.orange { border-left: 4px solid var(--orange); }
+  .kpi-block.green { border-left: 4px solid #22C55E; }
+
+  /* TOOL CHIP */
+  .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; background: var(--white); border: 1px solid var(--gray-200); color: var(--text); }
+  .chip.orange { background: var(--orange-pale); border-color: var(--orange); color: var(--orange); }
+  .chip.navy { background: var(--blue-light); border-color: var(--blue-mid); color: var(--navy); }
+
+  /* WARNING SLIDE SPECIAL */
+  .warning-box { background: #FEF3E2; border: 2px solid var(--orange); border-radius: 10px; padding: 16px 20px; }
+  .warning-box .w-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--orange); letter-spacing: 1px; margin-bottom: 8px; }
+  .warning-box .w-body { font-size: 13px; color: var(--text); line-height: 1.6; }
+
+  /* MINI TRAINING GRID */
+  .mt-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .mt-card { background: var(--white); border-radius: 8px; padding: 12px 14px; border: 1px solid var(--gray-200); border-top: 3px solid var(--navy); }
+  .mt-card.orange-top { border-top-color: var(--orange); }
+  .mt-card.green-top { border-top-color: #22C55E; }
+  .mt-card .mt-cat { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--orange); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+  .mt-card .mt-title { font-size: 11px; font-weight: 600; color: var(--navy); line-height: 1.4; }
+
+  /* PROGRESS BAR */
+  #progress { width: var(--slide-w); max-width: 100%; height: 2px; background: rgba(255,255,255,0.1); border-radius: 2px; }
+  #progress-fill { height: 100%; background: var(--orange); border-radius: 2px; transition: width 0.3s ease; }
+
+  #hint { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.2); letter-spacing: 1px; }
+  .highlight { color: var(--orange); font-weight: 600; }
+  .navy-text { color: var(--navy); font-weight: 600; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
-  <div class="header-logo">
-    <div class="logo-mark">IFCA</div>
-    <div class="logo-divider"></div>
-    <div class="logo-sub">Playbooks</div>
+<div id="nav">
+  <div class="logo">IFCA</div>
+  <div class="controls">
+    <button id="btn-prev" onclick="navigate(-1)" disabled>&#8592;</button>
+    <span id="slide-counter">1 / 15</span>
+    <button id="btn-next" onclick="navigate(1)">&#8594;</button>
   </div>
-  <nav>
-    <a href="#clients">Client Audits</a>
-    <a href="#workshops">Workshops</a>
-    <a href="#creative-tools">Creative Tools</a>
-    <a href="#calculators">Calculators</a>
-    <a href="#ai-tools">AI Training</a>
-    <a href="#bonus">Bonus</a>
-    <span class="nav-badge">APRIL 2026</span>
-  </nav>
-</header>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">
-      <div class="eyebrow-line"></div>
-      <div class="eyebrow-text">Seven-Figure Client Retreat &nbsp;·&nbsp; Impact Fitness Coaching Academy</div>
-    </div>
-    <div class="hero-title">IFCA<br><span class="accent">Playbooks</span></div>
-    <div class="hero-subtitle">Every workshop, tool, and framework from the 7-Figure Retreat — workshops, interactive calculators, creative production tools, AI modules, bonus resources, and individual client audits.</div>
-    <div class="hero-stats">
-      <div class="hero-stat"><div class="stat-num">7</div><div class="stat-label">Client Audits</div></div>
-      <div class="hero-divider"></div>
-      <div class="hero-stat"><div class="stat-num">2</div><div class="stat-label">Workshops</div></div>
-      <div class="hero-divider"></div>
-      <div class="hero-stat"><div class="stat-num">3</div><div class="stat-label">Creative AI Tools</div></div>
-      <div class="hero-divider"></div>
-      <div class="hero-stat"><div class="stat-num">14</div><div class="stat-label">AI Mini-Trainings</div></div>
-    </div>
-  </div>
-  <div class="scroll-hint"><div class="scroll-line"></div><span>Scroll to explore</span></div>
 </div>
 
-<!-- ══════════ DAY 1 BANNER ══════════ -->
-<div class="day-banner day1 reveal">
-  <div class="day-pip">DAY 1</div>
-  <div class="day-info">
-    <div class="day-eyebrow">April 2026 &nbsp;·&nbsp; Cancún</div>
-    <div class="day-title">Student Constraint Hot Seats</div>
-    <div class="day-desc">Individual business audits, data deep-dives, and constraint diagnosis for each client. Your personal hub is live below.</div>
+<div id="toc-bar"></div>
+<div id="progress"><div id="progress-fill"></div></div>
+
+<div id="stage">
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 1 — COVER
+═══════════════════════════════════════════════ -->
+<div class="slide active cover" id="s1">
+  <div class="cover-top">
+    <div class="cover-eyebrow">Seven-Figure Legacy Retreat &bull; April 2026</div>
+    <div class="cover-title">AI <span>INTEGRATION</span><br>WORKSHOP</div>
+    <div class="cover-subtitle">Work less. Output more. Scale without proportional hiring — by building AI leverage into the three systems that drive your business.</div>
   </div>
-  <div class="day-badge">● Live Now</div>
+  <div class="cover-bottom">
+    <div class="host">Jordan Dugger &mdash; Co-Founder, IFCA</div>
+    <div class="retreat">Impact Fitness Coaching Academy &bull; Confidential</div>
+  </div>
 </div>
 
-<!-- ══════════ 1 — CLIENT AUDITS ══════════ -->
-<section id="clients" class="client-section">
-  <div class="section-header reveal">
-    <div>
-      <div class="section-label">Seven-Figure Cancún &nbsp;·&nbsp; April 2026</div>
-      <div class="section-title">Client Audits</div>
+<!-- ═══════════════════════════════════════════════
+     SLIDE 2 — THE WARNING
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s2">
+  <div class="slide-header">
+    <h2>The Biggest AI Mistake You Can Make</h2>
+    <span class="section-tag">Foundation</span>
+  </div>
+  <div class="slide-body">
+    <div class="callout">
+      <p><strong>Most coaches use AI to solve problems that don't exist.</strong> They build elaborate workflows for things that weren't a bottleneck. They spend 10 hours automating a task that took 20 minutes a week. That's not leverage — that's a new job.</p>
     </div>
-    <div class="section-count">APRIL 2026 RETREAT</div>
+    <div class="two-col" style="flex: 0; gap: 12px;">
+      <div style="background: #FEE2E2; border-radius: 10px; padding: 16px 20px; border: 1px solid #FECACA;">
+        <div style="font-family: 'Bebas Neue'; font-size: 16px; color: #991B1B; letter-spacing: 1px; margin-bottom: 10px;">⚠ Signs You're In a Rabbit Hole</div>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot" style="background:#EF4444;"></div><span>You've spent more time building AI systems than actually using them in your business</span></div>
+          <div class="bullet-item"><div class="bullet-dot" style="background:#EF4444;"></div><span>You're automating tasks you could hire a $10/hr VA to do</span></div>
+          <div class="bullet-item"><div class="bullet-dot" style="background:#EF4444;"></div><span>You've collected 6+ AI tools but have a consistent workflow in zero of them</span></div>
+          <div class="bullet-item"><div class="bullet-dot" style="background:#EF4444;"></div><span>You're building an AI system before you've validated what your actual constraint is</span></div>
+        </div>
+      </div>
+      <div style="background: #F0FDF4; border-radius: 10px; padding: 16px 20px; border: 1px solid #BBF7D0;">
+        <div style="font-family: 'Bebas Neue'; font-size: 16px; color: #166534; letter-spacing: 1px; margin-bottom: 10px;">✓ The Right Application</div>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot" style="background:#22C55E;"></div><span><strong>Constraint first.</strong> What is the single bottleneck slowing your growth right now?</span></div>
+          <div class="bullet-item"><div class="bullet-dot" style="background:#22C55E;"></div><span><strong>Time audit.</strong> Where are you personally spending hours on tasks AI can handle at 80% quality?</span></div>
+          <div class="bullet-item"><div class="bullet-dot" style="background:#22C55E;"></div><span><strong>Leverage math.</strong> If AI frees 10 hrs/week at $500/hr value = $260K/yr in recovered capacity</span></div>
+          <div class="bullet-item"><div class="bullet-dot" style="background:#22C55E;"></div><span><strong>Build one system, use it daily</strong> before adding the next one</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="background: var(--navy); border-radius: 8px; padding: 14px 20px; display: flex; align-items: center; gap: 20px; flex: 0;">
+      <div style="font-family: 'Bebas Neue'; font-size: 20px; color: var(--orange); white-space: nowrap;">The Rule</div>
+      <div style="font-size: 13px; color: var(--blue-light); line-height: 1.5;">AI should optimize a real constraint, replace real overhead, or multiply real output. If it doesn't do one of those three things — it's a hobby, not a strategy.</div>
+    </div>
   </div>
-  <div class="client-grid stagger">
-
-    <a class="client-card" href="client-audits/alycia-israel/index.html">
-      <div class="cc-header">
-        <div class="cc-initials">AI</div>
-        <div class="cc-name">Alycia Israel</div>
-        <div class="cc-meta">$956K Revenue &nbsp;·&nbsp; CAC:LTV 5:1</div>
-      </div>
-      <div class="cc-strength">
-        <span class="cc-strength-label">Biggest Strength</span>
-        <span class="cc-strength-val">How to scale a DM lead magnet to 57% YoY growth — and how to build entity diversity before you hit the ceiling</span>
-      </div>
-      <div class="cc-resources">
-        <div class="cc-resource available">Complete Business Audit</div>
-        <div class="cc-resource available">Data Snapshot</div>
-        <div class="cc-resource available">Revenue Equilibrium</div>
-        <div class="cc-resource available">Creative Intelligence Report</div>
-        <div class="cc-resource available">Constraint Diagnosis</div>
-        <div class="cc-resource unavailable">90-Day Priority Action Plan &nbsp;<em style="font-size:9px;color:rgba(255,255,255,0.25);font-style:normal;">In Progress</em></div>
-      </div>
-      <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
-    </a>
-
-    <a class="client-card" href="client-audits/vanessa-omar/index.html">
-      <div class="cc-header">
-        <div class="cc-initials">VO</div>
-        <div class="cc-name">Vanessa &amp; Omar</div>
-        <div class="cc-meta">$2.35M Revenue &nbsp;·&nbsp; CAC:LTV 9.2:1</div>
-      </div>
-      <div class="cc-strength">
-        <span class="cc-strength-label">Biggest Strength</span>
-        <span class="cc-strength-val">How to build a $2M+ coaching brand almost entirely on organic — and what it looks like to unlock paid ads on top of it</span>
-      </div>
-      <div class="cc-resources">
-        <div class="cc-resource available">Complete Business Audit</div>
-        <div class="cc-resource available">Data Snapshot</div>
-        <div class="cc-resource available">Revenue Equilibrium</div>
-        <div class="cc-resource available">Creative Intelligence Report</div>
-        <div class="cc-resource available">Constraint Diagnosis</div>
-        <div class="cc-resource unavailable">90-Day Priority Action Plan &nbsp;<em style="font-size:9px;color:rgba(255,255,255,0.25);font-style:normal;">In Progress</em></div>
-      </div>
-      <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
-    </a>
-
-    <a class="client-card" href="client-audits/lacey-zach/index.html">
-      <div class="cc-header">
-        <div class="cc-initials">LZ</div>
-        <div class="cc-name">Lacey &amp; Zach</div>
-        <div class="cc-meta">$3.53 CPL &nbsp;·&nbsp; CAC:LTV 7.1:1</div>
-      </div>
-      <div class="cc-strength">
-        <span class="cc-strength-label">Biggest Strength</span>
-        <span class="cc-strength-val">How to create viral ad creative that proves demand — and what to fix when viral traffic breaks your sales system</span>
-      </div>
-      <div class="cc-resources">
-        <div class="cc-resource available">Complete Business Audit</div>
-        <div class="cc-resource available">Data Snapshot</div>
-        <div class="cc-resource available">Revenue Equilibrium</div>
-        <div class="cc-resource available">Creative Intelligence Report</div>
-        <div class="cc-resource available">Constraint Diagnosis</div>
-        <div class="cc-resource unavailable">90-Day Priority Action Plan &nbsp;<em style="font-size:9px;color:rgba(255,255,255,0.25);font-style:normal;">In Progress</em></div>
-      </div>
-      <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
-    </a>
-
-    <a class="client-card" href="client-audits/lindsey-mathews/index.html">
-      <div class="cc-header">
-        <div class="cc-initials">LM</div>
-        <div class="cc-name">Lindsey Mathews</div>
-        <div class="cc-meta">~$85K/mo Revenue &nbsp;·&nbsp; CAC:LTV 4:1</div>
-      </div>
-      <div class="cc-strength">
-        <span class="cc-strength-label">Biggest Strength</span>
-        <span class="cc-strength-val">How to scale to $1M+ with paid ads as the primary acquisition channel — and how to manage creative refresh at high spend levels</span>
-      </div>
-      <div class="cc-resources">
-        <div class="cc-resource available">Complete Business Audit</div>
-        <div class="cc-resource available">Data Snapshot</div>
-        <div class="cc-resource available">Revenue Equilibrium</div>
-        <div class="cc-resource available">Creative Intelligence Report</div>
-        <div class="cc-resource available">Constraint Diagnosis</div>
-        <div class="cc-resource unavailable">90-Day Priority Action Plan &nbsp;<em style="font-size:9px;color:rgba(255,255,255,0.25);font-style:normal;">In Progress</em></div>
-      </div>
-      <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
-    </a>
-
-    <a class="client-card" href="client-audits/april-arthur/index.html">
-      <div class="cc-header">
-        <div class="cc-initials">AA</div>
-        <div class="cc-name">April &amp; Arthur</div>
-        <div class="cc-meta">~$93K/mo Revenue &nbsp;·&nbsp; CAC:LTV 10.6:1</div>
-      </div>
-      <div class="cc-strength">
-        <span class="cc-strength-label">Biggest Strength</span>
-        <span class="cc-strength-val">Best CPL in the cohort at $0.94 — how to build a dual-funnel ad system with elite unit economics and a 10:1 CAC:LTV</span>
-      </div>
-      <div class="cc-resources">
-        <div class="cc-resource available">Complete Business Audit</div>
-        <div class="cc-resource available">Data Snapshot</div>
-        <div class="cc-resource available">Revenue Equilibrium</div>
-        <div class="cc-resource available">Creative Intelligence Report</div>
-        <div class="cc-resource available">Constraint Diagnosis</div>
-        <div class="cc-resource unavailable">90-Day Priority Action Plan &nbsp;<em style="font-size:9px;color:rgba(255,255,255,0.25);font-style:normal;">In Progress</em></div>
-      </div>
-      <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
-    </a>
-
-    <a class="client-card" href="client-audits/amy-jo/index.html">
-      <div class="cc-header">
-        <div class="cc-initials">AJ</div>
-        <div class="cc-name">Amy Jo Palmquest</div>
-        <div class="cc-meta">~$26K/mo Revenue &nbsp;·&nbsp; CAC:LTV ~5:1</div>
-      </div>
-      <div class="cc-strength">
-        <span class="cc-strength-label">Biggest Strength</span>
-        <span class="cc-strength-val">58% profit margins with a $1.36 CPL — how to run a lean, high-margin coaching business with elite unit economics at lower volume</span>
-      </div>
-      <div class="cc-resources">
-        <div class="cc-resource available">Complete Business Audit</div>
-        <div class="cc-resource available">Data Snapshot</div>
-        <div class="cc-resource available">Revenue Equilibrium</div>
-        <div class="cc-resource available">Creative Intelligence Report</div>
-        <div class="cc-resource available">Constraint Diagnosis</div>
-        <div class="cc-resource unavailable">90-Day Priority Action Plan &nbsp;<em style="font-size:9px;color:rgba(255,255,255,0.25);font-style:normal;">In Progress</em></div>
-      </div>
-      <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
-    </a>
-
-    <a class="client-card" href="client-audits/emily-etni/index.html">
-      <div class="cc-header">
-        <div class="cc-initials">EE</div>
-        <div class="cc-name">Emily &amp; Etni</div>
-        <div class="cc-meta">$332K Revenue &nbsp;·&nbsp; CAC:LTV 4.2:1</div>
-      </div>
-      <div class="cc-strength">
-        <span class="cc-strength-label">Biggest Strength</span>
-        <span class="cc-strength-val">Nearly 3× revenue growth in a single year — how to go from $117K to $332K and what the ad creative evolution looked like</span>
-      </div>
-      <div class="cc-resources">
-        <div class="cc-resource available">Complete Business Audit</div>
-        <div class="cc-resource available">Data Snapshot</div>
-        <div class="cc-resource available">Revenue Equilibrium</div>
-        <div class="cc-resource available">Creative Intelligence Report</div>
-        <div class="cc-resource available">Constraint Diagnosis</div>
-        <div class="cc-resource unavailable">90-Day Priority Action Plan &nbsp;<em style="font-size:9px;color:rgba(255,255,255,0.25);font-style:normal;">In Progress</em></div>
-      </div>
-      <div class="cc-footer"><span class="cc-open">Open Hub</span><span class="cc-arrow">→</span></div>
-    </a>
-
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
-<!-- ══════════ DAY 2–3 BANNER ══════════ -->
-<div class="day-banner day2 reveal">
-  <div class="day-pip">DAYS 2–3</div>
-  <div class="day-info">
-    <div class="day-eyebrow">April 2026 &nbsp;·&nbsp; Cancún</div>
-    <div class="day-title">Workshop Series &amp; Resources</div>
-    <div class="day-desc">Workshops, creative tools, calculators, AI training library, and bonus resources — all unlocking as we move through the agenda.</div>
-  </div>
-  <div class="day-badge">● Day 2 Underway</div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">2</span></div>
 </div>
 
-<!-- ══════════ 2 — WORKSHOPS ══════════ -->
-<section id="workshops">
-  <div class="section-header reveal">
-    <div>
-      <div class="section-label">Seven-Figure Retreat</div>
-      <div class="section-title">Workshop Series</div>
-    </div>
-    <div class="section-count">APRIL 2026 &nbsp;·&nbsp; CONFIDENTIAL</div>
+<!-- ═══════════════════════════════════════════════
+     SLIDE 3 — THE FRAMEWORK
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s3">
+  <div class="slide-header">
+    <h2>Your Filter for Everything in This Workshop</h2>
+    <span class="section-tag">The Framework</span>
   </div>
-  <div class="workshops-grid stagger">
-    <a class="workshop-card" href="7f-workshops/ad-creative-workshop.html">
-      <div class="card-category"><span class="cat-pill live">● Live</span><span class="card-num">01</span></div>
-      <div class="card-icon">🎯</div>
-      <div class="card-title">Ad Creative<br>Process Workshop</div>
-      <div class="card-desc">The full Andromeda era framework — Entity ID principle, hook and hold rate KPIs, kill rules, competitor intelligence, creative cadence, and live entity audit. The systematic creative machine behind $90K/month on Meta.</div>
-      <div class="card-meta"><span class="card-slides">22 SLIDES &nbsp;·&nbsp; 3.5 HRS</span><div class="card-arrow">→</div></div>
-    </a>
-    <div class="workshop-card" style="cursor:default;opacity:0.55;">
-      <div class="card-category"><span class="cat-pill coming">⏳ Unlocks Tomorrow</span><span class="card-num">02</span></div>
-      <div class="card-icon">🤖</div>
-      <div class="card-title">Agentic AI<br>Workshop</div>
-      <div class="card-desc">How to integrate the new wave of agentic AI tools into your business to save time, cut costs, and remove yourself from low-leverage work — across research, content, client operations, and ad production.</div>
-      <div class="card-meta"><span class="card-slides">UNLOCKS TOMORROW</span><div class="card-arrow" style="opacity:.3;">→</div></div>
-    </div>
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
-<!-- ══════════ 3 — AD CREATIVE TOOLS ══════════ -->
-<section id="creative-tools">
-  <div class="section-header reveal">
-    <div>
-      <div class="section-label">Creative Intelligence Flow</div>
-      <div class="section-title">Ad Creative Tools</div>
-    </div>
-    <div class="section-count">3-TOOL SYSTEM &nbsp;·&nbsp; ALL LIVE</div>
-  </div>
-  <div class="tool3-grid stagger">
-    <a class="creative-card" href="ad-creative-tools/creative-swipe-brief-builder.html">
-      <div class="tool-icon">🔍</div>
-      <div class="tool-title">Creative Swipe Brief Builder</div>
-      <div class="tool-desc">Paste your competitor intelligence report — the AI parses every hook, format, and angle, maps the white space, and outputs shoot-ready entity briefs. Start here.</div>
-      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
-    </a>
-    <a class="creative-card" href="ad-creative-tools/entity-audit-worksheet.html">
-      <div class="tool-icon">🗂️</div>
-      <div class="tool-title">Entity Audit Worksheet</div>
-      <div class="tool-desc">Map your current ad library by format, hook type, and emotion. Instantly see how many real entities you have vs. how many ads — and exactly what gaps to fill next.</div>
-      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
-    </a>
-    <a class="creative-card" href="ad-creative-tools/weekly-creative-brief.html">
-      <div class="tool-icon">📋</div>
-      <div class="tool-title">Weekly Creative Brief</div>
-      <div class="tool-desc">Dump your Swipe Brief output, Entity Audit, KPI data, and spend level into one box. The AI builds a fully scripted shoot plan — concept map, prioritized shoot cards, verbatim hooks, filming notes, and refinement prompts to iterate live in Claude. Step 3 of 3.</div>
-      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
-    </a>
-  </div>
-  <div class="flow-diagram reveal">
-    <div class="flow-intro">The Creative Intelligence Flow — how all four steps connect inside your Claude Project</div>
-    <div class="flow-nodes">
-      <div class="flow-node source"><div class="fn-step">Foundation</div><div class="fn-name">Claude<br>Project Setup</div><div class="fn-sub">Data constraints +<br>copy kit + intel report</div></div>
-      <div class="flow-arrow-node">→</div>
-      <div class="flow-node tool"><div class="fn-step">Step 1</div><div class="fn-name">Swipe Brief<br>Builder</div><div class="fn-sub">Intel report → AI<br>maps entity gaps</div></div>
-      <div class="flow-arrow-node">→</div>
-      <div class="flow-node tool"><div class="fn-step">Step 2</div><div class="fn-name">Entity Audit<br>Worksheet</div><div class="fn-sub">Map your live library<br>→ find real gaps</div></div>
-      <div class="flow-arrow-node">→</div>
-      <div class="flow-node tool"><div class="fn-step">Step 3</div><div class="fn-name">Weekly Creative<br>Brief</div><div class="fn-sub">Dump all data →<br>scripted shoot plan</div></div>
-      <div class="flow-arrow-node">→</div>
-      <div class="flow-output"><div class="fo-step">Step 4</div><div class="fo-name">Film &amp; Launch</div><div class="fo-sub">Measure → feed back in<br>→ brief gets smarter</div></div>
-    </div>
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
-<!-- ══════════ 4 — INTERACTIVE CALCULATORS ══════════ -->
-<section id="calculators">
-  <div class="section-header reveal">
-    <div>
-      <div class="section-label">Ad Performance Tools</div>
-      <div class="section-title">Interactive Calculators &amp; Trackers</div>
-    </div>
-    <div class="section-count">RUN THE NUMBERS DAILY</div>
-  </div>
-  <div class="tool3-grid stagger">
-    <a class="calc-card" href="interactive-calculators/data-constraints-tracker.html">
-      <div class="tool-icon">📊</div>
-      <div class="tool-title">Data Constraints Snapshot</div>
-      <div class="tool-desc">Monthly input form — CPL, cost per call, close rate, ROAS — outputs a full constraint diagnosis with ranked priorities and recommended actions. Start here — know your bottleneck before you touch budget.</div>
-      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
-    </a>
-    <a class="calc-card" href="interactive-calculators/budget-scale-planner.html">
-      <div class="tool-icon">💸</div>
-      <div class="tool-title">Budget &amp; Scale Planner</div>
-      <div class="tool-desc">Input your monthly budget and get the exact campaign structure, new creatives per week, rotation cadence, and the Launch 50 / Run 10 plan. Know how to allocate every dollar.</div>
-      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
-    </a>
-    <a class="calc-card" href="interactive-calculators/kpi-calculator.html">
-      <div class="tool-icon">🎯</div>
-      <div class="tool-title">Ad Testing KPI Calculator</div>
-      <div class="tool-desc">Input your offer price and get your exact CAC max, cost per qualified call target, hook rate thresholds, and kill rules for new vs. existing ads. The math behind every testing decision.</div>
-      <div class="tool-footer"><span class="tool-status live">● Live</span><div class="tool-arrow">→</div></div>
-    </a>
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
-<!-- ══════════ 5 — AI TRAINING LIBRARY ══════════ -->
-<section id="ai-tools" class="ai-tools-section">
-  <div class="section-header reveal">
-    <div>
-      <div class="section-label">AI Integration Workshop</div>
-      <div class="section-title">AI Training Library</div>
-    </div>
-    <div class="section-count">14 MINI-TRAININGS &nbsp;·&nbsp; SELF-PACED</div>
-  </div>
-
-  <div class="ai-workshop-banner reveal">
-    <div class="aib-left">
-      <div class="aib-icon">🤖</div>
-      <div>
-        <div class="aib-label">Workshop &nbsp;·&nbsp; Unlocks Tomorrow</div>
-        <div class="aib-title">AI Integration Workshop — The Full Session</div>
-        <div class="aib-desc">The high-level overview: LLMs vs. Agents, the three-domain framework, live demos, and how to prioritize your first build.</div>
+  <div class="slide-body">
+    <div style="display: flex; gap: 0; background: var(--navy); border-radius: 12px; overflow: hidden; flex: 0;">
+      <div style="flex: 1; padding: 28px 30px; border-right: 1px solid rgba(255,255,255,0.08);">
+        <div style="font-family: 'DM Mono'; font-size: 10px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">Step 01</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 36px; color: var(--white); letter-spacing: 1px; margin-bottom: 10px;">Determine<br>Priority</div>
+        <div style="font-size: 13px; color: var(--blue-mid); line-height: 1.6;">What is your #1 bottleneck right now? Marketing output, sales conversion, client fulfillment load? Write it down — this is your filter.</div>
+      </div>
+      <div style="flex: 1; padding: 28px 30px; border-right: 1px solid rgba(255,255,255,0.08); background: rgba(232,119,34,0.07);">
+        <div style="font-family: 'DM Mono'; font-size: 10px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">Step 02</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 36px; color: var(--white); letter-spacing: 1px; margin-bottom: 10px;">Uncover<br>Possibility</div>
+        <div style="font-size: 13px; color: var(--blue-mid); line-height: 1.6;">Which AI use case directly addresses your constraint? Today you'll see the full landscape — your job is to match it to your problem.</div>
+      </div>
+      <div style="flex: 1; padding: 28px 30px;">
+        <div style="font-family: 'DM Mono'; font-size: 10px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">Step 03</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 36px; color: var(--white); letter-spacing: 1px; margin-bottom: 10px;">Explore<br>Product</div>
+        <div style="font-size: 13px; color: var(--blue-mid); line-height: 1.6;">Pick the right tool for that one job. Build or deploy the system. Use it consistently before stacking the next one.</div>
       </div>
     </div>
-    <div class="aib-right">
-      <span class="aib-pill">⏳ Unlocks Tomorrow</span>
-      <div class="aib-arr">→</div>
-    </div>
-  </div>
-
-  <div class="ai-cat-label">Getting Started</div>
-  <div class="mini-grid stagger">
-    <div class="mini-card cs"><div class="mc-icon">🚀</div><div class="mc-title">Getting Started with Claude</div><div class="mc-desc">Plans, models, interface orientation, and the five things to set up before your first real work session.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">🔄</div><div class="mc-title">Migrating from ChatGPT to Claude</div><div class="mc-desc">What's different, what carries over, and how to move your prompts, workflows, and context without starting from zero.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">⚡</div><div class="mc-title">Optimizing &amp; Saving Claude Usage</div><div class="mc-desc">Why tokens run out faster than you expect, the model selection lever, and 10 habits that can double your effective daily budget.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">🎨</div><div class="mc-title">How Artifacts Work</div><div class="mc-desc">What artifacts are, when Claude creates them, and how to use the Publish trick for long iterative builds.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
-  </div>
-
-  <div class="ai-cat-label">Marketing</div>
-  <div class="mini-grid stagger">
-    <div class="mini-card cs"><div class="mc-icon">📊</div><div class="mc-title">Claude Instagram Audit</div><div class="mc-desc">Paste your IG URL and get a full audit: bio, content mix, hooks, engagement gaps, and a prioritized optimization report.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">🧠</div><div class="mc-title">Micro Lead Magnet Quizzes</div><div class="mc-desc">Build a free interactive HTML quiz in 30 minutes using Claude — hosted on GitHub for $0/month, with 70–85% completion rates vs. PDF downloads.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">🎨</div><div class="mc-title">Creating Canva Designs in Claude</div><div class="mc-desc">Design carousels, graphics, and presentations using Claude's Canva connector — no manual design required.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">📱</div><div class="mc-title">Posting to Instagram from Claude</div><div class="mc-desc">The CoWork + Zapier pipeline: approve content in Notion, auto-schedule to IG. Your VA approves, Claude publishes.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-  </div>
-
-  <div class="ai-cat-label navy-cat">Sales &amp; Automation</div>
-  <div class="mini-grid cols-3 stagger">
-    <div class="mini-card cs"><div class="mc-icon">💬</div><div class="mc-title">Claude ManyChat Automations</div><div class="mc-desc">Build DM qualification flows that score leads, route hot prospects to booking, and send unqualified leads to nurture — zero closer time wasted.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">🔁</div><div class="mc-title">Comment Response Automation</div><div class="mc-desc">Auto-respond to IG comments using ManyChat triggers and Claude-generated replies — keeps your content alive without manual monitoring.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">📋</div><div class="mc-title">Pre-Call Brief Builder</div><div class="mc-desc">Lead submits form → Claude generates a full pre-call brief: background, pain points, likely objections, recommended angle.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
-  </div>
-
-  <div class="ai-cat-label gray-cat">Advanced Builds</div>
-  <div class="mini-grid stagger">
-    <div class="mini-card cs"><div class="mc-icon">🔍</div><div class="mc-title">Manus + Claude + Foreplay</div><div class="mc-desc">The competitor intelligence research stack. 30 minutes to a 30-page brief with ad hooks, angles, and white space mapped.</div><div class="mc-foot"><span class="mc-status">⏳ Unlocks Tomorrow</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">🎨</div><div class="mc-title">Figma AI + Carousel Automation</div><div class="mc-desc">Automated carousel image generation in batch — 10 minutes per batch. Fully hands-off visual production at scale.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">⚙️</div><div class="mc-title">GHL + Claude Code Integration</div><div class="mc-desc">Connect GoHighLevel to Claude Code for automated page builds, funnel updates, and CRM workflow automation.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
-    <div class="mini-card cs"><div class="mc-icon">💻</div><div class="mc-title">Claude Code + GitHub Pages</div><div class="mc-desc">Build and deploy custom HTML tools, dashboards, and mini-training pages using Claude Code and free GitHub hosting.</div><div class="mc-foot"><span class="mc-status">Coming Soon</span><div class="mc-arr">→</div></div></div>
-  </div>
-</section>
-
-<!-- ══════════ AGENT SKILLS ══════════ -->
-<div class="agent-section">
-  <div class="agent-inner reveal">
-    <div class="agent-header">
-      <div>
-        <div class="agent-label">Bonus Resource &nbsp;·&nbsp; AI Tools</div>
-        <div class="agent-title">Agent Skills &amp; Prompts Library</div>
-        <div class="agent-subtitle">Pre-built Claude skills and prompt collections that plug directly into your IFCA workflow. Install a skill inside a Claude Project — then call any repeatable task with a single command. No re-prompting required.</div>
+    <div style="background: var(--white); border-radius: 10px; padding: 18px 24px; border: 1px solid var(--gray-200); flex: 0;">
+      <div style="font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 10px;">✏️ &nbsp;Live Exercise — Write Your Answer Now</div>
+      <div style="display: flex; gap: 20px;">
+        <div style="flex: 1;">
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 4px;">My #1 Bottleneck Right Now</div>
+          <div style="background: var(--gray-100); border-radius: 6px; height: 36px; border: 1px dashed var(--gray-400);"></div>
+        </div>
+        <div style="flex: 1;">
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 4px;">Domain (Marketing / Sales / Fulfillment)</div>
+          <div style="background: var(--gray-100); border-radius: 6px; height: 36px; border: 1px dashed var(--gray-400);"></div>
+        </div>
+        <div style="flex: 1;">
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 4px;">Hours/Week Lost to This</div>
+          <div style="background: var(--gray-100); border-radius: 6px; height: 36px; border: 1px dashed var(--gray-400);"></div>
+        </div>
       </div>
-      <div class="agent-badge">EXPANDING</div>
     </div>
-    <div class="agent-grid stagger">
-      <a class="agent-card coming-soon">
-        <div class="agent-card-icon">⚡</div>
-        <div class="agent-card-title">Skills Library</div>
-        <div class="agent-card-desc">Pre-built slash-command skills for hook generation, ad scripting, competitor analysis, content calendars, check-in responses, and more. Download and install directly into your Claude Project.</div>
-        <div class="agent-card-status">Coming Soon</div>
-      </a>
-      <a class="agent-card coming-soon">
-        <div class="agent-card-icon">📝</div>
-        <div class="agent-card-title">Prompts Library</div>
-        <div class="agent-card-desc">Curated prompt collection organized by use case — creative, research, offer optimization, content, sales, client ops. Copy, paste, run. No prompt engineering required.</div>
-        <div class="agent-card-status">Coming Soon</div>
+    <div class="callout" style="flex: 0;">
+      <p>This exercise comes back at the end. Every use case you see today — run it through this filter. <strong>Does it address my #1 bottleneck?</strong> If yes, circle it. That's your first build.</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">3</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 4 — LLM VS AGENTS
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s4">
+  <div class="slide-header">
+    <h2>The AI Landscape in 2026 — What's Actually Different</h2>
+    <span class="section-tag">Foundation</span>
+  </div>
+  <div class="slide-body" style="gap: 10px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; flex: 0;">
+      <div style="background: var(--white); border-radius: 10px; padding: 18px; border: 1px solid var(--gray-200); border-top: 3px solid var(--navy);">
+        <div style="font-family: 'DM Mono'; font-size: 10px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px;">Layer 01</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 26px; color: var(--navy); letter-spacing: 1px; margin-bottom: 8px;">LLM Chat</div>
+        <div style="font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">A brilliant thinking partner you have a conversation with. Generates, analyzes, edits, plans. Lives inside a chat window.</div>
+        <div class="chip-row">
+          <span class="chip navy">Claude Chat</span>
+          <span class="chip navy">ChatGPT</span>
+        </div>
+      </div>
+      <div style="background: var(--white); border-radius: 10px; padding: 18px; border: 1px solid var(--gray-200); border-top: 3px solid var(--orange);">
+        <div style="font-family: 'DM Mono'; font-size: 10px; color: var(--orange); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px;">Layer 02</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 26px; color: var(--navy); letter-spacing: 1px; margin-bottom: 8px;">Agent</div>
+        <div style="font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">That same thinking partner — but now it has <strong style="color:var(--navy);">tools, memory, and can take action</strong>. It doesn't just answer — it executes steps, reads files, triggers workflows.</div>
+        <div class="chip-row">
+          <span class="chip orange">CoWork</span>
+          <span class="chip orange">Claude Code</span>
+        </div>
+      </div>
+      <div style="background: var(--navy); border-radius: 10px; padding: 18px; border: 1px solid var(--navy-light);">
+        <div style="font-family: 'DM Mono'; font-size: 10px; color: var(--orange); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px;">Layer 03</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 26px; color: var(--white); letter-spacing: 1px; margin-bottom: 8px;">Agentic Workflow</div>
+        <div style="font-size: 12px; color: var(--blue-mid); line-height: 1.6; margin-bottom: 10px;">A <strong style="color:var(--white);">system of agents</strong> running a process — often without you in the loop. Input triggers a chain of actions across multiple tools.</div>
+        <div class="chip-row">
+          <span class="chip orange">GHL + Zapier</span>
+          <span class="chip orange">ManyChat</span>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; gap: 10px; flex: 0;">
+      <div style="flex: 1; background: var(--orange-pale); border-radius: 8px; padding: 14px 18px; border: 1px solid rgba(232,119,34,0.2);">
+        <div style="font-size: 12px; font-weight: 600; color: var(--orange); margin-bottom: 4px;">Where You Are Today</div>
+        <div style="font-size: 12px; color: var(--text); line-height: 1.5;">Most of you are at Layer 1 — using AI to chat, write, and think. <strong>The 10x unlock is moving to Layer 2</strong> — where Claude can take action across your business without you narrating every step.</div>
+      </div>
+      <div style="flex: 1; background: var(--gray-100); border-radius: 8px; padding: 14px 18px; border: 1px solid var(--gray-200);">
+        <div style="font-size: 12px; font-weight: 600; color: var(--navy); margin-bottom: 4px;">The Real Unlock: Compound Leverage</div>
+        <div style="font-size: 12px; color: var(--text); line-height: 1.5;">One good AI system runs while you're not working. <strong>It doesn't take vacation. It doesn't make emotional decisions. It doesn't need a Slack message.</strong> That's the business model shift.</div>
+      </div>
+    </div>
+    <div class="callout" style="flex: 0;">
+      <p>You don't need to understand the technology. You need to understand <strong>what layer solves your problem</strong> — and what to hand to your VA or success coach to build it.</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">4</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 5 — YOUR AI STACK
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s5">
+  <div class="slide-header">
+    <h2>Your Stack: Three Tools, Three Jobs</h2>
+    <span class="section-tag">Foundation</span>
+  </div>
+  <div class="slide-body" style="gap: 12px;">
+    <div style="display: flex; flex-direction: column; gap: 8px; flex: 0;">
+      <div style="display: flex; gap: 14px; align-items: stretch; background: var(--white); border-radius: 10px; padding: 16px 20px; border: 1px solid var(--gray-200); border-left: 5px solid var(--navy);">
+        <div style="min-width: 110px;">
+          <div style="font-family: 'Bebas Neue'; font-size: 22px; color: var(--navy); letter-spacing: 1px;">Claude</div>
+          <div style="font-family: 'DM Mono'; font-size: 9px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase;">Chat + Projects</div>
+        </div>
+        <div style="flex: 1; border-left: 1px solid var(--gray-200); padding-left: 16px;">
+          <div style="font-size: 13px; color: var(--text); line-height: 1.6;"><strong style="color:var(--navy);">Your thinking partner and content engine.</strong> Writes in your voice, analyzes data, builds strategy, drafts copy, answers complex questions. Lives in a browser tab. <span class="highlight">Projects</span> give it persistent memory of your business — no more re-explaining context every session.</div>
+        </div>
+        <div style="min-width: 120px; text-align: right;">
+          <span class="badge badge-navy">Start Here</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 14px; align-items: stretch; background: var(--white); border-radius: 10px; padding: 16px 20px; border: 1px solid var(--gray-200); border-left: 5px solid var(--orange);">
+        <div style="min-width: 110px;">
+          <div style="font-family: 'Bebas Neue'; font-size: 22px; color: var(--navy); letter-spacing: 1px;">CoWork</div>
+          <div style="font-family: 'DM Mono'; font-size: 9px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase;">Desktop Agent</div>
+        </div>
+        <div style="flex: 1; border-left: 1px solid var(--gray-200); padding-left: 16px;">
+          <div style="font-size: 13px; color: var(--text); line-height: 1.6;"><strong style="color:var(--navy);">Claude with hands.</strong> It can open apps, browse your desktop, execute multi-step tasks, and work across your computer while you do something else. <span class="highlight">This is where 80% of your workflow automation lives.</span> Not code — CoWork handles it through your existing tools.</div>
+        </div>
+        <div style="min-width: 120px; text-align: right;">
+          <span class="badge badge-orange">High Leverage</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 14px; align-items: stretch; background: var(--white); border-radius: 10px; padding: 16px 20px; border: 1px solid var(--gray-200); border-left: 5px solid var(--gray-400);">
+        <div style="min-width: 110px;">
+          <div style="font-family: 'Bebas Neue'; font-size: 22px; color: var(--navy); letter-spacing: 1px;">Claude Code</div>
+          <div style="font-family: 'DM Mono'; font-size: 9px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase;">Advanced Builds</div>
+        </div>
+        <div style="flex: 1; border-left: 1px solid var(--gray-200); padding-left: 16px;">
+          <div style="font-size: 13px; color: var(--text); line-height: 1.6;"><strong style="color:var(--navy);">Custom tools, GitHub deploys, interactive HTML pages like this one.</strong> Used to build the mini-training library, carousels, dashboards, and automation scripts. <span style="color: var(--text-muted);">This is VA or tech-person territory — but worth knowing it exists and what it can build for you.</span></div>
+        </div>
+        <div style="min-width: 120px; text-align: right;">
+          <span class="badge" style="background: var(--gray-100); color: var(--gray-600);">Later Stage</span>
+        </div>
+      </div>
+    </div>
+    <div style="background: var(--navy); border-radius: 8px; padding: 14px 20px; display: flex; align-items: center; gap: 20px; flex: 0;">
+      <div style="font-family: 'Bebas Neue'; font-size: 18px; color: var(--orange); white-space: nowrap;">The Sequence</div>
+      <div style="font-size: 13px; color: var(--blue-light); line-height: 1.5;">Master Claude chat + Projects first → Add CoWork for execution → Use Code (or hire someone who knows it) for custom builds. Don't skip ahead. CoWork alone can 10x most of what's in this room.</div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">5</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 6 — PROJECTS
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s6">
+  <div class="slide-header">
+    <h2>Claude Projects — Stop Re-Explaining Your Business</h2>
+    <span class="section-tag">Foundation</span>
+  </div>
+  <div class="slide-body" style="gap: 12px;">
+    <div class="callout" style="flex: 0;">
+      <p>Every time you open a new Claude chat without a Project, you're starting from zero. Claude doesn't know your voice, your offer, your audience, your frameworks. <strong>You spend the first 10 messages re-uploading your business.</strong> Projects fix this permanently.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 0;">
+      <div style="background: var(--white); border-radius: 10px; padding: 18px; border: 1px solid var(--gray-200);">
+        <div style="font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--orange); display: inline-block;">What You Store in a Project</div>
+        <div class="step-list">
+          <div class="step-item" style="padding: 8px 14px;">
+            <div class="step-num orange" style="font-size: 10px; width: 22px; height: 22px;">01</div>
+            <div class="step-content"><strong>Brand Voice Doc</strong><span>Your writing style, tone, phrases you use, phrases you avoid. Claude writes as you — not as a generic AI.</span></div>
+          </div>
+          <div class="step-item" style="padding: 8px 14px;">
+            <div class="step-num orange" style="font-size: 10px; width: 22px; height: 22px;">02</div>
+            <div class="step-content"><strong>Offer + Framework Context</strong><span>What you sell, who buys it, the transformation, key objections, your methodology. No re-explaining.</span></div>
+          </div>
+          <div class="step-item" style="padding: 8px 14px;">
+            <div class="step-num orange" style="font-size: 10px; width: 22px; height: 22px;">03</div>
+            <div class="step-content"><strong>SOPs + Templates</strong><span>Your check-in templates, onboarding docs, email frameworks, DM scripts. Claude references them on demand.</span></div>
+          </div>
+          <div class="step-item" style="padding: 8px 14px;">
+            <div class="step-num orange" style="font-size: 10px; width: 22px; height: 22px;">04</div>
+            <div class="step-content"><strong>Client Data + Context</strong><span>Past wins, testimonials, client profiles. Powers personalized marketing and fulfillment without manual input every time.</span></div>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="background: var(--navy); border-radius: 10px; padding: 18px; flex: 1;">
+          <div style="font-family: 'Bebas Neue'; font-size: 20px; color: var(--orange); margin-bottom: 8px; letter-spacing: 1px;">Before Projects</div>
+          <div class="bullet-list">
+            <div class="bullet-item"><div class="bullet-dot" style="background: rgba(255,255,255,0.3);"></div><span style="color: var(--blue-mid); font-size: 12px;">Upload your brand doc every session</span></div>
+            <div class="bullet-item"><div class="bullet-dot" style="background: rgba(255,255,255,0.3);"></div><span style="color: var(--blue-mid); font-size: 12px;">Re-explain your audience, your offer, your tone</span></div>
+            <div class="bullet-item"><div class="bullet-dot" style="background: rgba(255,255,255,0.3);"></div><span style="color: var(--blue-mid); font-size: 12px;">Generic AI output that doesn't sound like you</span></div>
+            <div class="bullet-item"><div class="bullet-dot" style="background: rgba(255,255,255,0.3);"></div><span style="color: var(--blue-mid); font-size: 12px;">10 messages of context before real work starts</span></div>
+          </div>
+        </div>
+        <div style="background: #F0FDF4; border-radius: 10px; padding: 18px; border: 1px solid #BBF7D0; flex: 1;">
+          <div style="font-family: 'Bebas Neue'; font-size: 20px; color: #166534; margin-bottom: 8px; letter-spacing: 1px;">After Projects</div>
+          <div class="bullet-list">
+            <div class="bullet-item"><div class="bullet-dot" style="background: #22C55E;"></div><span style="font-size: 12px; color: #1A2840;">Open Claude, type your request, get an on-brand result</span></div>
+            <div class="bullet-item"><div class="bullet-dot" style="background: #22C55E;"></div><span style="font-size: 12px; color: #1A2840;">Context is always there — every conversation picks up where the last left off</span></div>
+            <div class="bullet-item"><div class="bullet-dot" style="background: #22C55E;"></div><span style="font-size: 12px; color: #1A2840;">Output sounds like you wrote it</span></div>
+            <div class="bullet-item"><div class="bullet-dot" style="background: #22C55E;"></div><span style="font-size: 12px; color: #1A2840;">One setup — leveraged across every future session</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">6</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 7 — THREE DOMAINS OVERVIEW
+═══════════════════════════════════════════════ -->
+<div class="slide section-divider" id="s7">
+  <div class="section-num">02</div>
+  <div class="section-label">Section 02</div>
+  <div class="section-heading">Where AI<br>Moves<br>the Needle</div>
+  <div class="section-desc">Three domains. Three different leverage points. Marketing gives you output at scale. Sales gives you conversion without overhead. Fulfillment gives you capacity without headcount.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 8 — MARKETING
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s8">
+  <div class="slide-header">
+    <h2>Marketing — Your Content Machine Doesn't Need to Sleep</h2>
+    <span class="section-tag">Domain 01 &mdash; Marketing</span>
+  </div>
+  <div class="slide-body" style="gap: 10px;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; flex: 0;">
+      <div class="entity-card orange-top">
+        <div class="e-label">Content at Scale</div>
+        <div class="e-title">Voice-Matched Output</div>
+        <div class="e-body">30 days of content in a single session. Reels scripts, carousels, captions — all in your voice via a brand voice project. No more blank page.</div>
+      </div>
+      <div class="entity-card">
+        <div class="e-label">Ad Creative</div>
+        <div class="e-title">Hooks, Angles & Variations</div>
+        <div class="e-body">Generate 10 hook variations from a winning concept. Competitor angle research. Brief creation for your video team. Test more, spend less on losers.</div>
+      </div>
+      <div class="entity-card orange-top">
+        <div class="e-label">Research</div>
+        <div class="e-title">Market Intelligence</div>
+        <div class="e-body">IG Audit Agent analyzes your profile and gives a full optimization report. Competitor content mining. ICP interview synthesis into marketing angles.</div>
+      </div>
+      <div class="entity-card">
+        <div class="e-label">Design</div>
+        <div class="e-title">Carousels in Claude</div>
+        <div class="e-body">Build branded carousel graphics without Canva. Generate slide copy, visuals, and publish — all from one prompt chain.</div>
+      </div>
+      <div class="entity-card orange-top">
+        <div class="e-label">Distribution</div>
+        <div class="e-title">Auto-Post to Social</div>
+        <div class="e-body">CoWork + Zapier pipeline: content approved in Notion → auto-scheduled to IG, LinkedIn, Facebook. Your VA approves, Claude publishes.</div>
+      </div>
+      <div class="entity-card">
+        <div class="e-label">Repurposing</div>
+        <div class="e-title">One Piece → Many</div>
+        <div class="e-body">Podcast episode → 5 reels scripts + 3 carousels + 2 emails. The leverage math: 1 hour of content creation becomes 10 pieces of distribution.</div>
+      </div>
+    </div>
+    <div style="background: var(--navy); border-radius: 8px; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; flex: 0;">
+      <div style="font-size: 13px; color: var(--blue-light); line-height: 1.5; flex: 1;">Real example: <strong style="color:white;">Darius Lukas replaced a $25K/month marketing team</strong> with a $10K/month AI-native setup — saving $180K/year while <em>increasing</em> content output.</div>
+      <div style="font-family: 'Bebas Neue'; font-size: 22px; color: var(--orange); white-space: nowrap; padding-left: 20px;">$180K/yr Saved</div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">8</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 8B — LIVE DEMO: QUIZ LEAD MAGNET
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s8b">
+  <div class="slide-header">
+    <h2>Live Demo — The Hormone Quiz Funnel</h2>
+    <span class="section-tag">Domain 01 &mdash; Marketing · Live Build</span>
+  </div>
+  <div class="slide-body" style="gap: 8px;">
+
+    <!-- Top: Facilitator quote + live URL -->
+    <div style="display: grid; grid-template-columns: 1fr auto; gap: 12px; flex: 0; align-items: stretch;">
+      <div class="callout" style="margin: 0;">
+        <p>"I'm going to show you something I built in <strong>30 minutes</strong> with more persuasive power than any PDF lead magnet you've ever made. One conversation with Claude. One free GitHub account. Here's the live URL — let me click through it."</p>
+      </div>
+      <a href="https://jordandugger.github.io/Hormone-quiz.html/" target="_blank" style="background: var(--orange); border-radius: 10px; padding: 14px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; gap: 4px; min-width: 160px; flex-shrink: 0;">
+        <div style="font-size: 20px;">🔗</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 14px; color: white; letter-spacing: 1px; text-align: center;">Open Live Demo</div>
+        <div style="font-family: 'DM Mono'; font-size: 9px; color: rgba(255,255,255,0.8); letter-spacing: 0.5px; text-align: center;">jordandugger.github.io</div>
       </a>
     </div>
+
+    <!-- Middle: Three columns -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; flex: 1;">
+
+      <!-- Col 1: Why quizzes win -->
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="background: var(--white); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--gray-200); border-top: 3px solid var(--orange);">
+          <div style="font-size: 11px; font-weight: 600; color: var(--navy); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Why Quizzes Beat PDFs</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 8px;">
+            <div style="background: #FEE2E2; border-radius: 6px; padding: 8px 10px; text-align: center;">
+              <div style="font-family: 'Bebas Neue'; font-size: 22px; color: #991B1B; line-height: 1;">20–30%</div>
+              <div style="font-size: 10px; color: #991B1B; font-weight: 600;">PDF opens it</div>
+            </div>
+            <div style="background: #DCFCE7; border-radius: 6px; padding: 8px 10px; text-align: center;">
+              <div style="font-family: 'Bebas Neue'; font-size: 22px; color: #166534; line-height: 1;">70–85%</div>
+              <div style="font-size: 10px; color: #166534; font-weight: 600;">Quiz finishes</div>
+            </div>
+          </div>
+          <div class="bullet-list">
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size:11px;">Answer Q1 → they're committed, they want the result</span></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size:11px;">Result page is your pitch — feels like help, not sales</span></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size:11px;">GitHub hosting = $0/month. URL never expires.</span></div>
+          </div>
+        </div>
+        <!-- GHL note -->
+        <div style="background: var(--gray-100); border-radius: 8px; padding: 10px 14px; border: 1px solid var(--gray-200);">
+          <div style="font-size: 10px; font-weight: 600; color: var(--navy); margin-bottom: 4px;">GHL Users: Best Approach</div>
+          <div class="bullet-list">
+            <div class="bullet-item"><div class="bullet-dot" style="background: #22C55E;"></div><span style="font-size:11px;"><strong>Host on GitHub</strong> → iframe embed inside GHL page</span></div>
+            <div class="bullet-item"><div class="bullet-dot" style="background: #EF4444;"></div><span style="font-size:11px;"><strong>Don't paste raw HTML</strong> into GHL — JS breaks</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Col 2: The formula -->
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="background: var(--white); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--gray-200); flex: 0;">
+          <div style="font-size: 11px; font-weight: 600; color: var(--navy); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">The Formula — Don't Deviate</div>
+          <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 8px;">
+            <div style="background: var(--orange-pale); border: 1px solid rgba(232,119,34,0.25); border-radius: 5px; padding: 5px 10px; font-size: 11px; font-weight: 600; color: var(--orange);">5 questions max</div>
+            <div style="background: var(--orange-pale); border: 1px solid rgba(232,119,34,0.25); border-radius: 5px; padding: 5px 10px; font-size: 11px; font-weight: 600; color: var(--orange);">3 result types</div>
+            <div style="background: var(--orange-pale); border: 1px solid rgba(232,119,34,0.25); border-radius: 5px; padding: 5px 10px; font-size: 11px; font-weight: 600; color: var(--orange);">Multiple choice only</div>
+            <div style="background: var(--orange-pale); border: 1px solid rgba(232,119,34,0.25); border-radius: 5px; padding: 5px 10px; font-size: 11px; font-weight: 600; color: var(--orange);">One CTA on result page</div>
+          </div>
+          <div style="font-size: 11px; color: var(--text-muted); line-height: 1.5; border-top: 1px solid var(--gray-200); padding-top: 8px;"><strong style="color:var(--navy);">Title rule:</strong> sounds like something your client Googles at 11pm. <em>"Why Are You Always Tired?"</em> converts. <em>"Health Quiz"</em> does not.</div>
+        </div>
+        <!-- Before/after cost -->
+        <div style="background: var(--navy); border-radius: 10px; padding: 14px 16px; flex: 1;">
+          <div style="font-size: 11px; font-weight: 600; color: var(--orange); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">The Old Way vs. New Way</div>
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px;">
+              <span style="color: rgba(255,255,255,0.4);">Designer</span><span style="color: #fca5a5; font-family:'DM Mono';">$500</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px;">
+              <span style="color: rgba(255,255,255,0.4);">Quiz platform/month</span><span style="color: #fca5a5; font-family:'DM Mono';">$50/mo</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px;">
+              <span style="color: rgba(255,255,255,0.4);">Developer (when it breaks)</span><span style="color: #fca5a5; font-family:'DM Mono';">$200</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px;">
+              <span style="color: rgba(255,255,255,0.4);">Timeline</span><span style="color: #fca5a5; font-family:'DM Mono';">2–3 weeks</span>
+            </div>
+            <div style="height: 1px; background: rgba(255,255,255,0.08); margin: 6px 0;"></div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px;">
+              <span style="color: rgba(255,255,255,0.5);">Claude prompt</span><span style="color: #86efac; font-family:'DM Mono'; font-weight:600;">$0</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px;">
+              <span style="color: rgba(255,255,255,0.5);">GitHub Pages hosting</span><span style="color: #86efac; font-family:'DM Mono'; font-weight:600;">$0 forever</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px;">
+              <span style="color: rgba(255,255,255,0.5);">Total time</span><span style="color: #86efac; font-family:'DM Mono'; font-weight:600;">30 minutes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Col 3: Live exercise -->
+      <div style="background: var(--navy); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;">
+        <div style="font-family: 'Bebas Neue'; font-size: 16px; color: var(--orange); letter-spacing: 1px;">Live Exercise — Do This Now</div>
+        <div class="step-list" style="gap: 6px;">
+          <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 7px 11px;">
+            <div class="step-num" style="background: var(--orange); width:20px; height:20px; font-size:10px; flex-shrink:0;">1</div>
+            <div class="step-content"><strong style="color:white; font-size:11px;">Pick your quiz title</strong><span style="color:var(--blue-mid); font-size:10px;">From the idea bank in your mini-training, or write one that fits your niche</span></div>
+          </div>
+          <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 7px 11px;">
+            <div class="step-num" style="background: var(--orange); width:20px; height:20px; font-size:10px; flex-shrink:0;">2</div>
+            <div class="step-content"><strong style="color:white; font-size:11px;">Fill in the prompt template</strong><span style="color:var(--blue-mid); font-size:10px;">Your specialty, 3 result type names, your booking link</span></div>
+          </div>
+          <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 7px 11px;">
+            <div class="step-num" style="background: var(--orange); width:20px; height:20px; font-size:10px; flex-shrink:0;">3</div>
+            <div class="step-content"><strong style="color:white; font-size:11px;">Open Claude → paste → run</strong><span style="color:var(--blue-mid); font-size:10px;">Working first draft in ~60 seconds</span></div>
+          </div>
+          <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 7px 11px;">
+            <div class="step-num" style="background: var(--orange); width:20px; height:20px; font-size:10px; flex-shrink:0;">4</div>
+            <div class="step-content"><strong style="color:white; font-size:11px;">One follow-up prompt</strong><span style="color:var(--blue-mid); font-size:10px;">Brand color, your logo, or embed a podcast episode</span></div>
+          </div>
+          <div class="step-item" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); padding: 7px 11px;">
+            <div class="step-num" style="background: var(--orange); width:20px; height:20px; font-size:10px; flex-shrink:0;">5</div>
+            <div class="step-content"><strong style="color:white; font-size:11px;">Push to GitHub Pages</strong><span style="color:var(--blue-mid); font-size:10px;">5-step walkthrough in your mini-training — live URL in 60 seconds</span></div>
+          </div>
+        </div>
+        <div style="background: var(--orange); border-radius: 6px; padding: 8px 12px; margin-top: auto;">
+          <div style="font-size: 11px; color: white; line-height: 1.4;">"The skill isn't coding. <strong>The skill is knowing what to ask for.</strong> Claude builds it — you direct the strategy."</div>
+        </div>
+      </div>
+    </div>
+
   </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">8B</span></div>
 </div>
 
-<div class="section-divider"></div>
+<!-- ═══════════════════════════════════════════════
+     SLIDE 9 — SALES
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s9">
+  <div class="slide-header">
+    <h2>Sales — Turn Every Closer Into an Order-Taker</h2>
+    <span class="section-tag">Domain 02 &mdash; Sales</span>
+  </div>
+  <div class="slide-body" style="gap: 10px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 0;">
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div class="step-item">
+          <div class="step-num orange">1</div>
+          <div class="step-content">
+            <strong>DM Qualification Automation</strong>
+            <span>ManyChat flow asks the right questions, scores the lead, routes qualified prospects directly to a booking link. Closers only talk to people who are ready.</span>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num orange">2</div>
+          <div class="step-content">
+            <strong>Pre-Call Research Brief</strong>
+            <span>Lead fills out a form → Claude generates a full pre-call brief: background, pain points, likely objections, recommended angle. Closer walks in prepared.</span>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num orange">3</div>
+          <div class="step-content">
+            <strong>Post-Call Review + Coaching</strong>
+            <span>Paste in call transcript → Claude identifies missed objections, scores against your script, generates a Loom coaching note for the closer. Feedback loop closes automatically.</span>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num orange">4</div>
+          <div class="step-content">
+            <strong>Objection Prep Library</strong>
+            <span>Upload your top 20 objections → Claude builds a custom objection handling guide in your methodology. New closers ramp in days, not months.</span>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="background: var(--navy); border-radius: 10px; padding: 20px; flex: 1;">
+          <div style="font-family: 'Bebas Neue'; font-size: 18px; color: var(--orange); letter-spacing: 1px; margin-bottom: 12px;">The Leverage Math</div>
+          <div class="kpi-row" style="gap: 8px; flex-direction: column;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(255,255,255,0.06); border-radius: 6px;">
+              <span style="font-size: 12px; color: var(--blue-mid);">Hours saved per closer/day</span>
+              <span style="font-family: 'Bebas Neue'; font-size: 20px; color: var(--orange);">2 hrs</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(255,255,255,0.06); border-radius: 6px;">
+              <span style="font-size: 12px; color: var(--blue-mid);">Value of that time at $500/hr</span>
+              <span style="font-family: 'Bebas Neue'; font-size: 20px; color: var(--orange);">$1K/day</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(255,255,255,0.06); border-radius: 6px;">
+              <span style="font-size: 12px; color: var(--blue-mid);">Annualized per closer</span>
+              <span style="font-family: 'Bebas Neue'; font-size: 20px; color: var(--orange);">$260K</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(232,119,34,0.15); border-radius: 6px; border: 1px solid rgba(232,119,34,0.3);">
+              <span style="font-size: 12px; color: var(--orange); font-weight: 600;">Close rate lift from prep</span>
+              <span style="font-family: 'Bebas Neue'; font-size: 20px; color: #4ADE80;">+15–25%</span>
+            </div>
+          </div>
+        </div>
+        <div class="callout" style="background: var(--orange-pale); border-left-color: var(--orange);">
+          <p style="color: var(--text);">The goal isn't to replace closers with AI. It's to make every closer perform like your <strong>best</strong> closer — consistently.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">9</span></div>
+</div>
 
-<!-- ══════════ 6 — BONUS RESOURCES ══════════ -->
-<section id="bonus" class="bonus-section">
-  <div class="section-header reveal">
-    <div>
-      <div class="section-label">Supplemental Training</div>
-      <div class="section-title">Bonus Resources</div>
-    </div>
-    <div class="section-count">REFERENCE &amp; DEEP DIVES</div>
+<!-- ═══════════════════════════════════════════════
+     SLIDE 10 — FULFILLMENT
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s10">
+  <div class="slide-header">
+    <h2>Fulfillment — Serve 50+ Clients Without Burning Out Your Team</h2>
+    <span class="section-tag">Domain 03 &mdash; Fulfillment</span>
   </div>
-  <div class="bonus-grid stagger">
-    <div class="bonus-card coming-soon">
-      <div class="bonus-icon">🔁</div>
-      <div class="bonus-title">Show Rate Optimization Training</div>
-      <div class="bonus-desc">TY page structure, pre-call LNS sequences, calendar strategy, and the benchmarks behind a 70%+ show rate. Based on Jeremy Haynes' framework.</div>
-      <div class="bonus-status">⏳ Unlocks Tomorrow</div>
+  <div class="slide-body" style="gap: 10px;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; flex: 0;">
+      <div class="entity-card orange-top">
+        <div class="e-label">Check-Ins</div>
+        <div class="e-title">AI-Drafted Responses</div>
+        <div class="e-body">Client submits check-in → AI drafts a personalized, empathetic response using their history and coach notes. Coach reviews and sends in 2 minutes instead of 20.</div>
+      </div>
+      <div class="entity-card">
+        <div class="e-label">Onboarding</div>
+        <div class="e-title">Automated Welcome Flow</div>
+        <div class="e-body">New client enrolled → GHL triggers onboarding sequence: welcome email, program PDF, first check-in template, intro call prep — all without a human touch.</div>
+      </div>
+      <div class="entity-card orange-top">
+        <div class="e-label">Analysis</div>
+        <div class="e-title">Lab Work + Data Review</div>
+        <div class="e-body">For functional coaches: upload bloodwork or intake data → Claude's custom skill analyzes patterns, flags concerns, and drafts a coaching note. The AI success coach layer.</div>
+      </div>
+      <div class="entity-card">
+        <div class="e-label">Memory</div>
+        <div class="e-title">Client Context Engine</div>
+        <div class="e-body">Store every client's goals, history, preferences, and progress in a Claude Project or GHL notes. Claude references it on demand — no scrolling back through months of messages.</div>
+      </div>
+      <div class="entity-card orange-top">
+        <div class="e-label">Communication</div>
+        <div class="e-title">Templated + Personalized</div>
+        <div class="e-body">Build a library of proven communication frameworks (check-in prompts, milestone messages, re-engagement copy) and let AI personalize them per client at volume.</div>
+      </div>
+      <div class="entity-card">
+        <div class="e-label">Skills</div>
+        <div class="e-title">Custom AI Assistants</div>
+        <div class="e-body">Build a Claude Skill trained on your methodology. Your team calls it like an SOP — consistent, on-brand coaching support for every client, every time.</div>
+      </div>
     </div>
-    <div class="bonus-card coming-soon">
-      <div class="bonus-icon">🎯</div>
-      <div class="bonus-title">MOF &amp; BOF Ad Strategy Training</div>
-      <div class="bonus-desc">The full middle and bottom-of-funnel ad playbook — warm audience retargeting, short-form VSL funnels, AI UGC cloning with Arcads, and the ROAS-first KPI framework that stops you from killing ads that are actually making money.</div>
-      <div class="bonus-status">⏳ Unlocks Tomorrow</div>
-    </div>
-    <div class="bonus-card coming-soon">
-      <div class="bonus-icon">📈</div>
-      <div class="bonus-title">Offer &amp; Pricing Deep Dive</div>
-      <div class="bonus-desc">CAC/LTV math, front-end to back-end architecture, and why your offer price is the ceiling on your ad spend.</div>
-      <div class="bonus-status">Coming Soon</div>
-    </div>
-    <div class="bonus-card coming-soon">
-      <div class="bonus-icon">＋</div>
-      <div class="bonus-title">More Coming</div>
-      <div class="bonus-desc">Additional bonus training modules will be added as the resource library expands post-retreat.</div>
-      <div class="bonus-status">Coming Soon</div>
+    <div style="background: var(--navy); border-radius: 8px; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; flex: 0;">
+      <div style="font-size: 13px; color: var(--blue-light); line-height: 1.5; flex: 1;">The model shift: <strong style="color:white;">your success coaches stop being response machines and start being relationship managers.</strong> AI handles the volume; your team handles the judgment calls.</div>
+      <div style="font-family: 'Bebas Neue'; font-size: 22px; color: var(--orange); white-space: nowrap; padding-left: 20px;">10x Capacity</div>
     </div>
   </div>
-</section>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">10</span></div>
+</div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-left">
-    <div class="footer-logo">IFCA</div>
-    <div class="footer-sub">Impact Fitness Coaching Academy &nbsp;·&nbsp; ifca-playbooks &nbsp;·&nbsp; Confidential</div>
+<!-- ═══════════════════════════════════════════════
+     SLIDE 11 — THE AGENT LAYER
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s11">
+  <div class="slide-header">
+    <h2>The Agent Layer — What Becomes Possible When AI Takes Action</h2>
+    <span class="section-tag">Advanced</span>
   </div>
-  <div class="footer-right">Seven-Figure Client Retreat &nbsp;·&nbsp; April 2026<br>Jordan Dugger — Co-Founder &nbsp;·&nbsp; Cancún Legacy v1</div>
-</footer>
+  <div class="slide-body" style="gap: 10px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; flex: 0;">
+      <div style="background: var(--navy); border-radius: 10px; padding: 18px; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; border-radius: 50%; background: rgba(232,119,34,0.1);"></div>
+        <div class="e-label" style="color: var(--orange);">Demo 01</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 22px; color: var(--white); margin-bottom: 8px; letter-spacing: 1px;">IG Audit Agent</div>
+        <div style="font-size: 12px; color: var(--blue-mid); line-height: 1.6;">Paste your Instagram URL → Agent audits bio, content mix, hooks, engagement patterns, and returns a full optimization report with specific recommendations. Done in 90 seconds.</div>
+        <div style="margin-top: 10px;"><span class="badge badge-orange">Live Demo</span></div>
+      </div>
+      <div style="background: var(--navy); border-radius: 10px; padding: 18px; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; border-radius: 50%; background: rgba(232,119,34,0.1);"></div>
+        <div class="e-label" style="color: var(--orange);">Demo 02</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 22px; color: var(--white); margin-bottom: 8px; letter-spacing: 1px;">Check-In Draft Agent</div>
+        <div style="font-size: 12px; color: var(--blue-mid); line-height: 1.6;">Client check-in submitted → Agent pulls their history, reads today's submission, drafts a personalized coaching response, and flags if the coach needs to step in directly.</div>
+        <div style="margin-top: 10px;"><span class="badge badge-orange">Live Demo</span></div>
+      </div>
+      <div style="background: var(--navy); border-radius: 10px; padding: 18px; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; border-radius: 50%; background: rgba(232,119,34,0.1);"></div>
+        <div class="e-label" style="color: var(--orange);">Demo 03</div>
+        <div style="font-family: 'Bebas Neue'; font-size: 22px; color: var(--white); margin-bottom: 8px; letter-spacing: 1px;">DM Qualifier Flow</div>
+        <div style="font-size: 12px; color: var(--blue-mid); line-height: 1.6;">ManyChat DM flow → qualifies leads with 3 questions → scores them → routes hot leads directly to booking → sends unqualified leads to a nurture sequence. Zero closer time wasted.</div>
+        <div style="margin-top: 10px;"><span class="badge badge-orange">Live Demo</span></div>
+      </div>
+    </div>
+    <div style="display: flex; gap: 12px; flex: 0;">
+      <div style="flex: 1; background: var(--white); border-radius: 8px; padding: 14px 18px; border: 1px solid var(--gray-200);">
+        <div style="font-size: 12px; font-weight: 600; color: var(--navy); margin-bottom: 6px;">What's Coming — The Agentic Future</div>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size: 12px;">Multi-step agents: lead opts in → research runs → brief generated → CRM updated → closer notified → all without a human trigger</span></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size: 12px;">GHL + Zapier + Claude: the full automation stack running your pipeline while you sleep</span></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size: 12px;">AI agents that monitor your metrics and flag problems before you see them</span></div>
+        </div>
+      </div>
+      <div style="flex: 0; min-width: 260px; background: var(--orange-pale); border-radius: 8px; padding: 14px 18px; border: 1px solid rgba(232,119,34,0.2);">
+        <div style="font-size: 12px; font-weight: 600; color: var(--orange); margin-bottom: 6px;">Expectation Check</div>
+        <div style="font-size: 12px; color: var(--text); line-height: 1.6;">Agents require setup. CoWork gets you 80% there today. Full agentic systems are a VA build — not a Jordan-does-it-himself build. <strong>Know what to direct, not what to build.</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">11</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 12 — MINI TRAINING LIBRARY
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s12">
+  <div class="slide-header">
+    <h2>Your Resource Library — Everything to Go Deploy This</h2>
+    <span class="section-tag">Implementation</span>
+  </div>
+  <div class="slide-body" style="gap: 10px;">
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; flex: 0;">
+      <!-- Getting Started -->
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-family: 'DM Mono'; font-size: 9px; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; padding-bottom: 4px; border-bottom: 2px solid var(--orange);">Getting Started</div>
+        <div class="mt-card orange-top"><div class="mt-title">Migrating from ChatGPT to Claude</div></div>
+        <div class="mt-card orange-top"><div class="mt-title">Getting Started with Claude</div></div>
+        <div class="mt-card orange-top"><div class="mt-title">Setting Up Claude Projects</div></div>
+        <div class="mt-card orange-top"><div class="mt-title">How Artifacts Work</div></div>
+        <div class="mt-card orange-top"><div class="mt-title">Saving Claude Usage / Token Guide</div></div>
+      </div>
+      <!-- Marketing -->
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-family: 'DM Mono'; font-size: 9px; color: var(--navy); letter-spacing: 2px; text-transform: uppercase; padding-bottom: 4px; border-bottom: 2px solid var(--navy);">Marketing</div>
+        <div class="mt-card"><div class="mt-title">IG Audit Agent</div></div>
+        <div class="mt-card"><div class="mt-title">Carousels in Claude</div></div>
+        <div class="mt-card"><div class="mt-title">Auto-Post to Instagram</div></div>
+        <div class="mt-card"><div class="mt-title">Design in Canva with Claude</div></div>
+        <div class="mt-card"><div class="mt-title">Content Dashboard</div></div>
+        <div class="mt-card"><div class="mt-title">Editing Videos in Claude</div></div>
+      </div>
+      <!-- Sales -->
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-family: 'DM Mono'; font-size: 9px; color: var(--navy); letter-spacing: 2px; text-transform: uppercase; padding-bottom: 4px; border-bottom: 2px solid var(--navy);">Sales</div>
+        <div class="mt-card"><div class="mt-title">ManyChat DM Automation</div></div>
+        <div class="mt-card"><div class="mt-title">DM Qualification Flow</div></div>
+        <div class="mt-card"><div class="mt-title">Comment Response Automation</div></div>
+        <div class="mt-card"><div class="mt-title">Pre-Call Brief Builder</div></div>
+      </div>
+      <!-- Fulfillment -->
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-family: 'DM Mono'; font-size: 9px; color: var(--navy); letter-spacing: 2px; text-transform: uppercase; padding-bottom: 4px; border-bottom: 2px solid var(--navy);">Fulfillment</div>
+        <div class="mt-card"><div class="mt-title">Creating Claude Skills</div></div>
+        <div class="mt-card"><div class="mt-title">Onboarding Skill Setup</div></div>
+        <div class="mt-card"><div class="mt-title">Check-In Response Automation</div></div>
+        <div class="mt-card"><div class="mt-title">Lab Analysis Skill (Functional)</div></div>
+        <div class="mt-card"><div class="mt-title">Client Communication Templates</div></div>
+      </div>
+      <!-- Advanced -->
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-family: 'DM Mono'; font-size: 9px; color: var(--gray-400); letter-spacing: 2px; text-transform: uppercase; padding-bottom: 4px; border-bottom: 2px solid var(--gray-400);">Advanced</div>
+        <div class="mt-card" style="border-top-color: var(--gray-400);"><div class="mt-title">Claude Code Intro</div></div>
+        <div class="mt-card" style="border-top-color: var(--gray-400);"><div class="mt-title">HTML Pages via GitHub</div></div>
+        <div class="mt-card" style="border-top-color: var(--gray-400);"><div class="mt-title">Creating Dashboards</div></div>
+        <div class="mt-card" style="border-top-color: var(--gray-400);"><div class="mt-title">Prompt Bible</div></div>
+        <div class="mt-card" style="border-top-color: var(--gray-400);"><div class="mt-title">Marketing Skills (Code)</div></div>
+      </div>
+    </div>
+    <div style="background: var(--navy); border-radius: 8px; padding: 12px 20px; display: flex; align-items: center; gap: 20px; flex: 0;">
+      <div style="font-family: 'Bebas Neue'; font-size: 18px; color: var(--orange); white-space: nowrap;">How to Use This</div>
+      <div style="font-size: 13px; color: var(--blue-light); line-height: 1.5;">Each mini-training is a standalone guide your VA or success coach can implement. <strong style="color:white;">Your job is to direct the build, not execute it.</strong> Pick the one that addresses your bottleneck. Give it to your team. Revisit this library as you move to the next constraint.</div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">12</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 13 — PRIORITY ACTION
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s13">
+  <div class="slide-header">
+    <h2>One Constraint. One System. This Week.</h2>
+    <span class="section-tag">Action</span>
+  </div>
+  <div class="slide-body" style="gap: 12px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; flex: 0;">
+      <div style="background: var(--white); border-radius: 10px; padding: 20px; border: 1px solid var(--gray-200);">
+        <div style="font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--orange); display: inline-block;">✏️ Your Priority Action Plan</div>
+        <div class="step-list">
+          <div class="step-item" style="padding: 10px 14px;">
+            <div class="step-num orange">1</div>
+            <div class="step-content">
+              <strong>Name your #1 bottleneck</strong>
+              <span>From the exercise in Slide 3 — which single constraint is most limiting your growth right now?</span>
+            </div>
+          </div>
+          <div class="step-item" style="padding: 10px 14px;">
+            <div class="step-num orange">2</div>
+            <div class="step-content">
+              <strong>Match it to a domain</strong>
+              <span>Marketing, Sales, or Fulfillment — and identify the specific use case from this workshop that addresses it.</span>
+            </div>
+          </div>
+          <div class="step-item" style="padding: 10px 14px;">
+            <div class="step-num orange">3</div>
+            <div class="step-content">
+              <strong>Find your mini-training</strong>
+              <span>Go to the resource library. Circle the one guide your VA or success coach will implement this week.</span>
+            </div>
+          </div>
+          <div class="step-item" style="padding: 10px 14px;">
+            <div class="step-num orange">4</div>
+            <div class="step-content">
+              <strong>Run the system for 30 days</strong>
+              <span>Build one thing, use it consistently, measure the output. Then add the next system. Don't boil the ocean.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="background: var(--navy); border-radius: 10px; padding: 20px; flex: 1;">
+          <div style="font-family: 'Bebas Neue'; font-size: 20px; color: var(--orange); margin-bottom: 10px; letter-spacing: 1px;">The Principle That Scales</div>
+          <div class="bullet-list">
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="color: var(--blue-mid); font-size: 13px;"><strong style="color: white;">Constraint first,</strong> tool second. Always.</span></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="color: var(--blue-mid); font-size: 13px;"><strong style="color: white;">Direct the build,</strong> don't execute it. That's what your team is for.</span></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="color: var(--blue-mid); font-size: 13px;"><strong style="color: white;">One system,</strong> used daily, beats ten systems used occasionally.</span></div>
+            <div class="bullet-item"><div class="bullet-dot"></div><span style="color: var(--blue-mid); font-size: 13px;"><strong style="color: white;">AI doesn't replace judgment.</strong> It multiplies it. Your edge is knowing what to build.</span></div>
+          </div>
+        </div>
+        <div style="background: var(--orange-pale); border-radius: 8px; padding: 14px 18px; border: 1px solid rgba(232,119,34,0.3);">
+          <div style="font-size: 12px; font-weight: 600; color: var(--orange); margin-bottom: 4px;">What Separates the Coaches Who Win With AI</div>
+          <div style="font-size: 13px; color: var(--text); line-height: 1.6;">It's not technical skill. It's <strong>clarity on the constraint</strong> and the discipline to build one system at a time until it's running without them.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">13</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 14 — CLOSE
+═══════════════════════════════════════════════ -->
+<div class="slide content-slide" id="s14">
+  <div class="slide-header">
+    <h2>Resources, Next Steps & What's Coming</h2>
+    <span class="section-tag">Close</span>
+  </div>
+  <div class="slide-body" style="gap: 12px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; flex: 0;">
+      <div style="background: var(--white); border-radius: 10px; padding: 18px; border: 1px solid var(--gray-200); border-top: 3px solid var(--orange);">
+        <div style="font-family: 'Bebas Neue'; font-size: 18px; color: var(--navy); margin-bottom: 10px; letter-spacing: 1px;">Start Today</div>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size: 12px;">Set up your first Claude Project with your brand voice doc</span></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size: 12px;">Run the IG Audit Agent on your own profile</span></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size: 12px;">Identify your first mini-training and hand it to your team</span></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="font-size: 12px;">Download Claude for Desktop if you haven't yet</span></div>
+        </div>
+      </div>
+      <div style="background: var(--white); border-radius: 10px; padding: 18px; border: 1px solid var(--gray-200); border-top: 3px solid var(--navy);">
+        <div style="font-family: 'Bebas Neue'; font-size: 18px; color: var(--navy); margin-bottom: 10px; letter-spacing: 1px;">Access Your Library</div>
+        <div style="font-size: 13px; color: var(--text-muted); line-height: 1.7;">All mini-trainings, prompts, and workflow guides are available in your IFCA resource hub. New modules added as they're built.</div>
+        <div style="margin-top: 12px; background: var(--gray-100); border-radius: 6px; padding: 10px 14px; border: 1px solid var(--gray-200);">
+          <div style="font-family: 'DM Mono'; font-size: 11px; color: var(--navy); letter-spacing: 1px;">IFCA Resource Hub</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Workshop Index Page → AI Tools Library</div>
+        </div>
+      </div>
+      <div style="background: var(--navy); border-radius: 10px; padding: 18px;">
+        <div style="font-family: 'Bebas Neue'; font-size: 18px; color: var(--orange); margin-bottom: 10px; letter-spacing: 1px;">What's Being Built Next</div>
+        <div class="bullet-list">
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="color: var(--blue-mid); font-size: 12px;">Full GHL + Zapier automation blueprint</span></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="color: var(--blue-mid); font-size: 12px;">AI-generated UGC ad creative workflow</span></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="color: var(--blue-mid); font-size: 12px;">Prompt Bible for fitness coaches</span></div>
+          <div class="bullet-item"><div class="bullet-dot"></div><span style="color: var(--blue-mid); font-size: 12px;">CoWork Skills library for common coach tasks</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="background: var(--orange); border-radius: 10px; padding: 20px 28px; display: flex; align-items: center; justify-content: space-between; flex: 0;">
+      <div>
+        <div style="font-family: 'Bebas Neue'; font-size: 28px; color: white; letter-spacing: 1px;">The coaches who win with AI aren't the most technical.</div>
+        <div style="font-size: 14px; color: rgba(255,255,255,0.85); margin-top: 4px;">They're the ones who identify the right constraint, build one system, and run it until it becomes invisible leverage.</div>
+      </div>
+      <div style="font-family: 'Bebas Neue'; font-size: 48px; color: rgba(255,255,255,0.15); padding-left: 24px;">IFCA</div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IFCA &bull; AI Integration Workshop</span><span class="slide-num">14</span></div>
+</div>
+
+</div><!-- end #stage -->
+
+<div id="hint">← → arrow keys to navigate</div>
 
 <script>
-  const reveals = document.querySelectorAll('.reveal, .stagger');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => observer.observe(el));
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+
+const tocBar = document.getElementById('toc-bar');
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'toc-dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goTo(i);
+  tocBar.appendChild(dot);
+});
+
+function update() {
+  slides.forEach((s, i) => s.classList.toggle('active', i === current));
+  document.querySelectorAll('.toc-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  document.getElementById('slide-counter').textContent = (current + 1) + ' / ' + total;
+  document.getElementById('btn-prev').disabled = current === 0;
+  document.getElementById('btn-next').disabled = current === total - 1;
+  document.getElementById('progress-fill').style.width = ((current + 1) / total * 100) + '%';
+}
+
+function navigate(dir) {
+  current = Math.max(0, Math.min(total - 1, current + dir));
+  update();
+}
+
+function goTo(i) {
+  current = i;
+  update();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+  if (e.key === 'Home') goTo(0);
+  if (e.key === 'End') goTo(total - 1);
+});
 </script>
 </body>
 </html>

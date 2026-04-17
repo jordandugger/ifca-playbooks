@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFCA Masterclass Funnel System</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy-dark:#0B1A2B; --navy-mid:#142845; --navy-card:#1A3358;
+  --orange:#E87722; --orange-dim:rgba(232,119,34,0.12);
+  --blue-mid:#4A7FA5; --blue-dim:rgba(74,127,165,0.12);
+  --green:#22C55E; --green-dim:rgba(34,197,94,0.10);
+  --yellow:#F59E0B; --yellow-dim:rgba(245,158,11,0.10);
+  --red:#DC2626; --red-dim:rgba(220,38,38,0.10);
+  --purple:#8B5CF6;
+  --text:#F0F6FF; --muted:#8BA5C2;
+  --border:rgba(74,127,165,0.2); --border-bright:rgba(74,127,165,0.35);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--navy-dark);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.65;}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--navy-dark);}
+::-webkit-scrollbar-thumb{background:var(--border-bright);border-radius:3px;}
+
+/* ── TOP NAV ── */
+.top-nav{position:sticky;top:0;z-index:100;background:var(--navy-mid);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0;padding:0 32px;overflow-x:auto;}
+.top-nav::-webkit-scrollbar{display:none;}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--orange);letter-spacing:0.06em;padding:0 16px 0 0;border-right:1px solid var(--border);margin-right:8px;white-space:nowrap;flex-shrink:0;}
+.nav-btn{padding:14px 16px;background:none;border:none;border-bottom:3px solid transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s;letter-spacing:.02em;}
+.nav-btn:hover{color:var(--text);}
+.nav-btn.active{color:var(--orange);border-bottom-color:var(--orange);}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,#0B1A2B 0%,#152B48 55%,#0B1A2B 100%);border-bottom:2px solid var(--orange);padding:48px 40px 36px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 72px,rgba(74,127,165,0.03) 72px,rgba(74,127,165,0.03) 73px);pointer-events:none;}
+.hero-inner{max-width:960px;margin:0 auto;position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:10px;color:var(--orange);letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:56px;line-height:.95;letter-spacing:.02em;margin-bottom:12px;}
+.hero-title span{color:var(--orange);}
+.hero-desc{font-size:14px;color:var(--muted);max-width:540px;margin-bottom:20px;}
+.hero-badges{display:flex;flex-wrap:wrap;gap:8px;}
+.hbadge{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;}
+.hbadge.o{background:var(--orange-dim);border:1px solid rgba(232,119,34,.3);color:var(--orange);}
+.hbadge.b{background:var(--blue-dim);border:1px solid rgba(74,127,165,.25);color:var(--blue-mid);}
+.hbadge.g{background:var(--green-dim);border:1px solid rgba(34,197,94,.25);color:var(--green);}
+.hero-stat-box{background:var(--orange-dim);border:1px solid rgba(232,119,34,.3);border-radius:10px;padding:16px 22px;text-align:center;flex-shrink:0;}
+.hero-stat-num{font-family:'Bebas Neue',sans-serif;font-size:38px;color:var(--orange);line-height:1;}
+.hero-stat-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;}
+
+/* ── PANELS ── */
+.panel{display:none;max-width:960px;margin:0 auto;padding:36px 32px 60px;}
+.panel.active{display:block;}
+
+/* ── SECTION TITLES ── */
+.stitle{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:.04em;margin-bottom:4px;}
+.ssub{font-size:13px;color:var(--muted);margin-bottom:24px;}
+.divider{height:1px;background:var(--border);margin:36px 0;}
+
+/* ── CARDS ── */
+.card{background:var(--navy-card);border:1px solid var(--border);border-radius:10px;padding:20px;}
+.card.ol{border-left:4px solid var(--orange);}
+.card.bl{border-left:4px solid var(--blue-mid);}
+.card.gl{border-left:4px solid var(--green);}
+.card.yl{border-left:4px solid var(--yellow);}
+.card.pl{border-left:4px solid var(--purple);}
+
+/* ── GRIDS ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+@media(max-width:800px){.g2,.g3,.g4{grid-template-columns:1fr 1fr;}}
+@media(max-width:500px){.g2,.g3,.g4{grid-template-columns:1fr;}.hero-title{font-size:40px;}.hero{padding:28px 20px 24px;}.panel{padding:24px 16px 48px;}}
+
+/* ── TYPOGRAPHY ── */
+.mono{font-family:'DM Mono',monospace;}
+.label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;display:block;margin-bottom:5px;}
+.bignum{font-family:'Bebas Neue',sans-serif;font-size:32px;line-height:1;}
+.muted{color:var(--muted);}
+
+/* ── BADGES ── */
+.badge{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:3px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;}
+.badge.pass{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.3);}
+.badge.warn{background:var(--yellow-dim);color:var(--yellow);border:1px solid rgba(245,158,11,.3);}
+.badge.fail{background:var(--red-dim);color:var(--red);border:1px solid rgba(220,38,38,.3);}
+.badge.info{background:var(--blue-dim);color:var(--blue-mid);border:1px solid rgba(74,127,165,.3);}
+.badge.or{background:var(--orange-dim);color:var(--orange);border:1px solid rgba(232,119,34,.3);}
+.badge.req{background:var(--orange-dim);color:var(--orange);border:1px solid rgba(232,119,34,.3);}
+.badge.rec{background:var(--blue-dim);color:var(--blue-mid);border:1px solid rgba(74,127,165,.25);}
+.badge.pro{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.25);}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;border:none;text-decoration:none;}
+.btn.primary{background:var(--orange);color:#fff;}
+.btn.primary:hover{background:#cc6a14;}
+.btn.secondary{background:transparent;border:1px solid var(--border-bright);color:var(--muted);}
+.btn.secondary:hover{border-color:var(--orange);color:var(--orange);}
+.btn.green{background:var(--green);color:#000;}
+
+/* ── INPUTS ── */
+input[type=number],input[type=text],select{width:100%;background:var(--navy-dark);border:1px solid var(--border-bright);border-radius:6px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;padding:9px 12px;outline:none;transition:border-color .2s;}
+input[type=number]:focus,input[type=text]:focus{border-color:var(--orange);}
+input[type=range]{width:100%;accent-color:var(--orange);}
+
+/* ── STEPS ── */
+.step-row{display:grid;grid-template-columns:56px 1fr;gap:20px;padding:24px 0;border-bottom:1px solid var(--border);align-items:start;}
+.step-row:last-child{border-bottom:none;}
+.step-num{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:22px;flex-shrink:0;}
+.step-num.o{background:var(--orange-dim);border:2px solid var(--orange);color:var(--orange);}
+.step-num.b{background:var(--blue-dim);border:2px solid var(--blue-mid);color:var(--blue-mid);}
+.step-num.g{background:var(--green-dim);border:2px solid var(--green);color:var(--green);}
+.step-num.y{background:var(--yellow-dim);border:2px solid var(--yellow);color:var(--yellow);}
+.step-num.p{background:rgba(139,92,246,.1);border:2px solid var(--purple);color:var(--purple);}
+.step-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.03em;margin-bottom:4px;}
+.step-desc{font-size:13px;color:var(--muted);margin-bottom:12px;line-height:1.6;}
+
+/* ── CODE BLOCKS ── */
+.code-wrap{position:relative;}
+.code-block{background:#060F1C;border:1px solid var(--border);border-left:4px solid var(--orange);border-radius:8px;padding:16px 18px;font-family:'DM Mono',monospace;font-size:11px;color:#D6E4F0;white-space:pre-wrap;line-height:1.75;max-height:340px;overflow-y:auto;}
+.code-block.full{max-height:520px;}
+.copy-btn{position:absolute;top:8px;right:8px;background:var(--orange-dim);border:1px solid rgba(232,119,34,.3);color:var(--orange);border-radius:4px;padding:3px 10px;font-family:'DM Mono',monospace;font-size:9px;cursor:pointer;text-transform:uppercase;letter-spacing:.1em;transition:all .2s;}
+.copy-btn:hover{background:var(--orange);color:#fff;}
+
+/* ── FILE CARDS ── */
+.file-card{background:var(--navy-card);border:1px solid var(--border);border-radius:8px;padding:13px 15px;display:flex;align-items:flex-start;gap:11px;}
+.file-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+.file-name{font-size:13px;font-weight:600;margin-bottom:3px;}
+.file-desc{font-size:11px;color:var(--muted);line-height:1.5;}
+
+/* ── PROMPT PILLS ── */
+.prompt-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:600px){.prompt-grid{grid-template-columns:1fr;}}
+.prompt-pill{background:var(--navy-card);border:1px solid var(--border);border-radius:7px;padding:12px 14px;font-size:12px;cursor:pointer;transition:all .2s;text-align:left;}
+.prompt-pill:hover{border-color:var(--orange);background:var(--orange-dim);}
+.prompt-pre{font-family:'DM Mono',monospace;font-size:9px;color:var(--orange);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px;}
+
+/* ── ALERTS ── */
+.alert{border-radius:7px;padding:12px 16px;font-size:12px;display:flex;gap:10px;margin:12px 0;line-height:1.5;}
+.alert.o{background:var(--orange-dim);border:1px solid rgba(232,119,34,.28);color:#F0C98B;}
+.alert.b{background:var(--blue-dim);border:1px solid rgba(74,127,165,.25);color:var(--blue-mid);}
+.alert.g{background:var(--green-dim);border:1px solid rgba(34,197,94,.25);color:var(--green);}
+.alert.y{background:var(--yellow-dim);border:1px solid rgba(245,158,11,.25);color:var(--yellow);}
+
+/* ── DOWNLOAD CARDS ── */
+.dl-card{background:linear-gradient(135deg,#1A3358 0%,#0F2040 100%);border:1px solid var(--orange);border-radius:12px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:12px;}
+.dl-card.b{border-color:var(--blue-mid);}
+.dl-eyebrow{font-family:'DM Mono',monospace;font-size:9px;color:var(--orange);text-transform:uppercase;letter-spacing:.15em;margin-bottom:5px;}
+.dl-card.b .dl-eyebrow{color:var(--blue-mid);}
+.dl-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.03em;margin-bottom:4px;}
+.dl-desc{font-size:12px;color:var(--muted);max-width:420px;}
+
+/* ── FUNNEL ROWS (calculator) ── */
+.f-row{display:flex;align-items:center;gap:8px;padding:7px 12px;background:var(--navy-mid);border-radius:6px;border:1px solid var(--border);margin-bottom:3px;}
+.f-label{font-size:11px;color:var(--muted);flex:0 0 155px;}
+.f-bar-wrap{flex:1;height:6px;background:rgba(255,255,255,0.05);border-radius:3px;overflow:hidden;}
+.f-bar{height:100%;border-radius:3px;transition:width .4s ease;}
+.f-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:700;min-width:68px;text-align:right;}
+.f-rate{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);min-width:62px;text-align:right;}
+
+/* ── STAT CARDS ── */
+.stat-card{background:var(--navy-card);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.stat-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;}
+.stat-val{font-family:'Bebas Neue',sans-serif;font-size:30px;line-height:1;}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:3px;}
+
+/* ── CALC TABS ── */
+.calc-tabs{display:flex;background:var(--navy-mid);border-bottom:1px solid var(--border);border-radius:10px 10px 0 0;overflow:hidden;}
+.calc-tab{flex:1;padding:11px 8px;background:none;border:none;border-bottom:3px solid transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;text-align:center;}
+.calc-tab.active{color:var(--orange);border-bottom-color:var(--orange);}
+.calc-panel{display:none;padding:20px;}
+.calc-panel.active{display:block;}
+.calc-wrap{background:var(--navy-mid);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+
+/* ── PHASE CARDS ── */
+.phase-card{background:var(--navy-card);border:1px solid var(--border);border-radius:10px;padding:18px;position:relative;overflow:hidden;}
+.phase-card::before{content:attr(data-n);position:absolute;top:-8px;right:8px;font-family:'Bebas Neue',sans-serif;font-size:64px;color:rgba(255,255,255,0.03);line-height:1;pointer-events:none;}
+.phase-name{font-family:'Bebas Neue',sans-serif;font-size:17px;margin-bottom:3px;}
+.phase-spend{font-size:11px;color:var(--muted);margin-bottom:10px;}
+.phase-kpis{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;}
+.phase-kpi{font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:3px;background:var(--navy-dark);border:1px solid var(--border);color:var(--muted);}
+.phase-rev{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--green);margin-bottom:2px;}
+.phase-focus{font-size:11px;color:var(--muted);border-top:1px solid var(--border);padding-top:8px;margin-top:8px;}
+
+/* ── KPI TABLE ── */
+.kpi-table{width:100%;border-collapse:collapse;}
+.kpi-table th{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.kpi-table td{padding:8px 10px;border-bottom:1px solid rgba(74,127,165,.07);font-size:12px;}
+.kpi-table tr:last-child td{border-bottom:none;}
+
+/* ── TOAST ── */
+#toast{position:fixed;top:16px;right:16px;background:var(--navy-card);border:1px solid var(--orange);border-radius:8px;padding:10px 18px;font-size:12px;z-index:9999;opacity:0;transition:opacity .25s;pointer-events:none;}
+#toast.show{opacity:1;}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <div class="nav-logo">IFCA · Masterclass</div>
+  <button class="nav-btn active" onclick="showPanel('setup',this)">🚀 Project Setup</button>
+  <button class="nav-btn" onclick="showPanel('calculator',this)">📐 Calculator</button>
+  <button class="nav-btn" onclick="showPanel('instructions',this)">🤖 Project Instructions</button>
+  <button class="nav-btn" onclick="showPanel('files',this)">📁 File List</button>
+  <button class="nav-btn" onclick="showPanel('prompts',this)">💬 Prompt Starters</button>
+  <button class="nav-btn" onclick="showPanel('benchmarks',this)">🎯 KPI Benchmarks</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">IFCA 7-Figure Retreat · Workshop Tool</div>
+      <div class="hero-title">Masterclass<br><span>Funnel System</span></div>
+      <div class="hero-desc">Everything you need to build, launch, and optimize your masterclass funnel — projection calculator, Claude project setup, KPI benchmarks, and ready-to-use prompt starters. All in one file.</div>
+      <div class="hero-badges">
+        <span class="hbadge o">📐 Projection Calculator</span>
+        <span class="hbadge b">🤖 Claude Project Setup</span>
+        <span class="hbadge g">7-Step Funnel System</span>
+        <span class="hbadge o">90-Min Money Machine</span>
+      </div>
+    </div>
+    <div class="hero-stat-box">
+      <div class="hero-stat-num">7</div>
+      <div class="hero-stat-label">Step System</div>
+      <div style="height:8px;"></div>
+      <div class="hero-stat-num" style="font-size:26px;">$7,500+</div>
+      <div class="hero-stat-label">Campaign #1 Target</div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- ══════════════════════════════════════════
+  PANEL 1 — PROJECT SETUP
+══════════════════════════════════════════ -->
+<div class="panel active" id="panel-setup">
+
+  <div class="stitle">How to Set Up Your Masterclass Claude Project</div>
+  <div class="ssub">Follow these 5 steps in order. Takes about 15 minutes to set up. After that you have a personalized AI masterclass strategist — not a generic chatbot.</div>
+
+  <div>
+
+    <div class="step-row">
+      <div class="step-num o">1</div>
+      <div>
+        <div class="step-title">Create a New Claude Project</div>
+        <div class="step-desc">Go to Claude.ai → click <strong>Projects</strong> in the left sidebar → <strong>New Project</strong> → name it something like <em>"[Your Name] Masterclass Funnel"</em>. A Claude project gives you a persistent workspace where all your files and instructions live together. Every chat inside the project has access to your uploaded docs and system instructions automatically.</div>
+        <a href="https://claude.ai" target="_blank" class="btn primary">→ Open Claude.ai</a>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num b">2</div>
+      <div>
+        <div class="step-title">Copy & Paste the Project Instructions</div>
+        <div class="step-desc">Click the button below to copy the full project instructions, then: inside your Claude project → click the <strong>gear icon</strong> (Project Settings) → paste into the <strong>"Project Instructions"</strong> field → save. This tells Claude exactly what frameworks it knows, what role it plays, and how to guide you through each step of the 90-Minute Money Machine system.</div>
+        <button class="btn primary" onclick="copyProjectInstructions()">📋 Copy Project Instructions</button>
+        <div class="alert b" style="margin-top:12px;">
+          <span>ℹ️</span><div>You can also click the <strong>Project Instructions</strong> tab above to read the full text before copying. It includes the complete 7-step system, all KPI benchmarks, and 8 prompt starters.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num g">3</div>
+      <div>
+        <div class="step-title">Upload Your Project Files</div>
+        <div class="step-desc">Inside your Claude project → click <strong>Add Content</strong> (or the upload icon) → upload your files to the project knowledge base. The more context Claude has about your specific offer and past results, the more targeted its outputs will be. See the <strong>File List tab</strong> for exactly what to upload — broken down by required, recommended, and already-provided IFCA files.</div>
+        <button class="btn secondary" onclick="showPanel('files', document.querySelector('[onclick*=files]'))">→ See File List</button>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num y">4</div>
+      <div>
+        <div class="step-title">Run the Projection Calculator Inside Claude</div>
+        <div class="step-desc">Open a new chat <strong>inside your Masterclass project</strong>. Click the <strong>Calculator tab</strong> above, then click <strong>"Copy JSX Code"</strong>. Paste the code into the chat and say: <em>"Render this as a live artifact."</em> Claude will display the full interactive calculator — with projection sliders, KPI grading, campaign history, and benchmark reference — as a live tool inside your chat. You can re-open it any time.</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn primary" onclick="showPanel('calculator', document.querySelector('[onclick*=calculator]'))">→ Go to Calculator</button>
+          <button class="btn secondary" onclick="copyJSX()">📋 Copy JSX Code</button>
+        </div>
+        <div class="alert y" style="margin-top:12px;">
+          <span>⚡</span><div><strong>Important:</strong> Open the chat from <em>inside</em> your Masterclass project (not a regular chat) so the calculator has access to your project files and context.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num p">5</div>
+      <div>
+        <div class="step-title">Start with a Prompt Starter</div>
+        <div class="step-desc">You don't need to write a long prompt. Click the <strong>Prompt Starters tab</strong> above to copy any of the 8 ready-to-use prompts. The best first prompt is usually the offer creation one — once Claude knows your avatar, mechanism, and outcome, every other output gets dramatically more specific.</div>
+        <button class="btn secondary" onclick="showPanel('prompts', document.querySelector('[onclick*=prompts]'))">→ See Prompt Starters</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="stitle">The 7-Step System at a Glance</div>
+  <div class="ssub">Every prompt, template, and calculator in this file maps to one of these 7 steps.</div>
+  <div class="g2">
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div class="card ol"><span class="badge or" style="margin-bottom:6px;">Step 1</span><div style="font-weight:700;margin-bottom:3px;">Offer Creation — Rule of 1 Formula</div><div class="muted" style="font-size:12px;">One avatar. One problem. One mechanism. One outcome. One masterclass title.</div></div>
+      <div class="card bl"><span class="badge info" style="margin-bottom:6px;">Step 2</span><div style="font-weight:700;margin-bottom:3px;">Funnel & Tech Setup — 2-Hour Build</div><div class="muted" style="font-size:12px;">Landing page → confirmation page → booking/application page. Automation sequences.</div></div>
+      <div class="card gl"><span class="badge pass" style="margin-bottom:6px;">Step 3</span><div style="font-weight:700;margin-bottom:3px;">Creative Development — 14-Day Calendar</div><div class="muted" style="font-size:12px;">Carousels, B-roll reels, talking head ads. DM automation trigger word. Organic + paid flywheel.</div></div>
+      <div class="card yl"><span class="badge warn" style="margin-bottom:6px;">Step 4</span><div style="font-weight:700;margin-bottom:3px;">Setting Projections — KPI Framework</div><div class="muted" style="font-size:12px;">Set CPL, show rate, booking rate, close rate, and ROAS targets before spending $1.</div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div class="card pl"><span class="badge" style="background:rgba(139,92,246,.1);color:var(--purple);border:1px solid rgba(139,92,246,.3);margin-bottom:6px;">Step 5</span><div style="font-weight:700;margin-bottom:3px;">Building the Presentation — 90-Min Structure</div><div class="muted" style="font-size:12px;">Intro → 3 Secrets → Client Journey → Safeguards → No-Pressure Pitch. 45–60 min before offer reveal.</div></div>
+      <div class="card ol"><span class="badge or" style="margin-bottom:6px;">Step 6</span><div style="font-weight:700;margin-bottom:3px;">Hosting Strategy — Performance Tips</div><div class="muted" style="font-size:12px;">Live beats replay every time. Re-run strategy on Sunday. Open loops, engagement, energy.</div></div>
+      <div class="card bl"><span class="badge info" style="margin-bottom:6px;">Step 7</span><div style="font-weight:700;margin-bottom:3px;">Follow-Up Campaign — 7-Touch Sequence</div><div class="muted" style="font-size:12px;">Post-masterclass within 15 min. Replay → Urgency → Objection → Re-run → Story → DM outreach.</div></div>
+      <div class="card" style="background:var(--orange-dim);border-color:rgba(232,119,34,.3);">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;">The One Rule</div>
+        <div style="font-size:13px;line-height:1.6;">Do not scale ad spend past Campaign #1 until you hit <strong style="color:var(--orange);">3× ROAS minimum</strong>. Fix your lowest-graded KPI first. Every time.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════
+  PANEL 2 — CALCULATOR
+══════════════════════════════════════════ -->
+<div class="panel" id="panel-calculator">
+
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+    <div>
+      <div class="stitle">Masterclass Projection Calculator</div>
+      <div class="ssub" style="margin-bottom:0;">Use the interactive calculator below, or copy the JSX code to run it as a live artifact inside your own Claude project.</div>
+    </div>
+    <button class="btn primary" onclick="copyJSX()">📋 Copy JSX Code for Claude</button>
+  </div>
+
+  <div class="alert o" style="margin-bottom:20px;">
+    <span>⚡</span>
+    <div><strong>To use inside Claude:</strong> Click "Copy JSX Code" above → open a chat inside your Masterclass project → paste the code → say <em>"Render this as a live artifact"</em>. The full calculator runs live in Claude's artifact panel with persistent history for the session.</div>
+  </div>
+
+  <!-- EMBEDDED CALCULATOR -->
+  <div class="calc-wrap">
+    <div class="calc-tabs">
+      <button class="calc-tab active" onclick="switchCalcTab('proj',this)">📐 Projections</button>
+      <button class="calc-tab" onclick="switchCalcTab('actuals',this)">📊 Actuals</button>
+      <button class="calc-tab" onclick="switchCalcTab('history',this)">📋 History</button>
+      <button class="calc-tab" onclick="switchCalcTab('ref',this)">🎯 Benchmarks</button>
+    </div>
+
+    <!-- PROJECTIONS TAB -->
+    <div class="calc-panel active" id="cpanel-proj">
+      <div class="g2" style="gap:20px;">
+        <div>
+          <div class="card ol" style="margin-bottom:14px;">
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">Campaign Setup</div>
+            <div style="margin-bottom:10px;"><label class="label">Campaign Name</label><input type="text" id="p-name" value="Campaign #1" oninput="calcProj()"></div>
+            <div class="g2" style="gap:10px;">
+              <div><label class="label">Ad Spend ($)</label><input type="number" id="p-spend" value="1000" oninput="calcProj()"></div>
+              <div><label class="label">Offer Price ($)</label><input type="number" id="p-price" value="2500" oninput="calcProj()"></div>
+            </div>
+          </div>
+          <div class="card bl">
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--blue-mid);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">Target KPIs</div>
+            <div id="kpi-sliders"></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
+              <button class="btn secondary" style="font-size:11px;" onclick="applyScen('best')">⚡ Best</button>
+              <button class="btn secondary" style="font-size:11px;" onclick="applyScen('mid')">📊 Mid</button>
+              <button class="btn secondary" style="font-size:11px;" onclick="applyScen('worst')">🔻 Worst</button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:14px;">
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">📐 Projected Funnel</div>
+            <div id="funnel-rows"></div>
+          </div>
+          <div class="g2" style="margin-bottom:14px;">
+            <div class="stat-card ol"><div class="stat-label">Projected Revenue</div><div class="stat-val" id="p-out-rev" style="color:var(--orange);">—</div><div class="stat-sub" id="p-out-clients">—</div></div>
+            <div class="stat-card gl"><div class="stat-label">ROAS</div><div class="stat-val" id="p-out-roas" style="color:var(--green);">—</div><div class="stat-sub" id="p-out-profit">—</div></div>
+            <div class="stat-card bl"><div class="stat-label">CAC</div><div class="stat-val" id="p-out-cac" style="color:var(--blue-mid);">—</div><div class="stat-sub">Target: &lt;25% of price</div></div>
+            <div class="stat-card pl"><div class="stat-label">Warm Leads</div><div class="stat-val" id="p-out-warm" style="color:var(--purple);">—</div><div class="stat-sub">Nurture pipeline</div></div>
+          </div>
+          <div class="card">
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">Health Check</div>
+            <div id="health-check"></div>
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+              <button class="btn primary" style="font-size:11px;" onclick="saveProj()">💾 Save Projection</button>
+              <button class="btn secondary" style="font-size:11px;" onclick="copyProjText()">📋 Copy Summary</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Phase cards -->
+      <div style="margin-top:20px;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.04em;margin-bottom:4px;">Campaign Phase Targets</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">90-Minute Money Machine scaling framework — know your phase before scaling spend</div>
+        <div class="g4">
+          <div class="phase-card" data-n="1" style="border-left:3px solid var(--orange)"><span class="badge or" style="margin-bottom:7px;">Campaign #1</span><div class="phase-name">Foundation</div><div class="phase-spend">$500–$1,000 spend</div><div class="phase-kpis"><span class="phase-kpi">25%+ show</span><span class="phase-kpi">15%+ book</span><span class="phase-kpi">40%+ close</span></div><div class="phase-rev">$2.5K–$7.5K</div><div style="font-size:11px;color:var(--muted);">1–3 clients</div><div class="phase-focus">Goal: Break even. Focus: Show rate + presentation.</div></div>
+          <div class="phase-card" data-n="2" style="border-left:3px solid var(--yellow)"><span class="badge warn" style="margin-bottom:7px;">Campaign #2</span><div class="phase-name">Optimization</div><div class="phase-spend">$1,000–$1,500 spend</div><div class="phase-kpis"><span class="phase-kpi">30%+ show</span><span class="phase-kpi">20%+ book</span><span class="phase-kpi">50%+ close</span></div><div class="phase-rev">$7.5K–$12.5K</div><div style="font-size:11px;color:var(--muted);">3–5 clients</div><div class="phase-focus">Goal: 3× ROAS min. Focus: Creative + targeting.</div></div>
+          <div class="phase-card" data-n="3" style="border-left:3px solid var(--green)"><span class="badge pass" style="margin-bottom:7px;">Campaign #3</span><div class="phase-name">Scaling-Ish</div><div class="phase-spend">$1,500–$2,500 spend</div><div class="phase-kpis"><span class="phase-kpi">35%+ show</span><span class="phase-kpi">25%+ book</span><span class="phase-kpi">60%+ close</span></div><div class="phase-rev">$12.5K–$20K</div><div style="font-size:11px;color:var(--muted);">5–8 clients</div><div class="phase-focus">Goal: 5× ROAS. Focus: Scale winners, automate.</div></div>
+          <div class="phase-card" data-n="4" style="border-left:3px solid var(--purple)"><span class="badge" style="background:rgba(139,92,246,.1);color:var(--purple);border:1px solid rgba(139,92,246,.3);margin-bottom:7px;">Campaign #4</span><div class="phase-name">Full-Send</div><div class="phase-spend">$2,500–$5,000+ spend</div><div class="phase-kpis"><span class="phase-kpi">30%+ show</span><span class="phase-kpi">20%+ book</span><span class="phase-kpi">50%+ close</span></div><div class="phase-rev">$20K–$37.5K+</div><div style="font-size:11px;color:var(--muted);">8–15 clients</div><div class="phase-focus">Goal: 6× ROAS. Focus: Team + auto-replay funnel.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTUALS TAB -->
+    <div class="calc-panel" id="cpanel-actuals">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;">Enter your real campaign numbers to grade every KPI in real time</div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn secondary" style="font-size:11px;" onclick="loadEmz()">📥 Load Emz Example</button>
+          <button class="btn primary" style="font-size:11px;" onclick="saveActuals()">💾 Save Campaign</button>
+        </div>
+      </div>
+      <div class="g2" style="gap:20px;">
+        <div>
+          <div class="card">
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">Campaign Numbers</div>
+            <div style="margin-bottom:10px;"><label class="label">Campaign Name</label><input type="text" id="a-name" value="Campaign #1"></div>
+            <div class="g2" style="gap:10px;">
+              <div><label class="label">Ad Spend ($)</label><input type="number" id="a-spend" placeholder="2719" oninput="calcActuals()"></div>
+              <div><label class="label">IG/FB Leads</label><input type="number" id="a-leads" placeholder="278" oninput="calcActuals()"></div>
+              <div><label class="label">Registrants</label><input type="number" id="a-regs" placeholder="106" oninput="calcActuals()"></div>
+              <div><label class="label">Live Attendees</label><input type="number" id="a-attend" placeholder="21" oninput="calcActuals()"></div>
+              <div><label class="label">Stayed for Offer</label><input type="number" id="a-offer" placeholder="20" oninput="calcActuals()"></div>
+              <div><label class="label">Calls Booked</label><input type="number" id="a-booked" placeholder="5" oninput="calcActuals()"></div>
+              <div><label class="label">Closed / Clients</label><input type="number" id="a-closed" placeholder="1" oninput="calcActuals()"></div>
+              <div><label class="label">Offer Price ($)</label><input type="number" id="a-price" placeholder="2500" oninput="calcActuals()"></div>
+              <div><label class="label">Revenue Generated ($)</label><input type="number" id="a-rev" placeholder="6300" oninput="calcActuals()"></div>
+              <div><label class="label">Upfront Cash ($)</label><input type="number" id="a-cash" placeholder="3150" oninput="calcActuals()"></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="g2" style="margin-bottom:14px;">
+            <div class="stat-card ol"><div class="stat-label">Generated ROAS</div><div class="stat-val" id="a-out-roas" style="color:var(--orange);">—</div><div class="stat-sub">Target: 5×+</div></div>
+            <div class="stat-card gl"><div class="stat-label">Cash ROAS</div><div class="stat-val" id="a-out-cash-roas" style="color:var(--green);">—</div><div class="stat-sub">Day-zero</div></div>
+            <div class="stat-card bl"><div class="stat-label">Actual CPL</div><div class="stat-val" id="a-out-cpl" style="color:var(--blue-mid);">—</div><div class="stat-sub">Target: &lt;$10</div></div>
+            <div class="stat-card pl"><div class="stat-label">Cost Per Call</div><div class="stat-val" id="a-out-cpcall" style="color:var(--purple);">—</div><div class="stat-sub">Target: &lt;⅓ CAC</div></div>
+          </div>
+          <div class="card">
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">KPI Grades vs. Benchmarks</div>
+            <div id="kpi-grades">
+              <div class="alert b" style="font-size:11px;"><span>ℹ️</span><div>Enter campaign numbers to see live KPI grades.</div></div>
+            </div>
+          </div>
+          <div class="card" id="diag-card" style="margin-top:14px;">
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;">Constraint Diagnosis</div>
+            <div id="diag-body"><div class="alert b" style="font-size:11px;"><span>ℹ️</span><div>Enter numbers to see your #1 bottleneck.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORY TAB -->
+    <div class="calc-panel" id="cpanel-history">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;">All saved campaigns this session</div>
+        <button class="btn secondary" style="font-size:11px;" onclick="clearHistory()">🗑 Clear</button>
+      </div>
+      <div id="history-wrap">
+        <div class="alert b" style="font-size:11px;"><span>ℹ️</span><div>Save a projection or actuals to see campaign history here.</div></div>
+      </div>
+    </div>
+
+    <!-- BENCHMARKS TAB -->
+    <div class="calc-panel" id="cpanel-ref">
+      <div class="g2" style="gap:20px;">
+        <div>
+          <div class="card ol" style="margin-bottom:14px;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;margin-bottom:12px;">Top of Funnel — Ad → Registrant</div>
+            <table class="kpi-table"><thead><tr><th>KPI</th><th style="color:#DC2626;">Poor</th><th style="color:var(--yellow);">Good</th><th style="color:var(--green);">Excellent</th></tr></thead>
+            <tbody>
+              <tr><td class="muted">CPL</td><td><span class="badge fail">$15–25</span></td><td><span class="badge warn">$8–15</span></td><td><span class="badge pass">$3–8</span></td></tr>
+              <tr><td class="muted">LP Conversion</td><td><span class="badge fail">15–25%</span></td><td><span class="badge warn">30–40%</span></td><td><span class="badge pass">45–60%</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="card bl" style="margin-bottom:14px;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;margin-bottom:12px;">Mid-Funnel — Registrant → Call</div>
+            <table class="kpi-table"><thead><tr><th>KPI</th><th style="color:#DC2626;">Poor</th><th style="color:var(--yellow);">Good</th><th style="color:var(--green);">Excellent</th></tr></thead>
+            <tbody>
+              <tr><td class="muted">Show Rate</td><td><span class="badge fail">15–20%</span></td><td><span class="badge warn">25–35%</span></td><td><span class="badge pass">35–50%</span></td></tr>
+              <tr><td class="muted">Retention</td><td><span class="badge fail">50–65%</span></td><td><span class="badge warn">70–85%</span></td><td><span class="badge pass">85–95%</span></td></tr>
+              <tr><td class="muted">Offer → Book</td><td><span class="badge fail">3–8%</span></td><td><span class="badge warn">12–20%</span></td><td><span class="badge pass">25–40%</span></td></tr>
+            </tbody></table>
+          </div>
+          <div class="card gl">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;margin-bottom:12px;">Bottom-Funnel — Call → Revenue</div>
+            <table class="kpi-table"><thead><tr><th>KPI</th><th style="color:#DC2626;">Poor</th><th style="color:var(--yellow);">Good</th><th style="color:var(--green);">Excellent</th></tr></thead>
+            <tbody>
+              <tr><td class="muted">Close Rate</td><td><span class="badge fail">20–35%</span></td><td><span class="badge warn">40–55%</span></td><td><span class="badge pass">60–75%</span></td></tr>
+              <tr><td class="muted">Generated ROAS</td><td><span class="badge fail">&lt;2×</span></td><td><span class="badge warn">2–4×</span></td><td><span class="badge pass">5×+</span></td></tr>
+              <tr><td class="muted">Cash ROAS</td><td><span class="badge fail">&lt;1×</span></td><td><span class="badge warn">1–2×</span></td><td><span class="badge pass">2×+</span></td></tr>
+            </tbody></table>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:14px;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--orange);margin-bottom:10px;">The Math That Maths</div>
+            <div style="font-size:11px;color:var(--muted);margin-bottom:12px;">$1,000 ad spend at median KPIs — 90-Minute Money Machine base example</div>
+            <div id="ref-funnel"></div>
+            <div class="alert g" style="margin-top:10px;font-size:11px;"><span>✅</span><div>Plus 97 warm leads in your nurture pipeline for re-run + future campaigns.</div></div>
+          </div>
+          <div class="card yl">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;margin-bottom:10px;">CAC Constraint Rules</div>
+            <table class="kpi-table"><thead><tr><th>Rule</th><th>Formula</th><th>If Violated</th></tr></thead>
+            <tbody>
+              <tr><td class="muted">Max CAC</td><td class="mono" style="font-size:11px;">&lt;25% of price</td><td><span class="badge fail">margin squeeze</span></td></tr>
+              <tr><td class="muted">Scale Trigger</td><td class="mono" style="font-size:11px;">3× ROAS Campaign #1</td><td><span class="badge warn">don't scale yet</span></td></tr>
+              <tr><td class="muted">Target ROAS</td><td class="mono" style="font-size:11px;">5–7× steady state</td><td><span class="badge pass">compound it</span></td></tr>
+              <tr><td class="muted">Cash ROAS Floor</td><td class="mono" style="font-size:11px;">1× day-zero min</td><td><span class="badge fail">immediate review</span></td></tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /calc-wrap -->
+</div>
+
+<!-- ══════════════════════════════════════════
+  PANEL 3 — PROJECT INSTRUCTIONS
+══════════════════════════════════════════ -->
+<div class="panel" id="panel-instructions">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+    <div>
+      <div class="stitle">Claude Project Instructions</div>
+      <div class="ssub" style="margin-bottom:0;">Copy this entire block and paste into your Claude project's "Project Instructions" field (gear icon → Project Settings).</div>
+    </div>
+    <button class="btn primary" onclick="copyProjectInstructions()">📋 Copy All Instructions</button>
+  </div>
+  <div class="alert o">
+    <span>⚡</span><div><strong>Where to paste:</strong> Claude.ai → Your Masterclass Project → gear icon top-right → "Project Instructions" text field → paste → save. This becomes the permanent brain of your project.</div>
+  </div>
+  <div class="code-wrap" style="margin-top:16px;">
+    <div class="code-block full" id="proj-instructions-block"></div>
+    <button class="copy-btn" onclick="copyProjectInstructions()">Copy All</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+  PANEL 4 — FILE LIST
+══════════════════════════════════════════ -->
+<div class="panel" id="panel-files">
+  <div class="stitle">What to Upload to Your Claude Project</div>
+  <div class="ssub">The more context Claude has about your specific business, offer, and past results — the more specific and useful every output becomes. Here's the exact file list.</div>
+
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;">Required — Upload Your Own Files</div>
+  <div class="g2" style="margin-bottom:24px;">
+    <div class="file-card"><div class="file-icon">📊</div><div><div class="file-name">Past Masterclass Campaign Tracker</div><div class="file-desc">Your CSV or Excel file with past campaign data — ad spend, leads, registrants, attendees, calls booked, closes, revenue. Enables projection comparisons and real bottleneck diagnosis vs. your actual numbers.</div><span class="badge req" style="margin-top:6px;">Required</span></div></div>
+    <div class="file-card"><div class="file-icon">📝</div><div><div class="file-name">Your Offer Copy Kit</div><div class="file-desc">Offer overview doc, mechanism name, avatar description, price point, transformation promise, and key objections you handle. This is what makes every output niche-specific to you instead of generic.</div><span class="badge req" style="margin-top:6px;">Required</span></div></div>
+    <div class="file-card"><div class="file-icon">🏢</div><div><div class="file-name">Business Context Doc</div><div class="file-desc">IFCA audit, success coach notes, onboarding form, or any doc describing your business: niche, avatar, monthly revenue, team size, offer history, ad spend, and current constraints.</div><span class="badge req" style="margin-top:6px;">Required</span></div></div>
+    <div class="file-card"><div class="file-icon">🏆</div><div><div class="file-name">Client Testimonials &amp; Transformations</div><div class="file-desc">A doc with 5–10 client results. Real names (or first names), before/after details, timeline, specific numbers where possible. Used for ad hooks, presentation proof, and follow-up copy.</div><span class="badge rec" style="margin-top:6px;">Recommended</span></div></div>
+    <div class="file-card"><div class="file-icon">📣</div><div><div class="file-name">Current Ad Creative Examples</div><div class="file-desc">Screenshots, copy docs, or transcripts from your current or past best-performing ads. Helps Claude model your voice, tone, and what's already resonating with your specific audience.</div><span class="badge rec" style="margin-top:6px;">Recommended</span></div></div>
+    <div class="file-card"><div class="file-icon">📧</div><div><div class="file-name">Email / SMS Automation Sequences</div><div class="file-desc">Your current confirmation and reminder sequences. Claude can audit them against the IFCA benchmark templates and suggest rewrites to improve show rate.</div><span class="badge rec" style="margin-top:6px;">Recommended</span></div></div>
+    <div class="file-card"><div class="file-icon">🖥️</div><div><div class="file-name">Current Landing Page Copy</div><div class="file-desc">Copy from your masterclass landing page. Claude can grade it for conversion and suggest specific edits to headline, subhead, bullets, and CTA — calibrated against what's working in your niche.</div><span class="badge rec" style="margin-top:6px;">Recommended</span></div></div>
+    <div class="file-card"><div class="file-icon">🎤</div><div><div class="file-name">Masterclass Presentation (Current Version)</div><div class="file-desc">Your current slide deck or presentation script. Claude can audit your 3-Secrets structure, identify where attendees are likely dropping off, and suggest specific improvements for retention and booking rate.</div><span class="badge rec" style="margin-top:6px;">Recommended</span></div></div>
+  </div>
+
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--green);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;">Already Provided — IFCA Knowledge Files (upload these too)</div>
+  <div class="g2">
+    <div class="file-card"><div class="file-icon">📖</div><div><div class="file-name">90-Minute Money Machine Playbook</div><div class="file-desc">Full KPI framework, funnel math, scaling phase targets, and projection methodology. The core reference document for the entire system.</div><span class="badge pro" style="margin-top:6px;">Provided by IFCA</span></div></div>
+    <div class="file-card"><div class="file-icon">🎥</div><div><div class="file-name">Masterclass Paid Ad Creative Examples</div><div class="file-desc">Carousel, B-roll reel, and talking head examples with full ad copy from IFCA students including Payton Clark, Maddie Bunker, Jacey Lamb, Emily Fung, and Justin &amp; Amy Vetters.</div><span class="badge pro" style="margin-top:6px;">Provided by IFCA</span></div></div>
+    <div class="file-card"><div class="file-icon">🎞️</div><div><div class="file-name">Organic Reel Examples</div><div class="file-desc">Real Instagram reel hooks, copy, and creative breakdowns from Alycia, Vanessa, Bree, Kacey, and more. Covers POV hooks, problem villain hooks, list hooks, and talking head formats.</div><span class="badge pro" style="margin-top:6px;">Provided by IFCA</span></div></div>
+    <div class="file-card"><div class="file-icon">🖥️</div><div><div class="file-name">3-Secrets Presentation Framework</div><div class="file-desc">Full slide-by-slide script for the 30-minute persuasion section. Includes speaker scripts, proof examples, and the H.E.A.L. / M.E.T.A. method templates.</div><span class="badge pro" style="margin-top:6px;">Provided by IFCA</span></div></div>
+    <div class="file-card"><div class="file-icon">🔄</div><div><div class="file-name">Transition &amp; Pitch Framework</div><div class="file-desc">Jeremy Haynes' 3-Pillar Pre-Sell Framework with full scripts for the acknowledgment, pillar reveal, client journey, safeguards, and no-pressure invitation sections.</div><span class="badge pro" style="margin-top:6px;">Provided by IFCA</span></div></div>
+    <div class="file-card"><div class="file-icon">📋</div><div><div class="file-name">Masterclass Automation Sequences</div><div class="file-desc">Full email + SMS confirmation, reminder, and follow-up templates (9 emails, 9 SMS). Covers upon-registration through 10 minutes before live.</div><span class="badge pro" style="margin-top:6px;">Provided by IFCA</span></div></div>
+    <div class="file-card"><div class="file-icon">🎬</div><div><div class="file-name">Confirmation Page Video Framework</div><div class="file-desc">Script template for the thank-you page video — the #1 most underrated show-rate lever. Covers big promise, case studies, unique mechanism, and CTA.</div><span class="badge pro" style="margin-top:6px;">Provided by IFCA</span></div></div>
+    <div class="file-card"><div class="file-icon">📐</div><div><div class="file-name">Kevin's Internal Masterclass SOP</div><div class="file-desc">IFCA's internal KPI benchmarks, optimization playbook for each funnel stage, re-run strategy, and ad strategy guidance. The coach-facing operations manual.</div><span class="badge pro" style="margin-top:6px;">Provided by IFCA</span></div></div>
+    <div class="file-card"><div class="file-icon">🧠</div><div><div class="file-name">Jeremy Haynes Mastering Webinars SOP</div><div class="file-desc">Full methodology for monthly cadence, scarcity, pitch mechanics, re-run strategy, and high-ticket positioning. Includes the $80K spend → $600K net case study.</div><span class="badge pro" style="margin-top:6px;">Provided by IFCA</span></div></div>
+    <div class="file-card"><div class="file-icon">📊</div><div><div class="file-name">Emz 2026 Masterclass Campaign Tracker</div><div class="file-desc">Real 4-campaign dataset from IFCA student Emz. Use this as a reference for how to structure your own tracker and what campaign-over-campaign KPI progression looks like.</div><span class="badge pro" style="margin-top:6px;">Provided by IFCA</span></div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+  PANEL 5 — PROMPT STARTERS
+══════════════════════════════════════════ -->
+<div class="panel" id="panel-prompts">
+  <div class="stitle">Prompt Starters</div>
+  <div class="ssub">Click any prompt to copy it. Paste directly into a chat inside your Masterclass Claude project. These are designed to pull from your uploaded files — fill in the brackets with your specifics.</div>
+
+  <div class="alert g" style="margin-bottom:20px;">
+    <span>✅</span><div><strong>Best first prompt:</strong> Start with Offer Creation. Once Claude knows your avatar, mechanism, and outcome — every other output gets dramatically more specific and useful.</div>
+  </div>
+
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;">Step 1–3 — Build the Funnel</div>
+  <div class="prompt-grid" style="margin-bottom:20px;">
+    <div class="prompt-pill" onclick="copyPrompt(this)"><span class="prompt-pre">Step 1 · Offer Creation</span>Help me build my Rule of 1 offer. My niche is [describe your avatar and #1 problem]. Pull from the 90-Minute Money Machine framework and give me: 1 specific avatar, 1 big problem, 1 unique mechanism name, 1 clear outcome with timeline, and 5 masterclass title options.</div>
+    <div class="prompt-pill" onclick="copyPrompt(this)"><span class="prompt-pre">Step 2 · Landing Page</span>Write my masterclass landing page copy. My offer is [mechanism name] for [avatar]. Outcome: [X result in Y weeks without Z]. Give me: a headline, subhead, 5 bullet points, and a CTA button. Model from the IFCA LP examples in the project files.</div>
+    <div class="prompt-pill" onclick="copyPrompt(this)"><span class="prompt-pre">Step 3 · 14-Day Content Calendar</span>Build my 14-day pre-launch content calendar for my [topic] masterclass. Include: 3 organic reels (with hooks), 2 carousel concepts, 3 story sequences, and 2 paid ad scripts. My avatar is [describe]. My mechanism is called [name].</div>
+    <div class="prompt-pill" onclick="copyPrompt(this)"><span class="prompt-pre">Step 3 · Ad Hook Bank</span>Give me 15 ad hook options for my masterclass. Include: 5 POV hooks, 5 problem/villain hooks, and 5 call-out hooks ("Attention [avatar]..."). My avatar is [describe]. Pull from the paid ad creative examples in the project files.</div>
+  </div>
+
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;">Step 4–5 — Projections & Presentation</div>
+  <div class="prompt-grid" style="margin-bottom:20px;">
+    <div class="prompt-pill" onclick="copyPrompt(this)"><span class="prompt-pre">Step 4 · KPI Projections</span>Set my KPI projections for a [$X] ad spend campaign. My offer price is [$Y]. Based on my past campaign data in the project files, what are realistic CPL, show rate, booking rate, close rate, and ROAS targets? Which phase am I in?</div>
+    <div class="prompt-pill" onclick="copyPrompt(this)"><span class="prompt-pre">Step 5 · 3-Secrets Framework</span>Help me build my 3-Secrets slide framework. My mechanism is called [name]. The 3 false beliefs I need to destroy are: (1) [belief], (2) [belief], (3) [belief]. Write the slide content and speaker script for each secret using the format in the project files.</div>
+    <div class="prompt-pill" onclick="copyPrompt(this)"><span class="prompt-pre">Step 5 · Pitch Script</span>Write my no-pressure invitation pitch for the end of my masterclass. My call-to-action is a free [strategy call / assessment call / 30-min consult]. My offer is [name] at [$price]. Use Jeremy Haynes' 3-Pillar Pre-Sell Framework from the project files.</div>
+    <div class="prompt-pill" onclick="copyPrompt(this)"><span class="prompt-pre">Step 5 · Confirmation Page Video</span>Write my confirmation page video script. My masterclass topic is [topic]. My 3 client case studies are: [client 1 result], [client 2 result], [client 3 result]. My unique mechanism is [name]. Use the IFCA confirmation page video framework from the project files.</div>
+  </div>
+
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;">Step 6–7 — Hosting & Follow-Up</div>
+  <div class="prompt-grid" style="margin-bottom:20px;">
+    <div class="prompt-pill" onclick="copyPrompt(this)"><span class="prompt-pre">Step 7 · Follow-Up Sequence</span>Write my 7-touch post-masterclass follow-up sequence. I need: email + SMS for (1) attendees who didn't book, (2) no-shows, and (3) people who booked but haven't closed. My re-run is on Sunday. My offer is [name] at [$price]. Use the IFCA automation sequence templates.</div>
+    <div class="prompt-pill" onclick="copyPrompt(this)"><span class="prompt-pre">Funnel Diagnosis</span>Diagnose my funnel. My last campaign results were: ad spend [$X], leads [N], registrants [N], attendees [N], calls booked [N], closed [N], revenue [$X]. Show rate was [X]%, booking rate [X]%, close rate [X]%, ROAS [X]×. What is my #1 constraint and what's the specific fix?</div>
+  </div>
+
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;">Ongoing Optimization</div>
+  <div class="prompt-grid">
+    <div class="prompt-pill" onclick="copyPrompt(this)"><span class="prompt-pre">Show Rate Fix</span>My show rate is [X]%. My current nurture sequence is [describe or paste it]. Give me a rewritten 5-touch pre-masterclass nurture sequence (email + SMS) designed to get show rate above 30%. Pull from the IFCA automation templates in the project files.</div>
+    <div class="prompt-pill" onclick="copyPrompt(this)"><span class="prompt-pre">Retargeting Strategy</span>Build me a re-run strategy for my masterclass. I had [N] registrants who didn't show. My live masterclass was on [day]. Walk me through: the re-run announcement, Sunday timing, follow-up sequence, and how to pitch it without devaluing the original event.</div>
+    <div class="prompt-pill" onclick="copyPrompt(this)"><span class="prompt-pre">Offer Positioning Audit</span>Audit my masterclass offer positioning. My current title is [title]. My mechanism is [name]. My price is [$X]. My close rate on calls was [X]%. Based on my copy kit and business context in the project files, what are the top 3 positioning changes I should make before my next campaign?</div>
+    <div class="prompt-pill" onclick="copyPrompt(this)"><span class="prompt-pre">Scale Decision</span>Should I scale my ad spend? My Campaign #[N] results were: spend [$X], ROAS [X]×, show rate [X]%, close rate [X]%]. Which phase am I in? What do I need to fix before increasing spend? Give me a specific go/no-go recommendation based on the IFCA scaling rules.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+  PANEL 6 — KPI BENCHMARKS
+══════════════════════════════════════════ -->
+<div class="panel" id="panel-benchmarks">
+  <div class="stitle">KPI Benchmark Reference</div>
+  <div class="ssub">The complete 90-Minute Money Machine + Kevin's Internal SOP benchmark system. Know these before your first campaign. Use the "Lever to Pull" column to diagnose exactly what to fix.</div>
+
+  <div style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr>
+          <th style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);">KPI</th>
+          <th style="font-family:'DM Mono',monospace;font-size:9px;color:#DC2626;text-transform:uppercase;letter-spacing:.1em;padding:10px 12px;text-align:center;border-bottom:1px solid var(--border);">Poor — Fix This</th>
+          <th style="font-family:'DM Mono',monospace;font-size:9px;color:var(--yellow);text-transform:uppercase;letter-spacing:.1em;padding:10px 12px;text-align:center;border-bottom:1px solid var(--border);">Good — Solid</th>
+          <th style="font-family:'DM Mono',monospace;font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:.1em;padding:10px 12px;text-align:center;border-bottom:1px solid var(--border);">Excellent — Scale</th>
+          <th style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);">Lever to Pull If Poor</th>
+        </tr>
+      </thead>
+      <tbody id="bench-table-body"></tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+  <div class="stitle">Funnel Math Cheat Sheet</div>
+  <div class="ssub">From the 90-Minute Money Machine — two example funnels at different scale levels</div>
+  <div class="g2">
+    <div class="card ol">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--orange);margin-bottom:12px;">Base Funnel — $1K Spend</div>
+      <table class="kpi-table"><tbody>
+        <tr><td class="muted">Ad Spend</td><td class="mono" style="font-weight:700;color:var(--orange);">$1,000</td></tr>
+        <tr><td class="muted">Registrants ($10 CPL)</td><td class="mono">100</td></tr>
+        <tr><td class="muted">Live Attendees (30%)</td><td class="mono">30</td></tr>
+        <tr><td class="muted">Stayed for Offer (83%)</td><td class="mono">25</td></tr>
+        <tr><td class="muted">Calls Booked (20%)</td><td class="mono">5</td></tr>
+        <tr><td class="muted">New Clients (60%)</td><td class="mono" style="color:var(--green);font-weight:700;">3</td></tr>
+        <tr><td class="muted">Revenue (3 × $2,500)</td><td class="mono" style="color:var(--green);font-weight:700;">$7,500</td></tr>
+        <tr><td class="muted">Net Profit</td><td class="mono" style="color:var(--green);">$6,500</td></tr>
+        <tr><td class="muted">ROAS</td><td class="mono" style="color:var(--orange);font-weight:700;">7.5×</td></tr>
+      </tbody></table>
+    </div>
+    <div class="card gl">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--green);margin-bottom:12px;">Scaled Funnel — $3K Spend</div>
+      <table class="kpi-table"><tbody>
+        <tr><td class="muted">Ad Spend</td><td class="mono" style="font-weight:700;color:var(--orange);">$3,000</td></tr>
+        <tr><td class="muted">Registrants ($10 CPL)</td><td class="mono">300</td></tr>
+        <tr><td class="muted">Live Attendees (35%)</td><td class="mono">105</td></tr>
+        <tr><td class="muted">Stayed for Offer (90%)</td><td class="mono">95</td></tr>
+        <tr><td class="muted">Calls Booked (25%)</td><td class="mono">24</td></tr>
+        <tr><td class="muted">New Clients (62%)</td><td class="mono" style="color:var(--green);font-weight:700;">15</td></tr>
+        <tr><td class="muted">Revenue (15 × $2,500)</td><td class="mono" style="color:var(--green);font-weight:700;">$37,500</td></tr>
+        <tr><td class="muted">Net Profit</td><td class="mono" style="color:var(--green);">$34,500</td></tr>
+        <tr><td class="muted">ROAS</td><td class="mono" style="color:var(--green);font-weight:700;">12.5×</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════
+// PANEL SWITCHING
+// ════════════════════════════════════
+function showPanel(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  else {
+    document.querySelectorAll('.nav-btn').forEach(b => {
+      if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(id)) b.classList.add('active');
+    });
+  }
+  window.scrollTo(0, 0);
+}
+
+// ════════════════════════════════════
+// TOAST
+// ════════════════════════════════════
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+// ════════════════════════════════════
+// CALC TAB SWITCH
+// ════════════════════════════════════
+function switchCalcTab(id, btn) {
+  document.querySelectorAll('.calc-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.calc-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('cpanel-' + id).classList.add('active');
+  if (id === 'ref') buildRefFunnel();
+}
+
+// ════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════
+const f$ = v => isNaN(v)||v===null ? '—' : '$'+Math.round(v).toLocaleString();
+const fP = v => isNaN(v)||v===null ? '—' : (v*100).toFixed(1)+'%';
+const fX = v => isNaN(v)||v===null ? '—' : v.toFixed(2)+'×';
+const fN = v => isNaN(v)||v===null ? '—' : Math.round(v).toLocaleString();
+const g  = id => parseFloat(document.getElementById(id).value)||0;
+
+// ════════════════════════════════════
+// KPI SLIDERS
+// ════════════════════════════════════
+const SLIDERS = [
+  {key:'cpl', label:'Target CPL ($)', min:1, max:50, def:10, hint:'Excellent: $3–8 | Good: $8–15', pre:'$'},
+  {key:'lpcvr', label:'LP Conversion Rate (%)', min:1, max:80, def:30, hint:'Good: 30–40% | Excellent: 45–60%', suf:'%'},
+  {key:'show', label:'Show Rate (%)', min:1, max:70, def:30, hint:'Good: 25–35% | Excellent: 35–50%', suf:'%'},
+  {key:'retain', label:'Retention — Stay for Offer (%)', min:20, max:99, def:83, hint:'Good: 70–85% | Excellent: 85–95%', suf:'%'},
+  {key:'book', label:'Offer → Book Call (%)', min:1, max:50, def:20, hint:'Good: 12–20% | Excellent: 25–40%', suf:'%'},
+  {key:'close', label:'Close Rate (%)', min:5, max:90, def:60, hint:'Good: 40–55% | Excellent: 60–75%', suf:'%'},
+];
+const pvals = {};
+SLIDERS.forEach(s => pvals[s.key] = s.def);
+
+function buildSliders() {
+  const wrap = document.getElementById('kpi-sliders');
+  wrap.innerHTML = SLIDERS.map(s => `
+    <div style="margin-bottom:12px;">
+      <label class="label">${s.label}</label>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <input type="range" min="${s.min}" max="${s.max}" step="0.5" value="${pvals[s.key]}" id="r-${s.key}" oninput="pvals['${s.key}']=parseFloat(this.value);document.getElementById('rv-${s.key}').textContent='${s.pre||''}'+this.value+'${s.suf||''}';calcProj();">
+        <span id="rv-${s.key}" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--orange);min-width:46px;text-align:right;">${s.pre||''}${pvals[s.key]}${s.suf||''}</span>
+      </div>
+      <div style="font-size:10px;color:var(--muted);">${s.hint}</div>
+    </div>
+  `).join('');
+}
+
+// ════════════════════════════════════
+// PROJECTION CALC
+// ════════════════════════════════════
+function calcProj() {
+  const spend = g('p-spend'), price = g('p-price');
+  const cpl = pvals.cpl||10, lp = pvals.lpcvr/100||.3;
+  const sh = pvals.show/100||.3, re = pvals.retain/100||.83;
+  const bk = pvals.book/100||.2, cl = pvals.close/100||.6;
+  const leads=spend/cpl, regs=leads*lp, attend=regs*sh;
+  const offer=attend*re, booked=offer*bk, clients=booked*cl;
+  const rev=clients*price, roas=spend>0?rev/spend:0;
+  const profit=rev-spend, cac=clients>0?spend/clients:0;
+
+  window._lastProj = {spend,price,cpl,lp,sh,re,bk,cl,leads,regs,attend,offer,booked,clients,rev,roas,profit,cac};
+
+  document.getElementById('p-out-rev').textContent = f$(rev);
+  document.getElementById('p-out-clients').textContent = fN(clients)+' clients × '+f$(price);
+  document.getElementById('p-out-roas').textContent = fX(roas);
+  document.getElementById('p-out-roas').style.color = roas>=5?'var(--green)':roas>=3?'var(--yellow)':'var(--red)';
+  document.getElementById('p-out-profit').textContent = 'Net: '+f$(profit);
+  document.getElementById('p-out-cac').textContent = f$(cac);
+  document.getElementById('p-out-warm').textContent = fN(Math.max(0,regs-clients));
+
+  // Funnel rows
+  const rows = [
+    {label:'Ad Spend', val:f$(spend), rate:'', color:'var(--orange)', pct:100},
+    {label:'Leads Generated', val:fN(leads), rate:'$'+cpl+' CPL', color:'var(--blue-mid)', pct:100},
+    {label:'Registrants', val:fN(regs), rate:(lp*100).toFixed(0)+'% LP', color:'var(--blue-mid)', pct:lp*100},
+    {label:'Live Attendees', val:fN(attend), rate:(sh*100).toFixed(0)+'% show', color:'var(--yellow)', pct:sh*100},
+    {label:'Stayed for Offer', val:fN(offer), rate:(re*100).toFixed(0)+'% retain', color:'var(--yellow)', pct:re*100},
+    {label:'Calls Booked', val:fN(booked), rate:(bk*100).toFixed(0)+'% book', color:'var(--purple)', pct:bk*100},
+    {label:'New Clients', val:fN(clients), rate:(cl*100).toFixed(0)+'% close', color:'var(--green)', pct:cl*100},
+  ];
+  document.getElementById('funnel-rows').innerHTML = rows.map((r,i) =>
+    `<div class="f-row" style="${i===rows.length-1?'border-color:var(--green);':''}">`+
+    `<span class="f-label">${r.label}</span>`+
+    `<div class="f-bar-wrap"><div class="f-bar" style="width:${Math.min(100,r.pct)}%;background:${r.color};"></div></div>`+
+    `<span class="f-val" style="color:${r.color};">${r.val}</span>`+
+    `<span class="f-rate">${r.rate}</span>`+
+    `</div>`+
+    (i<rows.length-1?`<div style="text-align:center;font-size:9px;color:var(--muted);margin:1px 0;">↓</div>`:'')
+  ).join('');
+
+  // Health check
+  const cacPct = price>0?cac/price:0;
+  const checks = [
+    {label:'CPL', display:'$'+cpl, grade:cpl<=10?'pass':cpl<=15?'warn':'fail', note:cpl<=10?'On target':cpl<=15?'Acceptable — test creative':'New hook needed'},
+    {label:'Show Rate', display:(sh*100).toFixed(0)+'%', grade:sh>=.25?'pass':sh>=.18?'warn':'fail', note:sh>=.25?'Solid':'Build nurture sequence'},
+    {label:'Proj. ROAS', display:fX(roas), grade:roas>=5?'pass':roas>=3?'warn':'fail', note:roas>=5?'Scale it':roas>=3?'Optimize first':'Do not scale yet'},
+    {label:'CAC / Price', display:(cacPct*100).toFixed(0)+'%', grade:cacPct<=.25?'pass':cacPct<=.35?'warn':'fail', note:cacPct<=.25?'Healthy margin':'Raise close rate or lower spend'},
+  ];
+  document.getElementById('health-check').innerHTML = checks.map(c=>
+    `<div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(74,127,165,.07);">`+
+    `<span style="font-size:11px;color:var(--muted);flex:0 0 110px;">${c.label}</span>`+
+    `<span class="badge ${c.grade}">${c.display}</span>`+
+    `<span style="font-size:11px;color:var(--muted);flex:1;">${c.note}</span>`+
+    `</div>`
+  ).join('');
+}
+
+// ════════════════════════════════════
+// SCENARIOS
+// ════════════════════════════════════
+const SCEN = {
+  best: {cpl:5,lpcvr:50,show:40,retain:92,book:30,close:70},
+  mid:  {cpl:10,lpcvr:30,show:30,retain:83,book:20,close:55},
+  worst:{cpl:22,lpcvr:18,show:18,retain:65,book:7,close:30},
+};
+function applyScen(type) {
+  Object.entries(SCEN[type]).forEach(([k,v]) => {
+    pvals[k] = v;
+    const r = document.getElementById('r-'+k);
+    const rv = document.getElementById('rv-'+k);
+    if(r) r.value = v;
+    const s = SLIDERS.find(x=>x.key===k);
+    if(rv&&s) rv.textContent = (s.pre||'')+v+(s.suf||'');
+  });
+  calcProj();
+}
+
+// ════════════════════════════════════
+// ACTUALS CALC
+// ════════════════════════════════════
+function calcActuals() {
+  const spend=g('a-spend'),leads=g('a-leads'),regs=g('a-regs'),attend=g('a-attend');
+  const offer=g('a-offer'),booked=g('a-booked'),closed=g('a-closed'),price=g('a-price');
+  const rev=g('a-rev'),cash=g('a-cash');
+  const cpl=leads>0?spend/leads:NaN, regR=leads>0?regs/leads:NaN;
+  const showR=regs>0?attend/regs:NaN, retR=attend>0?offer/attend:NaN;
+  const bkR=offer>0?booked/offer:NaN, clR=booked>0?closed/booked:NaN;
+  const roas=spend>0?rev/spend:NaN, cashR=spend>0?cash/spend:NaN;
+
+  document.getElementById('a-out-roas').textContent=isNaN(roas)?'—':roas.toFixed(2)+'×';
+  document.getElementById('a-out-roas').style.color=isNaN(roas)?'var(--orange)':roas>=5?'var(--green)':roas>=3?'var(--yellow)':'var(--red)';
+  document.getElementById('a-out-cash-roas').textContent=isNaN(cashR)?'—':cashR.toFixed(2)+'×';
+  document.getElementById('a-out-cpl').textContent=isNaN(cpl)?'—':'$'+cpl.toFixed(2);
+  document.getElementById('a-out-cpcall').textContent=booked>0?f$(spend/booked):'—';
+
+  const kpis=[
+    {label:'CPL', v:cpl, fmt:v=>'$'+v.toFixed(2), tgt:'< $10', ok:v=>v<=10, wn:v=>v<=15, note:v=>v<=10?'On target':v<=15?'Optimize creative':'New hooks needed'},
+    {label:'Registration Rate', v:regR, fmt:fP, tgt:'30%+', ok:v=>v>=.30, wn:v=>v>=.20, note:v=>v>=.30?'Strong LP':'Test LP headline'},
+    {label:'Show Rate', v:showR, fmt:fP, tgt:'25–35%', ok:v=>v>=.25, wn:v=>v>=.18, note:v=>v>=.25?'Good attendance':v>=.18?'Fix nurture sequence':'Show rate crisis'},
+    {label:'Retention (See Offer)', v:retR, fmt:fP, tgt:'70%+', ok:v=>v>=.70, wn:v=>v>=.55, note:v=>v>=.70?'Good engagement':'Tighten presentation'},
+    {label:'Offer → Book Rate', v:bkR, fmt:fP, tgt:'12–20%', ok:v=>v>=.12, wn:v=>v>=.08, note:v=>v>=.12?'Solid booking':'Strengthen the pitch'},
+    {label:'Close Rate', v:clR, fmt:fP, tgt:'40–55%', ok:v=>v>=.40, wn:v=>v>=.30, note:v=>v>=.40?'Strong sales':'Sales training needed'},
+    {label:'Generated ROAS', v:roas, fmt:fX, tgt:'5×+', ok:v=>v>=5, wn:v=>v>=3, note:v=>v>=5?'Scale it':v>=3?'Optimize first':'Do not scale'},
+    {label:'Cash ROAS', v:cashR, fmt:fX, tgt:'2×+', ok:v=>v>=2, wn:v=>v>=1, note:v=>v>=2?'Healthy cash':'Review split pays'},
+  ];
+
+  const hasAny = [cpl,showR,clR,roas].some(v=>!isNaN(v)&&v>0);
+  if(!hasAny){document.getElementById('kpi-grades').innerHTML='<div class="alert b" style="font-size:11px;"><span>ℹ️</span><div>Enter campaign numbers to see live KPI grades.</div></div>';return;}
+
+  document.getElementById('kpi-grades').innerHTML=
+    '<table class="kpi-table"><thead><tr><th>KPI</th><th>Actual</th><th>Target</th><th>Grade</th><th>Note</th></tr></thead><tbody>'+
+    kpis.map(k=>{
+      const hv=!isNaN(k.v)&&k.v>0;
+      const gr=!hv?'info':k.ok(k.v)?'pass':k.wn(k.v)?'warn':'fail';
+      const gl=!hv?'—':gr==='pass'?'✓ PASS':gr==='warn'?'WATCH':'FIX';
+      return `<tr><td class="muted">${k.label}</td><td class="mono" style="font-weight:700;">${hv?k.fmt(k.v):'—'}</td><td class="mono muted" style="font-size:10px;">${k.tgt}</td><td><span class="badge ${gr}">${gl}</span></td><td style="font-size:11px;color:var(--muted);">${hv?k.note(k.v):'—'}</td></tr>`;
+    }).join('')+'</tbody></table>';
+
+  const issues=kpis.filter(k=>!isNaN(k.v)&&k.v>0&&!k.ok(k.v)&&!k.wn(k.v));
+  const warns=kpis.filter(k=>!isNaN(k.v)&&k.v>0&&!k.ok(k.v)&&k.wn(k.v));
+  let d='';
+  if(issues.length===0&&warns.length===0){d='<div class="alert g" style="font-size:11px;"><span>✅</span><div>All KPIs hitting benchmark. Consider increasing ad spend to Campaign Phase '+((roas>=5?3:roas>=3?2:1))+'.</div></div>';}
+  else{
+    issues.forEach(k=>{d+=`<div class="alert" style="background:var(--red-dim);border:1px solid rgba(220,38,38,.3);color:var(--red);font-size:11px;margin-bottom:6px;"><span>🔴</span><div><strong>${k.label}</strong>: ${k.fmt(k.v)} — ${k.note(k.v)}</div></div>`;});
+    warns.forEach(k=>{d+=`<div class="alert y" style="font-size:11px;margin-bottom:6px;"><span>🟡</span><div><strong>${k.label}</strong>: ${k.fmt(k.v)} — ${k.note(k.v)}</div></div>`;});
+  }
+  document.getElementById('diag-body').innerHTML=d;
+}
+
+function loadEmz() {
+  document.getElementById('a-name').value='Emz Campaign #1';
+  document.getElementById('a-spend').value=2719.57;
+  document.getElementById('a-leads').value=278;
+  document.getElementById('a-regs').value=106;
+  document.getElementById('a-attend').value=21;
+  document.getElementById('a-offer').value=20;
+  document.getElementById('a-booked').value=5;
+  document.getElementById('a-closed').value=1;
+  document.getElementById('a-price').value=6300;
+  document.getElementById('a-rev').value=6300;
+  document.getElementById('a-cash').value=3150;
+  calcActuals();
+  toast('📥 Emz Campaign #1 loaded!');
+}
+
+// ════════════════════════════════════
+// HISTORY
+// ════════════════════════════════════
+let history = [];
+function saveProj() {
+  const p = window._lastProj || {};
+  if(!p.spend){toast('Run a projection first!');return;}
+  history.unshift({name:document.getElementById('p-name').value||'Projection',type:'projection',spend:p.spend,price:p.price,regs:Math.round(p.regs),attend:Math.round(p.attend),booked:Math.round(p.booked),closed:Math.round(p.clients),revenue:Math.round(p.rev),roas:p.roas,id:Date.now()});
+  renderHistory();
+  toast('✅ Projection saved!');
+}
+function saveActuals() {
+  const spend=g('a-spend'),rev=g('a-rev'),roas=spend>0?rev/spend:0;
+  history.unshift({name:document.getElementById('a-name').value||'Campaign',type:'actual',spend,regs:g('a-regs'),attend:g('a-attend'),booked:g('a-booked'),closed:g('a-closed'),revenue:rev,roas,id:Date.now()});
+  renderHistory();
+  toast('✅ Campaign saved!');
+}
+function renderHistory() {
+  const w=document.getElementById('history-wrap');
+  if(!history.length){w.innerHTML='<div class="alert b" style="font-size:11px;"><span>ℹ️</span><div>No campaigns saved yet.</div></div>';return;}
+  w.innerHTML='<div style="overflow-x:auto;"><table class="kpi-table"><thead><tr><th>#</th><th>Name</th><th>Type</th><th>Spend</th><th>Clients</th><th>Revenue</th><th>ROAS</th><th>Show%</th><th>Close%</th><th></th></tr></thead><tbody>'+
+  history.map((c,i)=>{
+    const roas=c.roas||0,showR=c.regs>0?c.attend/c.regs:NaN,clR=c.booked>0?c.closed/c.booked:NaN;
+    const rg=roas>=5?'pass':roas>=3?'warn':'fail';
+    return `<tr><td class="mono muted" style="font-size:11px;">${i+1}</td><td style="font-size:12px;font-weight:600;">${c.name}</td><td><span class="badge ${c.type==='actual'?'pass':'or'}">${c.type}</span></td><td class="mono" style="font-size:11px;">${f$(c.spend)}</td><td class="mono" style="font-weight:700;color:var(--green);">${c.closed||0}</td><td class="mono" style="font-weight:700;color:var(--green);">${f$(c.revenue)}</td><td><span class="badge ${rg}">${roas.toFixed(1)}×</span></td><td><span class="badge ${isNaN(showR)?'info':showR>=.25?'pass':showR>=.18?'warn':'fail'}">${isNaN(showR)?'—':(showR*100).toFixed(0)+'%'}</span></td><td><span class="badge ${isNaN(clR)?'info':clR>=.40?'pass':clR>=.30?'warn':'fail'}">${isNaN(clR)?'—':(clR*100).toFixed(0)+'%'}</span></td><td><button onclick="history.splice(${i},1);renderHistory();" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:11px;">✕</button></td></tr>`;
+  }).join('')+'</tbody></table></div>';
+}
+function clearHistory(){history=[];renderHistory();}
+
+// ════════════════════════════════════
+// REF FUNNEL
+// ════════════════════════════════════
+function buildRefFunnel() {
+  const rows=[
+    {l:'Ad Spend', v:'$1,000', r:'', c:'var(--orange)'},
+    {l:'Registrants ($10 CPL)', v:'100', r:'100%', c:'var(--blue-mid)'},
+    {l:'Live Attendees', v:'30', r:'30% show', c:'var(--yellow)'},
+    {l:'Stayed for Offer', v:'25', r:'83% retention', c:'var(--yellow)'},
+    {l:'Calls Booked', v:'5', r:'20% booking', c:'var(--purple)'},
+    {l:'New Clients', v:'3', r:'60% close', c:'var(--green)'},
+    {l:'Revenue (3 × $2,500)', v:'$7,500', r:'7.5× ROAS', c:'var(--orange)'},
+  ];
+  const el=document.getElementById('ref-funnel');
+  if(!el)return;
+  el.innerHTML=rows.map((r,i)=>
+    `<div class="f-row" style="${i===rows.length-1?'border-color:var(--orange);background:var(--orange-dim);':''}">`+
+    `<span class="f-label" style="font-size:11px;">${r.l}</span>`+
+    `<div class="f-bar-wrap"><div class="f-bar" style="width:${i===0?100:Math.max(5,100-(i*12))}%;background:${r.c};"></div></div>`+
+    `<span class="f-val" style="color:${r.c};font-size:13px;">${r.v}</span>`+
+    `<span class="f-rate">${r.r}</span>`+
+    `</div>`
+  ).join('');
+}
+
+// ════════════════════════════════════
+// BENCHMARK TABLE
+// ════════════════════════════════════
+const BENCH = [
+  ['CPL','$15–25','$8–15','$3–8','New hook, better audience, test carousel vs. video'],
+  ['LP Conversion','15–25%','30–40%','45–60%','Rewrite headline, add specific outcome + timeline'],
+  ['Show Rate','15–20%','25–35%','35–50%','Better nurture sequence, manual DM/SMS day-of reminder'],
+  ['Retention (See Offer)','50–65%','70–85%','85–95%','Add open loops, cut dead slides, promise reveal at end'],
+  ['Offer → Book Rate','3–8%','12–20%','25–40%','Improve pitch, add bonus stack, stronger CTA urgency'],
+  ['Close Rate','20–35%','40–55%','60–75%','Sales training, better pre-call application, qualify leads'],
+  ['Generated ROAS','< 2×','2–4×','5×+','Fix lowest-graded KPI first. Never scale below 3×.'],
+  ['Cash ROAS','< 1×','1–2×','2×+','Review split pay terms, shorten payment plan gap'],
+];
+function buildBenchTable(){
+  const body=document.getElementById('bench-table-body');
+  if(!body)return;
+  body.innerHTML=BENCH.map(([kpi,poor,good,exc,lever])=>
+    `<tr style="border-bottom:1px solid rgba(74,127,165,.07);">`+
+    `<td style="padding:10px 12px;font-size:12px;color:var(--muted);">${kpi}</td>`+
+    `<td style="padding:10px 12px;text-align:center;"><span class="badge fail">${poor}</span></td>`+
+    `<td style="padding:10px 12px;text-align:center;"><span class="badge warn">${good}</span></td>`+
+    `<td style="padding:10px 12px;text-align:center;"><span class="badge pass">${exc}</span></td>`+
+    `<td style="padding:10px 12px;font-size:11px;color:var(--muted);">${lever}</td>`+
+    `</tr>`
+  ).join('');
+}
+
+// ════════════════════════════════════
+// COPY HELPERS
+// ════════════════════════════════════
+function copyProjText(){
+  const p=window._lastProj||{};
+  if(!p.spend){toast('Run a projection first!');return;}
+  const txt=`IFCA MASTERCLASS PROJECTION — ${document.getElementById('p-name').value}\nAd Spend: ${f$(p.spend)} | Offer: ${f$(p.price)} | CPL: $${pvals.cpl}\nRegistrants: ${fN(p.regs)} | Attendees: ${fN(p.attend)} | Clients: ${fN(p.clients)}\nRevenue: ${f$(p.rev)} | ROAS: ${fX(p.roas)} | Net Profit: ${f$(p.profit)}`;
+  navigator.clipboard.writeText(txt).then(()=>toast('📋 Summary copied!'));
+}
+
+function copyPrompt(el){
+  const prefix=el.querySelector('.prompt-pre');
+  const full=el.innerText;
+  const text=prefix?full.replace(prefix.innerText,'').trim():full;
+  navigator.clipboard.writeText(text).then(()=>{
+    const orig=el.style.borderColor;
+    el.style.borderColor='var(--green)';
+    setTimeout(()=>{el.style.borderColor=orig;},1000);
+    toast('📋 Prompt copied!');
+  });
+}
+
+// ════════════════════════════════════
+// PROJECT INSTRUCTIONS TEXT
+// ════════════════════════════════════
+const PROJECT_INSTRUCTIONS = `You are the IFCA Masterclass Funnel Strategist — a direct, coach-to-coach advisor trained on Jordan Dugger's 90-Minute Money Machine framework and IFCA's proven 7-step masterclass system. You help health and fitness coaches build, launch, and optimize a one-day masterclass funnel that converts strangers into paying high-ticket clients.
+
+Your job is to guide the coach through every stage of the funnel: offer creation, ad creative, presentation structure, KPI projection, show-rate optimization, live hosting strategy, and follow-up campaigns. You pull directly from the project files uploaded into this project. You always ask clarifying questions about the coach's niche, offer price, audience, and current results before giving advice. Keep recommendations fitness/health-coach specific, output in bold section headers, bullet points, and fill-in-the-blank style templates wherever possible.
+
+---
+
+THE 7-STEP SYSTEM
+
+STEP 1 — OFFER CREATION (Rule of 1 Formula)
+One avatar. One problem. One mechanism. One outcome.
+Template to complete:
+- My Specific Avatar: [who exactly — age, gender, life stage, situation]
+- Their #1 Problem: [what keeps them up at night — be specific]
+- My Unique Mechanism: [your named system/method — must be named]
+- Clear Outcome + Timeline: [X result in Y weeks without Z objection]
+- Masterclass Title Formula: "How [Avatar] Can [Outcome] Without [Objection] in [Timeline]"
+
+STEP 2 — FUNNEL & TECH SETUP (2-hour build)
+Core pages: Landing Page → Thank You/Confirmation Page → Booking/Application Page
+LP conversion targets: 30–40% = Good | 45–60% = Excellent
+Confirmation page must include: calendar add link, Zoom link, Facebook community link, TY video (use the IFCA confirmation page video framework in project files)
+Automation trigger: 1 DM keyword (e.g., MASTERCLASS, BOOST, FIX) → LP sent in DM
+Full automation sequence: confirmation email + SMS → 72hr, 48hr, 24hr, 4hr, 1hr, 10-min reminders (use IFCA templates in project files)
+
+STEP 3 — CREATIVE DEVELOPMENT (14-day pre-launch calendar)
+Ad types: Carousels, B-roll reels with text overlay, talking head reels
+Hook formulas: POV hook ("POV: you just..."), Problem/Villain hook, Call-out hook ("Attention [avatar]...")
+DM automation trigger word: one word max
+Organic + paid flywheel: run 3+ organic reels before launching paid
+Minimum 2-week marketing window before live date (3 weeks preferred)
+
+STEP 4 — SETTING PROJECTIONS (KPI Framework)
+Set targets before spending $1. Use the Masterclass Projection Calculator (included in the project portal).
+Phase targets:
+- Campaign #1 ($500–$1K): 25%+ show | 15%+ booking | 40%+ close | Goal: break even
+- Campaign #2 ($1K–$1.5K): 30%+ show | 20%+ booking | 50%+ close | Goal: 3× ROAS
+- Campaign #3 ($1.5K–$2.5K): 35%+ show | 25%+ booking | 60%+ close | Goal: 5× ROAS
+- Campaign #4 ($2.5K–$5K+): 30%+ show | 20%+ booking | 50%+ close | Goal: 6× ROAS
+RULE: Never scale past Campaign #1 budget without hitting 3× ROAS minimum.
+
+STEP 5 — BUILDING THE PRESENTATION (90-min structure)
+Full structure: Intro (credibility, agenda, quick win) → 3 Secrets (false belief destruction) → Client Journey (transformation timeline) → Safeguards (why DIY fails) → No-Pressure Invitation (free strategy/assessment call)
+Pitch method: NEVER pitch a direct buy. Always invite to a free call.
+Target length: 45–60 minutes of content before the offer reveal
+Retention target: 70%+ of attendees stay through the offer
+3-Secrets format (use project file templates):
+- Secret #1: Vehicle/Method false belief
+- Secret #2: Internal false belief
+- Secret #3: External false belief
+
+STEP 6 — HOSTING STRATEGY (performance tips)
+Live always beats replay on show rate and conversion — commit to showing up live
+Re-run strategy: announce a Sunday re-run for registrants who missed it. Never say the original will be recorded.
+Engagement tactics: open questions, chat polls, name attendees, pattern interrupts every 10 minutes
+Energy: arrive 20 min early, test tech, have water, stand if possible
+Post-masterclass within 15 min: send replay link + bonus to all registrants via email + SMS
+
+STEP 7 — FOLLOW-UP CAMPAIGN (7-touch sequence)
+Touch 1 (within 15 min): replay link + bonus — email + SMS to all registrants
+Touch 2 (Day 1): urgency email — "replay coming down in 48hrs"
+Touch 3 (Day 2): objection handling email or testimonial drop
+Touch 4 (Day 3): re-run invitation — "joining us Sunday?"
+Touch 5 (Day 4–5): story content — Instagram story CTA to book
+Touch 6 (Day 5–6): DM outreach to all no-shows and non-bookers personally
+Touch 7 (Day 7): final call — "last chance, doors close at midnight"
+
+---
+
+KPI BENCHMARKS (from Kevin's Internal SOP + 90-Min Money Machine)
+
+CPL: Poor $15–25 | Good $8–15 | Excellent $3–8
+LP Conversion: Poor 15–25% | Good 30–40% | Excellent 45–60%
+Lead → Attendance: Poor 15–20% | Good 25–35% | Excellent 35–50%
+Attendance → See Offer: Poor 50–65% | Good 70–85% | Excellent 85–95%
+See Offer → Book Call: Poor 3–8% | Good 12–20% | Excellent 25–40%
+Book Call → Close: Poor 20–35% | Good 40–55% | Excellent 60–75%
+Generated ROAS: Poor <2× | Good 2–4× | Excellent 5×+
+Cash ROAS: Poor <1× | Good 1–2× | Excellent 2×+
+
+FUNNEL MATH (base example — $1K spend, $10 CPL, $2,500 offer):
+100 registrants → 30 attendees (30%) → 25 see offer (83%) → 5 booked (20%) → 3 clients (60%) = $7,500 revenue = 7.5× ROAS
+
+---
+
+CONSTRAINT DIAGNOSIS RULES
+
+If show rate is below 18%: the nurture sequence is broken — rewrite confirmation + reminder emails/SMS
+If retention is below 60%: the presentation has dead spots — add open loops, cut slides 10+
+If booking rate is below 5%: the pitch is weak — rewrite CTA, add bonus stack, watch pitch section
+If close rate is below 30%: sales training needed OR leads are unqualified — add pre-call application
+If ROAS is below 3×: do not scale. Fix the lowest-graded KPI before increasing spend.
+
+---
+
+PROMPT STARTERS (suggest these when coach first opens a chat)
+
+1. "Help me build my Rule of 1 offer for [niche]"
+2. "Give me 10 masterclass title options for my avatar"
+3. "Build my 14-day pre-launch content calendar"
+4. "Set my KPI projections for a $[X] ad spend campaign at a $[Y] offer price"
+5. "Write my 3-Secrets slide framework for [mechanism name]"
+6. "Diagnose my funnel — show rate [X]%, booking rate [X]%, close rate [X]%"
+7. "Write my post-masterclass 7-touch follow-up sequence"
+8. "Give me 15 ad hook options for my masterclass"
+
+---
+
+NEVER DO THIS
+
+- Give generic advice that doesn't reference the coach's specific niche, avatar, or mechanism
+- Skip asking clarifying questions on the first interaction in a new conversation
+- Recommend running ads for less than 2 weeks before the masterclass live date
+- Suggest pitching a direct buy or checkout link during the masterclass
+- Recommend scaling ad spend before the coach hits 3× ROAS minimum
+- Use AI-sounding language or refer to yourself as an AI assistant`;
+
+function copyProjectInstructions(){
+  navigator.clipboard.writeText(PROJECT_INSTRUCTIONS).then(()=>toast('📋 Project instructions copied! Paste into Claude Project Settings.'));
+}
+
+// ════════════════════════════════════
+// JSX CODE (inline, full)
+// ════════════════════════════════════
+const JSX_CODE = `import { useState, useCallback } from "react";
+
+const C = {
+  navyDark:"#0B1A2B",navyMid:"#142845",navyCard:"#1A3358",
+  orange:"#E87722",orangeDim:"rgba(232,119,34,0.13)",
+  blueMid:"#4A7FA5",green:"#22C55E",greenDim:"rgba(34,197,94,0.12)",
+  yellow:"#F59E0B",yellowDim:"rgba(245,158,11,0.12)",
+  red:"#DC2626",redDim:"rgba(220,38,38,0.12)",purple:"#8B5CF6",
+  text:"#F0F6FF",muted:"#8BA5C2",
+  border:"rgba(74,127,165,0.2)",borderBright:"rgba(74,127,165,0.38)",
+};
+
+const f$=(v)=>isNaN(v)||v===null?"—":"$"+Math.round(v).toLocaleString();
+const fP=(v)=>isNaN(v)||v===null?"—":(v*100).toFixed(1)+"%";
+const fX=(v)=>isNaN(v)||v===null?"—":v.toFixed(2)+"×";
+const fN=(v)=>isNaN(v)||v===null?"—":Math.round(v).toLocaleString();
+const nv=(v)=>parseFloat(v)||0;
+
+const SLIDERS=[
+  {key:"cpl",label:"Target CPL ($)",min:1,max:50,def:10,hint:"Excellent: $3–8 | Good: $8–15",pre:"$"},
+  {key:"lpcvr",label:"LP Conversion (%)",min:1,max:80,def:30,hint:"Good: 30–40% | Excellent: 45–60%",suf:"%"},
+  {key:"show",label:"Show Rate (%)",min:1,max:70,def:30,hint:"Good: 25–35% | Excellent: 35–50%",suf:"%"},
+  {key:"retain",label:"Retention — See Offer (%)",min:20,max:99,def:83,hint:"Good: 70–85% | Excellent: 85–95%",suf:"%"},
+  {key:"book",label:"Offer → Book (%)",min:1,max:50,def:20,hint:"Good: 12–20% | Excellent: 25–40%",suf:"%"},
+  {key:"close",label:"Close Rate (%)",min:5,max:90,def:60,hint:"Good: 40–55% | Excellent: 60–75%",suf:"%"},
+];
+const SCEN={
+  best:{cpl:5,lpcvr:50,show:40,retain:92,book:30,close:70},
+  mid:{cpl:10,lpcvr:30,show:30,retain:83,book:20,close:55},
+  worst:{cpl:22,lpcvr:18,show:18,retain:65,book:7,close:30},
+};
+
+const s={
+  page:{background:C.navyDark,minHeight:"100vh",fontFamily:"system-ui,sans-serif",color:C.text,fontSize:13},
+  hdr:{background:"linear-gradient(135deg,#0B1A2B,#152B48 55%,#0B1A2B)",borderBottom:"2px solid "+C.orange,padding:"20px 20px 14px"},
+  tabs:{display:"flex",background:C.navyMid,borderBottom:"1px solid "+C.border,overflowX:"auto"},
+  tab:(a)=>({padding:"10px 14px",background:"none",border:"none",borderBottom:"3px solid "+(a?C.orange:"transparent"),color:a?C.orange:C.muted,fontSize:11,fontWeight:600,cursor:"pointer",whiteSpace:"nowrap"}),
+  card:(acc)=>({background:C.navyCard,border:"1px solid "+C.border,borderLeft:acc?"4px solid "+acc:"1px solid "+C.border,borderRadius:10,padding:16,marginBottom:14}),
+  badge:(t)=>{const m={pass:[C.greenDim,C.green,"rgba(34,197,94,0.3)"],warn:[C.yellowDim,C.yellow,"rgba(245,158,11,0.3)"],fail:[C.redDim,C.red,"rgba(220,38,38,0.3)"],info:["rgba(74,127,165,0.15)",C.blueMid,"rgba(74,127,165,0.3)"],or:[C.orangeDim,C.orange,"rgba(232,119,34,0.3)"]};const[bg,fg,br]=m[t]||m.info;return{display:"inline-block",background:bg,color:fg,border:"1px solid "+br,borderRadius:3,padding:"2px 7px",fontFamily:"monospace",fontSize:9,fontWeight:600,textTransform:"uppercase",letterSpacing:"0.08em"};},
+  btn:(p)=>({display:"inline-flex",alignItems:"center",gap:5,padding:"8px 14px",borderRadius:6,border:p?"none":"1px solid "+C.borderBright,background:p?C.orange:"transparent",color:p?"#fff":C.muted,fontSize:11,fontWeight:600,cursor:"pointer"}),
+  lbl:{fontFamily:"monospace",fontSize:9,color:C.muted,textTransform:"uppercase",letterSpacing:"0.1em",display:"block",marginBottom:4},
+  inp:{width:"100%",background:C.navyDark,border:"1px solid "+C.borderBright,borderRadius:6,color:C.text,fontFamily:"monospace",fontSize:12,padding:"8px 10px",outline:"none",boxSizing:"border-box"},
+  g2:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12},
+  g4:{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10},
+};
+
+function FRow({label,value,rate,color,pct}){return(<div style={{display:"flex",alignItems:"center",gap:7,padding:"6px 10px",background:C.navyMid,borderRadius:6,border:"1px solid "+C.border,marginBottom:2}}><span style={{fontSize:10,color:C.muted,flex:"0 0 140px"}}>{label}</span><div style={{flex:1,height:5,background:"rgba(255,255,255,0.05)",borderRadius:2,overflow:"hidden"}}><div style={{height:"100%",width:Math.min(100,pct||0)+"%",background:color,borderRadius:2,transition:"width 0.4s"}}/></div><span style={{fontFamily:"monospace",fontSize:12,color,minWidth:64,textAlign:"right",fontWeight:700}}>{value}</span><span style={{fontFamily:"monospace",fontSize:9,color:C.muted,minWidth:58,textAlign:"right"}}>{rate}</span></div>);}
+
+function StatCard({label,value,color,sub}){return(<div style={s.card(color)}><div style={{fontFamily:"monospace",fontSize:9,color:C.muted,textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:3}}>{label}</div><div style={{fontFamily:"sans-serif",fontWeight:700,fontSize:26,color,lineHeight:1}}>{value}</div>{sub&&<div style={{fontSize:10,color:C.muted,marginTop:3}}>{sub}</div>}</div>);}
+
+export default function MasterclassCalc(){
+  const[tab,setTab]=useState("proj");
+  const[pv,setPv]=useState({name:"Campaign #1",spend:1000,price:2500,...Object.fromEntries(SLIDERS.map(s=>[s.key,s.def]))});
+  const[av,setAv]=useState({name:"Campaign #1",spend:"",leads:"",regs:"",attend:"",offer:"",booked:"",closed:"",price:2500,rev:"",cash:""});
+  const[hist,setHist]=useState([]);
+  const[toast,setToast]=useState("");
+  const sp=id=>v=>setPv(p=>({...p,[id]:v}));
+  const sa=id=>v=>setAv(p=>({...p,[id]:v}));
+  const showToast=m=>{setToast(m);setTimeout(()=>setToast(""),2000);};
+
+  const spend=nv(pv.spend),price=nv(pv.price);
+  const cpl=pv.cpl||10,lp=pv.lpcvr/100||.3,sh=pv.show/100||.3,re=pv.retain/100||.83,bk=pv.book/100||.2,cl=pv.close/100||.6;
+  const leads=spend/cpl,regs=leads*lp,attend=regs*sh,offer=attend*re,booked=offer*bk,clients=booked*cl;
+  const rev=clients*price,roas=spend>0?rev/spend:0,profit=rev-spend,cac=clients>0?spend/clients:0;
+
+  const aS=nv(av.spend),aL=nv(av.leads),aR=nv(av.regs),aAt=nv(av.attend),aO=nv(av.offer),aBk=nv(av.booked),aCl=nv(av.closed),aPr=nv(av.price),aRv=nv(av.rev),aCsh=nv(av.cash);
+  const aCpl=aL>0?aS/aL:NaN,aSh=aR>0?aAt/aR:NaN,aRt=aAt>0?aO/aAt:NaN,aBkR=aO>0?aBk/aO:NaN,aClR=aBk>0?aCl/aBk:NaN,aROAS=aS>0?aRv/aS:NaN,aCashR=aS>0?aCsh/aS:NaN;
+
+  const grade=(v,ok,wn)=>(!isNaN(v)&&v>0)?(ok(v)?"pass":wn(v)?"warn":"fail"):"info";
+
+  return(
+  <div style={s.page}>
+    <div style={s.hdr}>
+      <div style={{fontFamily:"monospace",fontSize:9,color:C.orange,textTransform:"uppercase",letterSpacing:"0.2em",marginBottom:4}}>IFCA · 90-Minute Money Machine</div>
+      <div style={{fontWeight:700,fontSize:28,lineHeight:1,marginBottom:4}}>Masterclass <span style={{color:C.orange}}>Projection</span> Calculator</div>
+      <div style={{fontSize:11,color:C.muted}}>Know your numbers before you spend $1</div>
+    </div>
+    <div style={s.tabs}>
+      {[["proj","📐 Projections"],["actuals","📊 Actuals"],["hist","📋 History"],["bench","🎯 Benchmarks"]].map(([id,label])=>(
+        <button key={id} style={s.tab(tab===id)} onClick={()=>setTab(id)}>{label}</button>
+      ))}
+    </div>
+    {toast&&<div style={{position:"fixed",top:12,right:12,background:C.navyCard,border:"1px solid "+C.orange,borderRadius:7,padding:"8px 16px",fontSize:11,zIndex:999}}>{toast}</div>}
+    <div style={{padding:16}}>
+
+    {tab==="proj"&&(
+      <div>
+        <div style={s.g2}>
+          <div>
+            <div style={s.card(C.orange)}>
+              <div style={{fontFamily:"monospace",fontSize:9,color:C.orange,textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:10}}>Campaign Setup</div>
+              <div style={{marginBottom:8}}><label style={s.lbl}>Campaign Name</label><input style={s.inp} value={pv.name} onChange={e=>sp("name")(e.target.value)}/></div>
+              <div style={s.g2}><div><label style={s.lbl}>Ad Spend ($)</label><input type="number" style={s.inp} value={pv.spend} onChange={e=>sp("spend")(e.target.value)}/></div><div><label style={s.lbl}>Offer Price ($)</label><input type="number" style={s.inp} value={pv.price} onChange={e=>sp("price")(e.target.value)}/></div></div>
+            </div>
+            <div style={s.card(C.blueMid)}>
+              <div style={{fontFamily:"monospace",fontSize:9,color:C.blueMid,textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:10}}>Target KPIs</div>
+              {SLIDERS.map(sl=>(
+                <div key={sl.key} style={{marginBottom:10}}>
+                  <label style={s.lbl}>{sl.label}</label>
+                  <div style={{display:"flex",gap:8,alignItems:"center"}}>
+                    <input type="range" min={sl.min} max={sl.max} step="0.5" value={pv[sl.key]} onChange={e=>sp(sl.key)(parseFloat(e.target.value))} style={{flex:1,accentColor:C.orange}}/>
+                    <span style={{fontFamily:"monospace",fontSize:11,color:C.orange,minWidth:44,textAlign:"right"}}>{sl.pre||""}{pv[sl.key]}{sl.suf||""}</span>
+                  </div>
+                  <div style={{fontSize:9,color:C.muted}}>{sl.hint}</div>
+                </div>
+              ))}
+              <div style={{display:"flex",gap:6,flexWrap:"wrap",marginTop:8}}>
+                {["best","mid","worst"].map(t=><button key={t} style={s.btn(false)} onClick={()=>setPv(p=>({...p,...SCEN[t]}))}>{t==="best"?"⚡ Best":t==="mid"?"📊 Mid":"🔻 Worst"}</button>)}
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style={s.card(null)}>
+              <div style={{fontFamily:"monospace",fontSize:9,color:C.orange,textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:12}}>📐 Projected Funnel</div>
+              {[
+                {label:"Ad Spend",value:f$(spend),rate:"",color:C.orange,pct:100},
+                {label:"Leads Generated",value:fN(leads),rate:"$"+cpl+" CPL",color:C.blueMid,pct:100},
+                {label:"Registrants",value:fN(regs),rate:(lp*100).toFixed(0)+"%",color:C.blueMid,pct:lp*100},
+                {label:"Live Attendees",value:fN(attend),rate:(sh*100).toFixed(0)+"% show",color:C.yellow,pct:sh*100},
+                {label:"Stayed for Offer",value:fN(offer),rate:(re*100).toFixed(0)+"% retain",color:C.yellow,pct:re*100},
+                {label:"Calls Booked",value:fN(booked),rate:(bk*100).toFixed(0)+"% book",color:C.purple,pct:bk*100},
+                {label:"New Clients",value:fN(clients),rate:(cl*100).toFixed(0)+"% close",color:C.green,pct:cl*100},
+              ].map((r,i)=><FRow key={i} {...r}/>)}
+            </div>
+            <div style={s.g2}>
+              <StatCard label="Revenue" value={f$(rev)} color={C.orange} sub={fN(clients)+" × "+f$(price)}/>
+              <StatCard label="ROAS" value={fX(roas)} color={roas>=5?C.green:roas>=3?C.yellow:C.red} sub={"Net: "+f$(profit)}/>
+              <StatCard label="CAC" value={f$(cac)} color={C.blueMid} sub={price>0?(cac/price*100).toFixed(0)+"% of price":""}/>
+              <StatCard label="Warm Leads" value={fN(Math.max(0,regs-clients))} color={C.purple} sub="Nurture pipeline"/>
+            </div>
+            <div style={s.card(null)}>
+              <div style={{fontFamily:"monospace",fontSize:9,color:C.muted,textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:8}}>Health Check</div>
+              {[
+                {l:"CPL",d:"$"+cpl,g:cpl<=10?"pass":cpl<=15?"warn":"fail",n:cpl<=10?"On target":cpl<=15?"Test creative":"New hook needed"},
+                {l:"Show Rate",d:(sh*100).toFixed(0)+"%",g:sh>=.25?"pass":sh>=.18?"warn":"fail",n:sh>=.25?"Solid":"Fix nurture sequence"},
+                {l:"ROAS",d:fX(roas),g:roas>=5?"pass":roas>=3?"warn":"fail",n:roas>=5?"Scale it":roas>=3?"Optimize first":"Don't scale yet"},
+              ].map(c=>(
+                <div key={c.l} style={{display:"flex",alignItems:"center",gap:8,padding:"5px 0",borderBottom:"1px solid rgba(74,127,165,0.07)"}}>
+                  <span style={{fontSize:10,color:C.muted,flex:"0 0 80px"}}>{c.l}</span>
+                  <span style={s.badge(c.g)}>{c.d}</span>
+                  <span style={{fontSize:10,color:C.muted,flex:1}}>{c.n}</span>
+                </div>
+              ))}
+              <div style={{display:"flex",gap:6,marginTop:10}}>
+                <button style={s.btn(true)} onClick={()=>{setHist(h=>[{name:pv.name,type:"projection",spend,revenue:Math.round(rev),roas,closed:Math.round(clients),id:Date.now()},...h]);showToast("✅ Saved!");}}>💾 Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {tab==="actuals"&&(
+      <div>
+        <div style={{display:"flex",justifyContent:"space-between",marginBottom:14,flexWrap:"wrap",gap:8}}>
+          <div style={{fontFamily:"monospace",fontSize:9,color:C.muted,textTransform:"uppercase",letterSpacing:"0.1em"}}>Enter real numbers to grade every KPI</div>
+          <div style={{display:"flex",gap:6}}>
+            <button style={s.btn(false)} onClick={()=>{setAv({name:"Emz Campaign #1",spend:2719.57,leads:278,regs:106,attend:21,offer:20,booked:5,closed:1,price:6300,rev:6300,cash:3150});showToast("📥 Emz data loaded!");}}>📥 Emz Example</button>
+            <button style={s.btn(true)} onClick={()=>{setHist(h=>[{name:av.name,type:"actual",spend:aS,revenue:aRv,roas:aROAS,closed:aCl,id:Date.now()},...h]);showToast("✅ Saved!");}}>💾 Save</button>
+          </div>
+        </div>
+        <div style={s.g2}>
+          <div style={s.card(null)}>
+            <div style={{fontFamily:"monospace",fontSize:9,color:C.muted,textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:10}}>Actual Numbers</div>
+            <div style={{marginBottom:8}}><label style={s.lbl}>Campaign Name</label><input style={s.inp} value={av.name} onChange={e=>sa("name")(e.target.value)}/></div>
+            <div style={s.g2}>
+              {[["spend","Ad Spend ($)","2719"],["leads","Leads","278"],["regs","Registrants","106"],["attend","Attendees","21"],["offer","Saw Offer","20"],["booked","Calls Booked","5"],["closed","Closed","1"],["price","Offer Price","2500"],["rev","Revenue ($)","6300"],["cash","Cash Collected","3150"]].map(([k,l,ph])=>(
+                <div key={k}><label style={s.lbl}>{l}</label><input type="number" style={s.inp} placeholder={ph} value={av[k]} onChange={e=>sa(k)(e.target.value)}/></div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <div style={s.g2}>
+              <StatCard label="ROAS" value={isNaN(aROAS)?"—":aROAS.toFixed(2)+"×"} color={isNaN(aROAS)?C.muted:aROAS>=5?C.green:aROAS>=3?C.yellow:C.red} sub="Target: 5×+"/>
+              <StatCard label="CPL" value={isNaN(aCpl)?"—":"$"+aCpl.toFixed(2)} color={isNaN(aCpl)?C.muted:aCpl<=10?C.green:aCpl<=15?C.yellow:C.red} sub="Target: <$10"/>
+            </div>
+            <div style={{...s.card(null),marginTop:0}}>
+              <div style={{fontFamily:"monospace",fontSize:9,color:C.muted,textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:8}}>KPI Grades</div>
+              <table style={{width:"100%",borderCollapse:"collapse"}}>
+                <thead><tr>{["KPI","Actual","Target","Grade"].map(h=><th key={h} style={{fontFamily:"monospace",fontSize:8,textTransform:"uppercase",letterSpacing:"0.1em",color:C.muted,padding:"5px 8px",textAlign:"left",borderBottom:"1px solid "+C.border}}>{h}</th>)}</tr></thead>
+                <tbody>
+                  {[
+                    {l:"Show Rate",v:aSh,fmt:fP,tgt:"25–35%",ok:v=>v>=.25,wn:v=>v>=.18},
+                    {l:"Retention",v:aRt,fmt:fP,tgt:"70%+",ok:v=>v>=.70,wn:v=>v>=.55},
+                    {l:"Book Rate",v:aBkR,fmt:fP,tgt:"12–20%",ok:v=>v>=.12,wn:v=>v>=.08},
+                    {l:"Close Rate",v:aClR,fmt:fP,tgt:"40–55%",ok:v=>v>=.40,wn:v=>v>=.30},
+                    {l:"ROAS",v:aROAS,fmt:fX,tgt:"5×+",ok:v=>v>=5,wn:v=>v>=3},
+                    {l:"Cash ROAS",v:aCashR,fmt:fX,tgt:"2×+",ok:v=>v>=2,wn:v=>v>=1},
+                  ].map(k=>{const hv=!isNaN(k.v)&&k.v>0;const gr=hv?(k.ok(k.v)?"pass":k.wn(k.v)?"warn":"fail"):"info";return(<tr key={k.l}><td style={{padding:"6px 8px",fontSize:10,color:C.muted,borderBottom:"1px solid rgba(74,127,165,0.07)"}}>{k.l}</td><td style={{padding:"6px 8px",fontFamily:"monospace",fontSize:11,fontWeight:700,borderBottom:"1px solid rgba(74,127,165,0.07)"}}>{hv?k.fmt(k.v):"—"}</td><td style={{padding:"6px 8px",fontFamily:"monospace",fontSize:9,color:C.muted,borderBottom:"1px solid rgba(74,127,165,0.07)"}}>{k.tgt}</td><td style={{padding:"6px 8px",borderBottom:"1px solid rgba(74,127,165,0.07)"}}><span style={s.badge(gr)}>{gr==="pass"?"✓ PASS":gr==="warn"?"WATCH":gr==="fail"?"FIX":"—"}</span></td></tr>);})}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {tab==="hist"&&(
+      <div>
+        <div style={{display:"flex",justifyContent:"space-between",marginBottom:14}}>
+          <div style={{fontFamily:"monospace",fontSize:9,color:C.muted,textTransform:"uppercase",letterSpacing:"0.1em"}}>Campaign History — This Session</div>
+          <button style={s.btn(false)} onClick={()=>setHist([])}>🗑 Clear</button>
+        </div>
+        {hist.length===0?(<div style={{background:"rgba(74,127,165,0.08)",border:"1px solid rgba(74,127,165,0.2)",borderRadius:8,padding:20,color:C.muted,fontSize:12}}>No campaigns saved yet.</div>):(
+          <div style={{overflowX:"auto"}}>
+            <table style={{width:"100%",borderCollapse:"collapse"}}>
+              <thead><tr>{["#","Name","Type","Spend","Clients","Revenue","ROAS"].map(h=><th key={h} style={{fontFamily:"monospace",fontSize:8,textTransform:"uppercase",letterSpacing:"0.1em",color:C.muted,padding:"6px 10px",textAlign:"left",borderBottom:"1px solid "+C.border}}>{h}</th>)}</tr></thead>
+              <tbody>{hist.map((c,i)=>{const rg=c.roas>=5?"pass":c.roas>=3?"warn":"fail";return(<tr key={c.id}><td style={{padding:"7px 10px",fontFamily:"monospace",fontSize:10,color:C.muted}}>{i+1}</td><td style={{padding:"7px 10px",fontSize:11,fontWeight:600}}>{c.name}</td><td style={{padding:"7px 10px"}}><span style={s.badge(c.type==="actual"?"pass":"or")}>{c.type}</span></td><td style={{padding:"7px 10px",fontFamily:"monospace",fontSize:11}}>{f$(c.spend)}</td><td style={{padding:"7px 10px",fontFamily:"monospace",fontWeight:700,color:C.green}}>{c.closed||0}</td><td style={{padding:"7px 10px",fontFamily:"monospace",fontWeight:700,color:C.green}}>{f$(c.revenue)}</td><td style={{padding:"7px 10px"}}><span style={s.badge(isNaN(c.roas)?"info":rg)}>{isNaN(c.roas)?"—":c.roas.toFixed(1)+"×"}</span></td></tr>);})}</tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    )}
+
+    {tab==="bench"&&(
+      <div>
+        <div style={{fontFamily:"monospace",fontSize:9,color:C.muted,textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:14}}>90-Minute Money Machine KPI Benchmarks</div>
+        {[["CPL","$15–25","$8–15","$3–8"],["LP Conversion","15–25%","30–40%","45–60%"],["Show Rate","15–20%","25–35%","35–50%"],["Retention","50–65%","70–85%","85–95%"],["Offer → Book","3–8%","12–20%","25–40%"],["Close Rate","20–35%","40–55%","60–75%"],["ROAS","<2×","2–4×","5×+"]].map(([k,p,g,e])=>(
+          <div key={k} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 12px",background:C.navyCard,borderRadius:6,marginBottom:4}}>
+            <span style={{fontSize:11,color:C.muted,flex:"0 0 130px"}}>{k}</span>
+            <span style={s.badge("fail")}>{p}</span>
+            <span style={s.badge("warn")}>{g}</span>
+            <span style={s.badge("pass")}>{e}</span>
+          </div>
+        ))}
+        <div style={{...s.card(null),marginTop:14}}>
+          <div style={{fontFamily:"monospace",fontSize:9,color:C.orange,textTransform:"uppercase",letterSpacing:"0.1em",marginBottom:10}}>Base Funnel — $1K Spend</div>
+          {[["Registrants ($10 CPL)","100"],["Live Attendees (30%)","30"],["Saw Offer (83%)","25"],["Calls Booked (20%)","5"],["New Clients (60%)","3"],["Revenue","$7,500"],["ROAS","7.5×"]].map(([l,v],i)=>(
+            <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"5px 0",borderBottom:"1px solid rgba(74,127,165,0.07)"}}>
+              <span style={{fontSize:10,color:C.muted}}>{l}</span>
+              <span style={{fontFamily:"monospace",fontSize:11,fontWeight:700,color:i>=5?C.orange:C.text}}>{v}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    </div>
+  </div>);
+}`;
+
+function copyJSX(){
+  navigator.clipboard.writeText(JSX_CODE).then(()=>toast('📋 JSX code copied! Paste into Claude and say "Render this as a live artifact"'));
+}
+
+// ════════════════════════════════════
+// POPULATE PROJECT INSTRUCTIONS BLOCK
+// ════════════════════════════════════
+function populateInstructionsBlock(){
+  const el=document.getElementById('proj-instructions-block');
+  if(el){el.textContent=PROJECT_INSTRUCTIONS;}
+}
+
+// ════════════════════════════════════
+// INIT
+// ════════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{
+  buildSliders();
+  calcProj();
+  buildBenchTable();
+  buildRefFunnel();
+  populateInstructionsBlock();
+});
+</script>
+</body>
+</html>

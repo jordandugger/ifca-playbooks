@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFCA Masterclass Projection Calculator — How to Use</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-dark: #0B1A2B; --navy-mid: #142845; --navy-card: #1A3358;
+    --orange: #E87722; --orange-dim: rgba(232,119,34,0.12);
+    --blue-mid: #4A7FA5; --green: #22C55E; --green-dim: rgba(34,197,94,0.10);
+    --yellow: #F59E0B; --purple: #8B5CF6;
+    --text: #F0F6FF; --muted: #8BA5C2;
+    --border: rgba(74,127,165,0.2); --border-bright: rgba(74,127,165,0.35);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--navy-dark); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.65; }
+
+  .hero { background: linear-gradient(135deg, #0B1A2B 0%, #152B48 55%, #0B1A2B 100%); border-bottom: 2px solid var(--orange); padding: 52px 40px 40px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 72px, rgba(74,127,165,0.03) 72px, rgba(74,127,165,0.03) 73px); pointer-events: none; }
+  .hero-inner { max-width: 900px; margin: 0 auto; position: relative; }
+  .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--orange); letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 10px; }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: 62px; line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 16px; }
+  .hero-title span { color: var(--orange); }
+  .hero-desc { font-size: 16px; color: var(--muted); max-width: 580px; margin-bottom: 28px; }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; }
+  .hero-badge.orange { background: var(--orange-dim); border: 1px solid rgba(232,119,34,0.35); color: var(--orange); }
+  .hero-badge.blue { background: rgba(74,127,165,0.12); border: 1px solid rgba(74,127,165,0.3); color: var(--blue-mid); }
+  .hero-badge.green { background: var(--green-dim); border: 1px solid rgba(34,197,94,0.25); color: var(--green); }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 48px 40px 80px; }
+  h2.section-title { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 0.04em; margin-bottom: 6px; }
+  .section-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+  .divider { height: 1px; background: var(--border); margin: 44px 0; }
+
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step-card { display: grid; grid-template-columns: 64px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--border); align-items: start; }
+  .step-card:last-child { border-bottom: none; }
+  .step-num { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 26px; flex-shrink: 0; }
+  .step-num.orange { background: var(--orange-dim); border: 2px solid var(--orange); color: var(--orange); }
+  .step-num.blue { background: rgba(74,127,165,0.12); border: 2px solid var(--blue-mid); color: var(--blue-mid); }
+  .step-num.green { background: var(--green-dim); border: 2px solid var(--green); color: var(--green); }
+  .step-num.yellow { background: rgba(245,158,11,0.1); border: 2px solid var(--yellow); color: var(--yellow); }
+  .step-num.purple { background: rgba(139,92,246,0.1); border: 2px solid var(--purple); color: var(--purple); }
+  .step-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.04em; margin-bottom: 5px; }
+  .step-desc { font-size: 14px; color: var(--muted); margin-bottom: 12px; line-height: 1.6; }
+
+  .code-block { background: #060F1C; border: 1px solid var(--border); border-left: 4px solid var(--orange); border-radius: 8px; padding: 18px 20px; font-family: 'DM Mono', monospace; font-size: 12px; color: #D6E4F0; white-space: pre-wrap; line-height: 1.7; position: relative; }
+  .copy-btn { position: absolute; top: 10px; right: 10px; background: var(--orange-dim); border: 1px solid rgba(232,119,34,0.3); color: var(--orange); border-radius: 4px; padding: 4px 10px; font-family: 'DM Mono', monospace; font-size: 10px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; }
+  .copy-btn:hover { background: var(--orange); color: #fff; }
+
+  .alert { border-radius: 8px; padding: 14px 18px; font-size: 13px; display: flex; gap: 12px; margin: 16px 0; }
+  .alert.orange { background: var(--orange-dim); border: 1px solid rgba(232,119,34,0.3); color: #F0C98B; }
+  .alert.blue { background: rgba(74,127,165,0.1); border: 1px solid rgba(74,127,165,0.25); color: var(--blue-mid); }
+  .alert.green { background: var(--green-dim); border: 1px solid rgba(34,197,94,0.25); color: var(--green); }
+
+  .download-card { background: linear-gradient(135deg, #1A3358 0%, #0F2040 100%); border: 1px solid var(--orange); border-radius: 12px; padding: 28px 30px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 12px; }
+  .download-card-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 6px; }
+  .download-card-title { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.03em; margin-bottom: 5px; }
+  .download-card-desc { font-size: 13px; color: var(--muted); max-width: 440px; }
+  .download-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: var(--orange); color: #fff; border-radius: 7px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap; transition: background 0.2s; }
+  .download-btn:hover { background: #cc6a14; }
+
+  .funnel-flow { display: flex; flex-direction: column; gap: 0; margin: 20px 0; }
+  .funnel-step { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .funnel-step:last-child { border-bottom: none; }
+  .funnel-arrow { font-family: 'DM Mono', monospace; font-size: 18px; color: var(--orange); flex-shrink: 0; width: 30px; }
+  .funnel-label { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 0.04em; flex: 1; }
+  .funnel-input { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--blue-mid); }
+  .funnel-bench { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+
+  .kpi-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  .kpi-table th { background: var(--navy-card); padding: 10px 14px; text-align: left; font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--orange); border-bottom: 1px solid var(--border); }
+  .kpi-table td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid rgba(74,127,165,0.07); }
+  .kpi-table td:first-child { color: var(--muted); }
+
+  .rule-card { background: var(--navy-card); border-left: 4px solid var(--orange); border-radius: 8px; padding: 16px 20px; margin: 12px 0; }
+  .rule-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.04em; margin-bottom: 4px; }
+  .rule-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  @media (max-width: 640px) {
+    .hero { padding: 32px 20px 28px; } .hero-title { font-size: 44px; }
+    .main { padding: 28px 20px 48px; }
+    .step-card { grid-template-columns: 48px 1fr; gap: 14px; } .download-card { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">IFCA 7-Figure Retreat · Workshop Tools</div>
+    <div class="hero-title">Masterclass<br><span>Projection Calculator</span></div>
+    <div class="hero-desc">Project your full masterclass funnel — from ad spend to revenue — before you launch. Know your ROAS floor, set your KPI targets, and track actual campaign performance vs. projections in real time.</div>
+    <div class="hero-badges">
+      <span class="hero-badge orange">📐 Full Funnel Projection</span>
+      <span class="hero-badge blue">📊 Campaign History Tracker</span>
+      <span class="hero-badge green">✅ KPI Grade System</span>
+      <span class="hero-badge orange">JSX Artifact</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <h2 class="section-title">Get the Calculator</h2>
+  <div class="section-sub">A full masterclass funnel modeler that runs as a live JSX artifact inside Claude. Set your inputs, see your projected ROAS and revenue, and log each campaign to track performance over time.</div>
+
+  <div class="download-card">
+    <div class="download-card-info">
+      <div class="download-card-eyebrow">Interactive JSX Artifact · Claude Native</div>
+      <div class="download-card-title">Masterclass Projection Calculator</div>
+      <div class="download-card-desc">Enter your ad spend, offer price, and funnel KPIs. Projects leads → registrants → attendees → calls booked → revenue. Includes a campaign history log and ROAS grade to track every launch.</div>
+    </div>
+    <a href="masterclass-projection-calculator.jsx" download class="download-btn">⬇ Download JSX File</a>
+  </div>
+
+  <div class="alert orange">
+    <span>⚡</span>
+    <div><strong>JSX file — here's how to run it:</strong> Download the .jsx file → Open Claude.ai → New Chat → Upload the file → Say <em>"Render this JSX file as a live artifact"</em> → The calculator loads in the artifact panel on the right side of your screen.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- WHAT IT MODELS -->
+  <h2 class="section-title">What the Calculator Models — The Full Funnel</h2>
+  <div class="section-sub">Eight stages from ad spend to collected revenue. Every stage is a lever. The calculator shows you which lever, moved by how much, produces the biggest ROAS impact.</div>
+
+  <div class="funnel-flow">
+    <div class="funnel-step">
+      <div class="funnel-arrow">💰</div>
+      <div class="funnel-label">Ad Spend</div>
+      <div class="funnel-input">Your input</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-arrow">↓</div>
+      <div class="funnel-label">Leads Generated (CPL)</div>
+      <div class="funnel-input">Your CPL input → auto-calc</div>
+      <div class="funnel-bench">Benchmark: $3–15</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-arrow">↓</div>
+      <div class="funnel-label">Landing Page Conversions</div>
+      <div class="funnel-input">LP conversion % input</div>
+      <div class="funnel-bench">Benchmark: 30–60%</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-arrow">↓</div>
+      <div class="funnel-label">Masterclass Attendees (Show Rate)</div>
+      <div class="funnel-input">Show rate % input</div>
+      <div class="funnel-bench">Benchmark: 25–50%</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-arrow">↓</div>
+      <div class="funnel-label">Retention — Saw the Offer</div>
+      <div class="funnel-input">Retention % input</div>
+      <div class="funnel-bench">Benchmark: 70–95%</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-arrow">↓</div>
+      <div class="funnel-label">Booked Strategy Calls</div>
+      <div class="funnel-input">Offer → book % input</div>
+      <div class="funnel-bench">Benchmark: 12–40%</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-arrow">↓</div>
+      <div class="funnel-label">Closed Clients</div>
+      <div class="funnel-input">Close rate % input</div>
+      <div class="funnel-bench">Benchmark: 40–75%</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-arrow">💵</div>
+      <div class="funnel-label">Revenue Generated (ROAS)</div>
+      <div class="funnel-input">Auto-calculates from above</div>
+      <div class="funnel-bench">Min threshold: 3×</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- STEP 1: ADD TO CLAUDE -->
+  <h2 class="section-title">Step 1 — Add It to Claude</h2>
+  <div class="section-sub">This is a JSX file, which means it runs as a React artifact inside Claude. The process is slightly different from HTML files — here's exactly how.</div>
+
+  <div class="steps">
+
+    <div class="step-card">
+      <div class="step-num orange">1</div>
+      <div>
+        <div class="step-title">Option A — Upload the JSX File Directly</div>
+        <div class="step-desc">The fastest way. Works in any chat session.</div>
+        <div class="code-block" id="cb1"><button class="copy-btn" onclick="copyCode('cb1')">Copy</button>1. Download the .jsx file to your computer
+2. Go to Claude.ai → start a New Chat
+3. Click the paperclip/attachment icon
+4. Upload the .jsx file
+5. Send this message: "Render this JSX file as a live artifact"
+6. The projection calculator loads in the artifact panel on the right</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num blue">2</div>
+      <div>
+        <div class="step-title">Option B — Paste the Code Directly</div>
+        <div class="step-desc">If uploading doesn't work, open the .jsx file in any text editor (Notepad, TextEdit, VS Code), copy all the code, and paste it into the chat with this message:</div>
+        <div class="code-block" id="cb2"><button class="copy-btn" onclick="copyCode('cb2')">Copy</button>Here is my Masterclass Projection Calculator code. Please render it as a live interactive artifact:
+
+[paste the full JSX code here]</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num green">3</div>
+      <div>
+        <div class="step-title">Option C — Save to a Claude Project</div>
+        <div class="step-desc">For ongoing masterclass planning, save the JSX file inside a dedicated Masterclass Claude Project. The file stays accessible across all chats in that project.</div>
+        <div class="code-block" id="cb3"><button class="copy-btn" onclick="copyCode('cb3')">Copy</button>1. Claude.ai → Projects → New Project → "[Name] Masterclass System"
+2. Add Content → upload the .jsx file
+3. Also upload: your copy kit, past campaign data, offer details
+4. In any chat in this project: 
+   "Load the Masterclass Projection Calculator as an artifact"</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- STEP 2: ENTER DATA -->
+  <h2 class="section-title">Step 2 — Enter Your Campaign Data</h2>
+  <div class="section-sub">Use the calculator in two modes: projection mode before the campaign, and actuals mode after.</div>
+
+  <div class="steps">
+
+    <div class="step-card">
+      <div class="step-num orange">BEFORE LAUNCH</div>
+      <div>
+        <div class="step-title">Pre-Campaign Projection</div>
+        <div class="step-desc">Before spending a dollar, run the model with your target KPIs. If the projected ROAS is under 3×, adjust your inputs to find which lever needs to move — and by how much — to make the campaign worth launching.</div>
+        <table class="kpi-table">
+          <thead><tr><th>Input</th><th>Where to Get It</th></tr></thead>
+          <tbody>
+            <tr><td>Ad Spend (planned)</td><td>Your budget decision — use real planned spend</td></tr>
+            <tr><td>CPL Target</td><td>Your KPI Calculator output or past campaign average</td></tr>
+            <tr><td>LP Conversion %</td><td>Past masterclass data or use 35% as baseline first launch</td></tr>
+            <tr><td>Show Rate %</td><td>Past performance or use 30% as conservative baseline</td></tr>
+            <tr><td>Retention %</td><td>Past performance or use 75% as baseline</td></tr>
+            <tr><td>Offer → Book %</td><td>Past performance or use 15% as baseline</td></tr>
+            <tr><td>Close Rate %</td><td>Your actual sales call close rate from last 90 days</td></tr>
+            <tr><td>Offer Price</td><td>Your high-ticket offer price</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num blue">AFTER LAUNCH</div>
+      <div>
+        <div class="step-title">Post-Campaign Actuals</div>
+        <div class="step-desc">After your masterclass runs, update every input field with your actual numbers. The ROAS and revenue figures recalculate. Save this to campaign history — over 3–4 campaigns you'll see exactly which stage is dragging your ROAS and where your lever improvements are actually moving numbers.</div>
+        <div class="alert blue">
+          <span>💡</span>
+          <div>Compare projection vs. actuals for each stage. If your projected show rate was 35% and actuals were 22%, that's the constraint to address before your next launch — not more ad spend.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- STEP 3: HOW TO UTILIZE -->
+  <h2 class="section-title">Step 3 — How to Use It Across Campaigns</h2>
+  <div class="section-sub">The projection calculator is a decision tool, not just a math tool. Here's the three-part workflow.</div>
+
+  <div class="steps">
+
+    <div class="step-card">
+      <div class="step-num orange">1</div>
+      <div>
+        <div class="step-title">Never Launch Without a Projected ROAS ≥ 3×</div>
+        <div class="step-desc">If your model shows projected ROAS under 3×, don't launch — fix the inputs. Most of the time the fix is one of these: increase offer price, improve your close rate assumption, or shrink the campaign size to a lower-spend test. Don't talk yourself into launching a campaign that doesn't pencil out on paper.</div>
+        <div class="rule-card">
+          <div class="rule-title">The 3× Rule</div>
+          <div class="rule-desc">Campaign #1 minimum: 3× ROAS. Do not scale budget past Campaign #1 spend without hitting this threshold. The projection calculator exists to enforce this rule before you spend — not to explain a bad result after.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num blue">2</div>
+      <div>
+        <div class="step-title">Use Scenario Planning to Find Your Highest-Leverage Lever</div>
+        <div class="step-desc">The most powerful use of the calculator: change one variable at a time and see how much it moves ROAS. Which single improvement — +10% show rate, +5% close rate, or -$5 CPL — has the biggest ROAS impact? That's where your energy goes between campaigns.</div>
+        <div class="code-block" id="cb4"><button class="copy-btn" onclick="copyCode('cb4')">Copy</button>My last masterclass results:
+- Ad spend: $1,500 | CPL: $22 | LP conversion: 31%
+- Show rate: 24% | Retention: 78% | Offer→book: 14% | Close rate: 38%
+- Offer price: $5,500 | Actual ROAS: 2.1×
+
+I'm below my 3× ROAS target. Run three scenarios for my next campaign:
+Scenario 1: I only improve show rate to 35% (everything else same)
+Scenario 2: I only improve close rate to 48% (everything else same)
+Scenario 3: I only reduce CPL to $15 (everything else same)
+
+Which scenario produces the highest ROAS and which lever should I focus on first?</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num green">3</div>
+      <div>
+        <div class="step-title">Log Every Campaign to History</div>
+        <div class="step-desc">The calculator includes a campaign history log. After each masterclass, save the inputs and results. After 3 campaigns you'll have enough data to see real trends — which KPIs are improving, which are stagnant, and whether your ROAS trajectory is moving in the right direction. This is what separates coaches who systemize their masterclass from those who run it as a one-off event.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <h2 class="section-title">KPI Benchmarks Reference</h2>
+  <div class="section-sub">What the calculator grades each funnel stage against.</div>
+
+  <table class="kpi-table">
+    <thead><tr><th>Funnel Stage</th><th>🔴 Poor</th><th>🟡 Good</th><th>🟢 Excellent</th><th>Highest-Leverage Fix</th></tr></thead>
+    <tbody>
+      <tr><td>CPL</td><td>$15–25</td><td>$8–15</td><td>$3–8</td><td>Improve hook rate / ad creative</td></tr>
+      <tr><td>LP Conversion</td><td>15–25%</td><td>30–40%</td><td>45–60%</td><td>Rewrite headline and CTA on landing page</td></tr>
+      <tr><td>Show Rate</td><td>15–20%</td><td>25–35%</td><td>35–50%</td><td>Better reminder sequence + day-of manual DMs</td></tr>
+      <tr><td>Retention</td><td>50–65%</td><td>70–85%</td><td>85–95%</td><td>Cut dead slides, add open loops, promise deliver at end</td></tr>
+      <tr><td>Offer → Book</td><td>3–8%</td><td>12–20%</td><td>25–40%</td><td>Strengthen pitch, add bonus stack, CTA urgency</td></tr>
+      <tr><td>Close Rate</td><td>20–35%</td><td>40–55%</td><td>60–75%</td><td>Pre-call application quality, sales training</td></tr>
+      <tr><td>ROAS</td><td>&lt; 2×</td><td>2–4×</td><td>5×+</td><td>Do not scale below 3×. Fix lowest-grade KPI first.</td></tr>
+    </tbody>
+  </table>
+
+</div>
+
+<script>
+function copyCode(id) {
+  const el = document.getElementById(id);
+  const btn = el.querySelector('.copy-btn');
+  const text = el.innerText.replace(btn.innerText, '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = orig, 1800);
+  });
+}
+</script>
+</body>
+</html>

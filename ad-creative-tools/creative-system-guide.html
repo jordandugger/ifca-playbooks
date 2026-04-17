@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFCA Creative Intelligence System — Setup & Usage Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1E3A5F; --navy-dark:#0D1F35; --navy-mid:#142845;
+  --orange:#E87722; --orange-dim:rgba(232,119,34,0.10); --orange-glow:rgba(232,119,34,0.20);
+  --green:#22C55E; --green-dim:rgba(34,197,94,0.10); --green-glow:rgba(34,197,94,0.20);
+  --blue:#38BDF8; --blue-dim:rgba(56,189,248,0.10); --blue-glow:rgba(56,189,248,0.20);
+  --purple:#A78BFA; --purple-dim:rgba(167,139,250,0.10);
+  --gray-400:#94A3B8; --gray-500:#64748B; --gray-600:#475569;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy-dark);color:#fff;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 80% 50% at 10% 10%,rgba(74,127,165,.07) 0%,transparent 60%),
+             radial-gradient(ellipse 50% 40% at 90% 90%,rgba(232,119,34,.05) 0%,transparent 60%);}
+
+/* ── NAV ── */
+.topnav{position:sticky;top:0;z-index:100;background:rgba(13,31,53,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.07);padding:0 32px;height:52px;display:flex;align-items:center;justify-content:space-between;}
+.tnav-brand{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:var(--orange);}
+.tnav-links{display:flex;gap:20px;}
+.tnav-links a{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;color:var(--gray-500);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.tnav-links a:hover{color:var(--orange);}
+
+/* ── LAYOUT ── */
+.wrapper{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:48px 28px 100px;}
+
+/* ── HERO ── */
+.hero{margin-bottom:52px;}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--orange);text-transform:uppercase;margin-bottom:10px;}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,7vw,68px);line-height:.92;letter-spacing:.02em;color:#fff;margin-bottom:12px;}
+.hero-title span{color:var(--orange);}
+.hero-sub{font-size:14px;color:var(--gray-400);line-height:1.65;max-width:600px;margin-bottom:24px;}
+.hero-badges{display:flex;gap:10px;flex-wrap:wrap;}
+.hb{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 12px;border-radius:4px;}
+.hb-o{background:var(--orange-dim);color:var(--orange);border:1px solid var(--orange-glow);}
+.hb-g{background:var(--green-dim);color:var(--green);border:1px solid var(--green-glow);}
+.hb-n{background:rgba(255,255,255,.05);color:var(--gray-400);border:1px solid rgba(255,255,255,.1);}
+
+/* ── FLOW DIAGRAM ── */
+.flow-wrap{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:22px 20px;margin-bottom:48px;overflow-x:auto;}
+.flow-inner{display:flex;align-items:center;gap:0;min-width:600px;}
+.fn{display:flex;flex-direction:column;align-items:center;gap:5px;padding:11px 14px;border-radius:8px;text-align:center;min-width:110px;}
+.fn-src{background:rgba(74,127,165,.12);border:1px solid rgba(74,127,165,.25);}
+.fn-t1{background:var(--orange-dim);border:1px solid var(--orange-glow);}
+.fn-t2{background:var(--blue-dim);border:1px solid var(--blue-glow);}
+.fn-t3{background:var(--green-dim);border:1px solid var(--green-glow);}
+.fn-out{background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.18);}
+.fn-ic{font-size:18px;margin-bottom:2px;}
+.fn-lbl{font-family:'Bebas Neue',sans-serif;font-size:13px;color:#fff;letter-spacing:.4px;line-height:1.1;}
+.fn-sub{font-size:9px;color:var(--gray-600);line-height:1.4;}
+.fa{font-size:16px;color:rgba(255,255,255,.15);padding:0 6px;flex-shrink:0;}
+
+/* ── SECTION LABEL ── */
+.sl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;display:block;margin-bottom:6px;}
+.sl-o{color:var(--orange);}
+.sl-g{color:var(--green);}
+.sl-b{color:var(--blue);}
+.sl-p{color:var(--purple);}
+.sl-w{color:rgba(255,255,255,.3);}
+.sh{font-family:'Bebas Neue',sans-serif;font-size:26px;color:#fff;letter-spacing:.5px;margin-bottom:6px;}
+.sdesc{font-size:13px;color:var(--gray-500);line-height:1.6;margin-bottom:22px;}
+
+/* ── DIVIDER ── */
+.div{height:1px;background:rgba(255,255,255,.06);margin:40px 0;}
+
+/* ── CARD / BOX ── */
+.card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:13px;overflow:hidden;margin-bottom:20px;}
+.card-head{padding:16px 22px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:12px;}
+.card-icon{font-size:22px;flex-shrink:0;}
+.card-title{font-family:'Bebas Neue',sans-serif;font-size:19px;color:#fff;letter-spacing:.5px;}
+.card-sub{font-size:12px;color:var(--gray-500);margin-top:1px;}
+.card-body{padding:20px 22px;}
+.badge-live{font-family:'DM Mono',monospace;font-size:9px;padding:3px 9px;border-radius:3px;background:var(--green-dim);color:var(--green);border:1px solid var(--green-glow);white-space:nowrap;margin-left:auto;flex-shrink:0;}
+.badge-req{font-family:'DM Mono',monospace;font-size:9px;padding:3px 9px;border-radius:3px;background:var(--orange-dim);color:var(--orange);border:1px solid var(--orange-glow);white-space:nowrap;margin-left:auto;flex-shrink:0;}
+
+/* ── STEPS ── */
+.steps{display:flex;flex-direction:column;gap:0;}
+.step{display:flex;gap:18px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.step:last-child{border-bottom:none;}
+.step-n{font-family:'Bebas Neue',sans-serif;font-size:34px;line-height:1;color:var(--orange);flex-shrink:0;width:32px;text-align:center;margin-top:2px;}
+.step-n.blue{color:var(--blue);}
+.step-n.green{color:var(--green);}
+.step-body{flex:1;}
+.step-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;letter-spacing:-.01em;}
+.step-desc{font-size:13px;color:var(--gray-400);line-height:1.65;margin-bottom:9px;}
+.step-action{display:inline-flex;align-items:center;gap:7px;background:var(--orange-dim);border:1px solid var(--orange-glow);border-radius:5px;padding:6px 11px;font-family:'DM Mono',monospace;font-size:10px;color:var(--orange);letter-spacing:.04em;}
+.step-action.blue{background:var(--blue-dim);border-color:var(--blue-glow);color:var(--blue);}
+.step-action.green{background:var(--green-dim);border-color:var(--green-glow);color:var(--green);}
+.step-dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0;}
+.step-note{margin-top:7px;font-size:11px;color:var(--gray-600);font-style:italic;line-height:1.5;}
+
+/* ── UPLOAD ITEMS ── */
+.ul-list{display:flex;flex-direction:column;gap:12px;}
+.ul-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:rgba(255,255,255,.025);border-radius:8px;border:1px solid rgba(255,255,255,.06);}
+.ul-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--orange);font-weight:700;flex-shrink:0;margin-top:1px;}
+.ul-name{font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;}
+.ul-why{font-size:12px;color:var(--gray-500);line-height:1.5;}
+.ul-badge{font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:3px;margin-top:5px;display:inline-block;}
+.ub-req{background:var(--orange-dim);color:var(--orange);border:1px solid var(--orange-glow);}
+.ub-opt{background:rgba(255,255,255,.05);color:var(--gray-500);border:1px solid rgba(255,255,255,.1);}
+
+/* ── FILE NAME TABLE ── */
+.fname-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px;}
+.fname-table th{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--gray-500);text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.07);}
+.fname-table td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--gray-400);line-height:1.4;}
+.fname-table td:first-child{color:#fff;font-weight:600;font-family:'DM Mono',monospace;}
+.fname-table tr:last-child td{border-bottom:none;}
+.fname-example{margin-top:14px;padding:12px 16px;background:rgba(13,31,53,.7);border:1px solid var(--orange-glow);border-radius:8px;font-family:'DM Mono',monospace;font-size:13px;color:#fff;letter-spacing:.04em;}
+.fname-example span{color:var(--orange);}
+
+/* ── CADENCE TABLE ── */
+.cad-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:6px;}
+.cad-card{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:16px 18px;}
+.cad-tier{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:6px;}
+.cad-entities{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#fff;line-height:1;margin-bottom:4px;}
+.cad-details{font-size:12px;color:var(--gray-500);line-height:1.55;}
+
+/* ── DOWNLOAD BOX ── */
+.dl-box{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);border-radius:12px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px;}
+.dl-left{}
+.dl-name{font-family:'Bebas Neue',sans-serif;font-size:20px;color:#fff;letter-spacing:.5px;margin-bottom:2px;}
+.dl-desc{font-size:12px;color:var(--gray-500);}
+.dl-meta{font-family:'DM Mono',monospace;font-size:10px;color:var(--green);margin-top:4px;}
+.btn-dl{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border:none;border-radius:7px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;transition:all .2s;text-decoration:none;white-space:nowrap;}
+.btn-dl-g{background:var(--green);color:#0D1F35;}
+.btn-dl-g:hover{background:#16a34a;transform:translateY(-1px);}
+.btn-dl-o{background:var(--orange);color:#fff;}
+.btn-dl-o:hover{background:#d06518;transform:translateY(-1px);}
+.btn-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:6px;color:var(--gray-400);font-size:12px;font-weight:500;text-decoration:none;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.btn-link:hover{background:rgba(255,255,255,.1);color:#fff;}
+.btn-link-o{border-color:var(--orange-glow);color:var(--orange);background:var(--orange-dim);}
+.btn-link-o:hover{background:var(--orange-glow);}
+
+/* ── CALLOUT ── */
+.callout{padding:14px 18px;border-left:3px solid var(--orange);background:var(--orange-dim);border-radius:0 8px 8px 0;font-size:12px;color:var(--gray-400);line-height:1.6;margin:14px 0;}
+.callout strong{color:#fff;}
+.callout-g{border-left-color:var(--green);background:var(--green-dim);}
+.callout-b{border-left-color:var(--blue);background:var(--blue-dim);}
+
+/* ── TWO COL ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+
+/* ── LINK LIST ── */
+.link-list{display:flex;flex-direction:column;gap:8px;}
+.link-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-radius:8px;text-decoration:none;color:inherit;transition:all .2s;}
+.link-item:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.14);}
+.li-icon{font-size:18px;flex-shrink:0;}
+.li-name{font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;}
+.li-desc{font-size:11px;color:var(--gray-500);}
+.li-arrow{margin-left:auto;color:var(--gray-600);font-size:14px;}
+
+/* ── FOOTER ── */
+.page-footer{margin-top:64px;padding-top:24px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.footer-brand{font-family:'Bebas Neue',sans-serif;font-size:16px;color:rgba(255,255,255,.15);letter-spacing:2px;}
+.footer-note{font-size:10px;color:var(--gray-600);font-family:'DM Mono',monospace;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <div class="tnav-brand">IFCA Creative System</div>
+  <div class="tnav-links">
+    <a href="#setup">Project Setup</a>
+    <a href="#tool">The Tool</a>
+    <a href="#naming">File Naming</a>
+    <a href="#cadence">Cadence</a>
+    <a href="#reupload">Re-Upload</a>
+    <a href="#resources">Resources</a>
+  </div>
+</nav>
+
+<div class="wrapper">
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-eyebrow">IFCA · Seven-Figure Retreat · Ad Creative Workshop</div>
+  <h1 class="hero-title">Creative<br><span>Intelligence</span> System</h1>
+  <p class="hero-sub">Your complete weekly Meta ad creative machine — built inside Claude. Set up once, run every week, compounds over time. This guide covers everything: project setup, uploading the tool, running all three tabs, naming your files, and your weekly re-upload cadence.</p>
+  <div class="hero-badges">
+    <span class="hb hb-o">Andromeda Framework</span>
+    <span class="hb hb-g">● Tool Live</span>
+    <span class="hb hb-n">April 2026</span>
+  </div>
+</div>
+
+<!-- ── FLOW DIAGRAM ── -->
+<div class="flow-wrap">
+  <div class="flow-inner">
+    <div class="fn fn-src"><div class="fn-ic">⚙️</div><div class="fn-lbl">Project Setup</div><div class="fn-sub">Do once</div></div>
+    <div class="fa">→</div>
+    <div class="fn fn-t1"><div class="fn-ic">🔍</div><div class="fn-lbl">Swipe Brief Builder</div><div class="fn-sub">Paste intel report</div></div>
+    <div class="fa">→</div>
+    <div class="fn fn-t2"><div class="fn-ic">🗂️</div><div class="fn-lbl">Entity Audit</div><div class="fn-sub">Map live ad gaps</div></div>
+    <div class="fa">→</div>
+    <div class="fn fn-t3"><div class="fn-ic">📋</div><div class="fn-lbl">Weekly Brief</div><div class="fn-sub">Scripted shoot plan</div></div>
+    <div class="fa">→</div>
+    <div class="fn fn-out"><div class="fn-ic">🎬</div><div class="fn-lbl">Film + Launch</div><div class="fn-sub">Measure → repeat</div></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     SECTION 1 — WHAT YOU NEED
+════════════════════════════════ -->
+<span class="sl sl-o" id="setup">Before You Start</span>
+<div class="sh">What You Need</div>
+<p class="sdesc">Two things required before anything else works.</p>
+
+<div class="two-col">
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon">🤖</div>
+      <div><div class="card-title">Claude Pro Account</div><div class="card-sub">$20/month — required for Projects + Artifacts</div></div>
+      <span class="badge-req">Required</span>
+    </div>
+    <div class="card-body">
+      <div style="font-size:13px;color:var(--gray-400);line-height:1.6;margin-bottom:14px;">Free accounts cannot render interactive artifacts or use Projects with persistent memory. Pro is required for the tool to work.</div>
+      <a href="https://claude.ai" target="_blank" class="btn-dl btn-dl-o" style="font-size:12px;padding:9px 18px;">Open Claude.ai ↗</a>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon">📁</div>
+      <div><div class="card-title">Your Three Foundation Files</div><div class="card-sub">Upload to your project — one time setup</div></div>
+    </div>
+    <div class="card-body">
+      <div style="font-size:13px;color:var(--gray-400);line-height:1.6;">Data Constraints Tracker, Copy Kit, and your Manus Intelligence Report. These make every brief specific to your business. Details in the setup steps below.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     SECTION 2 — PROJECT SETUP
+════════════════════════════════ -->
+<div class="div"></div>
+<span class="sl sl-o">Part 1 — Do This Once · ~10 Minutes</span>
+<div class="sh">Claude Project Setup</div>
+<p class="sdesc">Your Claude Project is the permanent memory layer for the entire system. Every conversation inside the project inherits your business context automatically.</p>
+
+<div class="card">
+  <div class="card-head">
+    <div class="card-icon">🧠</div>
+    <div><div class="card-title">Step-by-Step: Create Your Project</div></div>
+  </div>
+  <div class="card-body">
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-body">
+          <div class="step-title">Go to claude.ai and upgrade to Pro</div>
+          <div class="step-desc">Settings → Billing → Upgrade to Pro ($20/month). Required for Projects and Artifacts.</div>
+          <div class="step-action"><div class="step-dot"></div>claude.ai → Settings → Billing → Pro</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-body">
+          <div class="step-title">Create a new Project</div>
+          <div class="step-desc">In the left sidebar click <strong style="color:#fff;">Projects → New Project</strong>. Name it: <em style="color:var(--orange);">[Your Name] — Ad Creative Intelligence</em></div>
+          <div class="step-action"><div class="step-dot"></div>Left sidebar → Projects → New Project</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="step-body">
+          <div class="step-title">Paste the Project Instructions</div>
+          <div class="step-desc">Click <strong style="color:#fff;">Project Instructions</strong> at the top of your project. Copy and paste the IFCA Creative Intelligence system prompt. This loads the full Andromeda framework — KPIs, kill rules, entity logic, and your voice guidelines — into every conversation.</div>
+          <div class="step-action"><div class="step-dot"></div>Project Instructions → Paste IFCA prompt → Save</div>
+          <div style="margin-top:12px;">
+            <a href="creative-intelligence-flow.html" class="btn-link btn-link-o">Get Project Instructions →</a>
+          </div>
+          <div class="step-note">Every conversation in this project inherits these instructions automatically. You never re-explain the framework.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">4</div>
+        <div class="step-body">
+          <div class="step-title">Upload your three foundation files</div>
+          <div class="step-desc">Click <strong style="color:#fff;">Add Content</strong> in your project and upload all three files below. This is what turns Claude from a smart assistant into a strategist who knows your business specifically.</div>
+          <div style="margin-top:12px;" class="ul-list">
+            <div class="ul-item">
+              <div class="ul-num">01</div>
+              <div>
+                <div class="ul-name">Data Constraints Tracker</div>
+                <div class="ul-why">Your business math — CPL target, CAC ceiling, offer price, close rate, revenue equilibrium. Every brief the tool generates is calibrated against these numbers. Without it, Claude uses generic industry averages.</div>
+                <span class="ul-badge ub-req">Required</span>
+              </div>
+            </div>
+            <div class="ul-item">
+              <div class="ul-num">02</div>
+              <div>
+                <div class="ul-name">Copy Kit</div>
+                <div class="ul-why">Your avatar's exact language, your mechanism name, your proof assets (client results, transformation stories), your DM keywords, and your CTA language. This is what makes hooks sound like you — not generic fitness copy.</div>
+                <span class="ul-badge ub-req">Required</span>
+              </div>
+            </div>
+            <div class="ul-item">
+              <div class="ul-num">03</div>
+              <div>
+                <div class="ul-name">Manus Intelligence Report</div>
+                <div class="ul-why">Your market layer — competitor ads (30+ day runners), organic top performers, and white space map. Run the IFCA Manus research prompt to generate this. Re-upload every 4–6 weeks or when you hit a creative plateau.</div>
+                <span class="ul-badge ub-req">Required</span>
+              </div>
+            </div>
+            <div class="ul-item">
+              <div class="ul-num">04</div>
+              <div>
+                <div class="ul-name">Ad Performance History (optional but powerful)</div>
+                <div class="ul-why">A CSV or doc of your recent ad performance — ad names, hook rates, hold rates, CPLs, killed vs. scaling. Claude builds institutional memory from this. Every brief avoids re-testing dead angles and doubles down on proven ones.</div>
+                <span class="ul-badge ub-opt">Optional</span>
+              </div>
+            </div>
+            <div class="ul-item">
+              <div class="ul-num">05</div>
+              <div>
+                <div class="ul-name">ChatGPT Marketing Context (if migrating)</div>
+                <div class="ul-why">If you've been building marketing context in ChatGPT — brand voice docs, content pillars, audience research, past ad copy — export and upload it here. Claude reads everything and adds it to your project context.</div>
+                <span class="ul-badge ub-opt">Optional</span>
+                <div style="margin-top:8px;"><a href="migrating-from-chatgpt.html" class="btn-link" style="font-size:11px;padding:5px 12px;">ChatGPT → Claude Migration Guide ↗</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">5</div>
+        <div class="step-body">
+          <div class="step-title">Download the Creative Intelligence Flow tool</div>
+          <div class="step-desc">Download the JSX file below. This is the interactive three-tab tool — Swipe Brief Builder, Entity Audit, and Weekly Creative Brief all in one artifact. You do not upload it to your project — you paste it into Claude conversations each time you run it.</div>
+          <div style="margin-top:12px;">
+            <a href="creative-intelligence-flow.html" class="btn-dl btn-dl-g" style="font-size:12px;padding:9px 18px;">↓ Download creative-intelligence-flow.jsx</a>
+          </div>
+          <div class="step-note">Why not upload it to the project? The file is code, not data. Claude needs to render it as a live artifact — that only happens when you paste it into a conversation, not when it sits in project files.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     SECTION 3 — RUNNING THE TOOL
+════════════════════════════════ -->
+<div class="div"></div>
+<span class="sl sl-g" id="tool">Part 2 — Run Every Week</span>
+<div class="sh">Using the Creative Intelligence Flow Tool</div>
+<p class="sdesc">Three tabs. Work left to right. Output from each tab carries forward automatically to the next.</p>
+
+<div class="card">
+  <div class="card-head">
+    <div class="card-icon">⚡</div>
+    <div><div class="card-title">How to Load and Run the Tool</div></div>
+    <span class="badge-live">● Live</span>
+  </div>
+  <div class="card-body">
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-body">
+          <div class="step-title">Open your project and start a new chat</div>
+          <div class="step-desc">Go to claude.ai → Projects → your Ad Creative Intelligence project → New Chat. Your full project context loads automatically. Do not start a chat outside the project — you'll lose your business context.</div>
+          <div class="step-action"><div class="step-dot"></div>Projects → [Your Project] → New Chat</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-body">
+          <div class="step-title">Open the JSX file and copy all the code</div>
+          <div class="step-desc">Open <strong style="color:#fff;">creative-intelligence-flow.jsx</strong> in any text editor (TextEdit, Notepad, VS Code). Press <strong style="color:#fff;">Cmd+A</strong> (Mac) or <strong style="color:#fff;">Ctrl+A</strong> (Windows) to select all, then <strong style="color:#fff;">Cmd+C / Ctrl+C</strong> to copy.</div>
+          <div class="step-action"><div class="step-dot"></div>Open .jsx file → Select All → Copy</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="step-body">
+          <div class="step-title">Paste into the Claude conversation and hit Enter</div>
+          <div class="step-desc">Click inside the Claude chat, paste the code (Cmd+V / Ctrl+V), and press Enter. Claude will render the three-tab Creative Intelligence Flow artifact directly in the chat. Takes about 10 seconds.</div>
+          <div class="step-action"><div class="step-dot"></div>Paste → Enter → artifact renders in ~10 seconds</div>
+          <div class="step-note">You need to paste the code once per conversation. For next week's brief, start a new chat in the same project and paste again. The project memory carries your creative history forward.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n blue">4</div>
+        <div class="step-body">
+          <div class="step-title">Tab 1 — Swipe Brief Builder: paste your intelligence report</div>
+          <div class="step-desc">Tab 1 opens by default (orange tab). Paste your Manus intelligence report into the text area — this should include your competitor paid ad audit, organic content top performers, and white space observations. Hit <strong style="color:var(--orange);">Generate Entity Briefs →</strong></div>
+          <div class="step-action"><div class="step-dot"></div>Paste intel report → Generate Entity Briefs →</div>
+          <div class="callout" style="margin-top:10px;">
+            <strong>What you get:</strong> 5–8 shoot-ready entity briefs, each with a 4-dimension fingerprint (Format + Hook Type + Emotion + Presenter), verbatim hook script, rehook, proof asset to reference, CTA direction, and a pre-built <strong>Ad File Name</strong> to use when you export the video and upload to Meta Ads Manager.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n blue">5</div>
+        <div class="step-body">
+          <div class="step-title">Hit "Entity Audit → Step 2" to carry output forward</div>
+          <div class="step-desc">Scroll to the bottom of the entity results and click <strong style="color:var(--green);">Entity Audit → Step 2</strong>. Tab 2 opens and loads a context note confirming your Step 1 output is ready to use.</div>
+          <div class="step-action step-action blue"><div class="step-dot"></div>Scroll → Entity Audit → Step 2</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n blue">6</div>
+        <div class="step-body">
+          <div class="step-title">Tab 2 — Entity Audit: map your live ads</div>
+          <div class="step-desc">Open Meta Ads Manager and filter to your last 30–90 days of active ads. For each ad, enter the name and select Format Bucket, Hook Type, and Emotion from the dropdowns. Hook rates color automatically: <strong style="color:#4ade80;">green = 25%+</strong>, <strong style="color:#F59E0B;">yellow = 15–24%</strong>, <strong style="color:#F87171;">red = below 15%</strong>. Duplicate entities flag in real time in red. The format coverage map and gap panel update live.</div>
+          <div class="step-action step-action blue"><div class="step-dot"></div>Meta Ads Manager → enter each active ad → watch gaps surface</div>
+          <div class="step-note">You don't need all fields for every row. Format + Hook Type + Emotion is the minimum for entity detection. The more you fill in, the sharper the heatmaps.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n blue">7</div>
+        <div class="step-body">
+          <div class="step-title">Hit "Weekly Brief → Step 3"</div>
+          <div class="step-desc">Scroll to the bottom of Tab 2 and click <strong style="color:var(--green);">Weekly Brief → Step 3</strong>. Tab 3 opens pre-filled with your Swipe Brief output and Entity Audit summary combined.</div>
+          <div class="step-action step-action blue"><div class="step-dot"></div>Scroll → Weekly Brief → Step 3</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n green">8</div>
+        <div class="step-body">
+          <div class="step-title">Tab 3 — Weekly Creative Brief: add KPIs and generate your shoot plan</div>
+          <div class="step-desc">The paste box is pre-filled with your Steps 1 + 2 data. Find the line at the bottom that says "ADD YOUR KPIs AND SPEND LEVEL" and fill it in: your current hook rate, hold rate, CPL, and monthly ad spend. Hit <strong style="color:var(--green);">Generate Weekly Brief →</strong></div>
+          <div class="step-action step-action green"><div class="step-dot"></div>Fill in KPIs + spend → Generate Weekly Brief →</div>
+          <div class="callout callout-g" style="margin-top:10px;">
+            <strong>What you get:</strong> A week summary showing how many entities to film based on your spend tier, then a fully scripted shoot card for each — verbatim hook, rehook, full body script, proof asset, filming notes, CTA script, and 3 copy-ready refinement prompts. Plus an <strong>Ad File Name</strong> on every card.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n green">9</div>
+        <div class="step-body">
+          <div class="step-title">Iterate using refinement prompts</div>
+          <div class="step-desc">At the bottom of each shoot card are 3 refinement prompts (Hook Variant / Angle Shift / Script Tightening). Copy one, scroll above the artifact in the same Claude conversation, and paste it as a new message. Claude rewrites that specific entity while the tool stays open in the chat.</div>
+          <div class="step-action step-action green"><div class="step-dot"></div>Copy refinement prompt → paste above artifact → Claude iterates</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-n green">10</div>
+        <div class="step-body">
+          <div class="step-title">Film, name your files, and launch</div>
+          <div class="step-desc">Film shoot cards P1 → P2 → P3. When you export each video from your editor, name the file exactly as shown in the <strong style="color:var(--orange);">Ad File Name</strong> field on the shoot card. Upload to Meta Ads Manager and paste that same name as the <strong style="color:#fff;">Ad Name</strong>. When results come back, everything maps perfectly.</div>
+          <div class="step-action step-action green"><div class="step-dot"></div>Film → Export with Ad File Name → Upload → Name ad to match</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     SECTION 4 — FILE NAMING
+════════════════════════════════ -->
+<div class="div"></div>
+<span class="sl sl-o" id="naming">Ad File Naming Convention</span>
+<div class="sh">Why Naming Matters</div>
+<p class="sdesc">The tool generates a unique file name for every entity. Use it for three things: your exported video file, your ad name in Meta Ads Manager, and your performance tracking sheet. When results come back, you can match every data point to the exact creative entity that produced it.</p>
+
+<div class="card">
+  <div class="card-head">
+    <div class="card-icon">📁</div>
+    <div><div class="card-title">The Naming Convention</div><div class="card-sub">Auto-generated by the tool — copy it off every shoot card</div></div>
+  </div>
+  <div class="card-body">
+    <div class="fname-example" style="margin-bottom:16px;font-size:14px;">
+      <span style="color:var(--gray-500);">[BRAND]</span>_<span style="color:var(--gray-500);">[FUNNEL]</span>_<span style="color:var(--gray-500);">[FORMAT]</span>_<span style="color:var(--gray-500);">[EMOTION]</span>_<span style="color:var(--gray-500);">[PRESENTER]</span>_<span style="color:var(--gray-500);">[ConceptSlug]</span>_<span style="color:var(--gray-500);">v[N]</span>
+    </div>
+    <div class="fname-example">
+      <span>IFCA</span>_<span>TOF</span>_<span>TH</span>_<span>FRUST</span>_<span>COACH</span>_<span>HormoneBreaker</span>_<span>v1</span>
+    </div>
+    <table class="fname-table" style="margin-top:16px;">
+      <thead><tr><th>Segment</th><th>What it means</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td>BRAND</td><td>Your brand abbreviated, max 8 chars</td><td>IFCA · TRAINER · SSHIFTS · MOXIE</td></tr>
+        <tr><td>FUNNEL</td><td>Funnel stage</td><td>TOF · MOF · BOF</td></tr>
+        <tr><td>FORMAT</td><td>Format bucket abbreviation</td><td>TH · BR · SK · VSL · INT · WLK · UGC · CAR</td></tr>
+        <tr><td>EMOTION</td><td>Core emotion abbreviation</td><td>FRUST · DESIRE · FEAR · HOPE · ASPIR · PRIDE · CURIO · SKEPT</td></tr>
+        <tr><td>PRESENTER</td><td>Who delivers the ad</td><td>COACH · CLIENT · PART · TEAM · UGC · VO</td></tr>
+        <tr><td>ConceptSlug</td><td>Parent concept, PascalCase, max 3 words</td><td>HormoneBreaker · DoctorDismissal · KimStory · SummerConfidence</td></tr>
+        <tr><td>v[N]</td><td>Version number — increments on hook swaps</td><td>v1=original · v2=hook swap · v3=next hook swap</td></tr>
+      </tbody>
+    </table>
+    <div class="callout" style="margin-top:16px;">
+      <strong>Hook swap rule:</strong> If you test a different hook on the same entity (same format + emotion + presenter), increment the version: v1 → v2 → v3. This keeps the entity fingerprint intact in your tracking while distinguishing which hook you tested. A different format, emotion, or presenter = new entity name entirely.
+    </div>
+    <div class="callout callout-g" style="margin-top:10px;">
+      <strong>In Meta Ads Manager:</strong> When you upload the video, set the Ad Name to the exact file name. When you pull results later — hook rate, hold rate, CPL, ROAS — you can sort by Ad Name and instantly see which entity, which funnel stage, which emotion, and which version produced each result. No more guessing which "Oct talking head" was the winner.
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     SECTION 5 — CREATIVE CADENCE
+════════════════════════════════ -->
+<div class="div"></div>
+<span class="sl sl-b" id="cadence">Creative Volume by Spend Tier</span>
+<div class="sh">How Many Entities Per Week</div>
+<p class="sdesc">The Weekly Creative Brief automatically calculates how many entities to schedule based on your spend level. Here's the full breakdown — and what your weekly production rhythm should look like at each tier.</p>
+
+<div class="cad-grid">
+  <div class="cad-card">
+    <div class="cad-tier">$500–$1,500/month</div>
+    <div class="cad-entities">2–3 <span style="font-family:'DM Sans';font-size:14px;font-weight:400;color:var(--gray-500);">entities/week</span></div>
+    <div class="cad-details">1 shoot day per week. Prioritize hook tests on your single strongest concept. Focus on getting one format right before diversifying. Batch 2–3 hook variants in one session.</div>
+  </div>
+  <div class="cad-card">
+    <div class="cad-tier">$1,500–$5,000/month</div>
+    <div class="cad-entities">3–5 <span style="font-family:'DM Sans';font-size:14px;font-weight:400;color:var(--gray-500);">entities/week</span></div>
+    <div class="cad-details">1–2 shoot days per week. Start mixing format types — one talking head day, one B-roll or UGC day. Prioritize filling the biggest format gap each week. Run at least one BOF ad at all times.</div>
+  </div>
+  <div class="cad-card">
+    <div class="cad-tier">$5,000–$10,000/month</div>
+    <div class="cad-entities">5–8 <span style="font-family:'DM Sans';font-size:14px;font-weight:400;color:var(--gray-500);">entities/week</span></div>
+    <div class="cad-details">2 shoot days per week. Dedicate one day to talking head / founder content, one day to client testimonials / UGC. Refresh intel report every 4–6 weeks. Maintain 70/30 budget split: 70% on proven winners, 30% on new entity tests.</div>
+  </div>
+  <div class="cad-card">
+    <div class="cad-tier">$10,000+/month</div>
+    <div class="cad-entities">8–12 <span style="font-family:'DM Sans';font-size:14px;font-weight:400;color:var(--gray-500);">entities/week</span></div>
+    <div class="cad-details">3 shoot days per week. Full creative team or dedicated UGC operator. Monthly entity audit mandatory. Run parallel concept lines — at least 3 active concepts with 3+ entities each. Re-run Manus monthly.</div>
+  </div>
+</div>
+
+<div class="callout" style="margin-top:6px;">
+  <strong>Kill rules:</strong> New ad — spend 2× your CPL target before killing. Existing winner — spend 3× target before killing. Never edit a live ad — duplicate → modify → launch as new. Editing resets micro-signal learning.
+</div>
+
+<!-- ════════════════════════════════
+     SECTION 6 — RE-UPLOAD CADENCE
+════════════════════════════════ -->
+<div class="div"></div>
+<span class="sl sl-p" id="reupload">Keep the System Sharp</span>
+<div class="sh">What to Re-Upload and When</div>
+<p class="sdesc">Your Claude Project compounds over time — but only if you keep the data fresh. Here's exactly what to update and how often.</p>
+
+<div class="card">
+  <div class="card-body" style="padding:0;">
+    <table class="fname-table">
+      <thead>
+        <tr>
+          <th style="width:200px;">File</th>
+          <th style="width:140px;">Frequency</th>
+          <th>When to update / what triggers a re-upload</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Manus Intelligence Report</td>
+          <td style="color:var(--orange);">Every 4–6 weeks</td>
+          <td>Competitor landscape shifts. New ad formats appearing in your niche. Hook rates dropping across the board (market saturation signal). Hit a creative plateau.</td>
+        </tr>
+        <tr>
+          <td>Ad Performance History</td>
+          <td style="color:var(--orange);">Monthly</td>
+          <td>After each monthly review, export your Meta Ads Manager results (ad name, hook rate, hold rate, CPL, status) and re-upload. Claude builds a kill/scale memory that prevents re-testing dead angles.</td>
+        </tr>
+        <tr>
+          <td>Data Constraints Tracker</td>
+          <td style="color:var(--blue);">Quarterly or on change</td>
+          <td>When your offer price changes. When you hit a new spend tier. When your CAC target shifts after a pricing or delivery change. When close rate changes materially (±5%).</td>
+        </tr>
+        <tr>
+          <td>Copy Kit</td>
+          <td style="color:var(--blue);">Quarterly or on change</td>
+          <td>When you rebrand or rename your mechanism. When you add new proof assets (big client wins, revenue milestones). When your avatar language shifts after market research.</td>
+        </tr>
+        <tr>
+          <td>KPI Snapshot (inline)</td>
+          <td style="color:var(--green);">Every brief session</td>
+          <td>Each time you run the tool, paste your current hook rate, hold rate, and CPL into Tab 3's input. You don't re-upload this — you paste it fresh every time so Claude has current data for the shoot plan.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="callout callout-g" style="margin-top:0;">
+  <strong>How to re-upload:</strong> Open your Claude Project → click the file in Project Files → delete it → click Add Content → upload the new version. Claude automatically uses the latest version in all future conversations.
+</div>
+
+<!-- ════════════════════════════════
+     SECTION 7 — RESOURCES
+════════════════════════════════ -->
+<div class="div"></div>
+<span class="sl sl-w" id="resources">Tools & Resources</span>
+<div class="sh">Everything You Need</div>
+<p class="sdesc">All the files, links, and reference material in one place.</p>
+
+<!-- Download the tool -->
+<div class="dl-box">
+  <div class="dl-left">
+    <div class="dl-name">Creative Intelligence Flow — JSX Tool</div>
+    <div class="dl-desc">Three-tab artifact: Swipe Brief Builder + Entity Audit + Weekly Creative Brief. Paste into any Claude conversation to render.</div>
+    <div class="dl-meta">● Tab 1: Swipe Brief Builder &nbsp;·&nbsp; Tab 2: Entity Audit &nbsp;·&nbsp; Tab 3: Weekly Creative Brief</div>
+  </div>
+  <a href="creative-intelligence-flow.html" class="btn-dl btn-dl-g">↓ Get Tool + Setup Guide</a>
+</div>
+
+<!-- Links -->
+<div class="link-list">
+  <a href="https://claude.ai" target="_blank" class="link-item">
+    <div class="li-icon">🤖</div>
+    <div><div class="li-name">Claude.ai — Create Your Project</div><div class="li-desc">claude.ai → Projects → New Project → paste IFCA system prompt</div></div>
+    <div class="li-arrow">↗</div>
+  </a>
+  <a href="https://www.anthropic.com/news/projects" target="_blank" class="link-item">
+    <div class="li-icon">📂</div>
+    <div><div class="li-name">Claude Projects Documentation</div><div class="li-desc">Official guide to setting up Projects, adding files, and writing Project Instructions</div></div>
+    <div class="li-arrow">↗</div>
+  </a>
+  <a href="migrating-from-chatgpt.html" class="link-item">
+    <div class="li-icon">🔄</div>
+    <div><div class="li-name">Migrating Marketing Context from ChatGPT → Claude</div><div class="li-desc">How to export your brand voice docs, ad copy, and audience research from ChatGPT and upload it to your Claude Project</div></div>
+    <div class="li-arrow">→</div>
+  </a>
+  <a href="entity-audit-worksheet.html" class="link-item">
+    <div class="li-icon">🗂️</div>
+    <div><div class="li-name">Entity Audit Worksheet — Standalone Version</div><div class="li-desc">The same audit tool as Tab 2, available as a standalone page for sharing or printing</div></div>
+    <div class="li-arrow">→</div>
+  </a>
+  <a href="https://manus.app" target="_blank" class="link-item">
+    <div class="li-icon">🔍</div>
+    <div><div class="li-name">Manus — Competitor Intelligence Research</div><div class="li-desc">Run the IFCA research prompt here to generate your intelligence report. Use the output in Tab 1.</div></div>
+    <div class="li-arrow">↗</div>
+  </a>
+  <a href="https://www.facebook.com/ads/library" target="_blank" class="link-item">
+    <div class="li-icon">📊</div>
+    <div><div class="li-name">Meta Ad Library</div><div class="li-desc">Verify competitor ads manually. Any ad running 30+ days = spending money. 60+ days = scaling. 90+ days = cash cow concept.</div></div>
+    <div class="li-arrow">↗</div>
+  </a>
+</div>
+
+<!-- ── FOOTER ── -->
+<div class="page-footer">
+  <div class="footer-brand">IFCA Playbooks</div>
+  <div class="footer-note">Seven-Figure Retreat · April 2026 · Confidential</div>
+</div>
+
+</div>
+</body>
+</html>

@@ -3,1249 +3,322 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IFCA Ad Testing KPI Calculator</title>
+<title>IFCA Ad Testing KPI Calculator — How to Use</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #1E3A5F;
-    --navy-dark: #142845;
-    --navy-deeper: #0D1F35;
-    --orange: #E87722;
-    --orange-pale: #FDF3E8;
-    --orange-dim: rgba(232, 119, 34, 0.12);
-    --blue-light: #D6E4F0;
-    --blue-mid: #4A7FA5;
-    --off-white: #F8FAFC;
-    --gray-100: #F1F5F9;
-    --gray-200: #E2E8F0;
-    --gray-300: #CBD5E1;
-    --gray-400: #94A3B8;
-    --text: #1A2840;
-    --text-muted: #475569;
-    --green: #22C55E;
-    --green-dark: #16A34A;
-    --green-bg: rgba(34, 197, 94, 0.1);
-    --red: #DC2626;
-    --red-bg: rgba(220, 38, 38, 0.1);
-    --yellow: #F59E0B;
-    --yellow-bg: rgba(245, 158, 11, 0.1);
+    --navy-dark: #0B1A2B; --navy-mid: #142845; --navy-card: #1A3358;
+    --orange: #E87722; --orange-dim: rgba(232,119,34,0.12);
+    --blue-mid: #4A7FA5; --green: #22C55E; --green-dim: rgba(34,197,94,0.10);
+    --yellow: #F59E0B; --purple: #8B5CF6; --red: #DC2626;
+    --text: #F0F6FF; --muted: #8BA5C2;
+    --border: rgba(74,127,165,0.2); --border-bright: rgba(74,127,165,0.35);
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--navy-dark); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.65; }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--navy-deeper);
-    color: var(--text);
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-  }
+  .hero { background: linear-gradient(135deg, #0B1A2B 0%, #152B48 55%, #0B1A2B 100%); border-bottom: 2px solid var(--orange); padding: 52px 40px 40px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 72px, rgba(74,127,165,0.03) 72px, rgba(74,127,165,0.03) 73px); pointer-events: none; }
+  .hero-inner { max-width: 900px; margin: 0 auto; position: relative; }
+  .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--orange); letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 10px; }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: 62px; line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 16px; }
+  .hero-title span { color: var(--orange); }
+  .hero-desc { font-size: 16px; color: var(--muted); max-width: 580px; margin-bottom: 28px; }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; }
+  .hero-badge.orange { background: var(--orange-dim); border: 1px solid rgba(232,119,34,0.35); color: var(--orange); }
+  .hero-badge.blue { background: rgba(74,127,165,0.12); border: 1px solid rgba(74,127,165,0.3); color: var(--blue-mid); }
+  .hero-badge.green { background: var(--green-dim); border: 1px solid rgba(34,197,94,0.25); color: var(--green); }
+  .hero-badge.yellow { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: var(--yellow); }
 
-  /* Background texture */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: 
-      radial-gradient(ellipse 80% 50% at 20% 20%, rgba(78, 127, 165, 0.08) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(232, 119, 34, 0.05) 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
+  .main { max-width: 900px; margin: 0 auto; padding: 48px 40px 80px; }
+  h2.section-title { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 0.04em; margin-bottom: 6px; }
+  .section-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+  .divider { height: 1px; background: var(--border); margin: 44px 0; }
 
-  .wrapper {
-    position: relative;
-    z-index: 1;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 40px 24px 80px;
-  }
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step-card { display: grid; grid-template-columns: 64px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--border); align-items: start; }
+  .step-card:last-child { border-bottom: none; }
+  .step-num { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 26px; flex-shrink: 0; }
+  .step-num.orange { background: var(--orange-dim); border: 2px solid var(--orange); color: var(--orange); }
+  .step-num.blue { background: rgba(74,127,165,0.12); border: 2px solid var(--blue-mid); color: var(--blue-mid); }
+  .step-num.green { background: var(--green-dim); border: 2px solid var(--green); color: var(--green); }
+  .step-num.yellow { background: rgba(245,158,11,0.1); border: 2px solid var(--yellow); color: var(--yellow); }
+  .step-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.04em; margin-bottom: 5px; }
+  .step-desc { font-size: 14px; color: var(--muted); margin-bottom: 12px; line-height: 1.6; }
 
-  /* ── HEADER ── */
-  .header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 40px;
-    gap: 20px;
-  }
+  .code-block { background: #060F1C; border: 1px solid var(--border); border-left: 4px solid var(--orange); border-radius: 8px; padding: 18px 20px; font-family: 'DM Mono', monospace; font-size: 12px; color: #D6E4F0; white-space: pre-wrap; line-height: 1.7; position: relative; }
+  .copy-btn { position: absolute; top: 10px; right: 10px; background: var(--orange-dim); border: 1px solid rgba(232,119,34,0.3); color: var(--orange); border-radius: 4px; padding: 4px 10px; font-family: 'DM Mono', monospace; font-size: 10px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; }
+  .copy-btn:hover { background: var(--orange); color: #fff; }
 
-  .header-left .eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    color: var(--orange);
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
+  .alert { border-radius: 8px; padding: 14px 18px; font-size: 13px; display: flex; gap: 12px; margin: 16px 0; }
+  .alert.orange { background: var(--orange-dim); border: 1px solid rgba(232,119,34,0.3); color: #F0C98B; }
+  .alert.blue { background: rgba(74,127,165,0.1); border: 1px solid rgba(74,127,165,0.25); color: var(--blue-mid); }
+  .alert.green { background: var(--green-dim); border: 1px solid rgba(34,197,94,0.25); color: var(--green); }
 
-  .header-left h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(36px, 5vw, 56px);
-    line-height: 0.95;
-    color: #fff;
-    letter-spacing: 0.02em;
-  }
+  .download-card { background: linear-gradient(135deg, #1A3358 0%, #0F2040 100%); border: 1px solid var(--orange); border-radius: 12px; padding: 28px 30px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 12px; }
+  .download-card-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 6px; }
+  .download-card-title { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.03em; margin-bottom: 5px; }
+  .download-card-desc { font-size: 13px; color: var(--muted); max-width: 440px; }
+  .download-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: var(--orange); color: #fff; border-radius: 7px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap; transition: background 0.2s; }
+  .download-btn:hover { background: #cc6a14; }
 
-  .header-left h1 span {
-    color: var(--orange);
-  }
+  .output-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
+  .output-card { background: var(--navy-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .output-icon { font-size: 20px; margin-bottom: 6px; }
+  .output-title { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.04em; margin-bottom: 4px; }
+  .output-desc { font-size: 12px; color: var(--muted); line-height: 1.4; }
 
-  .header-left .subtitle {
-    font-size: 14px;
-    color: var(--gray-400);
-    margin-top: 10px;
-    max-width: 380px;
-    line-height: 1.5;
-  }
+  .kpi-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  .kpi-table th { background: var(--navy-card); padding: 10px 14px; text-align: left; font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--orange); border-bottom: 1px solid var(--border); }
+  .kpi-table td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid rgba(74,127,165,0.07); }
+  .kpi-table td:first-child { color: var(--muted); }
 
-  .header-badge {
-    flex-shrink: 0;
-    background: var(--orange-dim);
-    border: 1px solid rgba(232, 119, 34, 0.3);
-    border-radius: 8px;
-    padding: 12px 16px;
-    text-align: center;
-    min-width: 130px;
-  }
-
-  .header-badge .badge-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    color: var(--orange);
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  .header-badge .badge-val {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    color: #fff;
-    line-height: 1;
-  }
-
-  /* ── OFFER INPUT CARD ── */
-  .input-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 16px;
-    padding: 32px;
-    margin-bottom: 28px;
-    backdrop-filter: blur(8px);
-  }
-
-  .input-card .card-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    color: #fff;
-    letter-spacing: 0.05em;
-    margin-bottom: 6px;
-  }
-
-  .input-card .card-sub {
-    font-size: 13px;
-    color: var(--gray-400);
-    margin-bottom: 24px;
-  }
-
-  .input-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
-  }
+  .big-principle { background: var(--navy-card); border: 1px solid var(--orange); border-radius: 10px; padding: 24px; margin: 20px 0; }
+  .big-principle-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 8px; }
+  .big-principle-text { font-family: 'Bebas Neue', sans-serif; font-size: 28px; line-height: 1.1; letter-spacing: 0.03em; }
+  .big-principle-sub { font-size: 13px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
 
   @media (max-width: 640px) {
-    .input-row { grid-template-columns: 1fr; }
+    .hero { padding: 32px 20px 28px; } .hero-title { font-size: 44px; }
+    .main { padding: 28px 20px 48px; } .output-grid { grid-template-columns: 1fr; }
+    .step-card { grid-template-columns: 48px 1fr; gap: 14px; } .download-card { flex-direction: column; }
   }
-
-  .input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .input-group label {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--gray-400);
-    text-transform: uppercase;
-  }
-
-  .input-wrap {
-    position: relative;
-  }
-
-  .input-wrap .prefix {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: 'DM Mono', monospace;
-    font-size: 14px;
-    color: var(--orange);
-    pointer-events: none;
-  }
-
-  .input-wrap input {
-    width: 100%;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 10px;
-    padding: 13px 16px 13px 32px;
-    font-family: 'DM Mono', monospace;
-    font-size: 18px;
-    color: #fff;
-    outline: none;
-    transition: border-color 0.2s, background 0.2s;
-    -moz-appearance: textfield;
-  }
-
-  .input-wrap input::-webkit-outer-spin-button,
-  .input-wrap input::-webkit-inner-spin-button { -webkit-appearance: none; }
-
-  .input-wrap input:focus {
-    border-color: var(--orange);
-    background: rgba(232, 119, 34, 0.08);
-  }
-
-  .input-wrap input::placeholder {
-    color: rgba(255,255,255,0.2);
-  }
-
-  /* Optional toggle */
-  .toggle-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255,255,255,0.06);
-  }
-
-  .toggle-label {
-    font-size: 13px;
-    color: var(--gray-400);
-  }
-
-  .toggle-label strong {
-    color: rgba(255,255,255,0.7);
-  }
-
-  .toggle-switch {
-    position: relative;
-    width: 44px;
-    height: 24px;
-    flex-shrink: 0;
-  }
-
-  .toggle-switch input { opacity: 0; width: 0; height: 0; }
-
-  .toggle-slider {
-    position: absolute;
-    inset: 0;
-    background: rgba(255,255,255,0.1);
-    border-radius: 24px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-
-  .toggle-slider::before {
-    content: '';
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    background: #fff;
-    border-radius: 50%;
-    top: 3px;
-    left: 3px;
-    transition: transform 0.2s;
-  }
-
-  .toggle-switch input:checked + .toggle-slider { background: var(--orange); }
-  .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
-
-  /* ── YOUR NUMBERS (conditional) ── */
-  .your-numbers {
-    display: none;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(232, 119, 34, 0.2);
-  }
-
-  .your-numbers.visible { display: grid; }
-
-  @media (max-width: 640px) {
-    .your-numbers { grid-template-columns: 1fr; }
-  }
-
-  /* ── RESULTS GRID ── */
-  .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    color: var(--gray-400);
-    text-transform: uppercase;
-    margin-bottom: 14px;
-    margin-top: 28px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: rgba(255,255,255,0.06);
-  }
-
-  /* ── KPI TARGETS ── */
-  .kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 4px;
-  }
-
-  @media (max-width: 700px) {
-    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  .kpi-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 18px 16px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.2s;
-  }
-
-  .kpi-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    border-radius: 12px 12px 0 0;
-  }
-
-  .kpi-card.orange::before { background: var(--orange); }
-  .kpi-card.green::before  { background: var(--green); }
-  .kpi-card.blue::before   { background: var(--blue-mid); }
-  .kpi-card.red::before    { background: var(--red); }
-
-  .kpi-card .kpi-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    color: var(--gray-400);
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    line-height: 1.4;
-  }
-
-  .kpi-card .kpi-value {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px;
-    color: #fff;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .kpi-card.orange .kpi-value { color: var(--orange); }
-  .kpi-card.green  .kpi-value { color: var(--green); }
-  .kpi-card.blue   .kpi-value { color: #7ABFDD; }
-  .kpi-card.red    .kpi-value { color: #F87171; }
-
-  .kpi-card .kpi-note {
-    font-size: 11px;
-    color: var(--gray-400);
-    line-height: 1.4;
-  }
-
-  /* ── KILL RULES ── */
-  .kill-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  .kill-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    gap: 16px;
-    align-items: flex-start;
-  }
-
-  .kill-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    flex-shrink: 0;
-  }
-
-  .kill-icon.new { background: var(--orange-dim); }
-  .kill-icon.winner { background: var(--green-bg); }
-
-  .kill-card .kill-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gray-400);
-    margin-bottom: 4px;
-  }
-
-  .kill-card .kill-rule {
-    font-size: 13px;
-    color: rgba(255,255,255,0.7);
-    margin-bottom: 8px;
-    line-height: 1.4;
-  }
-
-  .kill-card .kill-amount {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    line-height: 1;
-  }
-
-  .kill-card.new .kill-amount { color: var(--orange); }
-  .kill-card.winner .kill-amount { color: var(--green); }
-
-  .kill-card .kill-sub {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--gray-400);
-    margin-top: 3px;
-  }
-
-  /* ── CADENCE TABLE ── */
-  .cadence-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-
-  .cadence-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .cadence-table thead tr {
-    background: rgba(255,255,255,0.04);
-  }
-
-  .cadence-table th {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gray-400);
-    padding: 12px 16px;
-    text-align: left;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-
-  .cadence-table td {
-    padding: 14px 16px;
-    font-size: 14px;
-    color: rgba(255,255,255,0.75);
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    vertical-align: middle;
-  }
-
-  .cadence-table tr:last-child td { border-bottom: none; }
-
-  .cadence-table tr.active-tier td {
-    background: rgba(232, 119, 34, 0.07);
-    color: #fff;
-  }
-
-  .cadence-table tr.active-tier td:first-child {
-    border-left: 3px solid var(--orange);
-  }
-
-  .tier-badge {
-    display: inline-block;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    padding: 3px 8px;
-    border-radius: 4px;
-    text-transform: uppercase;
-    margin-left: 8px;
-  }
-
-  .tier-badge.yours {
-    background: var(--orange);
-    color: #fff;
-  }
-
-  .cadence-table .mono {
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-  }
-
-  .cadence-table .strong {
-    font-weight: 600;
-    color: #fff;
-  }
-
-  /* ── YOUR NUMBERS STATUS (conditional) ── */
-  .status-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-top: 4px;
-  }
-
-  @media (max-width: 640px) {
-    .status-grid { grid-template-columns: 1fr; }
-  }
-
-  .status-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .status-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .status-dot.pass { background: var(--green); box-shadow: 0 0 8px var(--green); }
-  .status-dot.fail { background: var(--red); box-shadow: 0 0 8px var(--red); }
-  .status-dot.warn { background: var(--yellow); box-shadow: 0 0 8px var(--yellow); }
-  .status-dot.neutral { background: var(--gray-400); }
-
-  .status-info .status-metric {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--gray-400);
-    margin-bottom: 2px;
-  }
-
-  .status-info .status-compare {
-    font-size: 13px;
-    color: rgba(255,255,255,0.8);
-  }
-
-  .status-info .status-verdict {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    margin-top: 2px;
-  }
-
-  .status-verdict.pass { color: var(--green); }
-  .status-verdict.fail { color: #F87171; }
-  .status-verdict.warn { color: var(--yellow); }
-  .status-verdict.neutral { color: var(--gray-400); }
-
-  /* ── 70/30 RULE ── */
-  .rule-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 24px;
-  }
-
-  .budget-bar {
-    height: 12px;
-    border-radius: 6px;
-    background: rgba(255,255,255,0.06);
-    overflow: hidden;
-    margin: 16px 0;
-    position: relative;
-  }
-
-  .budget-bar-fill {
-    height: 100%;
-    border-radius: 6px;
-    background: linear-gradient(90deg, var(--navy) 70%, transparent 70%);
-    position: absolute;
-    inset: 0;
-    display: flex;
-  }
-
-  .budget-bar-proven {
-    background: var(--blue-mid);
-    height: 100%;
-    width: 70%;
-    border-radius: 6px 0 0 6px;
-    transition: width 0.5s;
-  }
-
-  .budget-bar-test {
-    background: var(--orange);
-    height: 100%;
-    flex: 1;
-    border-radius: 0 6px 6px 0;
-  }
-
-  .budget-legend {
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-
-  .budget-legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: rgba(255,255,255,0.7);
-  }
-
-  .legend-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
-
-  .legend-dot.proven { background: var(--blue-mid); }
-  .legend-dot.test { background: var(--orange); }
-
-  .budget-amounts {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 16px;
-  }
-
-  .budget-amount-block {
-    padding: 14px;
-    border-radius: 8px;
-  }
-
-  .budget-amount-block.proven { background: rgba(74, 127, 165, 0.1); border: 1px solid rgba(74, 127, 165, 0.2); }
-  .budget-amount-block.test { background: var(--orange-dim); border: 1px solid rgba(232, 119, 34, 0.2); }
-
-  .budget-amount-block .ba-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gray-400);
-    margin-bottom: 4px;
-  }
-
-  .budget-amount-block .ba-val {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    line-height: 1;
-  }
-
-  .budget-amount-block.proven .ba-val { color: #7ABFDD; }
-  .budget-amount-block.test .ba-val { color: var(--orange); }
-
-  .budget-amount-block .ba-note {
-    font-size: 12px;
-    color: var(--gray-400);
-    margin-top: 2px;
-  }
-
-  /* ── ENTITY TARGETS ── */
-  .entity-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 24px;
-  }
-
-  .entity-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-  }
-
-  .entity-row:last-child { border-bottom: none; }
-
-  .entity-row .er-label {
-    font-size: 14px;
-    color: rgba(255,255,255,0.7);
-  }
-
-  .entity-row .er-val {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 24px;
-    color: #fff;
-  }
-
-  /* ── CALLOUT ── */
-  .callout {
-    border-left: 3px solid var(--orange);
-    background: var(--orange-dim);
-    border-radius: 0 10px 10px 0;
-    padding: 16px 20px;
-    margin-top: 28px;
-  }
-
-  .callout .callout-head {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--orange);
-    margin-bottom: 6px;
-  }
-
-  .callout p {
-    font-size: 13px;
-    color: rgba(255,255,255,0.7);
-    line-height: 1.6;
-  }
-
-  /* ── FOOTER ── */
-  .footer {
-    margin-top: 48px;
-    padding-top: 24px;
-    border-top: 1px solid rgba(255,255,255,0.06);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .footer-brand {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    color: rgba(255,255,255,0.3);
-    letter-spacing: 0.08em;
-  }
-
-  .footer-brand span { color: var(--orange); opacity: 0.7; }
-
-  .footer-note {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: rgba(255,255,255,0.2);
-    letter-spacing: 0.05em;
-  }
-
-  /* ── TRANSITIONS ── */
-  .kpi-value, .kill-amount, .ba-val, .er-val {
-    transition: opacity 0.15s, transform 0.15s;
-  }
-
-  .updating .kpi-value,
-  .updating .kill-amount,
-  .updating .ba-val,
-  .updating .er-val {
-    opacity: 0.4;
-    transform: scale(0.97);
-  }
-
-  /* ── EMPTY STATE ── */
-  .empty-hint {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: rgba(255,255,255,0.2);
-    font-style: italic;
-  }
-
-  /* ── PERFORMANCE STATUS hidden by default ── */
-  #status-section { display: none; }
-  #status-section.visible { display: block; }
 </style>
 </head>
 <body>
 
-<div class="wrapper">
-
-  <!-- HEADER -->
-  <header class="header">
-    <div class="header-left">
-      <div class="eyebrow">IFCA · Meta Ads Framework</div>
-      <h1>AD TESTING<br><span>KPI CALCULATOR</span></h1>
-      <p class="subtitle">Enter your offer price. Every target, kill rule, and cadence threshold auto-calculates from first principles.</p>
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">IFCA 7-Figure Retreat · Workshop Tools</div>
+    <div class="hero-title">Ad Testing<br><span>KPI Calculator</span></div>
+    <div class="hero-desc">Enter your offer price once. Every KPI target, kill rule, budget threshold, and creative cadence benchmark auto-calculates from first principles — no manual math, no guessing.</div>
+    <div class="hero-badges">
+      <span class="hero-badge orange">🎯 Offer-Based Targets</span>
+      <span class="hero-badge blue">⚰️ Kill Rules</span>
+      <span class="hero-badge yellow">📅 Creative Cadence</span>
+      <span class="hero-badge green">✅ One Input. Everything Else Auto-Calculates.</span>
     </div>
-    <div class="header-badge">
-      <span class="badge-label">Framework</span>
-      <div class="badge-val">4×</div>
-      <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gray-400); margin-top: 2px;">ROAS Floor</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <h2 class="section-title">Get the Calculator</h2>
+  <div class="section-sub">The KPI Calculator is built on a single insight: every ad metric threshold in your business should derive from your offer price — not from industry averages, not from what you saw in a YouTube video. Enter your offer price and get your complete personalized KPI framework.</div>
+
+  <div class="download-card">
+    <div class="download-card-info">
+      <div class="download-card-eyebrow">Interactive Artifact · Claude Native</div>
+      <div class="download-card-title">Ad Testing KPI Calculator</div>
+      <div class="download-card-desc">One input: your offer price. Auto-outputs: hook rate target, hold rate target, max CPL, max CAC, kill rules for new and existing ads, 70/30 budget split, entity count targets, and cadence thresholds by spend tier.</div>
     </div>
-  </header>
+    <a href="kpi-calculator.html" download class="download-btn">⬇ Download HTML File</a>
+  </div>
 
-  <!-- INPUT CARD -->
-  <div class="input-card" id="input-card">
-    <div class="card-title">YOUR OFFER</div>
-    <div class="card-sub">Enter your core offer price. All thresholds cascade from this single number.</div>
+  <div class="alert orange">
+    <span>⚡</span>
+    <div><strong>How to run it in Claude:</strong> Download the HTML file → Open Claude.ai → New Chat → Upload the file → Say <em>"Open this as an artifact"</em> → Enter your offer price → Every KPI threshold populates automatically.</div>
+  </div>
 
-    <div class="input-row">
-      <div class="input-group">
-        <label>Offer Price</label>
-        <div class="input-wrap">
-          <span class="prefix">$</span>
-          <input type="number" id="offer-price" placeholder="4500" min="0" step="100">
-        </div>
-      </div>
-      <div class="input-group">
-        <label>Monthly Ad Spend</label>
-        <div class="input-wrap">
-          <span class="prefix">$</span>
-          <input type="number" id="monthly-spend" placeholder="3000" min="0" step="100">
-        </div>
-      </div>
-      <div class="input-group">
-        <label>Offer Duration (Days)</label>
-        <div class="input-wrap" style="position: relative;">
-          <span class="prefix" style="color: var(--gray-400);">⟳</span>
-          <input type="number" id="offer-days" placeholder="90" min="1" step="1">
-        </div>
-      </div>
+  <div class="divider"></div>
+
+  <!-- THE CORE PRINCIPLE -->
+  <div class="big-principle">
+    <div class="big-principle-label">The Core Principle</div>
+    <div class="big-principle-text">Your offer price is the anchor. Every KPI derives from it.</div>
+    <div class="big-principle-sub">A $3,000 offer and a $12,000 offer have completely different CAC ceilings, different CPL tolerance, and different kill thresholds — even at the same close rate. This calculator builds your entire KPI framework from your specific economics, not from generic benchmarks that may not apply to your business.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- WHAT IT GENERATES -->
+  <h2 class="section-title">What the Calculator Generates</h2>
+  <div class="section-sub">Six complete sections auto-populate the moment you enter your offer price and close rate.</div>
+
+  <div class="output-grid">
+    <div class="output-card">
+      <div class="output-icon">🎯</div>
+      <div class="output-title">Core KPI Targets</div>
+      <div class="output-desc">Hook rate, hold rate, and CPL targets calculated from your offer price and target close rate.</div>
     </div>
-
-    <!-- Toggle: add your current numbers -->
-    <div class="toggle-row">
-      <label class="toggle-switch">
-        <input type="checkbox" id="toggle-current" onchange="toggleCurrentNumbers()">
-        <span class="toggle-slider"></span>
-      </label>
-      <div class="toggle-label">Compare <strong>my current numbers</strong> against targets</div>
+    <div class="output-card">
+      <div class="output-icon">⚰️</div>
+      <div class="output-title">Kill Rules</div>
+      <div class="output-desc">Exact spend thresholds — 2× for new ads, 3× for winners — that trigger automatic cuts. No emotion required.</div>
     </div>
-
-    <!-- Your current numbers (hidden by default) -->
-    <div class="your-numbers" id="your-numbers-row">
-      <div class="input-group">
-        <label>Current CPL</label>
-        <div class="input-wrap">
-          <span class="prefix">$</span>
-          <input type="number" id="current-cpl" placeholder="8.50" min="0" step="0.01">
-        </div>
-      </div>
-      <div class="input-group">
-        <label>Current Hook Rate %</label>
-        <div class="input-wrap">
-          <span class="prefix" style="color: var(--gray-400);">%</span>
-          <input type="number" id="current-hook" placeholder="18" min="0" max="100" step="0.1">
-        </div>
-      </div>
-      <div class="input-group">
-        <label>Current CAC</label>
-        <div class="input-wrap">
-          <span class="prefix">$</span>
-          <input type="number" id="current-cac" placeholder="950" min="0" step="10">
-        </div>
-      </div>
+    <div class="output-card">
+      <div class="output-icon">💸</div>
+      <div class="output-title">70/30 Budget Split</div>
+      <div class="output-desc">Given your monthly budget, the exact dollar amounts for proven winner scaling vs. new entity testing.</div>
+    </div>
+    <div class="output-card">
+      <div class="output-icon">📅</div>
+      <div class="output-title">Creative Cadence</div>
+      <div class="output-desc">How many new entities to launch per week, tiered by monthly ad spend. Based on your spend level.</div>
+    </div>
+    <div class="output-card">
+      <div class="output-icon">🏗️</div>
+      <div class="output-title">Entity Count Targets</div>
+      <div class="output-desc">How many simultaneous live entities you should be running to give the Andromeda algorithm enough signal.</div>
+    </div>
+    <div class="output-card">
+      <div class="output-icon">📊</div>
+      <div class="output-title">Your Numbers vs. Targets</div>
+      <div class="output-desc">Optional: enter your actual current metrics and see real-time grades against your personalized benchmarks.</div>
     </div>
   </div>
 
-  <!-- ─────────────── KPI TARGETS ─────────────── -->
-  <div class="section-label">Core KPI Targets</div>
+  <div class="divider"></div>
 
-  <div class="kpi-grid" id="kpi-grid">
-    <div class="kpi-card orange">
-      <div class="kpi-label">Max CAC<br>(25% of offer)</div>
-      <div class="kpi-value" id="max-cac">—</div>
-      <div class="kpi-note">Floor for 4× ROAS. Spend more than this and you're underwater.</div>
-    </div>
-    <div class="kpi-card green">
-      <div class="kpi-label">Max Cost Per<br>Qualified Call</div>
-      <div class="kpi-value" id="max-cpqc">—</div>
-      <div class="kpi-note">⅓ of CAC. The lead-to-book filter threshold.</div>
-    </div>
-    <div class="kpi-card blue">
-      <div class="kpi-label">Hook Rate<br>Minimum</div>
-      <div class="kpi-value">25%</div>
-      <div class="kpi-note">Below 15% = Andromeda deprioritizes before auction. Hard floor.</div>
-    </div>
-    <div class="kpi-card blue">
-      <div class="kpi-label">Hold Rate<br>Minimum</div>
-      <div class="kpi-value">20%</div>
-      <div class="kpi-note">30-second views ÷ impressions. Non-negotiable quality signal.</div>
-    </div>
-  </div>
+  <!-- STEP 1: ADD TO CLAUDE -->
+  <h2 class="section-title">Step 1 — Add It to Claude</h2>
+  <div class="section-sub">Up and running in under 2 minutes.</div>
 
-  <!-- ─────────────── KILL RULES ─────────────── -->
-  <div class="section-label">Kill Rules</div>
+  <div class="steps">
 
-  <div class="kill-grid">
-    <div class="kill-card new">
-      <div class="kill-icon new">🔪</div>
+    <div class="step-card">
+      <div class="step-num orange">1</div>
       <div>
-        <div class="kill-tag">New Ad</div>
-        <div class="kill-rule">Spend 2× your cost-per-qualified-call target before killing.</div>
-        <div class="kill-amount" id="kill-new">—</div>
-        <div class="kill-sub">before you can kill it</div>
+        <div class="step-title">Upload and Open as Artifact</div>
+        <div class="code-block" id="cb1"><button class="copy-btn" onclick="copyCode('cb1')">Copy</button>1. Download the HTML file
+2. Claude.ai → New Chat
+3. Paperclip icon → upload the file
+4. Send: "Open this as an artifact"
+5. The calculator loads — enter your offer price to begin</div>
       </div>
     </div>
-    <div class="kill-card winner">
-      <div class="kill-icon winner">🏆</div>
+
+    <div class="step-card">
+      <div class="step-num blue">2</div>
       <div>
-        <div class="kill-tag">Existing Winner</div>
-        <div class="kill-rule">Spend 3× your cost-per-qualified-call target before killing.</div>
-        <div class="kill-amount" id="kill-winner">—</div>
-        <div class="kill-sub">before you can kill it</div>
+        <div class="step-title">Add to Your Ads Claude Project</div>
+        <div class="step-desc">Save the calculator in your project so Claude can reference your personal KPI thresholds when giving ad strategy advice. Then every campaign recommendation Claude gives you will be calibrated to your actual offer economics — not generic rules.</div>
+        <div class="code-block" id="cb2"><button class="copy-btn" onclick="copyCode('cb2')">Copy</button>1. Claude.ai → Projects → your Ads Project
+2. Add Content → upload this HTML file
+3. Also note your offer price and current KPIs in the project instructions
+4. Claude will use your benchmarks when reviewing ad performance</div>
       </div>
     </div>
+
   </div>
 
-  <div class="callout" style="margin-top: 16px; margin-bottom: 4px;">
-    <div class="callout-head">⚠ Never Edit a Live Winning Ad</div>
-    <p>Editing resets the ad ID and wipes its micro-learning. Duplicate it, then edit the duplicate. The original keeps running.</p>
-  </div>
+  <div class="divider"></div>
 
-  <!-- ─────────────── 70/30 BUDGET SPLIT ─────────────── -->
-  <div class="section-label">70/30 Budget Rule</div>
+  <!-- STEP 2: HOW TO USE -->
+  <h2 class="section-title">Step 2 — Enter Your Inputs</h2>
+  <div class="section-sub">Two required inputs. Everything else auto-fills.</div>
 
-  <div class="rule-card" id="rule-card">
-    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+  <div class="steps">
+
+    <div class="step-card">
+      <div class="step-num orange">1</div>
       <div>
-        <div style="font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: #fff; letter-spacing: 0.03em;">Monthly Spend Split</div>
-        <div style="font-size: 13px; color: var(--gray-400); margin-top: 2px;">Based on your monthly budget input</div>
-      </div>
-      <div class="empty-hint" id="budget-hint">← Enter monthly spend to calculate</div>
-    </div>
-
-    <div class="budget-bar" id="budget-bar" style="display: none;">
-      <div class="budget-bar-fill">
-        <div class="budget-bar-proven"></div>
-        <div class="budget-bar-test"></div>
+        <div class="step-title">Enter Your Offer Price</div>
+        <div class="step-desc">This is the front-end price of your primary coaching offer — the thing you're selling on calls. If you have multiple offers, use the one you're actively running ads for. Every KPI threshold recalculates instantly when this changes.</div>
+        <div class="alert blue">
+          <span>💡</span>
+          <div>If you offer payment plans, use the full value (e.g., 3 × $2,000 = enter $6,000). Your CAC ceiling is based on full contract value, not the first payment.</div>
+        </div>
       </div>
     </div>
 
-    <div class="budget-legend" style="margin-bottom: 0;">
-      <div class="budget-legend-item"><div class="legend-dot proven"></div>70% Proven Winners</div>
-      <div class="budget-legend-item"><div class="legend-dot test"></div>30% New Entity Tests</div>
-    </div>
-
-    <div class="budget-amounts" id="budget-amounts" style="display: none;">
-      <div class="budget-amount-block proven">
-        <div class="ba-label">Proven Winners Budget</div>
-        <div class="ba-val" id="budget-proven">—</div>
-        <div class="ba-note">70% · keep winners running</div>
-      </div>
-      <div class="budget-amount-block test">
-        <div class="ba-label">New Entity Test Budget</div>
-        <div class="ba-val" id="budget-test">—</div>
-        <div class="ba-note">30% · new entities only</div>
+    <div class="step-card">
+      <div class="step-num blue">2</div>
+      <div>
+        <div class="step-title">Enter Your Current Close Rate</div>
+        <div class="step-desc">Your actual close rate from the past 30–90 days. Don't use your best month — use your average. This drives your CPL target and entity count recommendation.</div>
       </div>
     </div>
+
+    <div class="step-card">
+      <div class="step-num green">3</div>
+      <div>
+        <div class="step-title">(Optional) Enter Your Current Actuals</div>
+        <div class="step-desc">In the "Your Numbers vs. Targets" section, enter your actual hook rate, CPL, and hold rate from Meta Ads Manager. The calculator grades each metric green/yellow/red against your personalized benchmarks. This is the fastest way to see exactly where you're at vs. where you need to be.</div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- ─────────────── CADENCE TABLE ─────────────── -->
-  <div class="section-label">Creative Cadence by Spend Tier</div>
+  <div class="divider"></div>
 
-  <div class="cadence-card">
-    <table class="cadence-table">
-      <thead>
-        <tr>
-          <th>Monthly Spend</th>
-          <th>Campaign Structure</th>
-          <th>Active Ads</th>
-          <th>New Creatives/Week</th>
-          <th>Min Live Entities</th>
-        </tr>
-      </thead>
-      <tbody id="cadence-body">
-        <tr data-tier="1">
-          <td class="mono strong">$500 – $2K
-            <span class="tier-badge yours" id="tier-badge-1" style="display:none;">YOUR TIER</span>
-          </td>
-          <td>1 campaign · 1 ad set</td>
-          <td class="mono">8–10 ads</td>
-          <td class="mono strong">2–3 / week</td>
-          <td class="mono strong">8–10</td>
-        </tr>
-        <tr data-tier="2">
-          <td class="mono strong">$2K – $5K
-            <span class="tier-badge yours" id="tier-badge-2" style="display:none;">YOUR TIER</span>
-          </td>
-          <td>1–2 campaigns · 12–15 ads</td>
-          <td class="mono">12–15 ads</td>
-          <td class="mono strong">4–5 / week</td>
-          <td class="mono strong">10–12</td>
-        </tr>
-        <tr data-tier="3">
-          <td class="mono strong">$5K – $15K
-            <span class="tier-badge yours" id="tier-badge-3" style="display:none;">YOUR TIER</span>
-          </td>
-          <td>2–3 campaigns · 15–25 ads</td>
-          <td class="mono">15–25 ads</td>
-          <td class="mono strong">8–12 / week</td>
-          <td class="mono strong">12–15</td>
-        </tr>
-        <tr data-tier="4">
-          <td class="mono strong">$15K+
-            <span class="tier-badge yours" id="tier-badge-4" style="display:none;">YOUR TIER</span>
-          </td>
-          <td>3+ campaigns · 25+ ads</td>
-          <td class="mono">25+ ads</td>
-          <td class="mono strong">12–20 / week</td>
-          <td class="mono strong">15+</td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- STEP 3: HOW TO UTILIZE -->
+  <h2 class="section-title">Step 3 — How to Apply Your KPI Framework</h2>
+  <div class="section-sub">The calculator gives you numbers. Here's how to use them to actually manage your ad account.</div>
+
+  <div class="steps">
+
+    <div class="step-card">
+      <div class="step-num orange">A</div>
+      <div>
+        <div class="step-title">Use Kill Rules Religiously</div>
+        <div class="step-desc">Print your kill rule thresholds and put them somewhere visible. The rule: if a new ad spends 2× your target CPL without booking a call, kill it. If a previously-winning ad spends 3× your target CPL in a week without results, kill it. Not reduce it. Kill it. The algorithm has made its decision.</div>
+        <table class="kpi-table">
+          <thead><tr><th>Ad Type</th><th>Kill Threshold</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>New entity (first 7 days)</td><td>Spend 2× target CPL with 0 qualified calls</td><td>Kill. Archive. Analyze the hook, not the audience.</td></tr>
+            <tr><td>Existing winner</td><td>Spend 3× target CPL in a 7-day window declining</td><td>Kill. Build a variation — don't patch the original.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num blue">B</div>
+      <div>
+        <div class="step-title">Use Creative Cadence as Your Production Schedule</div>
+        <div class="step-desc">The calculator outputs exactly how many new entities to launch per week based on your spend tier. That number is your creative team's weekly minimum. It's not aspirational — it's the volume needed to continuously replenish your entity library as winners fatigue and losers get killed.</div>
+        <div class="alert orange">
+          <span>⚠️</span>
+          <div>Most coaches at $1,500/month in ad spend need 2–3 new entities per week to maintain a healthy library. If you're only launching 1–2 per month, you're running out of creative inventory faster than you're replenishing it.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num green">C</div>
+      <div>
+        <div class="step-title">Update It When Your Offer Price Changes</div>
+        <div class="step-desc">If you raise (or lower) your offer price, re-open the calculator and update. Your entire KPI framework shifts. A 2× increase in offer price roughly doubles your CAC tolerance — which means your CPL target, kill thresholds, and budget allocation all change. The calculator recalculates everything in real time.</div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- ─────────────── ENTITY TARGETS ─────────────── -->
-  <div class="section-label">Entity Targets</div>
+  <div class="divider"></div>
 
-  <div class="entity-card">
-    <div style="font-size: 13px; color: var(--gray-400); margin-bottom: 16px; line-height: 1.6;">
-      <strong style="color: rgba(255,255,255,0.8);">Entity = Format + Emotion + Hook Type.</strong> Same combination = same entity = same lottery ticket. Hook Swaps don't create new entities. Format Shifts, Angle Shifts, and Presenter Swaps do.
-    </div>
-    <div class="entity-row">
-      <span class="er-label">Minimum distinct live entities (any tier)</span>
-      <span class="er-val">8–10</span>
-    </div>
-    <div class="entity-row">
-      <span class="er-label">Target live entities (your tier)</span>
-      <span class="er-val" id="entity-target">—</span>
-    </div>
-    <div class="entity-row">
-      <span class="er-label">Concepts to maintain (each spawns 3–5 entities)</span>
-      <span class="er-val" id="concept-count">—</span>
-    </div>
-    <div class="entity-row">
-      <span class="er-label">Hook swap variations per entity (hook rate testing only)</span>
-      <span class="er-val">2–4</span>
-    </div>
-    <div class="entity-row" style="border-bottom: none;">
-      <span class="er-label">Ashton "Launch 50, Run 10" pre-loaded backlog target</span>
-      <span class="er-val" id="backlog-count">—</span>
-    </div>
+  <h2 class="section-title">Example KPI Framework by Offer Price</h2>
+  <div class="section-sub">Reference table — your calculator will produce these numbers automatically from your inputs.</div>
+
+  <table class="kpi-table">
+    <thead><tr><th>Offer Price</th><th>Max CAC</th><th>Target CPL</th><th>Hook Rate Target</th><th>New Ad Kill ($)</th></tr></thead>
+    <tbody>
+      <tr><td>$3,000</td><td>$750</td><td>$25–40</td><td>25%+</td><td>~$50–80 with no call</td></tr>
+      <tr><td>$5,000</td><td>$1,250</td><td>$40–65</td><td>25%+</td><td>~$80–130 with no call</td></tr>
+      <tr><td>$8,000</td><td>$2,000</td><td>$65–100</td><td>25%+</td><td>~$130–200 with no call</td></tr>
+      <tr><td>$12,000</td><td>$3,000</td><td>$100–150</td><td>25%+</td><td>~$200–300 with no call</td></tr>
+    </tbody>
+  </table>
+
+  <div class="alert green">
+    <span>✅</span>
+    <div><strong>The point of the calculator:</strong> You never again have to ask "should I kill this ad?" The answer is always yes when your specific threshold is crossed. Discipline + clear thresholds = better creative decisions at scale.</div>
   </div>
-
-  <!-- ─────────────── PERFORMANCE STATUS (conditional) ─────────────── -->
-  <div id="status-section">
-    <div class="section-label">Your Numbers vs. Targets</div>
-    <div class="status-grid" id="status-grid"></div>
-  </div>
-
-  <!-- CALLOUT -->
-  <div class="callout">
-    <div class="callout-head">📌 The Andromeda Rule on Hook Rate</div>
-    <p>Below 15% hook rate → Andromeda deprioritizes your ad before it even reaches the auction. You're paying for impressions that the algorithm has already written off. Fix hook rate before fixing anything else.</p>
-  </div>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-brand">IFCA <span>PLAYBOOKS</span></div>
-    <div class="footer-note">ifca-playbooks · tools-and-calculators/kpi-calculator · April 2026</div>
-  </footer>
 
 </div>
 
 <script>
-  const offerInput    = document.getElementById('offer-price');
-  const spendInput    = document.getElementById('monthly-spend');
-  const daysInput     = document.getElementById('offer-days');
-  const currentCPL    = document.getElementById('current-cpl');
-  const currentHook   = document.getElementById('current-hook');
-  const currentCAC    = document.getElementById('current-cac');
-
-  function fmt(n, decimals = 0) {
-    if (n === null || n === undefined || isNaN(n)) return '—';
-    return '$' + n.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  }
-
-  function fmtNum(n) {
-    if (n === null || n === undefined || isNaN(n)) return '—';
-    return n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  }
-
-  function getTier(spend) {
-    if (!spend || spend <= 0) return null;
-    if (spend < 2000)  return 1;
-    if (spend < 5000)  return 2;
-    if (spend < 15000) return 3;
-    return 4;
-  }
-
-  const tierData = {
-    1: { entities: '8–10',  entityMin: 8,  entityMax: 10, concepts: '2–3', backlog: '20–30' },
-    2: { entities: '10–12', entityMin: 10, entityMax: 12, concepts: '3–4', backlog: '30–40' },
-    3: { entities: '12–15', entityMin: 12, entityMax: 15, concepts: '3–5', backlog: '40–50' },
-    4: { entities: '15+',   entityMin: 15, entityMax: 20, concepts: '4–6', backlog: '50+' },
-  };
-
-  function calculate() {
-    const offer  = parseFloat(offerInput.value)  || null;
-    const spend  = parseFloat(spendInput.value)  || null;
-
-    // KPI Targets
-    const maxCAC   = offer ? offer * 0.25 : null;
-    const maxCPQC  = maxCAC ? maxCAC / 3 : null;
-
-    document.getElementById('max-cac').textContent  = maxCAC  ? fmt(maxCAC)  : '—';
-    document.getElementById('max-cpqc').textContent = maxCPQC ? fmt(maxCPQC) : '—';
-
-    // Kill Rules (based on CPQC)
-    const killNew    = maxCPQC ? maxCPQC * 2 : null;
-    const killWinner = maxCPQC ? maxCPQC * 3 : null;
-
-    document.getElementById('kill-new').textContent    = killNew    ? fmt(killNew)    : '—';
-    document.getElementById('kill-winner').textContent = killWinner ? fmt(killWinner) : '—';
-
-    // 70/30 Budget
-    if (spend) {
-      const proven = spend * 0.70;
-      const test   = spend * 0.30;
-      document.getElementById('budget-proven').textContent = fmt(proven);
-      document.getElementById('budget-test').textContent   = fmt(test);
-      document.getElementById('budget-amounts').style.display = 'grid';
-      document.getElementById('budget-bar').style.display = 'block';
-      document.getElementById('budget-hint').style.display = 'none';
-    } else {
-      document.getElementById('budget-amounts').style.display = 'none';
-      document.getElementById('budget-bar').style.display = 'none';
-      document.getElementById('budget-hint').style.display = '';
-    }
-
-    // Cadence tier highlight
-    const tier = getTier(spend);
-    for (let t = 1; t <= 4; t++) {
-      const row   = document.querySelector(`tr[data-tier="${t}"]`);
-      const badge = document.getElementById(`tier-badge-${t}`);
-      if (tier === t) {
-        row.classList.add('active-tier');
-        badge.style.display = 'inline-block';
-      } else {
-        row.classList.remove('active-tier');
-        badge.style.display = 'none';
-      }
-    }
-
-    // Entity targets
-    if (tier) {
-      const td = tierData[tier];
-      document.getElementById('entity-target').textContent  = td.entities;
-      document.getElementById('concept-count').textContent  = td.concepts;
-      document.getElementById('backlog-count').textContent  = td.backlog;
-    } else {
-      document.getElementById('entity-target').textContent  = '—';
-      document.getElementById('concept-count').textContent  = '—';
-      document.getElementById('backlog-count').textContent  = '—';
-    }
-
-    // Performance Status
-    updateStatus(maxCAC, maxCPQC);
-  }
-
-  function updateStatus(maxCAC, maxCPQC) {
-    const showSection = document.getElementById('toggle-current').checked;
-    const statusSection = document.getElementById('status-section');
-    const grid = document.getElementById('status-grid');
-
-    if (!showSection) {
-      statusSection.classList.remove('visible');
-      return;
-    }
-
-    const cpl    = parseFloat(currentCPL.value)  || null;
-    const hook   = parseFloat(currentHook.value) || null;
-    const cac    = parseFloat(currentCAC.value)  || null;
-
-    if (!cpl && !hook && !cac) {
-      statusSection.classList.remove('visible');
-      return;
-    }
-
-    statusSection.classList.add('visible');
-    grid.innerHTML = '';
-
-    // CPL check
-    if (cpl !== null && maxCPQC !== null) {
-      const pass = cpl <= maxCPQC;
-      const warn = cpl <= maxCPQC * 1.5;
-      const cls  = pass ? 'pass' : warn ? 'warn' : 'fail';
-      const verb = pass ? '✓ On target' : warn ? '⚠ Marginally high' : '✗ Above threshold';
-      grid.innerHTML += `
-        <div class="status-card">
-          <div class="status-dot ${cls}"></div>
-          <div class="status-info">
-            <div class="status-metric">Cost per Lead</div>
-            <div class="status-compare">${fmt(cpl)} vs. ${maxCPQC ? fmt(maxCPQC) : '—'} target</div>
-            <div class="status-verdict ${cls}">${verb}</div>
-          </div>
-        </div>`;
-    }
-
-    // Hook Rate check
-    if (hook !== null) {
-      const pass = hook >= 25;
-      const warn = hook >= 15;
-      const cls  = pass ? 'pass' : warn ? 'warn' : 'fail';
-      const verb = pass ? '✓ Healthy' : warn ? '⚠ Danger zone (15–25%)' : '✗ Below floor — Andromeda penalizing';
-      grid.innerHTML += `
-        <div class="status-card">
-          <div class="status-dot ${cls}"></div>
-          <div class="status-info">
-            <div class="status-metric">Hook Rate</div>
-            <div class="status-compare">${hook.toFixed(1)}% vs. 25% target</div>
-            <div class="status-verdict ${cls}">${verb}</div>
-          </div>
-        </div>`;
-    }
-
-    // CAC check
-    if (cac !== null && maxCAC !== null) {
-      const pass = cac <= maxCAC;
-      const warn = cac <= maxCAC * 1.25;
-      const cls  = pass ? 'pass' : warn ? 'warn' : 'fail';
-      const verb = pass ? '✓ Under max CAC' : warn ? '⚠ Slightly over — monitor closely' : '✗ Above max — unprofitable at scale';
-      grid.innerHTML += `
-        <div class="status-card">
-          <div class="status-dot ${cls}"></div>
-          <div class="status-info">
-            <div class="status-metric">Current CAC</div>
-            <div class="status-compare">${fmt(cac)} vs. ${fmt(maxCAC)} max</div>
-            <div class="status-verdict ${cls}">${verb}</div>
-          </div>
-        </div>`;
-    }
-  }
-
-  function toggleCurrentNumbers() {
-    const checked = document.getElementById('toggle-current').checked;
-    const row = document.getElementById('your-numbers-row');
-    row.classList.toggle('visible', checked);
-    calculate();
-  }
-
-  // Live calculation on input
-  [offerInput, spendInput, daysInput, currentCPL, currentHook, currentCAC].forEach(el => {
-    el.addEventListener('input', () => {
-      document.getElementById('input-card').classList.add('updating');
-      setTimeout(() => {
-        calculate();
-        document.getElementById('input-card').classList.remove('updating');
-      }, 80);
-    });
+function copyCode(id) {
+  const el = document.getElementById(id);
+  const btn = el.querySelector('.copy-btn');
+  const text = el.innerText.replace(btn.innerText, '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = orig, 1800);
   });
-
-  // Initial state
-  calculate();
+}
 </script>
 </body>
 </html>

@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camden Mamian — Full Business Audit | IFCA 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:        #1E3A5F;
+  --navy-dark:   #0B1A2B;
+  --navy-mid:    #142845;
+  --navy-card:   rgba(20,40,69,0.6);
+  --orange:      #E87722;
+  --orange-dim:  rgba(232,119,34,0.12);
+  --orange-glow: rgba(232,119,34,0.22);
+  --blue-mid:    #4A7FA5;
+  --blue-dim:    rgba(74,127,165,0.12);
+  --blue-light:  #D6E4F0;
+  --gray-400:    #94A3B8;
+  --gray-500:    #64748B;
+  --gray-600:    #475569;
+  --green:       #22C55E;
+  --green-bg:    rgba(34,197,94,0.10);
+  --red:         #DC2626;
+  --red-bg:      rgba(220,38,38,0.09);
+  --yellow:      #F59E0B;
+  --yellow-bg:   rgba(245,158,11,0.10);
+  --purple:      #8B5CF6;
+  --purple-bg:   rgba(139,92,246,0.10);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy-dark);
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+body::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 5% 5%, rgba(74,127,165,.09) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 95% 95%, rgba(232,119,34,.06) 0%, transparent 55%);
+}
+
+.page {
+  position: relative; z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px 120px;
+}
+
+/* HERO */
+.hero {
+  padding: 60px 0 52px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  margin-bottom: 0;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: .2em; color: var(--orange);
+  text-transform: uppercase; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.hero-eyebrow::before { content: ''; width: 32px; height: 2px; background: var(--orange); border-radius: 1px; }
+
+.hero-name {
+  font-family: 'Bebas Neue'; font-size: clamp(52px, 8vw, 96px);
+  line-height: .88; letter-spacing: .02em; color: #fff;
+  margin-bottom: 6px;
+}
+.hero-name span { color: var(--orange); }
+
+.hero-title {
+  font-family: 'DM Mono', monospace; font-size: 14px;
+  letter-spacing: .08em; color: rgba(255,255,255,.4);
+  text-transform: uppercase; margin-bottom: 28px;
+}
+
+.hero-stats {
+  display: flex; gap: 0; margin-bottom: 32px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 14px; overflow: hidden;
+}
+
+.hs { flex: 1; padding: 20px 24px; border-right: 1px solid rgba(255,255,255,.06); }
+.hs:last-child { border-right: none; }
+.hs-val { font-family: 'Bebas Neue'; font-size: 40px; line-height: 1; margin-bottom: 4px; }
+.hs-val.orange { color: var(--orange); }
+.hs-val.green  { color: var(--green); }
+.hs-val.blue   { color: #7ABFDD; }
+.hs-val.white  { color: #fff; }
+.hs-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-500); }
+
+.hero-summary {
+  font-size: 15px; color: rgba(255,255,255,.65);
+  line-height: 1.7; max-width: 720px;
+  border-left: 3px solid var(--orange);
+  padding-left: 20px;
+}
+.hero-summary strong { color: rgba(255,255,255,.9); }
+
+/* NAV */
+.doc-nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(11,26,43,.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  padding: 0;
+  margin: 0 -24px;
+}
+.doc-nav-inner {
+  max-width: 1080px; margin: 0 auto;
+  padding: 0 24px;
+  display: flex; align-items: center; gap: 4px; overflow-x: auto;
+  scrollbar-width: none;
+}
+.doc-nav-inner::-webkit-scrollbar { display: none; }
+.nav-link {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 14px 16px; white-space: nowrap;
+  color: var(--gray-500); text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color .18s, border-color .18s;
+}
+.nav-link:hover { color: rgba(255,255,255,.7); }
+.nav-link.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+/* SECTIONS */
+.doc-section { padding: 56px 0 0; }
+.sec-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .18em; color: var(--orange); text-transform: uppercase; margin-bottom: 8px; }
+.sec-heading { font-family: 'Bebas Neue'; font-size: clamp(30px,4vw,44px); line-height: .95; letter-spacing: .02em; color: #fff; margin-bottom: 24px; }
+.sec-divider { height: 1px; background: rgba(255,255,255,.07); margin-bottom: 28px; }
+
+/* CARDS */
+.card { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; padding: 22px 24px; }
+.card.orange-left { border-left: 3px solid var(--orange); border-radius: 0 14px 14px 0; background: var(--orange-dim); }
+.card.green-left  { border-left: 3px solid var(--green);  border-radius: 0 14px 14px 0; background: var(--green-bg); }
+.card.red-left    { border-left: 3px solid var(--red);    border-radius: 0 14px 14px 0; background: var(--red-bg); }
+.card.yellow-left { border-left: 3px solid var(--yellow); border-radius: 0 14px 14px 0; background: var(--yellow-bg); }
+.card.blue-left   { border-left: 3px solid var(--blue-mid); border-radius: 0 14px 14px 0; background: var(--blue-dim); }
+
+/* GRIDS */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+@media(max-width:720px){ .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } .hero-stats { flex-direction: column; } .hs { border-right: none; border-bottom: 1px solid rgba(255,255,255,.06); } .hs:last-child { border-bottom: none; } }
+@media(max-width:900px){ .grid-3 { grid-template-columns: 1fr 1fr; } .grid-4 { grid-template-columns: 1fr 1fr; } }
+
+/* WIN CARDS */
+.win-card { background: var(--green-bg); border: 1px solid rgba(34,197,94,.2); border-radius: 12px; padding: 18px; display: flex; align-items: flex-start; gap: 12px; }
+.win-icon { font-size: 20px; flex-shrink: 0; padding-top: 2px; }
+.win-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--green); margin-bottom: 4px; }
+.win-desc  { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.55; }
+
+/* PERIOD SWITCHER */
+.period-bar { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+.period-bar-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-500); }
+.period-tabs { display: flex; gap: 4px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 4px; }
+.pt { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 7px 14px; border-radius: 7px; border: none; background: transparent; color: var(--gray-500); cursor: pointer; transition: all .18s; }
+.pt.active { background: var(--navy-mid); color: #fff; }
+.pt:hover:not(.active) { color: rgba(255,255,255,.6); }
+.edit-btn { margin-left: auto; background: var(--orange-dim); border: 1px solid rgba(232,119,34,.3); border-radius: 8px; padding: 8px 16px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--orange); cursor: pointer; transition: all .18s; }
+.edit-btn:hover { background: var(--orange-glow); }
+.edit-btn.on { background: var(--orange); color: #fff; }
+
+/* KPI BAND */
+.kpi-band { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; margin-bottom: 20px; }
+@media(max-width:700px){ .kpi-band { grid-template-columns: 1fr 1fr; } }
+.kpi-chip { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 14px 16px; position: relative; overflow: hidden; }
+.kpi-chip::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:12px 12px 0 0; }
+.kpi-chip.pass::before { background: var(--green); }
+.kpi-chip.warn::before { background: var(--yellow); }
+.kpi-chip.fail::before { background: var(--red); }
+.kpi-chip.info::before { background: var(--blue-mid); }
+.chip-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); margin-bottom:5px; line-height:1.4; }
+.chip-val   { font-family:'Bebas Neue'; font-size:30px; line-height:1; margin-bottom:3px; }
+.kpi-chip.pass .chip-val { color: var(--green); }
+.kpi-chip.warn .chip-val { color: var(--yellow); }
+.kpi-chip.fail .chip-val { color: #F87171; }
+.kpi-chip.info .chip-val { color: #7ABFDD; }
+.chip-target { font-family:'DM Mono',monospace; font-size:10px; color:var(--gray-500); }
+
+/* METRICS TABLE */
+.tbl-wrap { background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; overflow: hidden; margin-bottom: 16px; }
+.mtbl { width:100%; border-collapse:collapse; }
+.mtbl thead tr { background:rgba(255,255,255,.03); }
+.mtbl th { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); padding:10px 14px; text-align:left; border-bottom:1px solid rgba(255,255,255,.06); white-space:nowrap; }
+.mtbl td { padding:12px 14px; font-size:13px; color:rgba(255,255,255,.7); border-bottom:1px solid rgba(255,255,255,.04); vertical-align:middle; }
+.mtbl tbody tr:last-child td { border-bottom:none; }
+.mtbl tbody tr:hover td { background:rgba(255,255,255,.02); }
+.m-name   { font-size:13px; color:rgba(255,255,255,.85); }
+.m-target { font-family:'DM Mono',monospace; font-size:11px; color:var(--gray-500); }
+.m-val    { font-family:'Bebas Neue'; font-size:22px; line-height:1; }
+.m-val.pass { color:var(--green); }
+.m-val.warn { color:var(--yellow); }
+.m-val.fail { color:#F87171; }
+.m-val.info { color:#7ABFDD; }
+.badge { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.08em; text-transform:uppercase; padding:3px 9px; border-radius:4px; white-space:nowrap; }
+.badge.pass { background:var(--green-bg); color:var(--green); border:1px solid rgba(34,197,94,.25); }
+.badge.warn { background:var(--yellow-bg); color:var(--yellow); border:1px solid rgba(245,158,11,.25); }
+.badge.fail { background:var(--red-bg); color:#F87171; border:1px solid rgba(220,38,38,.25); }
+.badge.info { background:var(--blue-dim); color:#7ABFDD; border:1px solid rgba(74,127,165,.3); }
+.m-note { font-size:11px; color:var(--gray-500); line-height:1.5; max-width:200px; }
+.edit-input { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); border-radius:7px; padding:6px 10px; font-family:'DM Mono',monospace; font-size:13px; color:#fff; outline:none; width:110px; transition:border-color .18s; -moz-appearance:textfield; }
+.edit-input::-webkit-inner-spin-button { -webkit-appearance:none; }
+.edit-input:focus { border-color:rgba(232,119,34,.5); background:rgba(232,119,34,.06); }
+
+/* CREATIVE / AUDIT TABLES */
+.audit-table-wrap { background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; overflow: hidden; }
+.audit-tbl { width:100%; border-collapse:collapse; }
+.audit-tbl th { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); padding:10px 14px; text-align:left; background:rgba(255,255,255,.03); border-bottom:1px solid rgba(255,255,255,.06); }
+.audit-tbl td { padding:12px 14px; font-size:13px; color:rgba(255,255,255,.65); border-bottom:1px solid rgba(255,255,255,.04); vertical-align:top; line-height:1.5; }
+.audit-tbl tbody tr:last-child td { border-bottom:none; }
+.audit-tbl td strong { color:rgba(255,255,255,.9); }
+
+.gap-pill { display:inline-block; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.06em; text-transform:uppercase; padding:2px 8px; border-radius:4px; margin:2px 3px 2px 0; }
+.gap-pill.missing    { background:var(--red-bg); color:#F87171; border:1px solid rgba(220,38,38,.2); }
+.gap-pill.opportunity{ background:var(--green-bg); color:var(--green); border:1px solid rgba(34,197,94,.2); }
+.gap-pill.warn       { background:var(--yellow-bg); color:var(--yellow); border:1px solid rgba(245,158,11,.2); }
+
+/* COMPETITOR TABLE */
+.comp-card { background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; overflow: hidden; }
+.comp-tbl { width:100%; border-collapse:collapse; }
+.comp-tbl th { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); padding:10px 14px; text-align:left; background:rgba(255,255,255,.03); border-bottom:1px solid rgba(255,255,255,.06); }
+.comp-tbl td { padding:12px 14px; font-size:13px; color:rgba(255,255,255,.65); border-bottom:1px solid rgba(255,255,255,.04); vertical-align:top; line-height:1.55; }
+.comp-tbl tbody tr:last-child td { border-bottom:none; }
+.comp-tbl td strong { color:rgba(255,255,255,.9); }
+
+/* REV EQUILIBRIUM */
+.eq-box { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:12px; padding:18px 20px; }
+.eq-b-val { font-family:'Bebas Neue'; font-size:36px; color:#fff; line-height:1; }
+.eq-b-val.blue   { color: #7ABFDD; }
+.eq-b-val.green  { color: var(--green); }
+.eq-b-val.orange { color: var(--orange); }
+.eq-b-val.yellow { color: var(--yellow); }
+.eq-b-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); margin-top:3px; }
+.eq-b-sub  { font-size:11px; color:var(--gray-500); }
+.eq-vs { font-family:'Bebas Neue'; font-size:32px; color:rgba(255,255,255,.18); text-align:center; display:flex; align-items:center; justify-content:center; }
+.eq-verdict { padding:15px 18px; border-radius:10px; font-size:13px; line-height:1.65; }
+.eq-verdict.building { background:var(--green-bg); border:1px solid rgba(34,197,94,.25); color:var(--green); }
+.eq-verdict.eroding  { background:var(--red-bg); border:1px solid rgba(220,38,38,.25); color:#F87171; }
+.eq-verdict.flat     { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); color:var(--gray-400); }
+
+/* DIAGNOSIS */
+.diag-list { display:flex; flex-direction:column; gap:10px; }
+.diag-card { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:12px; padding:20px 22px; }
+.diag-card.p1 { border-left:3px solid var(--red); background:var(--red-bg); }
+.diag-card.p2 { border-left:3px solid var(--orange); background:var(--orange-dim); }
+.diag-card.p3 { border-left:3px solid var(--yellow); background:var(--yellow-bg); }
+.diag-card.ok { border-left:3px solid var(--green); background:var(--green-bg); }
+.diag-head { display:flex; gap:16px; align-items:flex-start; margin-bottom:10px; }
+.diag-rank { font-family:'Bebas Neue'; font-size:42px; color:rgba(255,255,255,.12); line-height:1; flex-shrink:0; min-width:30px; }
+.diag-card.p1 .diag-rank { color:#F87171; }
+.diag-card.p2 .diag-rank { color:var(--orange); }
+.diag-card.p3 .diag-rank { color:var(--yellow); }
+.diag-card.ok .diag-rank { color:var(--green); }
+.diag-title { font-size:15px; font-weight:600; color:#fff; margin-bottom:6px; line-height:1.2; }
+.diag-desc  { font-size:13px; color:rgba(255,255,255,.6); line-height:1.65; }
+.diag-action { font-size:13px; color:rgba(255,255,255,.55); line-height:1.65; padding-top:10px; border-top:1px solid rgba(255,255,255,.06); }
+.diag-action strong { color:rgba(255,255,255,.8); }
+
+/* 90-DAY PLAN */
+.plan-list { display:flex; flex-direction:column; gap:10px; }
+.plan-item { display:flex; align-items:flex-start; gap:16px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:12px; padding:18px 20px; transition:border-color .2s; }
+.plan-item:hover { border-color:rgba(232,119,34,.2); }
+.plan-num { font-family:'Bebas Neue'; font-size:38px; color:var(--orange); line-height:1; flex-shrink:0; min-width:30px; }
+.plan-title { font-size:15px; font-weight:600; color:#fff; margin-bottom:5px; line-height:1.2; }
+.plan-desc  { font-size:13px; color:rgba(255,255,255,.6); line-height:1.65; }
+.plan-tag { display:inline-block; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.08em; text-transform:uppercase; padding:2px 8px; border-radius:4px; margin-top:8px; margin-right:4px; }
+.plan-tag.ads      { background:var(--orange-dim); color:var(--orange); border:1px solid rgba(232,119,34,.25); }
+.plan-tag.sales    { background:var(--green-bg); color:var(--green); border:1px solid rgba(34,197,94,.2); }
+.plan-tag.ops      { background:var(--blue-dim); color:#7ABFDD; border:1px solid rgba(74,127,165,.25); }
+.plan-tag.creative { background:var(--purple-bg); color:#c4b5fd; border:1px solid rgba(139,92,246,.2); }
+
+/* FOOTER */
+.doc-footer { margin-top:80px; padding:32px 0 0; border-top:1px solid rgba(255,255,255,.07); display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.df-brand { font-family:'Bebas Neue'; font-size:20px; letter-spacing:.08em; color:rgba(255,255,255,.2); }
+.df-brand span { color:rgba(232,119,34,.5); }
+.df-note  { font-family:'DM Mono',monospace; font-size:10px; color:rgba(255,255,255,.15); letter-spacing:.05em; }
+
+/* UTILITY */
+p { font-size:14px; color:rgba(255,255,255,.65); line-height:1.7; }
+p + p { margin-top:10px; }
+strong { color:rgba(255,255,255,.85); }
+em { color:var(--orange); font-style:normal; }
+.mt-sm { margin-top:12px; }
+.mt-md { margin-top:20px; }
+.mt-lg { margin-top:32px; }
+.mb-sm { margin-bottom:12px; }
+.mb-md { margin-bottom:20px; }
+.gap-sm { gap:10px; }
+.gap-md { gap:16px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HERO -->
+<section class="hero" id="overview">
+  <div class="hero-eyebrow">IFCA · Full Business Audit · April 2026</div>
+  <div class="hero-name">CAMDEN <span>MAMIAN</span></div>
+  <div class="hero-title">@mamianfitness &nbsp;·&nbsp; Metabolic Repair Coaching</div>
+
+  <div class="hero-stats">
+    <div class="hs">
+      <div class="hs-val orange">$210.6K</div>
+      <div class="hs-label">Q1 Cash Collected</div>
+    </div>
+    <div class="hs">
+      <div class="hs-val green">57%</div>
+      <div class="hs-label">Q1 Avg Net Margin</div>
+    </div>
+    <div class="hs">
+      <div class="hs-val blue">$70.2K</div>
+      <div class="hs-label">Q1 Monthly Avg</div>
+    </div>
+    <div class="hs">
+      <div class="hs-val orange">$1,839</div>
+      <div class="hs-label">Avg FE Price</div>
+    </div>
+    <div class="hs">
+      <div class="hs-val white">12x</div>
+      <div class="hs-label">Q1 Collected ROAS</div>
+    </div>
+  </div>
+
+  <div class="hero-summary">
+    Camden is running a <strong>genuinely elite business on a shoestring ad budget</strong> — $9K in Q1 ad spend generating $210K in cash collected at 12× collected ROAS and 57% net operating margin. The sales engine works: 57% close rate, $168 CPA against an $1,839 FE, only 9.2% of front-end offer price. The problem is not quality — it's <strong>volume and velocity</strong>. Marketing margin is only 4.3% of revenue when a growth-phase business should be at 15–20%. The CPL has climbed from $11 → $12 → $18 across Q1 and the lead-to-booked-call rate is running at 2.9% on a mixed funnel. <strong>The machine is profitable and proven — it just needs more fuel and more creative diversity to scale.</strong>
+  </div>
+</section>
+
+<!-- STICKY NAV -->
+<nav class="doc-nav">
+  <div class="doc-nav-inner">
+    <a href="#overview"    class="nav-link active">Overview</a>
+    <a href="#working"     class="nav-link">What's Working</a>
+    <a href="#data"        class="nav-link">Data Snapshot</a>
+    <a href="#equilibrium" class="nav-link">Rev Equilibrium</a>
+    <a href="#creative"    class="nav-link">Creative Intel</a>
+    <a href="#diagnosis"   class="nav-link">Constraints</a>
+    <a href="#plan"        class="nav-link">90-Day Plan</a>
+  </div>
+</nav>
+
+<!-- WHAT'S WORKING -->
+<section class="doc-section" id="working">
+  <div class="sec-eyebrow">Section 01</div>
+  <div class="sec-heading">What's Working</div>
+  <div class="sec-divider"></div>
+  <div class="grid-2 gap-md">
+    <div class="win-card">
+      <div class="win-icon">🎯</div>
+      <div>
+        <div class="win-label">57% Close Rate — Sales Is Not The Constraint</div>
+        <div class="win-desc">Q1 close rate trended 53% → 53% → 65% across January, February, and March. At 57% Q1 average, Camden is closing well above the 30–45% target range. The calls that show are converting. The problem is upstream — not enough calls on the calendar.</div>
+      </div>
+    </div>
+    <div class="win-card">
+      <div class="win-icon">💰</div>
+      <div>
+        <div class="win-label">57% Net Operating Margin — Best-in-Class Efficiency</div>
+        <div class="win-desc">Q1 net margin of 57% ($120.9K profit on $210.6K cash) is exceptional. Labor at 32.4%, marketing at 4.3%, overhead at 5.9% — all within or under healthy targets. This isn't a tight operation barely squeezing by. It's a lean, profitable machine that has room to invest aggressively in growth.</div>
+      </div>
+    </div>
+    <div class="win-card">
+      <div class="win-icon">📈</div>
+      <div>
+        <div class="win-label">12× Collected ROAS — One of the Highest ROI Ads in the Cohort</div>
+        <div class="win-desc">Q1 blended collected ROAS of 12× (ranging 8.9×–15.5× across months) on a $9K spend base. Even in the worst month (March, 8.9×) the economics are elite. A $168 CPA against a $1,839 FE is just 9.2% of offer price — the threshold is 20%. This is a green light to spend 2–3× more immediately.</div>
+      </div>
+    </div>
+    <div class="win-card">
+      <div class="win-icon">🔁</div>
+      <div>
+        <div class="win-label">~45% FE → BE Conversion (January Data)</div>
+        <div class="win-desc">Nearly half of frontend clients are converting to a backend program at $2,500–$3,600 avg. Backend revenue directly increases blended LTV and further widens the gap between CAC and lifetime gross profit. This conversion rate validates both delivery quality and the ascension offer design.</div>
+      </div>
+    </div>
+    <div class="win-card">
+      <div class="win-icon">🧲</div>
+      <div>
+        <div class="win-label">138K-View Organic Reel — Validated Hook for Paid</div>
+        <div class="win-desc">Camden's top organic reel — "My Mom ate 1200 calories for an entire year and here's what happened" — hit 138K views. That's not just an organic win. It's a direct-response ad waiting to be turned on. The algorithm has already validated the emotional resonance. Converting this to a paid entity is a Day 1 action.</div>
+      </div>
+    </div>
+    <div class="win-card">
+      <div class="win-icon">🏗️</div>
+      <div>
+        <div class="win-label">83% Upfront Cash Collection — Self-Funding Growth</div>
+        <div class="win-desc">Q1 upfront collection rate averaging 83% means Camden is essentially collecting cash before the month is over. At $70K/month average collected, the business has no cash flow constraint to scaling ad spend. The money to fund 3× ad growth is already sitting in the bank each month.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATA SNAPSHOT -->
+<section class="doc-section" id="data">
+  <div class="sec-eyebrow">Section 02</div>
+  <div class="sec-heading">Data Snapshot — Q1 2026</div>
+  <div class="sec-divider"></div>
+
+  <div class="period-bar">
+    <span class="period-bar-label">Period</span>
+    <div class="period-tabs">
+      <button class="pt" onclick="setPeriod('jan')">Jan</button>
+      <button class="pt" onclick="setPeriod('feb')">Feb</button>
+      <button class="pt" onclick="setPeriod('mar')">Mar</button>
+      <button class="pt active" onclick="setPeriod('q1')">Q1 Avg</button>
+    </div>
+    <button id="edit-btn" class="edit-btn" onclick="toggleEdit()">✏ Update Numbers</button>
+  </div>
+
+  <div class="kpi-band" id="kpi-band"></div>
+
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-500);margin-bottom:10px;">Ad &amp; Sales Metrics</div>
+  <div class="tbl-wrap">
+    <table class="mtbl">
+      <thead><tr><th>Metric</th><th>Target</th><th>Value</th><th>Status</th><th>Notes</th></tr></thead>
+      <tbody id="ad-tbody"></tbody>
+    </table>
+  </div>
+
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-500);margin:20px 0 10px;">Margin Breakdown</div>
+  <div class="tbl-wrap">
+    <table class="mtbl">
+      <thead><tr><th>Metric</th><th>Target</th><th>Value</th><th>Status</th><th>Notes</th></tr></thead>
+      <tbody id="margin-tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="card yellow-left mt-md">
+    <p style="font-size:13px;margin-bottom:0;"><strong>CPL trend alert:</strong> Cost per lead climbed $11.29 → $11.84 → $17.75 across Q1 — a 57% increase from January to March. This is classic Andromeda ad fatigue: running the same 4 creative entities too long without rotation. The fix is not budget cuts — it's launching new entity variations. Cost per <em>scheduled call</em> is even more telling: $35.71 → $47.38 → $76.92. The ads work when fresh. The creative cadence just needs to match the algorithm's demand for novelty.</p>
+  </div>
+</section>
+
+<!-- REVENUE EQUILIBRIUM -->
+<section class="doc-section" id="equilibrium">
+  <div class="sec-eyebrow">Section 03</div>
+  <div class="sec-heading">Revenue Equilibrium</div>
+  <div class="sec-divider"></div>
+  <p class="mb-md">Revenue Equilibrium = LTV × New Clients/Month. The CACLTGP tracker shows partial data for individual month LTV — the LTV and churn fields depend on cohort-level active client tracking that Camden has not yet fully entered into the tracker. Key inputs below are sourced from the data available. New clients/month used is Q1 avg closes (21/month).</p>
+
+  <div class="grid-3 gap-sm mb-md">
+    <div class="eq-box">
+      <div class="eq-b-val orange" id="re-churn">—</div>
+      <div class="eq-b-label">Monthly Churn Rate</div>
+      <div class="eq-b-sub">CACLTGP tracker — data entry pending</div>
+    </div>
+    <div class="eq-box">
+      <div class="eq-b-val blue" id="re-ltv">—</div>
+      <div class="eq-b-label">LTV (Lifetime Value)</div>
+      <div class="eq-b-sub">Est. from FE + BE conversion data</div>
+    </div>
+    <div class="eq-box">
+      <div class="eq-b-val green" id="re-new">21</div>
+      <div class="eq-b-label">New Clients / Month</div>
+      <div class="eq-b-sub">Q1 avg closes (25 + 16 + 22) / 3</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin-bottom:14px;">
+    <div class="eq-box" style="text-align:center;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500);margin-bottom:8px;">Estimated Equilibrium</div>
+      <div class="eq-b-val green" id="re-eq">~$58K</div>
+      <div class="eq-b-sub" style="text-align:center;">Est. LTV ~$2,760 × 21 new/mo</div>
+    </div>
+    <div class="eq-vs">VS</div>
+    <div class="eq-box" style="text-align:center;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500);margin-bottom:8px;">Q1 Avg Monthly Revenue</div>
+      <div class="eq-b-val orange" id="re-actual">$70.2K</div>
+      <div class="eq-b-sub" style="text-align:center;">$210.6K Q1 / 3 months</div>
+    </div>
+  </div>
+
+  <div class="eq-verdict yellow-left card mt-md">
+    <p style="font-size:13px;margin-bottom:0;"><strong>⚠ Equilibrium data is incomplete.</strong> The CACLTGP tracker does not yet have active client counts or full churn data entered, which means a clean LTV and rev equilibrium calculation can't be run from the tracker alone. Estimated LTV using Q1 FE avg ($1,839) + 45% BE conversion at avg BE price ($3,160) = ~$3,262 blended. At 21 new clients/month, estimated equilibrium ≈ ~$68.5K/month. <strong>Revenue is running slightly above equilibrium ($70.2K), which is net positive but signals that acquisition needs to stay consistent</strong> — any dip in close volume will show up quickly. Priority action: fully populate the CACLTGP active clients and churn fields to get clean recurring revenue data.</p>
+  </div>
+</section>
+
+<!-- CREATIVE INTELLIGENCE -->
+<section class="doc-section" id="creative">
+  <div class="sec-eyebrow">Section 04 — Updated April 2026</div>
+  <div class="sec-heading">Creative Intelligence Report</div>
+  <div class="sec-divider"></div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px;">
+    <p style="margin:0;max-width:680px;">Full intelligence synthesis across brand positioning, organic ecosystem, Meta Ad Library, competitive benchmarks, entity gap analysis, and verbatim hooks — ready for the Ad Creative Workshop entity-building exercise.</p>
+    <button id="copy-intel-btn" onclick="copyIntelReport()" style="background:var(--orange);border:none;border-radius:10px;padding:12px 22px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#fff;cursor:pointer;display:flex;align-items:center;gap:8px;transition:opacity .18s;white-space:nowrap;flex-shrink:0;">
+      <span>⬆</span> Copy for Workshop
+    </button>
+  </div>
+
+  <!-- EXEC SUMMARY -->
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:10px;">Executive Summary</div>
+  <div class="card orange-left mb-md">
+    <p style="font-size:13px;margin-bottom:8px;">Camden is the highest-margin, lowest-spend operator in this retreat cohort. He's sitting on a 12× ROAS machine spending only 4.3% of revenue on ads — when a growth-phase business should be at 15–20%. The creative fatigue problem is real (CPL tripled from Jan to March) but it's a symptom of a deeper issue: running only 4 distinct entities for too long with no systematic variation cadence. The organic library has already produced a 138K-view reel that maps directly to a TOF paid entity. The white space in his category (perimenopause specificity, body composition vs. scale weight, anti-tracking angles, medical gaslighting) is wide open.</p>
+    <p style="font-size:13px;margin-bottom:0;"><strong>Core insight:</strong> Camden's economics make him one of the safest bets in the room to 3× ad spend. CAC at 9.2% of FE is well under the 20% ceiling. The system doesn't need to be rebuilt — it needs more creative fuel, a weekly testing cadence, and 6–8 new entities launched in the next 30 days. His biggest competitive moat (the "metabolic reverse" mechanism and eating more to weigh less) is currently running in only one ad entity format when it should be powering 4–5 distinct formats across all emotional drivers.</p>
+  </div>
+
+  <!-- BRAND, OFFER, FUNNEL -->
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin-bottom:10px;">Brand, Offer &amp; Funnel Intelligence</div>
+  <div class="audit-table-wrap mb-md">
+    <table class="audit-tbl">
+      <thead><tr><th>Dimension</th><th>Evidence</th><th>Strategic Meaning</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Brand Identity</strong></td>
+          <td>@mamianfitness · Metabolic repair for women</td>
+          <td>Camden is the sole face and mechanism authority. The brand is built on contrarian nutrition science (eat more, weigh less), which creates a strong polarization filter — exactly what Andromeda rewards in TOF hooks.</td>
+        </tr>
+        <tr>
+          <td><strong>Core Avatar</strong></td>
+          <td>Busy working moms, 30–55, stuck on 1,200-calorie diets, frustrated by zero progress</td>
+          <td>Hyper-specific avatar with a clear villain (chronic under-eating, metabolic adaptation). This is one of the best-defined target audiences in the cohort — specificity this sharp produces far above-average hook rates when properly exploited in ad copy.</td>
+        </tr>
+        <tr>
+          <td><strong>Core Mechanism</strong></td>
+          <td>90-Day Metabolic Accelerator — reversal phase from 1,200–1,400 cal to 2,000+ while losing 10–20 lbs</td>
+          <td>This mechanism is rare and counterintuitive enough to be a headline-level differentiator. Most competitors talk about restriction. Camden's program literally tells women to eat more. Every entity should be anchoring the mechanism — it's the primary reason for above-average hook rates.</td>
+        </tr>
+        <tr>
+          <td><strong>Conversion Funnel</strong></td>
+          <td>DM automation via keywords (SUMMER, ROOT, NEXT, MOM READY) → setter → call</td>
+          <td>Multi-keyword funnel structure is smart — different keywords signal different intent levels. The leak is at lead → booked call (2.9% on mixed funnel vs. 4–5% target). Setter QC and AI-assisted follow-up are the levers here.</td>
+        </tr>
+        <tr>
+          <td><strong>FE → BE Structure</strong></td>
+          <td>FE avg $1,839 → BE avg $3,159 · ~45% conversion (Jan data)</td>
+          <td>Strong backend attach rate. The blended LTV is significantly higher than FE price alone suggests. Drilling coaches on upsell scripting (game tape + weekly mock scenarios as success coach recommended) will protect and expand this number.</td>
+        </tr>
+        <tr>
+          <td><strong>Ad Entity Count</strong></td>
+          <td>4 active Meta entities as of April 2026</td>
+          <td>Running 4 entities vs. IFCA target of 8–10. This directly explains the CPL creep from $11 → $18 — Andromeda has exhausted the creative diversity and is pulling from a shrinking quality pool. Doubling entity count is the highest-leverage CPL fix available.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ORGANIC CONTENT AUDIT -->
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin:24px 0 10px;">Organic Content Audit — Top-Performing Reels</div>
+  <div class="audit-table-wrap mb-md">
+    <table class="audit-tbl">
+      <thead><tr><th>Performance</th><th>Verbatim Hook</th><th>Format</th><th>Emotional Driver</th><th>Paid Ad Potential</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="white-space:nowrap;"><strong>138K views ⭐</strong></td>
+          <td>"My Mom ate 1200 calories for an entire year and here's what happened."</td>
+          <td>B-roll + text overlay</td>
+          <td>Fear / Frustration</td>
+          <td><span class="badge pass">Very High — TOF</span></td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><strong>18.8K views</strong></td>
+          <td>"Start of our 24 week cut! Drumroll… 🤣🤣"</td>
+          <td>Transformation reveal</td>
+          <td>Desire / Social Proof</td>
+          <td><span class="badge pass">High — TOF/MOF</span></td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><strong>18K views</strong></td>
+          <td>"I just spent 2 weeks in Japan… and it made me realize how backwards we've gotten with health in the U.S."</td>
+          <td>B-roll + talking head</td>
+          <td>Identity / Curiosity</td>
+          <td><span class="badge pass">High — TOF</span></td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><strong>9.4K views</strong></td>
+          <td>"You can eat 2200 calories a day and lose weight? No wonder men have it easy. I only eat 1200 calories a day and the scale barely moves."</td>
+          <td>B-roll + text overlay</td>
+          <td>Frustration / Identity</td>
+          <td><span class="badge pass">High — TOF</span></td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><strong>9.4K views</strong></td>
+          <td>"'Why do you track your calories?' 'Just listen to your body'"</td>
+          <td>Talking head</td>
+          <td>Identity / Frustration</td>
+          <td><span class="badge pass">High — TOF</span></td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><strong>5.4K views</strong></td>
+          <td>"15 foods you can eat MORE of and still lose fat 👏"</td>
+          <td>B-roll + text overlay</td>
+          <td>Desire / Curiosity</td>
+          <td><span class="badge warn">Medium — TOF</span></td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><strong>2.2K views</strong></td>
+          <td>"Dorothy lost 34 pounds after increasing her calories from 1300 to 2400 using our metabolic reverse method!"</td>
+          <td>Client testimonial</td>
+          <td>Social Proof / Desire</td>
+          <td><span class="badge pass">Very High — MOF/BOF</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ENTITY CLUSTERS -->
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin:24px 0 10px;">Organic Entity Clusters</div>
+  <div class="audit-table-wrap mb-md">
+    <table class="audit-tbl">
+      <thead><tr><th>Cluster Name</th><th>Emotional Driver</th><th>Best Format</th><th>Paid Priority</th></tr></thead>
+      <tbody>
+        <tr><td><strong>The Metabolism Story</strong> — personal/family narrative around chronic under-eating consequences</td><td>Fear / Frustration</td><td>B-roll + text overlay</td><td><span class="badge pass">P1 — Launch Now</span></td></tr>
+        <tr><td><strong>The Paradox Hook</strong> — "eat more, weigh less" counterintuitive positioning</td><td>Curiosity / Desire</td><td>Talking head direct to cam</td><td><span class="badge pass">P1 — Launch Now</span></td></tr>
+        <tr><td><strong>Proof Transformation</strong> — specific client result with calorie numbers (Dorothy, 1300→2400, -34 lbs)</td><td>Social Proof / Desire</td><td>Client testimonial / interview</td><td><span class="badge pass">P1 — MOF/BOF</span></td></tr>
+        <tr><td><strong>Identity / Contrarian</strong> — "men have it easy" angle, frustration validation</td><td>Frustration / Identity</td><td>B-roll + text overlay</td><td><span class="badge warn">P2 — Week 2</span></td></tr>
+        <tr><td><strong>Cultural Observation</strong> — Japan travel / U.S. health culture critique</td><td>Curiosity / Identity</td><td>Travel B-roll + talking head</td><td><span class="badge warn">P2 — Week 2</span></td></tr>
+        <tr><td><strong>Value-First List</strong> — "foods you can eat more of" educational content</td><td>Desire / Curiosity</td><td>B-roll carousel style</td><td><span class="badge info">P3 — Audience builder</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- META AD LIBRARY AUDIT -->
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin:24px 0 10px;">Meta Ad Library — Current Active Entities</div>
+  <div class="audit-table-wrap mb-md">
+    <table class="audit-tbl">
+      <thead><tr><th>Entity</th><th>Hook</th><th>Format</th><th>Driver</th><th>Assessment</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Entity 1</strong><br><span style="font-size:11px;color:var(--gray-500);">Root-Cause Pitch (TOF)</span></td>
+          <td>"If you've been stuck in that cycle of… ❌ Eating less but gaining more ❌ Exhausted no matter how 'healthy' you eat ❌ Cutting carbs, sugar, or calories… with zero results"</td>
+          <td>Video — Talking head / B-roll</td>
+          <td>Frustration</td>
+          <td><span class="badge pass">Strong TOF</span> — Core performing entity</td>
+        </tr>
+        <tr>
+          <td><strong>Entity 2</strong><br><span style="font-size:11px;color:var(--gray-500);">Symptom Case Study (MOF)</span></td>
+          <td>"Message me 'NEXT' if you are ready to be our next transformation! 🙌"</td>
+          <td>Long-form testimonial (0:49)</td>
+          <td>Social Proof / Desire</td>
+          <td><span class="badge pass">Strong MOF</span> — Makenzie case study with specific numbers</td>
+        </tr>
+        <tr>
+          <td><strong>Entity 3</strong><br><span style="font-size:11px;color:var(--gray-500);">Avatar Testimonial (MOF)</span></td>
+          <td>"Career-Driven Mom Lost 20 Pounds without restricting her fav foods! 🤩"</td>
+          <td>Client testimonial talking head</td>
+          <td>Social Proof / Desire</td>
+          <td><span class="badge warn">Solid MOF</span> — Avatar call-out is strong; needs hook variant testing</td>
+        </tr>
+        <tr>
+          <td><strong>Entity 4</strong><br><span style="font-size:11px;color:var(--gray-500);">Value-First Recipe (Audience Builder)</span></td>
+          <td>"5 meals under 500 cals with 50g of protein that don't taste like cardboard 👇"</td>
+          <td>Carousel-style food content</td>
+          <td>Desire / Curiosity</td>
+          <td><span class="badge info">Audience builder</span> — Low direct-conversion intent. Good for follower funnel, not lead gen</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ENTITY GAP SCORECARD -->
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin:24px 0 10px;">Entity Gap Scorecard</div>
+  <div class="grid-3 gap-sm mb-md">
+    <div class="card red-left" style="text-align:center;">
+      <div style="font-family:'Bebas Neue';font-size:48px;color:#F87171;line-height:1;">4</div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500);margin-top:4px;">Active Paid Entities</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;">Target: 8–10 diverse entities</div>
+    </div>
+    <div class="card green-left" style="text-align:center;">
+      <div style="font-family:'Bebas Neue';font-size:48px;color:var(--green);line-height:1;">6</div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500);margin-top:4px;">Organic Entity Clusters</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;">Ready to convert to paid</div>
+    </div>
+    <div class="card orange-left" style="text-align:center;">
+      <div style="font-family:'Bebas Neue';font-size:48px;color:var(--orange);line-height:1;">4–6</div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500);margin-top:4px;">Entity Gap to Fill</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px;">Plus 3 white space angles ready</div>
+    </div>
+  </div>
+
+  <!-- VERBATIM HOOKS TABLE -->
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin:24px 0 10px;">Verbatim Hooks — Workshop-Ready</div>
+  <div class="audit-table-wrap mb-md">
+    <table class="audit-tbl">
+      <thead><tr><th>#</th><th>Verbatim Hook</th><th>Driver</th><th>Source</th><th>TOF/MOF/BOF</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td>"My Mom ate 1200 calories for an entire year and here's what happened to her metabolism."</td><td>Fear / Frustration</td><td>138K organic reel</td><td><span class="badge pass">TOF</span></td></tr>
+        <tr><td><strong>2</strong></td><td>"You can eat 2200 calories a day and lose weight? No wonder men have it easy — I only eat 1200 and the scale barely moves."</td><td>Frustration / Identity</td><td>9.4K organic reel</td><td><span class="badge pass">TOF</span></td></tr>
+        <tr><td><strong>3</strong></td><td>"Dorothy lost 34 pounds after increasing her calories from 1300 to 2400 using our metabolic reverse method."</td><td>Social Proof</td><td>Organic testimonial</td><td><span class="badge warn">MOF</span></td></tr>
+        <tr><td><strong>4</strong></td><td>"If you're over 40, eating 1200 calories isn't just stalling your weight loss — it's actively making your perimenopause symptoms worse."</td><td>Frustration / Identity</td><td>White space angle</td><td><span class="badge pass">TOF</span></td></tr>
+        <tr><td><strong>5</strong></td><td>"Has your doctor told you to just 'eat less and move more'? Here's why that advice is scientifically flawed for women over 35."</td><td>Authority / Frustration</td><td>White space angle</td><td><span class="badge pass">TOF</span></td></tr>
+        <tr><td><strong>6</strong></td><td>"Doing everything right but feeling softer, not leaner? Here's why your current diet is destroying your muscle mass."</td><td>Frustration / Desire</td><td>Competitor whitespace</td><td><span class="badge pass">TOF</span></td></tr>
+        <tr><td><strong>7</strong></td><td>"I just spent 2 weeks in Japan and it made me realize how backwards we've gotten with women's health in the U.S."</td><td>Identity / Curiosity</td><td>18K organic reel</td><td><span class="badge pass">TOF</span></td></tr>
+        <tr><td><strong>8</strong></td><td>"How [Client] lost 25 lbs without tracking a single calorie or giving up date night."</td><td>Desire / Social Proof</td><td>New format build</td><td><span class="badge warn">MOF</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- COMPETITOR BENCHMARKS -->
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin:24px 0 10px;">Competitive Benchmark — Metabolic Coaching Space (~19K Active Ads)</div>
+  <div class="comp-card mb-md">
+    <table class="comp-tbl">
+      <thead><tr><th>Competitor</th><th>Hook</th><th>Format</th><th>Angle</th><th>Camden's Counter</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Tandem Nutrition</strong></td>
+          <td>"Menopause didn't break your metabolism. Your doctor did."</td>
+          <td>Talking head</td>
+          <td>Doctor blame + Menopause</td>
+          <td><span class="gap-pill missing">Gap — not running this</span> Perimenopause specificity is untapped by Camden</td>
+        </tr>
+        <tr>
+          <td><strong>eat.simple</strong></td>
+          <td>"Losing weight without tracking ANYTHING. Yes, it's possible… even after 40!"</td>
+          <td>Video</td>
+          <td>Anti-tracking + Age 40+</td>
+          <td><span class="gap-pill missing">Gap — not running this</span> Camden tracks macros; "no tracking" angle available</td>
+        </tr>
+        <tr>
+          <td><strong>Kelly Nicole</strong></td>
+          <td>"Why Your Diet Is Making You Softer, Not Leaner"</td>
+          <td>Video</td>
+          <td>Body composition vs. scale weight</td>
+          <td><span class="gap-pill missing">Gap — not running this</span> "Skinny fat" body comp angle unclaimed</td>
+        </tr>
+        <tr>
+          <td><strong>Kayla Johnson</strong></td>
+          <td>"20 pounds up. Perimenopause. Doing everything 'right' — and still stuck."</td>
+          <td>DM funnel video</td>
+          <td>Perimenopause specific</td>
+          <td><span class="gap-pill missing">Gap — not running this</span> Camden's avatar overlaps strongly here</td>
+        </tr>
+        <tr>
+          <td><strong>Vanessa Pozos</strong></td>
+          <td>"You've done everything 'right'—so why does your body look like you're doing nothing? 😤"</td>
+          <td>Video</td>
+          <td>Functional lab testing</td>
+          <td><span class="gap-pill opportunity">Opportunity</span> Camden can run a parallel frustration angle tied to the metabolic mechanism</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- WHITE SPACE ANGLES -->
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin:24px 0 10px;">Competitive White Space — Highest Priority Angles</div>
+  <div class="audit-table-wrap mb-md">
+    <table class="audit-tbl">
+      <thead><tr><th>Angle</th><th>Why It's Open</th><th>Hook Direction</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Perimenopause / Age 40+ Specificity</strong></td>
+          <td>Competitors dominating this sub-avatar but Camden runs broad "moms" targeting</td>
+          <td>"If you're over 40, eating 1200 calories isn't just stalling weight loss — it's making your perimenopause symptoms worse."</td>
+          <td><span class="badge fail">Launch Week 2</span></td>
+        </tr>
+        <tr>
+          <td><strong>Body Composition (Softer, Not Leaner)</strong></td>
+          <td>Kelly Nicole running this but Camden can adapt to metabolic mechanism</td>
+          <td>"Doing everything right but feeling softer, not leaner? Here's why your diet is destroying muscle mass."</td>
+          <td><span class="badge fail">Launch Week 2</span></td>
+        </tr>
+        <tr>
+          <td><strong>Medical Gaslighting / Doctor Blame</strong></td>
+          <td>Tandem Nutrition owns it — but Camden can run a metabolic-specific version</td>
+          <td>"Has your doctor told you to just eat less and move more? Here's why that advice is scientifically broken for women over 35."</td>
+          <td><span class="badge warn">Launch Week 3</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ENTITY BUILD QUEUE -->
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin:24px 0 10px;">Entity Build Queue — 30-Day Roadmap</div>
+  <div class="diag-list mb-md">
+    <div class="diag-card p1">
+      <div class="diag-head">
+        <div class="diag-rank">1</div>
+        <div>
+          <div class="diag-title">Convert 138K Organic Reel → Paid TOF Entity</div>
+          <div class="diag-desc">Hook: "My Mom ate 1200 calories for an entire year and here's what happened to her metabolism." Format: B-roll + text overlay leading into talking head mechanism reveal. Driver: Fear/Frustration. Source: Already algorithm-validated — this is the lowest-risk new entity launch available.</div>
+        </div>
+      </div>
+    </div>
+    <div class="diag-card p1">
+      <div class="diag-head">
+        <div class="diag-rank">2</div>
+        <div>
+          <div class="diag-title">The Paradox Hook — "Eat More, Weigh Less" Mechanism Entity</div>
+          <div class="diag-desc">Hook: "You can eat 2200 calories a day and lose weight? No wonder men have it easy." Format: Talking head direct-to-camera. Driver: Frustration/Identity. Source: 9.4K organic reel. This is Camden's core differentiator — it should have multiple paid entity variations.</div>
+        </div>
+      </div>
+    </div>
+    <div class="diag-card p2">
+      <div class="diag-head">
+        <div class="diag-rank">3</div>
+        <div>
+          <div class="diag-title">Perimenopause-Specific Frustration Hook</div>
+          <div class="diag-desc">Hook: "If you're over 40, eating 1200 calories isn't just stalling your weight loss — it's actively making your perimenopause symptoms worse." Format: Talking head (authoritative, empathetic). Driver: Frustration/Identity. This sub-avatar is underserved by Camden and overperforming for competitors.</div>
+        </div>
+      </div>
+    </div>
+    <div class="diag-card p2">
+      <div class="diag-head">
+        <div class="diag-rank">4</div>
+        <div>
+          <div class="diag-title">Client Testimonial with Specific Numbers — MOF Closer</div>
+          <div class="diag-desc">Hook: "Dorothy lost 34 pounds after increasing her calories from 1300 to 2400 using our metabolic reverse method." Format: Client testimonial / before-after video with specific calorie and weight numbers shown on screen. Driver: Social Proof/Desire. The specificity of "1300→2400 calories" is the hook — not just the result.</div>
+        </div>
+      </div>
+    </div>
+    <div class="diag-card p3">
+      <div class="diag-head">
+        <div class="diag-rank">5</div>
+        <div>
+          <div class="diag-title">Japan Travel / Cultural Observation Hook</div>
+          <div class="diag-desc">Hook: "I just spent 2 weeks in Japan and it made me realize how backwards we've gotten with women's health in the U.S." Format: Travel B-roll + talking head. Driver: Identity/Curiosity. 18K organic views validates the angle — the travel format registers as a new entity even with the same mechanism.</div>
+        </div>
+      </div>
+    </div>
+    <div class="diag-card p3">
+      <div class="diag-head">
+        <div class="diag-rank">6</div>
+        <div>
+          <div class="diag-title">Medical Gaslighting / Doctor Blame Authority Hook</div>
+          <div class="diag-desc">Hook: "Has your doctor told you to just eat less and move more? Here's why that advice is scientifically broken for women over 35." Format: Direct-to-camera educational talking head. Driver: Authority/Frustration. High white space — Tandem Nutrition owns this angle in menopause but Camden can run it for the metabolic adaptation mechanism.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STRATEGIC DIAGNOSIS -->
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin:24px 0 10px;">Strategic Diagnosis</div>
+  <div class="card orange-left">
+    <p style="font-size:13px;margin-bottom:0;">Camden is the most financially efficient business in the Cancun retreat cohort. 57% net margin at $70K/month with only 4.3% of revenue going to ads is not a normal outcome — it's the byproduct of a strong offer, a validated mechanism, and a closer who actually closes. The creative intelligence problem is straightforward: 4 entities running without rotation produced fatigue, and fatigue produced the CPL climb. The solution is not complex — it's cadence. Launch 6 new entities in the next 30 days using the organic library already validated by the algorithm, attack the perimenopause and body composition white space that competitors are winning with, and bring the weekly testing rhythm to the same level as the closes. The success coach's instruction is correct: the businesses that spend the most and test the most aggressively win the most. Camden has the margin, the offer, and the mechanism. The only missing input is volume.</p>
+  </div>
+</section>
+
+<!-- CONSTRAINT DIAGNOSIS -->
+<section class="doc-section" id="diagnosis">
+  <div class="sec-eyebrow">Section 05</div>
+  <div class="sec-heading">Constraint Diagnosis</div>
+  <div class="sec-divider"></div>
+  <p class="mb-md">Constraints ranked by revenue impact. P1 = critical bottleneck, P2 = meaningful gap, P3 = watch item, OK = leave alone and protect.</p>
+
+  <div class="diag-list">
+    <div class="diag-card p1">
+      <div class="diag-head">
+        <div class="diag-rank">P1</div>
+        <div>
+          <div class="diag-title">Under-Investment in Advertising — 4.3% of Revenue vs. 15–20% Growth Target</div>
+          <div class="diag-desc">Camden is running a 12× collected ROAS machine and spending 4.3% of revenue on ads. A growth-phase business should be at 15–20%. That gap represents $7,500–$11,000 in additional monthly spend that would generate an estimated 50–80 additional leads and 5–10 additional closes per month — at existing economics. Every month this gap exists, Camden is leaving approximately $9K–$18K in net profit on the table from the additional closes he should be acquiring.</div>
+          <div class="diag-action"><strong>Fix:</strong> Set a client capacity target (e.g. 35–40 new clients/month vs. current ~21). Reverse-engineer the required ad spend from Q1 blended CPA (~$143). At 35 closes/month, that's ~$5,000/month minimum ad spend (vs. current ~$3,000). At 40 closes, ~$5,700. Budget to capacity, not to comfort level. Then launch 6+ new entities to prevent the CPL increase that will come with higher spend on stale creative.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diag-card p1">
+      <div class="diag-head">
+        <div class="diag-rank">P1</div>
+        <div>
+          <div class="diag-title">Creative Fatigue — CPL Tripled From $11 → $18 With Only 4 Active Entities</div>
+          <div class="diag-desc">Running 4 creative entities against Andromeda's 8–10 target is the direct cause of the CPL deterioration. From January to March, CPL rose 57% and cost per scheduled call rose 115% (from $35.71 to $76.92). The algorithm exhausts a small creative pool faster than a diverse one — and Camden's monthly ad spend is not high enough to justify that burn rate. Without new entities entering the rotation weekly, scaling spend will only accelerate the fatigue.</div>
+          <div class="diag-action"><strong>Fix:</strong> Launch the 138K-view organic reel as a paid TOF entity immediately — zero new recording required. Then build to 8–10 active entities over 30 days using the hooks from the organic library. Use the "3 hooks × 8 ad types + location/image variation" system from the success coach Loom to generate 24 new testable variations from existing content. Kill anything above $12 CPL at 72-hour intervals. Minimum $30/day test budget ($150/week for 5 concurrent tests).</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diag-card p2">
+      <div class="diag-head">
+        <div class="diag-rank">P2</div>
+        <div>
+          <div class="diag-title">Lead → Booked Call Rate at 2.9% — Target is 4–5% on Mixed Funnel</div>
+          <div class="diag-desc">The setting tracker shows 1,444 conversations started in March producing 43 booked calls — a 2.9% lead-to-book ratio on a mixed DM ad + organic + follower funnel. On a purely organic funnel this might be acceptable, but on a mixed funnel where paid DM leads are in the pipeline, 4–5% is the standard. The gap between 2.9% and 4.5% on 1,444 conversations is roughly 23 additional calls/month — at a 57% close rate, that's 13 additional closes, or approximately $24K in additional contracted frontend revenue every month.</div>
+          <div class="diag-action"><strong>Fix:</strong> Daily QC audit of 2–3 random setter conversations. Measure setter call booking per hour (target: 0.25 met, 0.35 exceed, 0.45 excels). At 43 calls in ~160 setter hours, current rate is ~0.27 — MET KPI but will not scale without adding a second setter or AI automation. Once call volume grows with higher ad spend, setter capacity becomes the chokepoint. Begin planning this transition now, not after the bottleneck hits.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diag-card p3">
+      <div class="diag-head">
+        <div class="diag-rank">P3</div>
+        <div>
+          <div class="diag-title">Show Rate at 62% Q1 — Below 70% Target, March Barely Reaching Target</div>
+          <div class="diag-desc">Q1 show rate averaged 62% (target 70%) with significant monthly variance: 63.5% → 52.6% → 70.8%. The 52.6% February dip is the most concerning — that's 14 calls that showed vs. 27 scheduled. At a 57% close rate, those 13 no-shows represent approximately 7 closes and ~$13K in contracted revenue in a single month. February's dip may correlate with lower-quality lead sourcing or a drop in confirmation/reminder sequences during that period.</div>
+          <div class="diag-action"><strong>Fix:</strong> Audit the confirmation and reminder sequence cadence. Is there a 24-hour SMS reminder? A 1-hour reminder? A calendar link in the initial confirmation? Every missed show-up is a $1,839 FE minimum that didn't happen. At scale (40+ scheduled calls/month), a 10-point show rate improvement is worth 4+ closes. Build the reminder sequence once, automate it, and protect the Q1 March 70.8% number as the new floor.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diag-card p3">
+      <div class="diag-head">
+        <div class="diag-rank">P3</div>
+        <div>
+          <div class="diag-title">FE → BE Data Gap — Backend Conversion Only Tracked in January</div>
+          <div class="diag-desc">Backend FE→BE conversion is populated (45%) for January but missing for February and March in the tracker. Since backend revenue materially impacts blended LTV and the rev equilibrium calculation, running with a partial picture on the most important LTV driver is a data risk. Backend revenue in Q1 was $74.6K total — a significant portion of the $210K Q1 cash — and without clean month-by-month tracking, it's impossible to know if the attach rate is declining, stable, or growing.</div>
+          <div class="diag-action"><strong>Fix:</strong> Populate February and March backend conversion data in the tracker. Add the weekly upsell drilling and game tape sessions that the success coach recommended — this is both a tracking fix and a conversion protection move. At 45% attach and $3,159 avg BE price, every 1% improvement in attach rate across 21 monthly closes = $660/month in additional backend contracted revenue.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diag-card ok">
+      <div class="diag-head">
+        <div class="diag-rank">OK</div>
+        <div>
+          <div class="diag-title">Close Rate, CPA, and Operating Margins — Leave Alone and Scale Into</div>
+          <div class="diag-desc">57% close rate trending upward (65% in March), $168 CPA at 9.2% of FE price, 57% net operating margin, 83% upfront cash collection rate. These are all either at or significantly above IFCA targets. No optimization needed here — the risk is over-engineering a system that already works. The correct move is to scale into these strengths (more volume, not different process) and protect them as entity diversity and setter capacity expand.</div>
+          <div class="diag-action"><strong>Protect by:</strong> Not changing the close script while volume is low. Not pivoting offer pricing during the ad scale phase. Maintaining the current labor overhead levels while revenue grows — don't add team before demand justifies it. The margins will compress naturally as spend increases; the goal is to keep net margin above 45% as the 15–20% marketing margin target is reached.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 90-DAY PLAN -->
+<section class="doc-section" id="plan">
+  <div class="sec-eyebrow">Section 06</div>
+  <div class="sec-heading">90-Day Action Plan</div>
+  <div class="sec-divider"></div>
+  <p class="mb-md">Ranked by constraint priority. Days 1–30 are execution moves. Days 31–60 are scale moves. Days 61–90 are system moves.</p>
+
+  <div class="plan-list">
+    <div class="plan-item">
+      <div class="plan-num">1</div>
+      <div>
+        <div class="plan-title">Launch the 138K-View Organic Reel as a Paid TOF Entity — This Week</div>
+        <div class="plan-desc">The "My Mom ate 1200 calories for an entire year" reel has 138K organic views — the algorithm has already validated the emotional resonance. Turn it into a paid ad with a DM automation CTA ("Comment METABOLISM for the breakdown I never expected"). No new recording required. This is the single fastest CPL-reducing move available with zero production cost. Target: live within 48 hours of this audit.</div>
+        <span class="plan-tag ads">Ads</span><span class="plan-tag creative">Creative</span>
+      </div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-num">2</div>
+      <div>
+        <div class="plan-title">Build to 8–10 Active Entities in 30 Days Using the Hook Variation System</div>
+        <div class="plan-desc">Use the "3 hooks × 8 ad types + location/image change = 24 new ads" framework from the success coach Loom. Priority build order: (1) Organic reel conversion, (2) Paradox hook talking head, (3) Perimenopause frustration hook, (4) Dorothy testimonial with specific calorie numbers on screen, (5) Japan cultural observation B-roll. Each entity launch = a minimum 72-hour test at $30/day test budget. Kill at $12+ CPL. Graduate winners into the main campaign with proportional budget increase.</div>
+        <span class="plan-tag ads">Ads</span><span class="plan-tag creative">Creative</span>
+      </div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-num">3</div>
+      <div>
+        <div class="plan-title">Scale Ad Spend to 15% of Revenue — Set Capacity Target First</div>
+        <div class="plan-desc">Determine max client intake capacity (team, delivery bandwidth). Then reverse-engineer the budget: if target is 35 new clients/month at $143 CPA = $5,005/month ad spend. At 40 clients = $5,720. Commit to the number for a full 90-day cycle — don't let a single bad week pull the budget back. At Q1 ROAS, $5,500/month in spend should produce ~$66K in contracted revenue just from the paid channel alone. Current spend of $3,000/month on a business doing $70K/month collected is leaving real money on the table every single week.</div>
+        <span class="plan-tag ads">Ads</span><span class="plan-tag ops">Ops</span>
+      </div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-num">4</div>
+      <div>
+        <div class="plan-title">Implement Daily Setter QC + Audit Call Booking Per Hour Rate</div>
+        <div class="plan-desc">Review 2–3 random setter conversations daily. Calculate current calls booked per hour (43 calls ÷ hours worked in March). If at 0.26 calls/hour (MET KPI), begin planning for a second setter or AI-assisted follow-up before ad spend ramp creates a setter bottleneck. The lead-to-book gap from 2.9% to 4.5% on 1,444 conversations is worth 23 additional calls and approximately 13 closes per month — that's $24K in frontend contracted revenue recoverable with no additional ad spend.</div>
+        <span class="plan-tag sales">Sales</span><span class="plan-tag ops">Ops</span>
+      </div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-num">5</div>
+      <div>
+        <div class="plan-title">Build TOF/MOF/BOF Retargeting Stack — Days 31–60</div>
+        <div class="plan-desc">With 1,000+ leads in the pipeline, Camden has the audience base to run a full retargeting ecosystem. TOF: new cold traffic entities (paradox hook, organic conversions). MOF: DM automation ads (existing Entity 1 + new entity variations). BOF: testimonial ads with specific results (Dorothy case study, "Career-Driven Mom" entity). Retargeting warm audiences costs significantly less per lead than cold. This stack will improve both CPL and lead-to-call rate simultaneously. Jordan will walk through the full architecture in the retreat session.</div>
+        <span class="plan-tag ads">Ads</span><span class="plan-tag creative">Creative</span>
+      </div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-num">6</div>
+      <div>
+        <div class="plan-title">Weekly Backend Upsell Drilling + Game Tape — Protect BE Attach Rate</div>
+        <div class="plan-desc">45% FE→BE attach at ~$3,159 avg BE price means every client is worth ~$1,421 in expected backend revenue beyond the FE sale. Weekly upsell drilling (mock scenarios with coaches) + game tape sessions (watch a real upsell call together, give feedback, practice the scenario that came up) will protect and compound this number as volume scales. Build this into the weekly team rhythm in the next 14 days before new client volume increases from the ad scale. Every 1% improvement in attach rate = $660/month at current close velocity.</div>
+        <span class="plan-tag sales">Sales</span><span class="plan-tag ops">Ops</span>
+      </div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-num">7</div>
+      <div>
+        <div class="plan-title">Populate CACLTGP Tracker + Build Clean LTV Baseline — Days 1–14</div>
+        <div class="plan-desc">The CACLTGP sheet currently has only January data and multiple #DIV/0! errors across churn rate, active clients, and LTV fields. Without clean LTV data, the revenue equilibrium model can't run accurately and it's impossible to know the true CAC:LTV ratio — which is the single most important number for determining how aggressively to scale ad spend. Priority action: enter active client count and monthly churn data for February and March into the tracker. This takes 30 minutes and unlocks the full financial model.</div>
+        <span class="plan-tag ops">Ops</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <div class="df-brand">IFCA <span>ACCELERATOR</span></div>
+  <div class="df-note">Seven-Figure Client Retreat · Cancun 2026 · Confidential</div>
+</div>
+
+</div><!-- /page -->
+
+<script>
+const DATA = {
+  q1: {
+    label: 'Q1 2026 Avg',
+    adSpend:     3011.64,
+    leads:       223.33,
+    cpl:         13.63,
+    scheduledCalls: 59.67,
+    liveCalls:   37.0,
+    showRate:    0.6233,
+    costPerCall: 53.33,
+    closes:      21.0,
+    closeRate:   0.5708,
+    fePrice:     1839.0,
+    contractedROAS: 13.76,
+    collectedROAS:  12.36,
+    feToBe:      0.455,
+    bePrice:     3159.41,
+    upfrontPct:  0.8479,
+    laborMargin: 0.3294,
+    marketingMargin: 0.0436,
+    overheadMargin:  0.0596,
+    netMargin:   0.5673,
+    cac:         143.41,
+    ltv:         null,
+    cacLtv:      null,
+    churn:       null,
+    activeClients: null,
+    monthlyRev:  70183.88,
+    newClients:  21,
+    revEq:       null,
+  },
+  jan: {
+    label: 'January 2026',
+    adSpend:     2642.53,
+    leads:       234.0,
+    cpl:         11.29,
+    scheduledCalls: 74.0,
+    liveCalls:   47.0,
+    showRate:    0.6351,
+    costPerCall: 35.71,
+    closes:      25.0,
+    closeRate:   0.5319,
+    fePrice:     1850.0,
+    contractedROAS: 18.81,
+    collectedROAS:  15.52,
+    feToBe:      0.455,
+    bePrice:     3399.0,
+    upfrontPct:  0.8249,
+    laborMargin: 0.2758,
+    marketingMargin: 0.0325,
+    overheadMargin:  0.0467,
+    netMargin:   0.6450,
+    cac:         105.70,
+    ltv:         null,
+    cacLtv:      null,
+    churn:       null,
+    activeClients: null,
+    monthlyRev:  81367.97,
+    newClients:  25,
+    revEq:       null,
+  },
+  feb: {
+    label: 'February 2026',
+    adSpend:     2700.38,
+    leads:       228.0,
+    cpl:         11.84,
+    scheduledCalls: 57.0,
+    liveCalls:   30.0,
+    showRate:    0.5263,
+    costPerCall: 47.38,
+    closes:      16.0,
+    closeRate:   0.5333,
+    fePrice:     1850.0,
+    contractedROAS: 11.65,
+    collectedROAS:  12.64,
+    feToBe:      null,
+    bePrice:     3576.0,
+    upfrontPct:  1.0,
+    laborMargin: 0.3779,
+    marketingMargin: 0.0451,
+    overheadMargin:  0.0687,
+    netMargin:   0.5082,
+    cac:         168.77,
+    ltv:         null,
+    cacLtv:      null,
+    churn:       null,
+    activeClients: null,
+    monthlyRev:  59817.13,
+    newClients:  16,
+    revEq:       null,
+  },
+  mar: {
+    label: 'March 2026',
+    adSpend:     3692.0,
+    leads:       208.0,
+    cpl:         17.75,
+    scheduledCalls: 48.0,
+    liveCalls:   34.0,
+    showRate:    0.7083,
+    costPerCall: 76.92,
+    closes:      22.0,
+    closeRate:   0.6471,
+    fePrice:     1818.0,
+    contractedROAS: 10.83,
+    collectedROAS:  8.92,
+    feToBe:      null,
+    bePrice:     2503.22,
+    upfrontPct:  0.8232,
+    laborMargin: 0.3344,
+    marketingMargin: 0.0532,
+    overheadMargin:  0.0636,
+    netMargin:   0.5487,
+    cac:         167.82,
+    ltv:         null,
+    cacLtv:      null,
+    churn:       null,
+    activeClients: null,
+    monthlyRev:  69366.55,
+    newClients:  22,
+    revEq:       null,
+  }
+};
+
+let period = 'q1';
+let editMode = false;
+let overrides = {};
+
+function val(key) {
+  const v = (editMode && overrides[key] !== undefined) ? overrides[key] : DATA[period][key];
+  return (v === null || v === undefined) ? NaN : v;
+}
+
+function fmtD(v){ return isNaN(v) ? '—' : '$'+v.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}); }
+function fmtK(v){ if(isNaN(v)) return '—'; return v>=1000 ? '$'+(v/1000).toFixed(1)+'K' : fmtD(v); }
+function fmtP(v){ return isNaN(v) ? '—' : (v*100).toFixed(1)+'%'; }
+function fmtX(v){ return isNaN(v) ? '—' : v.toFixed(1)+'×'; }
+
+const AD_METRICS = [
+  { key:'adSpend',       label:'Monthly Ad Spend',           fmt:fmtD, target:'Budget to capacity', pass:v=>v>=3000&&v<=15000, warn:v=>v>=1500, note:'Q1 avg $3.0K — only 4.3% of revenue. Growth target: 15–20%.' },
+  { key:'leads',         label:'Leads Generated',             fmt:v=>Math.round(v)+'', target:'Volume metric', pass:()=>true, warn:()=>false, note:'Q1 avg 223/mo from ~$3K spend. Strong lead volume per dollar.' },
+  { key:'cpl',           label:'Cost Per Lead',               fmt:fmtD, target:'< $10', pass:v=>v<10, warn:v=>v<15, note:'Trended $11.29 → $11.84 → $17.75 — classic Andromeda fatigue. Fix: new creative entities.' },
+  { key:'scheduledCalls',label:'Scheduled Sales Calls',        fmt:v=>Math.round(v)+'', target:'Volume metric', pass:()=>true, warn:()=>false, note:'Q1 avg 59.7/mo scheduled. March dipped to 48 as CPL rose.' },
+  { key:'liveCalls',     label:'Live (Show) Calls',            fmt:v=>Math.round(v)+'', target:'Volume metric', pass:()=>true, warn:()=>false, note:'Q1 avg 37/mo. February dip to 30 live calls notable.' },
+  { key:'showRate',      label:'Sales Show Rate',              fmt:fmtP, target:'> 70%', pass:v=>v>=.70, warn:v=>v>=.60, note:'Q1 avg 62.3%. Only March hit 70.8% target. Feb dipped to 52.6%.' },
+  { key:'costPerCall',   label:'Cost Per Scheduled Call',      fmt:fmtD, target:'< 1/3 of CAC', pass:v=>v<val('cac')/3, warn:v=>v<val('cac')/2, note:'Tripled from $35.71 (Jan) to $76.92 (Mar) — directly tied to CPL creep.' },
+  { key:'closes',        label:'Closes',                       fmt:v=>Math.round(v)+'', target:'Volume metric', pass:()=>true, warn:()=>false, note:'Q1 avg 21/mo. Trended 25→16→22 — February dip tied to low show rate.' },
+  { key:'closeRate',     label:'Close Rate',                   fmt:fmtP, target:'30–45%', pass:v=>v>=.30&&v<=.65, warn:v=>v>=.25, note:'Q1 avg 57.1% — significantly above target. Trending up: 65% in March. Sales is not the constraint.' },
+  { key:'fePrice',       label:'Frontend Avg Price',           fmt:fmtD, target:'Offer price', pass:()=>true, warn:()=>false, note:'Stable $1,839 Q1 avg. Strong pricing discipline across all three months.' },
+  { key:'contractedROAS',label:'Contracted ROAS',              fmt:fmtX, target:'> 5×', pass:v=>v>=5, warn:v=>v>=3, note:'Q1 avg 13.8×. Even March at 10.8× is well above target. Strong economics.' },
+  { key:'collectedROAS', label:'Collected ROAS',               fmt:fmtX, target:'> 2×', pass:v=>v>=2, warn:v=>v>=1.5, note:'Q1 avg 12.4×. March dipped to 8.9× but still far above 2× threshold.' },
+  { key:'feToBe',        label:'FE → BE Conversion',          fmt:fmtP, target:'> 50%', pass:v=>v>=.50, warn:v=>v>=.40, note:'45% in January data — strong near-target attach rate. Feb/Mar data not yet entered.' },
+  { key:'upfrontPct',    label:'Upfront Cash Collection %',   fmt:fmtP, target:'> 30%', pass:v=>v>=.30, warn:v=>v>=.20, note:'Q1 avg 85%+ upfront collection — exceptional cash flow. Self-funding growth is not a constraint.' },
+];
+
+const MARGIN_METRICS = [
+  { key:'laborMargin',     label:'Labor Margin',     fmt:fmtP, target:'30–35%', pass:v=>v>=.30&&v<=.38, warn:v=>v>=.25, note:'Q1 avg 32.9% — right in healthy zone. January at 27.6% was low; March 33.4% ideal.' },
+  { key:'marketingMargin', label:'Marketing Margin', fmt:fmtP, target:'10–20%', pass:v=>v>=.10&&v<=.20, warn:v=>v<.25, note:'Q1 avg 4.4% — massively under-invested. Growth target is 15–20%. This is the primary opportunity metric.' },
+  { key:'overheadMargin',  label:'Overhead Margin',  fmt:fmtP, target:'3–8%',   pass:v=>v>=.03&&v<=.09, warn:v=>v<.12, note:'Q1 avg 5.9% — squarely in target range. Overhead well controlled as revenue scales.' },
+  { key:'netMargin',       label:'Net Operating Margin', fmt:fmtP, target:'> 50%', pass:v=>v>=.50, warn:v=>v>=.35, note:'Q1 avg 56.7% — best-in-class. January 64.5%, February 50.8%, March 54.9%. All above 50% floor.' },
+];
+
+function statusClass(m, v){
+  if(isNaN(v)) return 'info';
+  if(m.pass(v)) return 'pass';
+  if(m.warn && m.warn(v)) return 'warn';
+  return 'fail';
+}
+
+function render(){
+  // KPI band — 5 key chips
+  const kpiDefs = [
+    { label:'Cost Per Lead', key:'cpl', fmt:fmtD, pass:v=>v<10, warn:v=>v<15 },
+    { label:'Show Rate', key:'showRate', fmt:fmtP, pass:v=>v>=.70, warn:v=>v>=.60 },
+    { label:'Close Rate', key:'closeRate', fmt:fmtP, pass:v=>v>=.30&&v<=.65, warn:v=>v>=.25 },
+    { label:'Collected ROAS', key:'collectedROAS', fmt:fmtX, pass:v=>v>=2, warn:v=>v>=1.5 },
+    { label:'Net Margin', key:'netMargin', fmt:fmtP, pass:v=>v>=.50, warn:v=>v>=.35 },
+  ];
+  document.getElementById('kpi-band').innerHTML = kpiDefs.map(k=>{
+    const v = val(k.key);
+    const cls = isNaN(v) ? 'info' : k.pass(v) ? 'pass' : k.warn(v) ? 'warn' : 'fail';
+    return `<div class="kpi-chip ${cls}">
+      <div class="chip-label">${k.label}</div>
+      <div class="chip-val">${k.fmt(v)}</div>
+      <div class="chip-target">${DATA[period].label}</div>
+    </div>`;
+  }).join('');
+
+  // Ad metrics table
+  document.getElementById('ad-tbody').innerHTML = AD_METRICS.map(m=>{
+    const v = val(m.key);
+    const cls = statusClass(m, v);
+    const valCell = editMode
+      ? `<input class="edit-input" type="number" value="${isNaN(v)?'':v}" oninput="upd('${m.key}',this.value)" />`
+      : `<span class="m-val ${cls}">${m.fmt(v)}</span>`;
+    return `<tr>
+      <td><div class="m-name">${m.label}</div></td>
+      <td><div class="m-target">${m.target}</div></td>
+      <td>${valCell}</td>
+      <td><span class="badge ${cls}">${cls==='pass'?'Pass':cls==='warn'?'Watch':cls==='fail'?'Fix':'Info'}</span></td>
+      <td><div class="m-note">${m.note}</div></td>
+    </tr>`;
+  }).join('');
+
+  // Margin table
+  document.getElementById('margin-tbody').innerHTML = MARGIN_METRICS.map(m=>{
+    const v = val(m.key);
+    const cls = statusClass(m, v);
+    const valCell = editMode
+      ? `<input class="edit-input" type="number" value="${isNaN(v)?'':(v*100).toFixed(1)}" oninput="updP('${m.key}',this.value)" />`
+      : `<span class="m-val ${cls}">${m.fmt(v)}</span>`;
+    return `<tr>
+      <td><div class="m-name">${m.label}</div></td>
+      <td><div class="m-target">${m.target}</div></td>
+      <td>${valCell}</td>
+      <td><span class="badge ${cls}">${cls==='pass'?'Pass':cls==='warn'?'Watch':cls==='fail'?'Fix':'Info'}</span></td>
+      <td><div class="m-note">${m.note}</div></td>
+    </tr>`;
+  }).join('');
+}
+
+function setPeriod(p){
+  period = p; overrides = {};
+  document.querySelectorAll('.pt').forEach(t=>t.classList.remove('active'));
+  document.querySelector(`.pt[onclick="setPeriod('${p}')"]`).classList.add('active');
+  render();
+}
+
+function toggleEdit(){
+  editMode = !editMode;
+  const btn = document.getElementById('edit-btn');
+  btn.textContent = editMode ? '✓ Done Editing' : '✏ Update Numbers';
+  btn.classList.toggle('on', editMode);
+  if(!editMode) overrides = {};
+  render();
+}
+
+function upd(key,v){ overrides[key]=parseFloat(v); render(); }
+function updP(key,v){ overrides[key]=parseFloat(v)/100; render(); }
+
+const sections = document.querySelectorAll('.doc-section, .hero');
+const navLinks  = document.querySelectorAll('.nav-link');
+const observer  = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      const match = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if(match) match.classList.add('active');
+    }
+  });
+},{ threshold:.3 });
+sections.forEach(s=>observer.observe(s));
+
+render();
+
+function copyIntelReport() {
+  const report = `CAMDEN MAMIAN — CREATIVE INTELLIGENCE REPORT
+IFCA Ad Creative Workshop · April 2026 · Confidential
+═══════════════════════════════════════════════════════
+
+BRAND & POSITIONING SNAPSHOT
+Brand: @mamianfitness · Metabolic Repair Coaching
+Revenue: $210.6K Q1 2026 · 57% net operating margin · 12× collected ROAS
+Avatar: Busy working moms, 30–55, stuck on 1200-calorie diets, frustrated by zero results
+Mechanism: 90-Day Metabolic Accelerator — reversal from 1,200→2,000+ calories while losing 10–20 lbs
+Offer: FE avg $1,839 → BE avg $3,159 · ~45% FE→BE attach rate
+Acquisition: DM automation (keywords: SUMMER, ROOT, NEXT, MOM READY) → setter → call
+Ad Status: 4 active entities · CPL trended $11.29→$11.84→$17.75 (Andromeda fatigue) · 4.3% of revenue on ads
+
+KEY CONTEXT FROM SUCCESS COACH:
+- Q1 ROAS 12× on ~$9K spend — machine is profitable and proven
+- CPL climbed 57% Jan→Mar — classic creative fatigue with only 4 entities
+- Close rate trending up: 53%→53%→65% — sales is not the constraint
+- Lead-to-booked call at 2.9% on mixed funnel (target 4–5%)
+- Marketing margin 4.3% revenue — growth phase target is 15–20%
+- 1,400+ leads banked — ready for retargeting stack
+- Setter at ~MET KPI call booking per hour — will need delegation at scale
+- Backend data gap: FE→BE only tracked for January
+
+───────────────────────────────────
+META AD LIBRARY — CURRENT STATUS
+───────────────────────────────────
+Active Paid Entities: 4 (target: 8–10)
+
+Entity 1 — Root-Cause Pitch (TOF)
+Hook: "If you've been stuck in that cycle of… ❌ Eating less but gaining more…"
+Format: Video (talking head / b-roll) | Driver: Frustration | Status: Core performing
+
+Entity 2 — Symptom Case Study (MOF)
+Hook: "Message me 'NEXT' if you are ready to be our next transformation! 🙌"
+Format: Long-form testimonial (0:49) | Driver: Social Proof | Status: Strong MOF
+
+Entity 3 — Avatar Testimonial (MOF)
+Hook: "Career-Driven Mom Lost 20 Pounds without restricting her fav foods!"
+Format: Client testimonial | Driver: Social Proof | Status: Solid, needs hook variation
+
+Entity 4 — Value-First Recipe (Audience Builder)
+Hook: "5 meals under 500 cals with 50g of protein that don't taste like cardboard"
+Format: Carousel food content | Driver: Desire | Status: Audience builder, not lead gen
+
+Entity gap: 4 paid vs. 6 organic clusters + 3 white space angles = 5–7 entities behind target
+
+───────────────────────────────────
+ORGANIC WINNERS — PULL FORWARD
+───────────────────────────────────
+138K views — "My Mom ate 1200 calories for an entire year and here's what happened."
+→ Format: B-roll + text overlay | Driver: Fear/Frustration | Priority: LAUNCH NOW as paid TOF
+
+18.8K views — "Start of our 24 week cut! Drumroll… 🤣🤣"
+→ Format: Transformation reveal | Driver: Desire/Social Proof | Priority: High
+
+18K views — "I just spent 2 weeks in Japan… and it made me realize how backwards we've gotten with health in the U.S."
+→ Format: B-roll + talking head | Driver: Identity/Curiosity | Priority: High
+
+9.4K views — "You can eat 2200 calories a day and lose weight? No wonder men have it easy."
+→ Format: B-roll + text overlay | Driver: Frustration/Identity | Priority: High
+
+2.2K views — "Dorothy lost 34 pounds after increasing her calories from 1300 to 2400 using our metabolic reverse method!"
+→ Format: Client testimonial | Driver: Social Proof | Priority: Very High (MOF)
+
+───────────────────────────────────
+PRIORITY HOOKS — WORKSHOP BUILD LIST
+───────────────────────────────────
+(1) "My Mom ate 1200 calories for an entire year and here's what happened to her metabolism." — Fear/Frustration | TOF (138K validated)
+(2) "You can eat 2200 calories a day and lose weight? No wonder men have it easy — I only eat 1200 and the scale barely moves." — Frustration/Identity | TOF
+(3) "Dorothy lost 34 pounds after increasing her calories from 1300 to 2400 using our metabolic reverse method." — Social Proof | MOF
+(4) "If you're over 40, eating 1200 calories isn't just stalling your weight loss — it's actively making your perimenopause symptoms worse." — Frustration/Identity | TOF (white space)
+(5) "Has your doctor told you to just eat less and move more? Here's why that advice is scientifically broken for women over 35." — Authority/Frustration | TOF (white space)
+(6) "Doing everything right but feeling softer, not leaner? Here's why your diet is destroying your muscle mass." — Frustration/Desire | TOF (white space)
+(7) "I just spent 2 weeks in Japan and it made me realize how backwards we've gotten with women's health in the U.S." — Identity/Curiosity | TOF
+(8) "How [Client] lost 25 lbs without tracking a single calorie or giving up date night." — Desire/Social Proof | MOF
+
+───────────────────────────────────
+COMPETITIVE WHITE SPACE
+───────────────────────────────────
+Competitors in metabolic/hormone coaching (~19K active ads):
+- Tandem Nutrition: "Menopause didn't break your metabolism. Your doctor did." — Doctor blame + menopause
+- eat.simple: "Losing weight without tracking ANYTHING... even after 40!" — Anti-tracking + age 40+
+- Kelly Nicole: "Why Your Diet Is Making You Softer, Not Leaner" — Body comp vs scale weight
+- Kayla Johnson: "20 pounds up. Perimenopause. Doing everything right — still stuck." — Perimenopause specific
+- Vanessa Pozos: "You've done everything right — why does your body look like you're doing nothing?" — Functional frustration
+
+Camden's white space:
+→ Perimenopause/40+ specificity — major competitor angle, Camden runs broad "moms"
+→ Body composition ("softer, not leaner") — Kelly Nicole owns it but Camden can adapt to mechanism
+→ Medical gaslighting ("your doctor is wrong") — Tandem owns menopause version, open for metabolic
+→ Anti-tracking angle — "our method doesn't require obsessive calorie counting"
+
+───────────────────────────────────
+ENTITY BUILD QUEUE — 30-DAY ROADMAP
+───────────────────────────────────
+#1 — ORGANIC → PAID CONVERSION (Week 1)
+Hook: "My Mom ate 1200 calories for an entire year and here's what happened."
+Format: B-roll + text overlay → talking head mechanism reveal
+Driver: Fear/Frustration | Note: 138K organic validated. Zero new recording needed.
+
+#2 — PARADOX MECHANISM (Week 1)
+Hook: "You can eat 2200 calories and lose weight? No wonder men have it easy."
+Format: Direct-to-camera talking head
+Driver: Frustration/Identity | Note: Core differentiator — needs multiple format variations.
+
+#3 — PERIMENOPAUSE FRUSTRATION (Week 2)
+Hook: "If you're over 40, eating 1200 calories isn't just stalling weight loss — it's making perimenopause worse."
+Format: Talking head (authoritative, empathetic)
+Driver: Frustration/Identity | Note: High white space. Competitors dominate this sub-avatar.
+
+#4 — CLIENT PROOF WITH NUMBERS (Week 2)
+Hook: "Dorothy lost 34 pounds after increasing calories from 1300 to 2400."
+Format: Client testimonial / before-after with calorie numbers on screen
+Driver: Social Proof/Desire | Note: Specificity of calorie numbers is the hook, not just the result.
+
+#5 — JAPAN CULTURAL OBSERVATION (Week 3)
+Hook: "I just spent 2 weeks in Japan and it made me realize how backwards U.S. health culture is."
+Format: Travel B-roll + talking head
+Driver: Identity/Curiosity | Note: New format + location = new Andromeda entity even with same mechanism.
+
+#6 — MEDICAL GASLIGHTING AUTHORITY (Week 4)
+Hook: "Has your doctor told you to just eat less and move more? Here's why that's scientifically broken."
+Format: Direct-to-camera, educational
+Driver: Authority/Frustration | Note: High-trust angle for warm retargeting audience.
+
+───────────────────────────────────
+STRATEGIC DIAGNOSIS (ONE PARAGRAPH)
+───────────────────────────────────
+Camden is the most financially efficient operator in the Cancun cohort. A 57% net margin at $70K/month with only 4.3% of revenue in ad spend is not normal — it's the result of a strong offer, validated mechanism, and closer who converts at 57%. The creative fatigue problem (CPL $11→$18 across Q1) is real but has a simple diagnosis: 4 entities running without rotation against an algorithm that demands diversity. The organic library has already produced a 138K-view reel that maps directly to a paid TOF entity — zero new content required. The white space in metabolic coaching (perimenopause specificity, body composition, medical gaslighting) is wide open. Camden's economics make him one of the safest bets to 3× ad spend in this room. The only missing input is creative volume and a weekly testing cadence that matches the closes.
+
+═══════════════════════════════════════════════════════
+END OF INTEL REPORT — CAMDEN MAMIAN | IFCA WORKSHOP 2026
+`;
+
+  navigator.clipboard.writeText(report).then(() => {
+    const btn = document.getElementById('copy-intel-btn');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<span>✓</span> Copied to Clipboard';
+    btn.style.background = 'var(--green)';
+    setTimeout(() => { btn.innerHTML = orig; btn.style.background = 'var(--orange)'; }, 2500);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = report;
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+    const btn = document.getElementById('copy-intel-btn');
+    btn.innerHTML = '<span>✓</span> Copied!';
+    btn.style.background = 'var(--green)';
+    setTimeout(() => { btn.innerHTML = '<span>⬆</span> Copy for Workshop'; btn.style.background = 'var(--orange)'; }, 2500);
+  });
+}
+</script>
+</body>
+</html>

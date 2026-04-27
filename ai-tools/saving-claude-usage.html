@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Optimizing & Saving Claude Usage — IFCA AI Workshop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #1E3A5F;
+  --navy-dk:   #111e2e;
+  --navy-card: #172840;
+  --navy-mid:  #1e3050;
+  --orange:    #E87722;
+  --orange-lt: #f08c3a;
+  --sky:       #c8ddef;
+  --sky-dim:   #8faabf;
+  --white:     #ffffff;
+  --g200:      #cdd8e4;
+  --g400:      #7b97b3;
+  --g600:      #445e78;
+  --green:     #22c97a;
+  --green-bg:  rgba(34,201,122,.09);
+  --yellow:    #f5c23a;
+  --yellow-bg: rgba(245,194,58,.09);
+  --red:       #e8403e;
+  --red-bg:    rgba(232,64,62,.09);
+  --ff-d:      'Barlow Condensed', sans-serif;
+  --ff-b:      'DM Sans', sans-serif;
+  --ff-m:      'DM Mono', monospace;
+  --t:         0.22s ease;
+  --r:         10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--ff-b);background:var(--navy-dk);color:var(--white);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.5}
+.page{position:relative;z-index:1}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(160deg,#0d1a28 0%,#1a3050 60%,#0d1a28 100%);
+  padding:64px 24px 56px;text-align:center;
+  position:relative;overflow:hidden;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.hero::after{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(232,119,34,.12) 0%,transparent 65%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(232,119,34,.12);border:1px solid rgba(232,119,34,.3);color:var(--orange-lt);font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:24px}
+.hero h1{font-family:var(--ff-d);font-weight:900;font-size:clamp(38px,7vw,72px);line-height:.92;text-transform:uppercase;letter-spacing:-.01em;color:var(--white);margin-bottom:6px}
+.hero h1 em{font-style:italic;color:var(--orange);display:block;font-size:.85em}
+.hero-rule{width:40px;height:3px;background:var(--orange);margin:22px auto;border-radius:2px}
+.hero-sub{font-family:var(--ff-b);font-size:clamp(14px,2vw,17px);color:var(--sky);line-height:1.7;max-width:520px;margin:0 auto}
+
+/* ── SECTIONS ── */
+.section{padding:52px 24px}
+.section + .section{border-top:1px solid rgba(255,255,255,.06)}
+.section-label{font-family:var(--ff-d);font-weight:700;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+.section-title{font-family:var(--ff-d);font-weight:900;font-size:clamp(26px,4vw,38px);text-transform:uppercase;letter-spacing:.02em;line-height:1.05;color:var(--white);margin-bottom:12px}
+.section-desc{font-family:var(--ff-b);font-size:15px;color:var(--sky);line-height:1.7;margin-bottom:32px;max-width:640px}
+
+/* ── STAT BAR ── */
+.stat-bar{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+  margin-bottom:40px;
+}
+@media(max-width:520px){.stat-bar{grid-template-columns:1fr}}
+.stat-item{
+  background:var(--navy-card);border:1px solid rgba(255,255,255,.07);
+  border-radius:var(--r);padding:20px 22px;text-align:center;
+  border-top:2px solid var(--orange);
+}
+.stat-num{font-family:var(--ff-d);font-weight:900;font-size:38px;color:var(--orange);line-height:1;margin-bottom:4px}
+.stat-lbl{font-family:var(--ff-b);font-size:12px;color:var(--sky-dim);line-height:1.4}
+
+/* ── TIP CARDS ── */
+.tips-list{display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+.tip-card{
+  background:var(--navy-card);border:1px solid rgba(255,255,255,.07);
+  border-radius:var(--r);padding:22px 24px;
+  display:flex;gap:18px;align-items:flex-start;
+  transition:border-color var(--t),transform var(--t);
+  cursor:default;
+}
+.tip-card:hover{border-color:rgba(232,119,34,.35);transform:translateX(3px)}
+.tip-num{
+  font-family:var(--ff-d);font-weight:900;font-size:32px;
+  color:rgba(232,119,34,.25);line-height:1;flex-shrink:0;min-width:36px;
+  transition:color var(--t);
+}
+.tip-card:hover .tip-num{color:rgba(232,119,34,.6)}
+.tip-body{}
+.tip-title{font-family:var(--ff-d);font-weight:800;font-size:19px;text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin-bottom:5px;line-height:1.1}
+.tip-desc{font-family:var(--ff-b);font-size:14px;color:var(--sky);line-height:1.65}
+.tip-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:var(--ff-d);font-weight:700;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;margin-top:8px;
+}
+.badge-high{background:var(--green-bg);color:var(--green);border:1px solid rgba(34,201,122,.25)}
+.badge-med{background:var(--yellow-bg);color:var(--yellow);border:1px solid rgba(245,194,58,.25)}
+.badge-quick{background:rgba(232,119,34,.1);color:var(--orange-lt);border:1px solid rgba(232,119,34,.25)}
+
+/* ── CATEGORY PILL ── */
+.cat-row{display:flex;align-items:center;gap:10px;margin:28px 0 12px}
+.cat-pill{
+  font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  padding:4px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.12);color:var(--g400);
+  background:rgba(255,255,255,.04);
+}
+.cat-line{flex:1;height:1px;background:rgba(255,255,255,.06)}
+
+/* ── PROMPT BOX ── */
+.prompt-box{
+  background:var(--navy-card);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--r);overflow:hidden;
+  margin-bottom:24px;
+}
+.pb-header{
+  background:rgba(255,255,255,.04);
+  padding:12px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.pb-label{font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--g400)}
+.copy-btn{
+  background:rgba(232,119,34,.15);
+  color:var(--orange-lt);font-family:var(--ff-d);font-weight:700;font-size:10px;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:5px 12px;border-radius:4px;cursor:pointer;
+  transition:background var(--t);border:none;
+}
+.copy-btn:hover{background:rgba(232,119,34,.3)}
+.pb-body{padding:20px;font-family:var(--ff-m);font-size:13px;line-height:1.75;color:var(--sky);white-space:pre-wrap}
+
+/* ── QUICK REF TABLE ── */
+.ref-table{width:100%;border-collapse:collapse;margin-bottom:24px}
+.ref-table th{
+  font-family:var(--ff-d);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--g400);padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.08);
+  text-align:left;background:rgba(255,255,255,.02);
+}
+.ref-table td{
+  font-family:var(--ff-b);font-size:13.5px;color:var(--sky);
+  padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.05);
+  vertical-align:top;
+}
+.ref-table tr:last-child td{border-bottom:none}
+.ref-table tr:hover td{background:rgba(255,255,255,.02)}
+.ref-table .col-do{color:var(--green);font-weight:500}
+.ref-table .col-dont{color:var(--red);font-weight:500}
+.ref-table .col-why{color:var(--sky-dim);font-size:12.5px}
+
+/* ── CALLOUT BOX ── */
+.callout{
+  background:rgba(232,119,34,.07);border:1px solid rgba(232,119,34,.2);
+  border-left:3px solid var(--orange);
+  border-radius:var(--r);padding:20px 24px;margin-bottom:24px;
+}
+.callout-title{font-family:var(--ff-d);font-weight:800;font-size:15px;text-transform:uppercase;letter-spacing:.05em;color:var(--orange-lt);margin-bottom:6px}
+.callout-body{font-family:var(--ff-b);font-size:14px;color:var(--sky);line-height:1.65}
+
+/* ── BACK NAV ── */
+.back-nav{
+  padding:20px 24px;border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;gap:10px;
+}
+.back-link{
+  font-family:var(--ff-d);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--g400);text-decoration:none;display:flex;align-items:center;gap:6px;
+  transition:color var(--t);
+}
+.back-link:hover{color:var(--orange-lt)}
+.back-link svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.back-sep{color:var(--g600);font-size:12px}
+.back-curr{font-family:var(--ff-d);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--white)}
+
+/* ── FOOTER ── */
+.footer{padding:40px 24px;text-align:center;border-top:1px solid rgba(255,255,255,.06)}
+.footer-text{font-family:var(--ff-b);font-size:13px;color:var(--g600)}
+.footer-text a{color:var(--g400);text-decoration:none}
+.footer-text a:hover{color:var(--orange-lt)}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.hero-badge{animation:fadeUp .5s ease both}
+.hero h1{animation:fadeUp .5s .1s ease both}
+.hero-rule{animation:fadeUp .5s .18s ease both}
+.hero-sub{animation:fadeUp .5s .25s ease both}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- BACK NAV -->
+  <nav class="back-nav">
+    <a class="back-link" href="../index.html">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      IFCA Hub
+    </a>
+    <span class="back-sep">›</span>
+    <span class="back-curr">AI Workshop</span>
+    <span class="back-sep">›</span>
+    <span class="back-curr">Saving Claude Usage</span>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-badge">⚡ Getting Started · AI Workshop Series</div>
+    <h1>Optimizing &<em>Saving Claude Usage</em></h1>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">Why tokens run out faster than you expect, the model selection lever, and 10 habits that can double your effective daily budget.</p>
+  </header>
+
+  <!-- WHY TOKENS DISAPPEAR -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-label">The Problem</div>
+      <div class="section-title">Why Your Usage Runs Out Fast</div>
+      <p class="section-desc">Claude's usage limits are based on tokens — and tokens count both what you send AND what Claude sends back. The bigger the conversation history, the more tokens every single message costs. Here's what's eating your budget without you realizing it:</p>
+
+      <div class="stat-bar">
+        <div class="stat-item">
+          <div class="stat-num">3×</div>
+          <div class="stat-lbl">Token cost multiplier as a long conversation grows vs. starting fresh</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">~5K</div>
+          <div class="stat-lbl">Tokens consumed just loading a large project file or pasted document</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">10+</div>
+          <div class="stat-lbl">Habits below that can realistically double your effective daily output</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">The Core Insight</div>
+        <div class="callout-body">Claude has no memory between conversations. Every message in a thread re-sends ALL previous messages as context. A 50-message conversation costs 10–20× more per message than starting fresh. The fix isn't using Claude less — it's using it smarter.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE 10 HABITS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-label">The System</div>
+      <div class="section-title">10 Habits That Protect Your Budget</div>
+      <p class="section-desc">These aren't suggestions — this is the operating system. Build these into how you work with Claude and your effective output goes up significantly without upgrading your plan.</p>
+
+      <div class="cat-row"><span class="cat-pill">Structure Your Sessions</span><div class="cat-line"></div></div>
+
+      <div class="tips-list">
+
+        <div class="tip-card">
+          <div class="tip-num">01</div>
+          <div class="tip-body">
+            <div class="tip-title">Use Projects for Recurring Work</div>
+            <div class="tip-desc">System prompts in Projects load your context once and persist across sessions — so Claude already knows your business, voice, and frameworks without you re-explaining every time. That context doesn't burn your daily limit on every message the same way a pasted prompt would.</div>
+            <span class="tip-badge badge-high">🟢 Highest Impact</span>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tip-num">02</div>
+          <div class="tip-body">
+            <div class="tip-title">Start Fresh Chats for New Tasks</div>
+            <div class="tip-desc">Long conversations accumulate context fast. Once you've finished a task — ad copy done, funnel mapped, script approved — start a new chat for the next thing. Don't keep piling tasks into the same thread. Each new chat resets the token counter.</div>
+            <span class="tip-badge badge-high">🟢 Highest Impact</span>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tip-num">03</div>
+          <div class="tip-body">
+            <div class="tip-title">Use Haiku for Simple Tasks</div>
+            <div class="tip-desc">Hook rewrites, quick edits, short-form copy, reformatting text — none of that needs Sonnet. Claude Haiku runs on a separate, more generous usage allowance. Switch models before you ask for anything routine. Save Sonnet for complex builds, strategy, and multi-step thinking.</div>
+            <span class="tip-badge badge-high">🟢 Highest Impact</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="cat-row"><span class="cat-pill">Write Better Prompts</span><div class="cat-line"></div></div>
+
+      <div class="tips-list">
+
+        <div class="tip-card">
+          <div class="tip-num">04</div>
+          <div class="tip-body">
+            <div class="tip-title">Be Specific Upfront</div>
+            <div class="tip-desc">One detailed prompt beats five back-and-forth clarifying messages every time. Before you send, ask yourself: does Claude have the format, tone, length, audience, and goal it needs? Add those details upfront. Every round-trip correction costs tokens on both sides.</div>
+            <span class="tip-badge badge-med">🟡 High Impact</span>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tip-num">05</div>
+          <div class="tip-body">
+            <div class="tip-title">Give Surgical Edit Instructions</div>
+            <div class="tip-desc">Never say "rewrite the whole thing" when you only need one section changed. Tell Claude exactly what to fix: "Change the hook in paragraph 1 to lead with the result, not the problem." Partial rewrites cost a fraction of full regenerations — and they're usually more accurate anyway.</div>
+            <span class="tip-badge badge-med">🟡 High Impact</span>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tip-num">06</div>
+          <div class="tip-body">
+            <div class="tip-title">Batch Related Requests</div>
+            <div class="tip-desc">Ask for 10 hooks in one message, not one at a time. Ask for the full ad set in a single prompt, not hook → body → CTA in separate turns. Batching cuts the per-task overhead significantly. One well-structured prompt doing 10 things costs far less than 10 individual prompts.</div>
+            <span class="tip-badge badge-med">🟡 High Impact</span>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tip-num">07</div>
+          <div class="tip-body">
+            <div class="tip-title">Skip the Pleasantries</div>
+            <div class="tip-desc">"Please," "thank you," "can you help me with," "I was wondering if" — all of it counts as tokens. Just start with the instruction. Claude isn't offended. Direct prompts are faster, cheaper, and usually produce better outputs because there's no hedging for Claude to sort through.</div>
+            <span class="tip-badge badge-quick">🟠 Quick Win</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="cat-row"><span class="cat-pill">Manage Your Context</span><div class="cat-line"></div></div>
+
+      <div class="tips-list">
+
+        <div class="tip-card">
+          <div class="tip-num">08</div>
+          <div class="tip-body">
+            <div class="tip-title">Don't Paste Giant Documents Into Chat</div>
+            <div class="tip-desc">If you have a reference doc, business context, brand voice guide, or SOP that Claude needs — upload it to Project Knowledge, not the chat. Project Knowledge loads efficiently in the background. Pasting 5,000 words of context into a message window is one of the fastest ways to burn your limit in a single session.</div>
+            <span class="tip-badge badge-high">🟢 Highest Impact</span>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tip-num">09</div>
+          <div class="tip-body">
+            <div class="tip-title">Reset When a Thread Goes Sideways</div>
+            <div class="tip-desc">If Claude misunderstood your intent and you're three corrections deep, don't keep fighting it in the same thread. Start a new chat with a cleaner, sharper version of your original prompt. Trying to course-correct a derailed conversation costs more tokens than starting over — and the output is usually worse.</div>
+            <span class="tip-badge badge-quick">🟠 Quick Win</span>
+          </div>
+        </div>
+
+        <div class="tip-card">
+          <div class="tip-num">10</div>
+          <div class="tip-body">
+            <div class="tip-title">Save Your Best Prompts</div>
+            <div class="tip-desc">Don't rebuild context from scratch every session. Keep a running doc — Notion, Google Docs, Notes, wherever — with your go-to prompts for the tasks you do repeatedly. Hook generation, ad scripts, email sequences, VSL outlines. Paste and go. You're not paying for Claude to "learn" you — bring the context with you.</div>
+            <span class="tip-badge badge-high">🟢 Highest Impact</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DO / DON'T TABLE -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-label">Quick Reference</div>
+      <div class="section-title">Do This. Not That.</div>
+      <p class="section-desc">The fastest way to internalize these habits is seeing the contrast side by side.</p>
+
+      <div class="prompt-box">
+        <div class="pb-header">
+          <span class="pb-label">Usage Habits — Do vs. Don't</span>
+        </div>
+        <table class="ref-table" style="margin:0">
+          <thead>
+            <tr>
+              <th>Situation</th>
+              <th style="color:var(--green)">✓ Do This</th>
+              <th style="color:var(--red)">✗ Not This</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>New task, new day</td>
+              <td class="col-do">Open a new chat</td>
+              <td class="col-dont">Continue yesterday's thread</td>
+            </tr>
+            <tr>
+              <td>Editing existing copy</td>
+              <td class="col-do">"Change line 3 to say X"</td>
+              <td class="col-dont">"Rewrite this whole section"</td>
+            </tr>
+            <tr>
+              <td>Need 10 hooks</td>
+              <td class="col-do">Ask for all 10 in one prompt</td>
+              <td class="col-dont">Ask one at a time and iterate</td>
+            </tr>
+            <tr>
+              <td>Simple formatting/copy task</td>
+              <td class="col-do">Switch to Haiku model first</td>
+              <td class="col-dont">Use Sonnet for everything</td>
+            </tr>
+            <tr>
+              <td>Sharing a long reference doc</td>
+              <td class="col-do">Upload to Project Knowledge</td>
+              <td class="col-dont">Paste raw text into the chat</td>
+            </tr>
+            <tr>
+              <td>Claude went off track</td>
+              <td class="col-do">Start fresh with a cleaner prompt</td>
+              <td class="col-dont">Keep correcting in same thread</td>
+            </tr>
+            <tr>
+              <td>Prompting style</td>
+              <td class="col-do">"Write 5 hooks for X audience"</td>
+              <td class="col-dont">"Hi! Could you please help me with..."</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMPT STARTER -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-label">Bonus</div>
+      <div class="section-title">Paste This Into Any New Chat</div>
+      <p class="section-desc">If you're not using a Project yet, this quick context-setter front-loads everything Claude needs so you're not re-explaining mid-conversation.</p>
+
+      <div class="prompt-box">
+        <div class="pb-header">
+          <span class="pb-label">Session Starter Prompt</span>
+          <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+        </div>
+        <div class="pb-body" id="starter-prompt">I run an online [fitness/health/nutrition] coaching business. My offer is [describe offer in 1 sentence]. My ideal client is [avatar description]. My brand voice is [direct/conversational/educational]. 
+
+For this session I need: [specific task]
+
+Format: [bullets / paragraph / ad copy / email / etc.]
+Length: [short / medium / long]
+Tone: [professional / casual / urgent / motivational]
+
+Do not ask clarifying questions. Start with the output directly.</div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">Pro Move: Build Your Own Version Once</div>
+        <div class="callout-body">Fill this out for YOUR business, save it in a Notes doc or Notion, and paste it at the start of every new session. It takes 20 seconds and eliminates the first 3–4 back-and-forth clarifying messages every single time.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="wrap">
+      <p class="footer-text">IFCA AI Workshop Series · <a href="../index.html">← Back to Hub</a></p>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+function copyPrompt(btn) {
+  const text = document.getElementById('starter-prompt').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.style.background = 'rgba(34,201,122,.2)';
+    btn.style.color = 'var(--green)';
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 1800);
+  });
+}
+</script>
+</body>
+</html>

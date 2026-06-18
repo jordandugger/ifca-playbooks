@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kelli Brower — Full Business Audit | IFCA 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"><style>
+:root {
+  --navy:        #1E3A5F;
+  --navy-dark:   #0B1A2B;
+  --navy-mid:    #142845;
+  --navy-card:   rgba(20,40,69,0.6);
+  --orange:      #E87722;
+  --orange-dim:  rgba(232,119,34,0.12);
+  --orange-glow: rgba(232,119,34,0.22);
+  --blue-mid:    #4A7FA5;
+  --blue-dim:    rgba(74,127,165,0.12);
+  --blue-light:  #D6E4F0;
+  --gray-400:    #94A3B8;
+  --gray-500:    #64748B;
+  --gray-600:    #475569;
+  --green:       #22C55E;
+  --green-bg:    rgba(34,197,94,0.10);
+  --red:         #DC2626;
+  --red-bg:      rgba(220,38,38,0.09);
+  --yellow:      #F59E0B;
+  --yellow-bg:   rgba(245,158,11,0.10);
+  --purple:      #8B5CF6;
+  --purple-bg:   rgba(139,92,246,0.10);
+}
+*, ::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--navy-dark); color: #fff; min-height: 100vh; overflow-x: hidden; }
+body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0; background-image: linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px); background-size: 48px 48px; }
+body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(ellipse 80% 60% at 5% 5%, rgba(74,127,165,.09) 0%, transparent 55%), radial-gradient(ellipse 60% 50% at 95% 95%, rgba(232,119,34,.06) 0%, transparent 55%); }
+.page { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 24px 120px; }
+.hero { padding: 60px 0 52px; border-bottom: 1px solid rgba(255,255,255,.07); margin-bottom: 0; position: relative; }
+.hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .2em; color: var(--orange); text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+.hero-eyebrow::before { content: ''; width: 32px; height: 2px; background: var(--orange); border-radius: 1px; }
+.hero-name { font-family: 'Bebas Neue'; font-size: clamp(52px, 8vw, 96px); line-height: .88; letter-spacing: .02em; color: #fff; margin-bottom: 6px; }
+.hero-name span { color: var(--orange); }
+.hero-title { font-family: 'DM Mono', monospace; font-size: 14px; letter-spacing: .08em; color: rgba(255,255,255,.4); text-transform: uppercase; margin-bottom: 28px; }
+.hero-stats { display: flex; gap: 0; margin-bottom: 32px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; overflow: hidden; }
+.hs { flex: 1; padding: 20px 24px; border-right: 1px solid rgba(255,255,255,.06); }
+.hs:last-child { border-right: none; }
+.hs-val { font-family: 'Bebas Neue'; font-size: 40px; line-height: 1; margin-bottom: 4px; }
+.hs-val.orange { color: var(--orange); } .hs-val.green { color: var(--green); } .hs-val.blue { color: #7ABFDD; } .hs-val.white { color: #fff; }
+.hs-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-500); }
+.hero-summary { font-size: 15px; color: rgba(255,255,255,.65); line-height: 1.7; max-width: 720px; border-left: 3px solid var(--orange); padding-left: 20px; }
+.hero-summary strong { color: rgba(255,255,255,.9); }
+.doc-nav { position: sticky; top: 0; z-index: 50; background: rgba(11,26,43,.92); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,.07); padding: 0; margin: 0 -24px; }
+.doc-nav-inner { max-width: 1080px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.doc-nav-inner::-webkit-scrollbar { display: none; }
+.nav-link { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; padding: 14px 16px; white-space: nowrap; color: var(--gray-500); text-decoration: none; border-bottom: 2px solid transparent; transition: color .18s, border-color .18s; }
+.nav-link:hover { color: rgba(255,255,255,.7); }
+.nav-link.active { color: var(--orange); border-bottom-color: var(--orange); }
+.doc-section { padding: 56px 0 0; }
+.sec-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .18em; color: var(--orange); text-transform: uppercase; margin-bottom: 8px; }
+.sec-heading { font-family: 'Bebas Neue'; font-size: clamp(30px,4vw,44px); line-height: .95; letter-spacing: .02em; color: #fff; margin-bottom: 24px; }
+.sec-divider { height: 1px; background: rgba(255,255,255,.07); margin-bottom: 28px; }
+.card { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; padding: 22px 24px; }
+.card.orange-left { border-left: 3px solid var(--orange); border-radius: 0 14px 14px 0; background: var(--orange-dim); }
+.card.green-left { border-left: 3px solid var(--green); border-radius: 0 14px 14px 0; background: var(--green-bg); }
+.card.red-left { border-left: 3px solid var(--red); border-radius: 0 14px 14px 0; background: var(--red-bg); }
+.card.yellow-left { border-left: 3px solid var(--yellow); border-radius: 0 14px 14px 0; background: var(--yellow-bg); }
+.card.blue-left { border-left: 3px solid var(--blue-mid); border-radius: 0 14px 14px 0; background: var(--blue-dim); }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+@media(max-width:720px){ .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } .hero-stats { flex-direction: column; } .hs { border-right: none; border-bottom: 1px solid rgba(255,255,255,.06); } .hs:last-child { border-bottom: none; } }
+@media(max-width:900px){ .grid-3 { grid-template-columns: 1fr 1fr; } .grid-4 { grid-template-columns: 1fr 1fr; } }
+.win-card { background: var(--green-bg); border: 1px solid rgba(34,197,94,.2); border-radius: 12px; padding: 18px; display: flex; align-items: flex-start; gap: 12px; }
+.win-icon { font-size: 20px; flex-shrink: 0; padding-top: 2px; }
+.win-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--green); margin-bottom: 4px; }
+.win-desc { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.55; }
+.period-bar { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+.period-bar-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-500); }
+.period-tabs { display: flex; gap: 4px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 4px; }
+.pt { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 7px 14px; border-radius: 7px; border: none; background: transparent; color: var(--gray-500); cursor: pointer; transition: all .18s; }
+.pt.active { background: var(--navy-mid); color: #fff; }
+.pt:hover:not(.active) { color: rgba(255,255,255,.6); }
+.edit-btn { margin-left: auto; background: var(--orange-dim); border: 1px solid rgba(232,119,34,.3); border-radius: 8px; padding: 8px 16px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--orange); cursor: pointer; transition: all .18s; }
+.edit-btn:hover { background: var(--orange-glow); }
+.edit-btn.on { background: var(--orange); color: #fff; }
+.kpi-band { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; margin-bottom: 20px; }
+@media(max-width:700px){ .kpi-band { grid-template-columns: 1fr 1fr; } }
+.kpi-chip { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 14px 16px; position: relative; overflow: hidden; }
+.kpi-chip::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:12px 12px 0 0; }
+.kpi-chip.pass::before { background: var(--green); } .kpi-chip.warn::before { background: var(--yellow); } .kpi-chip.fail::before { background: var(--red); } .kpi-chip.info::before { background: var(--blue-mid); }
+.chip-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); margin-bottom:5px; line-height:1.4; }
+.chip-val { font-family:'Bebas Neue'; font-size:30px; line-height:1; margin-bottom:3px; }
+.kpi-chip.pass .chip-val { color: var(--green); } .kpi-chip.warn .chip-val { color: var(--yellow); } .kpi-chip.fail .chip-val { color: #F87171; } .kpi-chip.info .chip-val { color: #7ABFDD; }
+.chip-target { font-family:'DM Mono',monospace; font-size:10px; color:var(--gray-500); }
+.tbl-wrap { background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; overflow: hidden; margin-bottom: 16px; }
+.mtbl { width:100%; border-collapse:collapse; }
+.mtbl thead tr { background:rgba(255,255,255,.03); }
+.mtbl th { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); padding:10px 14px; text-align:left; border-bottom:1px solid rgba(255,255,255,.06); white-space:nowrap; }
+.mtbl td { padding:12px 14px; font-size:13px; color:rgba(255,255,255,.7); border-bottom:1px solid rgba(255,255,255,.04); vertical-align:middle; }
+.mtbl tbody tr:last-child td { border-bottom:none; }
+.mtbl tbody tr:hover td { background:rgba(255,255,255,.02); }
+.m-name { font-size:13px; color:rgba(255,255,255,.85); }
+.m-target { font-family:'DM Mono',monospace; font-size:11px; color:var(--gray-500); }
+.m-val { font-family:'Bebas Neue'; font-size:22px; line-height:1; }
+.m-val.pass { color:var(--green); } .m-val.warn { color:var(--yellow); } .m-val.fail { color:#F87171; } .m-val.info { color:#7ABFDD; }
+.badge { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.08em; text-transform:uppercase; padding:3px 9px; border-radius:4px; white-space:nowrap; }
+.badge.pass { background:var(--green-bg); color:var(--green); border:1px solid rgba(34,197,94,.25); }
+.badge.warn { background:var(--yellow-bg); color:var(--yellow); border:1px solid rgba(245,158,11,.25); }
+.badge.fail { background:var(--red-bg); color:#F87171; border:1px solid rgba(220,38,38,.25); }
+.badge.info { background:var(--blue-dim); color:#7ABFDD; border:1px solid rgba(74,127,165,.3); }
+.m-note { font-size:11px; color:var(--gray-500); line-height:1.5; max-width:210px; }
+.edit-input { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); border-radius:7px; padding:6px 10px; font-family:'DM Mono',monospace; font-size:13px; color:#fff; outline:none; width:110px; transition:border-color .18s; -moz-appearance:textfield; }
+.edit-input::-webkit-inner-spin-button { -webkit-appearance:none; }
+.edit-input:focus { border-color:rgba(232,119,34,.5); background:rgba(232,119,34,.06); }
+.audit-table-wrap { background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; overflow: hidden; }
+.audit-tbl { width:100%; border-collapse:collapse; }
+.audit-tbl th { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); padding:10px 14px; text-align:left; background:rgba(255,255,255,.03); border-bottom:1px solid rgba(255,255,255,.06); }
+.audit-tbl td { padding:12px 14px; font-size:13px; color:rgba(255,255,255,.65); border-bottom:1px solid rgba(255,255,255,.04); vertical-align:top; line-height:1.5; }
+.audit-tbl tbody tr:last-child td { border-bottom:none; }
+.audit-tbl td strong { color:rgba(255,255,255,.9); }
+.gap-pill { display:inline-block; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.06em; text-transform:uppercase; padding:2px 8px; border-radius:4px; margin:2px 3px 2px 0; }
+.gap-pill.missing { background:var(--red-bg); color:#F87171; border:1px solid rgba(220,38,38,.2); }
+.gap-pill.opportunity { background:var(--green-bg); color:var(--green); border:1px solid rgba(34,197,94,.2); }
+.gap-pill.warn { background:var(--yellow-bg); color:var(--yellow); border:1px solid rgba(245,158,11,.2); }
+.comp-card { background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; overflow: hidden; }
+.comp-tbl { width:100%; border-collapse:collapse; }
+.comp-tbl th { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); padding:10px 14px; text-align:left; background:rgba(255,255,255,.03); border-bottom:1px solid rgba(255,255,255,.06); }
+.comp-tbl td { padding:13px 14px; font-size:13px; color:rgba(255,255,255,.65); border-bottom:1px solid rgba(255,255,255,.04); vertical-align:top; line-height:1.5; }
+.comp-tbl tbody tr:last-child td { border-bottom:none; }
+.diag-list { display:flex; flex-direction:column; gap:12px; }
+.diag-card { border-radius:14px; border:1px solid rgba(255,255,255,.07); background:rgba(255,255,255,.025); overflow:hidden; }
+.diag-card.p1 { border-color:rgba(220,38,38,.35); background:rgba(220,38,38,.04); }
+.diag-card.p2 { border-color:rgba(245,158,11,.28); background:rgba(245,158,11,.03); }
+.diag-card.p3 { border-color:rgba(232,119,34,.22); }
+.diag-card.ok { border-color:rgba(34,197,94,.22); background:rgba(34,197,94,.03); }
+.diag-head { display:flex; align-items:flex-start; gap:16px; padding:20px 22px 16px; }
+.diag-rank { font-family:'Bebas Neue'; font-size:40px; line-height:1; flex-shrink:0; min-width:36px; padding-top:2px; }
+.diag-card.p1 .diag-rank { color:#F87171; } .diag-card.p2 .diag-rank { color:var(--yellow); } .diag-card.p3 .diag-rank { color:var(--orange); } .diag-card.ok .diag-rank { color:var(--green); }
+.diag-title { font-family:'Bebas Neue'; font-size:20px; letter-spacing:.04em; line-height:1.1; margin-bottom:6px; }
+.diag-card.p1 .diag-title { color:#F87171; } .diag-card.p2 .diag-title { color:var(--yellow); } .diag-card.p3 .diag-title { color:var(--orange); } .diag-card.ok .diag-title { color:var(--green); }
+.diag-desc { font-size:13px; color:rgba(255,255,255,.65); line-height:1.65; }
+.diag-action { padding:12px 22px 16px 74px; border-top:1px solid rgba(255,255,255,.05); font-family:'DM Mono',monospace; font-size:11px; color:var(--gray-400); line-height:1.6; }
+.diag-action strong { color:rgba(255,255,255,.75); }
+.req-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:24px; }
+@media(max-width:580px){ .req-grid { grid-template-columns:1fr; } }
+.req-cell { display:flex; flex-direction:column; gap:4px; }
+.req-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); }
+.req-val { font-family:'Bebas Neue'; font-size:36px; line-height:1; color:#fff; }
+.req-sub { font-size:11px; color:var(--gray-500); margin-top:1px; }
+.eq-compare { display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:center; margin-bottom:16px; }
+@media(max-width:580px){ .eq-compare { grid-template-columns:1fr; } }
+.eq-block { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:20px; text-align:center; }
+.eq-block.purple { border-color:rgba(139,92,246,.3); background:var(--purple-bg); }
+.eq-block.blue { border-color:rgba(74,127,165,.3); background:var(--blue-dim); }
+.eq-b-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); margin-bottom:6px; }
+.eq-b-val { font-family:'Bebas Neue'; font-size:42px; line-height:1; margin-bottom:4px; }
+.eq-block.purple .eq-b-val { color:#c4b5fd; } .eq-block.blue .eq-b-val { color:#7ABFDD; }
+.eq-b-sub { font-size:11px; color:var(--gray-500); }
+.eq-vs { font-family:'Bebas Neue'; font-size:32px; color:rgba(255,255,255,.18); text-align:center; }
+.eq-verdict { padding:15px 18px; border-radius:10px; font-size:13px; line-height:1.65; }
+.eq-verdict.building { background:var(--green-bg); border:1px solid rgba(34,197,94,.25); color:var(--green); }
+.eq-verdict.eroding { background:var(--red-bg); border:1px solid rgba(220,38,38,.25); color:#F87171; }
+.eq-verdict.flat { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); color:var(--gray-400); }
+.plan-list { display:flex; flex-direction:column; gap:10px; }
+.plan-item { display:flex; align-items:flex-start; gap:16px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:12px; padding:18px 20px; transition:border-color .2s; }
+.plan-item:hover { border-color:rgba(232,119,34,.2); }
+.plan-num { font-family:'Bebas Neue'; font-size:38px; color:var(--orange); line-height:1; flex-shrink:0; min-width:30px; }
+.plan-title { font-size:15px; font-weight:600; color:#fff; margin-bottom:5px; line-height:1.2; }
+.plan-desc { font-size:13px; color:rgba(255,255,255,.6); line-height:1.65; }
+.plan-tag { display:inline-block; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.08em; text-transform:uppercase; padding:2px 8px; border-radius:4px; margin-top:8px; margin-right:4px; }
+.plan-tag.ads { background:var(--orange-dim); color:var(--orange); border:1px solid rgba(232,119,34,.25); }
+.plan-tag.sales { background:var(--green-bg); color:var(--green); border:1px solid rgba(34,197,94,.2); }
+.plan-tag.ops { background:var(--blue-dim); color:#7ABFDD; border:1px solid rgba(74,127,165,.25); }
+.plan-tag.creative { background:var(--purple-bg); color:#c4b5fd; border:1px solid rgba(139,92,246,.2); }
+.doc-footer { margin-top:80px; padding:32px 0 0; border-top:1px solid rgba(255,255,255,.07); display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.df-brand { font-family:'Bebas Neue'; font-size:20px; letter-spacing:.08em; color:rgba(255,255,255,.2); }
+.df-brand span { color:rgba(232,119,34,.5); }
+.df-note { font-family:'DM Mono',monospace; font-size:10px; color:rgba(255,255,255,.15); letter-spacing:.05em; }
+p { font-size:14px; color:rgba(255,255,255,.65); line-height:1.7; }
+p + p { margin-top:10px; }
+strong { color:rgba(255,255,255,.85); }
+em { color:var(--orange); font-style:normal; }
+.mt-sm { margin-top:12px; } .mt-md { margin-top:20px; } .mt-lg { margin-top:32px; }
+.mb-sm { margin-bottom:12px; } .mb-md { margin-bottom:20px; }
+.gap-sm { gap:10px; } .gap-md { gap:16px; }
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<!-- HERO -->
+<section class="hero" id="overview">
+  <div class="hero-eyebrow">IFCA · Seven-Figure Retreat Audit · June 2026</div>
+  <div class="hero-name">KELLI <span>BROWER</span></div>
+  <div class="hero-title">KelzBFit  ·  The Metabolic Reboot System  ·  Fat Loss Coach for Medical-Pro Moms</div>
+  <div class="hero-stats">
+    <div class="hs"><div class="hs-val orange">$48K</div><div class="hs-label">Best Month (May '26)</div></div>
+    <div class="hs"><div class="hs-val green">59%</div><div class="hs-label">Net Op Margin</div></div>
+    <div class="hs"><div class="hs-val blue">$1.28</div><div class="hs-label">CPL (Q1 Avg)</div></div>
+    <div class="hs"><div class="hs-val orange">$5,045</div><div class="hs-label">LTV per Client</div></div>
+    <div class="hs"><div class="hs-val white">19:1</div><div class="hs-label">LTV : CAC</div></div>
+  </div>
+  <div class="hero-summary">
+    Kelli has built a <strong>genuinely healthy, highly profitable business</strong> — ~59% net margins, $1.28 CPL, and elite 19:1 unit economics on a $5,045 LTV — almost entirely off <strong>four years of referrals from a PA mom group on Facebook</strong>. That referral engine is now tapping out, and the numbers show the consequence: she's bouncing between $35K and $48K months and panicking through the dips, when her goal is a <strong>predictable $50–60K every month</strong>. This is not a fix-the-leaks problem. The margins, the close rate, and the lead cost are all excellent. It is a <strong>lead-generation and acquisition-system problem</strong>: one ad entity running, no real DM funnel, no setting system, and an ad account funded at roughly 3% of revenue when it has room to run 5–10× that profitably.
+  </div>
+</section>
+
+<!-- STICKY NAV -->
+<nav class="doc-nav">
+  <div class="doc-nav-inner">
+    <a href="#overview" class="nav-link active">Overview</a>
+    <a href="#working" class="nav-link">What's Working</a>
+    <a href="#data" class="nav-link">Data Snapshot</a>
+    <a href="#equilibrium" class="nav-link">Rev Equilibrium</a>
+    <a href="#creative" class="nav-link">Creative Intel</a>
+    <a href="#diagnosis" class="nav-link">Constraints</a>
+    <a href="#plan" class="nav-link">90-Day Plan</a>
+  </div>
+</nav>
+
+<!-- WHAT'S WORKING -->
+<section class="doc-section" id="working">
+  <div class="sec-eyebrow">Section 01</div>
+  <div class="sec-heading">What's Working</div>
+  <div class="sec-divider"></div>
+  <div class="grid-2 gap-md">
+    <div class="win-card"><div class="win-icon">💰</div><div><div class="win-label">CPL at $1.28 — Absurdly Cheap</div><div class="win-desc">Q1 average CPL is $1.28, dipping to $0.71 in May. That's roughly 1/8th of the $10 IFCA ceiling. Lead cost is emphatically not the problem — the follower funnel produces cheap, quality-enough volume. The gap is downstream: turning those leads into booked calls.</div></div></div>
+    <div class="win-card"><div class="win-icon">📊</div><div><div class="win-label">59% Net Operating Margin</div><div class="win-desc">Net margin runs 52–63% month to month — well above the 50% IFCA target. Lean overhead (~1.5%), tight labor (~37%), and tiny ad spend mean almost every dollar of growth drops to profit. This business is built to scale spend without breaking.</div></div></div>
+    <div class="win-card"><div class="win-icon">🔁</div><div><div class="win-label">19:1 LTV:CAC — Elite Unit Economics</div><div class="win-desc">$5,045 LTV against a $265 CAC. The IFCA "good" line is 4:1; Kelli is at 19:1. She is dramatically under-investing in acquisition relative to what each client is worth. There is enormous headroom to spend more and still print profit.</div></div></div>
+    <div class="win-card"><div class="win-icon">🤝</div><div><div class="win-label">4 Years of Referral Proof + Retention</div><div class="win-desc">~97 active clients, 7.2% monthly churn, ~47–50% front-to-backend conversion across 3–4 assistant coaches with resell and testimonial tracking. The offer delivers and clients re-buy. The brand has deep trust — it just hasn't been converted into a paid acquisition engine yet.</div></div></div>
+    <div class="win-card"><div class="win-icon">🎯</div><div><div class="win-label">Close Rate 56% — Sales Isn't the Problem</div><div class="win-desc">Q1 close rate averaged 56% (70% in March, 67% in May). When a qualified person gets on the call, Kelli closes. That means every additional booked call is worth a lot — the entire constraint is getting more of the right people onto the calendar.</div></div></div>
+    <div class="win-card"><div class="win-icon">🩺</div><div><div class="win-label">An Untapped Medical-Pro Moat</div><div class="win-desc">Manus confirms the "fat loss for medical-professional moms" lane is essentially empty in the Meta Ad Library. Kelli's PA background + her organic data (the 15.8K PA-career reel, the 4.9K healthcare-moms reel) prove this is her sharpest, most defensible differentiator — and nobody is running it as paid.</div></div></div>
+  </div>
+</section>
+
+<!-- DATA SNAPSHOT -->
+<section class="doc-section" id="data">
+  <div class="sec-eyebrow">Section 02</div>
+  <div class="sec-heading">Data Snapshot — 2026</div>
+  <div class="sec-divider"></div>
+  <div class="period-bar">
+    <span class="period-bar-label">Period</span>
+    <div class="period-tabs">
+      <button class="pt" onclick="setPeriod('jan')">Jan</button>
+      <button class="pt" onclick="setPeriod('mar')">Mar</button>
+      <button class="pt" onclick="setPeriod('apr')">Apr</button>
+      <button class="pt" onclick="setPeriod('may')">May</button>
+      <button class="pt active" onclick="setPeriod('q1')">Q1 Avg</button>
+    </div>
+    <button class="edit-btn" id="edit-btn" onclick="toggleEdit()">✏ Update Numbers</button>
+  </div>
+  <div class="kpi-band" id="kpi-band"></div>
+  <div class="tbl-wrap"><table class="mtbl"><thead><tr><th>Ad &amp; Funnel Metric</th><th>IFCA Target</th><th>Your Number</th><th>Status</th><th>Note</th></tr></thead><tbody id="ad-tbody"></tbody></table></div>
+  <div class="tbl-wrap"><table class="mtbl"><thead><tr><th>Profit &amp; Margin Metric</th><th>IFCA Target</th><th>Your Number</th><th>Status</th><th>Note</th></tr></thead><tbody id="margin-tbody"></tbody></table></div>
+  <div class="card orange-left mt-md"><p style="font-size:13px;"><strong>Jordan's read on the numbers:</strong> The CPL is almost unfair — $1.28, dipping to $0.71. But cheap leads are hiding the real story. The two tells: <em>lead-to-booked-call sits around 2%</em> (cheap follower-funnel volume that doesn't convert to calls), and <em>marketing margin is ~3%</em> — she's barely spending on ads relative to a business throwing off 59% net margins. April is a vacation-month outlier (she took the whole month off — discount it). Show rate is the operational watch item: 79% in Jan, slipped to 62.5% in March and 63.6% in April, recovered to 80% in May. The margins and close rate are excellent. This is not an efficiency problem — it's a <strong>volume problem</strong>. She needs more entities, more spend, a real DM funnel, and a setting system that actually books the calls.</p></div>
+  <div class="card blue-left mt-md"><p style="font-size:13px;margin-bottom:0;"><strong>Data note:</strong> February is blank in the tracker, so the Q1 Avg is calculated from January + March only. CAC, LTV, churn, and active-client counts are currently logged for March in the LTGP tab and carried across periods — the team is still ramping the EOM report / success dashboard, so treat the unit-economics numbers as a March snapshot, not a fully-built monthly trend yet (see Constraint 6).</p></div>
+</section>
+
+<!-- REVENUE EQUILIBRIUM -->
+<section class="doc-section" id="equilibrium">
+  <div class="sec-eyebrow">Section 03</div>
+  <div class="sec-heading">Revenue Equilibrium</div>
+  <div class="sec-divider"></div>
+  <p class="mb-md">The leaky-bucket question: are you adding client value faster than churn is removing it? <strong>Revenue Equilibrium = LTV × New Clients Acquired per month.</strong> If that number is above your current revenue, you're building a compounding base. If it's roughly equal, you're treading water — replacing churn but not growing. This is the math underneath Kelli's "good month / panic month" cycle.</p>
+  <div class="card mt-md">
+    <div class="req-grid">
+      <div class="req-cell"><span class="req-label">Monthly Churn Rate</span><span class="req-val" id="re-churn">7.2%</span><span class="req-sub">Off-boarded ÷ active clients (~97 active)</span></div>
+      <div class="req-cell"><span class="req-label">LTV per Client</span><span class="req-val" id="re-ltv">$5,045</span><span class="req-sub">Avg monthly value ÷ churn rate</span></div>
+      <div class="req-cell"><span class="req-label">New Clients / Month</span><span class="req-val" id="re-new">8</span><span class="req-sub">Avg closes this period</span></div>
+    </div>
+    <div class="eq-compare">
+      <div class="eq-block purple"><div class="eq-b-label">Revenue Equilibrium</div><div class="eq-b-val" id="re-eq">$38K</div><div class="eq-b-sub">LTV × New Clients — what you're building toward</div></div>
+      <div class="eq-vs">VS</div>
+      <div class="eq-block blue"><div class="eq-b-label">Actual Monthly Revenue</div><div class="eq-b-val" id="re-actual">$35K</div><div class="eq-b-sub">Cash collected this period</div></div>
+    </div>
+    <div class="eq-verdict flat" id="re-verdict"></div>
+  </div>
+  <div class="card yellow-left mt-md"><p style="font-size:13px;"><strong>The core insight — this IS the "panic month" problem:</strong> At 7.2% churn on ~97 clients, Kelli loses roughly <strong>7 clients a month</strong>. She closes about <strong>7–8 a month</strong>. So she's running almost exactly in place — every new client basically just replaces a churned one. That's why revenue oscillates around the same band instead of climbing, and why a soft month (like April's 3 closes) immediately becomes a $34K dip. The entire fix is on one side of the equation: <strong>get new clients per month from ~8 up to 12–15</strong>. At 12–15 closes/month, equilibrium jumps to $60–76K and the base finally compounds — which is exactly the predictable $50–60K Kelli is asking for. New-client volume is a lead-gen problem, which is a paid-ads problem.</p></div>
+</section>
+
+<!-- CREATIVE INTELLIGENCE -->
+<section class="doc-section" id="creative">
+  <div class="sec-eyebrow">Section 04 — Updated June 2026</div>
+  <div class="sec-heading">Creative Intelligence Report</div>
+  <div class="sec-divider"></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px;">
+    <p style="margin:0;max-width:680px;">Full intelligence synthesis — positioning resolution, The Metabolic Reboot System mechanism, organic ecosystem, Meta Ad Library competitive audit, entity gap analysis, verbatim hooks, and a 10-entity build queue — ready for the Ad Creative Workshop exercise.</p>
+    <button id="copy-intel-btn" onclick="copyIntelReport()" style="background:var(--orange);border:none;border-radius:10px;padding:12px 22px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#fff;cursor:pointer;display:flex;align-items:center;gap:8px;transition:opacity .18s;white-space:nowrap;flex-shrink:0;">
+      <span>⬆</span> Copy for Workshop
+    </button>
+  </div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:10px;">Executive Summary</div>
+  <div class="card orange-left mb-md">
+    <p style="font-size:13px;margin-bottom:8px;">Kelli is a profitable, healthy operator with a validated offer (~97 active clients, 7.2% churn, 59% net margin) and almost no paid acquisition infrastructure. The Meta Ad Library shows <strong>one active ad entity</strong> against an IFCA standard of 8–10 — and that single ad points to a follower funnel, not a DM funnel. The brand's deepest asset is hiding in plain sight: <strong>the medical-professional-mom angle</strong>. Her IG bio fuses both positioning lines — "I help Medical Professional Moms lose fat for the last time without giving up 🍕 and 🍷" — and her organic data confirms it pulls hardest (the 15.8K-view "Why I decided NOT to go back to work as a PA" reel and the 4.9K "Shoutout to all the Healthcare Moms" reel both beat her generic anti-diet content).</p>
+    <p style="font-size:13px;margin-bottom:0;"><strong>The diagnosis:</strong> <em>Kelli doesn't have a message problem or a sales problem — she has an entity-count and funnel-type problem. The medical-pro mom lane is open white space no serious competitor is running, her mechanism (The Metabolic Reboot System) and food-freedom promise are sharp, and her unit economics can fund aggressive testing. Her next move is a deliberate 10-entity DM-funnel portfolio — led by the medical-professional identity — plus the MOF/proof layer she has zero of today.</em></p>
+  </div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin-bottom:10px;">Brand, Offer &amp; Funnel Intelligence</div>
+  <div class="audit-table-wrap mb-md"><table class="audit-tbl"><thead><tr><th>Dimension</th><th>Evidence</th><th>Strategic Meaning</th></tr></thead><tbody>
+    <tr><td><strong>Core Avatar</strong></td><td>Medical-professional moms (nurses, PAs, NPs, physicians) 30–45 — they spend their careers caring for everyone else's body and can't crack their own. Secondary frame: busy moms generally.</td><td>Lead with the medical-pro identity in the hook; use "busy mom" in the body. This is the sharpest, most defensible avatar — and the one her own organic algorithm rewards most.</td></tr>
+    <tr><td><strong>Named Mechanism</strong></td><td><strong>The Metabolic Reboot System</strong> — restore a slowed/under-fed metabolism, then lose fat sustainably while still eating the foods you love</td><td>A proprietary frame that separates Kelli from "eat less / work out more." Positions metabolic repair (eat MORE) as the counterintuitive mechanism. Already live in her brand name and group.</td></tr>
+    <tr><td><strong>Core Promise</strong></td><td>Lose fat "for the last time" without giving up 🍕 and 🍷, without 1,200-calorie diets, cleanses, or 6-day-a-week workouts — built for a life that never slows down</td><td>Food-freedom + sustainability + "never start over again." The "without" framing names the enemies in one line — usable directly as direct-response copy.</td></tr>
+    <tr><td><strong>Primary Enemy</strong></td><td>The 30-day challenge / January cleanse / "start over every year" cycle; 1,200-calorie restriction; chronic cardio; the diet industry's "try harder" lie</td><td>The villain isn't just bad diets — it's the entire restart cycle that has trained her avatar to believe their body is broken. Broader and more emotionally resonant.</td></tr>
+    <tr><td><strong>Premium Differentiator</strong></td><td>Kelli's PA credential + lived experience as a mom of three who homeschools with no childcare</td><td>The PA background unlocks angles no non-medical coach can run credibly (e.g. GLP-1 muscle-loss authority). The mom-of-three reality makes "built for your real life" believable.</td></tr>
+    <tr><td><strong>Funnel Infrastructure</strong></td><td>Comment-to-DM CTAs · quiz funnel (new) · follower funnel (primary, working) · "FREE Busy Mom Food Guide" lead magnet · SetSmart AI setter (being implemented)</td><td>Surfaces exist but everything is TOF and points at the follower funnel. The DM funnel and the lead magnet are barely expressed as paid. No MOF nurture layer at all.</td></tr>
+  </tbody></table></div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin-bottom:10px;">Meta Ad Library Audit — June 2026</div>
+  <div class="card red-left mb-sm"><p style="font-size:13px;margin-bottom:0;"><strong>Ad Library status:</strong> Kelli's page shows <strong>1 active ad / 1 entity</strong> (Library ID 1626527208580798, live since ~April 29 — approaching the 60-day proven-winner mark). Strong hook, wrong destination: it drives to a <em>follower funnel</em>, not a DM-automation entry. It's a single lottery ticket where she needs ten. This is not a failure — it's an untouched opportunity on top of a validated offer.</p></div>
+  <div class="audit-table-wrap mb-md"><table class="audit-tbl"><thead><tr><th>Advertiser</th><th>Verbatim Hook (First 3 Sec)</th><th>Format</th><th>Driver</th><th>Status / Entity Judgment</th></tr></thead><tbody>
+    <tr><td><strong>Kelli (KelzBFit)</strong></td><td><em>"I wish more women in healthcare careers actually took care of themselves the same way they take care of their families and their patients..."</em> → Visit IG profile</td><td>B-roll + text (0:14)</td><td><span class="gap-pill warn">Identity</span></td><td>Her only entity. Right lane, wrong funnel (follower, not DM).</td></tr>
+    <tr><td>WarriorBabe</td><td><em>"...completely reshaped her body in just 2.5 years... and she's 60 years old!"</em> → how-it-works</td><td>Case-study video (14:28)</td><td><span class="gap-pill opportunity">Social Proof</span></td><td>⭐ ~13 months running — proven winner. 8+ testimonial variants = pure Andromeda play.</td></tr>
+    <tr><td>Audrey Adams</td><td><em>"If you've been trying to lose the same ten pounds for five years, eating well under 1,200 calories... the answer is not eating less."</em></td><td>Talking-head VSL (7:37)</td><td><span class="gap-pill warn">Relief / Validation</span></td><td>Owns the "eat more / anti-1,200-cal" lane with long-form. Don't compete head-on here.</td></tr>
+    <tr><td>Tandem Nutrition</td><td><em>"If you lost weight on Ozempic... but gained it back after stopping — you are not broken."</em> → Comment "RESET"</td><td>Talking head (2:04)</td><td><span class="gap-pill warn">Relief / Validation</span></td><td>GLP-1 rebound + comment-DM funnel. Kelli can out-authority this with her PA credential.</td></tr>
+    <tr><td>Bach Performance</td><td><em>"Comment METHOD and I'll send you the full breakdown..."</em></td><td>Talking head (DM funnel)</td><td><span class="badge info">Authority / Identity</span></td><td>8 DM-funnel variants — the exact comment-trigger architecture Kelli should copy.</td></tr>
+    <tr><td>Conquer Fitness &amp; Nutrition</td><td><em>"Attention women over 30 struggling to lose 20+ lbs... a real, sustainable solution..."</em></td><td>Text / static</td><td><span class="gap-pill missing">Frustration</span></td><td>⭐ ~7 months running — proven winner in the sustainable-fat-loss frame.</td></tr>
+    <tr><td colspan="5" style="background:rgba(255,255,255,.02);font-size:12px;color:var(--gray-500);font-style:italic;">Category C (medical-pro / nurse fat loss) returned essentially <strong>zero</strong> coaching competitors in the Ad Library — a genuine, defensible moat for Kelli.</td></tr>
+  </tbody></table></div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin-bottom:10px;">Organic Content Audit — Top Reels (Verbatim)</div>
+  <div class="card blue-left mb-sm"><p style="font-size:13px;margin-bottom:0;"><strong>Standout data point:</strong> Her meal-prep reel <em>"NOT TO BE DRAMATIC... but if I wanted to lose 10 lbs by spring break here are some meals I'd have on repeat"</em> hit <strong>324K views</strong> — proving food-freedom/aspiration content has outsized reach. It is not currently a paid entity. Meanwhile her three highest-pull <em>identity</em> reels are all medical-professional themed.</p></div>
+  <div class="audit-table-wrap mb-md"><table class="audit-tbl"><thead><tr><th>Views</th><th>Verbatim Hook</th><th>Format</th><th>Driver</th><th>Ad Potential</th></tr></thead><tbody>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-400);">324K</td><td><strong>"NOT TO BE DRAMATIC... but if I wanted to lose 10 lbs by spring break here are some meals I'd have on repeat"</strong></td><td>B-roll + text</td><td><span class="badge info">Desire</span></td><td><span class="gap-pill opportunity">Very High — viral food-freedom reach</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-400);">15.8K</td><td><strong>"WHY I DECIDED NOT TO GO BACK TO WORK AS A PA"</strong></td><td>Talking head</td><td><span class="gap-pill warn">Identity / Story</span></td><td><span class="gap-pill opportunity">Very High — proven medical-pro pull</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-400);">7.1K</td><td><strong>"Believe it or not... Your 'all or nothing' mindset is what's hurting your progress"</strong> (in scrubs)</td><td>Talking head</td><td><span class="gap-pill missing">Frustration</span></td><td><span class="gap-pill opportunity">High — scrubs visual differentiates</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-400);">4.9K</td><td><strong>"Shoutout to all the Healthcare Moms that thought working in healthcare would help as a mom... but all it did was make your mom anxiety worse."</strong></td><td>Talking head</td><td><span class="gap-pill missing">Frustration / Identity</span></td><td><span class="gap-pill opportunity">Very High — direct, pain-specific</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-400);">3.6K</td><td><strong>"My clients in Healthcare walking past the cardio machines after finally learning..."</strong></td><td>Humor / social proof</td><td><span class="gap-pill opportunity">Identity / Proof</span></td><td><span class="gap-pill opportunity">High — medical-pro proof + humor</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-400);">3.0K</td><td><strong>"The biggest fat loss mistake I see busy women making"</strong></td><td>Talking head (gym)</td><td><span class="gap-pill missing">Frustration</span></td><td><span class="gap-pill opportunity">High — classic DM-funnel pain hook</span></td></tr>
+  </tbody></table></div>
+  <div class="grid-3 mb-md mt-md" style="gap:12px;">
+    <div class="card" style="text-align:center;padding:24px 16px;"><div style="font-family:'Bebas Neue';font-size:52px;color:#F87171;line-height:1;">1</div><div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500);margin-top:4px;">Active Paid Entities</div><div style="font-size:12px;color:rgba(255,255,255,.45);margin-top:6px;">One ad, pointed at a follower funnel</div></div>
+    <div class="card" style="text-align:center;padding:24px 16px;"><div style="font-family:'Bebas Neue';font-size:52px;color:var(--green);line-height:1;">3</div><div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500);margin-top:4px;">Organic Content Clusters</div><div style="font-size:12px;color:rgba(255,255,255,.45);margin-top:6px;">Medical-pro identity · food freedom · anti-diet education</div></div>
+    <div class="card" style="text-align:center;padding:24px 16px;border-color:rgba(245,158,11,.25);"><div style="font-family:'Bebas Neue';font-size:52px;color:var(--yellow);line-height:1;">9+</div><div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500);margin-top:4px;">Entity Gap to Standard</div><div style="font-size:12px;color:rgba(255,255,255,.45);margin-top:6px;">1 of 8–10 · zero MOF/BOF entities</div></div>
+  </div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin-bottom:10px;">Verbatim Hooks — Pull Forward Into Workshop</div>
+  <div class="audit-table-wrap mb-md"><table class="audit-tbl"><thead><tr><th>Source</th><th>Verbatim Hook</th><th>Format</th><th>Driver</th></tr></thead><tbody>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray-500);">Active paid ad</td><td><strong>"I wish more women in healthcare careers actually took care of themselves the same way they take care of their families and their patients."</strong></td><td>B-roll + text</td><td><span class="gap-pill warn">Identity</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray-500);">Organic — 15.8K</td><td><strong>"Why I decided NOT to go back to work as a PA."</strong></td><td>Talking-head story</td><td><span class="gap-pill warn">Identity</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray-500);">Organic — 4.9K</td><td><strong>"Shoutout to all the Healthcare Moms that thought working in healthcare would help as a mom... but all it did was make your mom anxiety worse."</strong></td><td>Talking head</td><td><span class="gap-pill missing">Frustration</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray-500);">Organic (verbatim)</td><td><strong>"Here you are again, in the same spot, trying the same thing... Throwing yourself on a 1,200-calorie diet doing 6–7 days of workouts is just going to leave you defeated."</strong></td><td>Talking head</td><td><span class="gap-pill missing">Villain / Frustration</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray-500);">Organic — 324K</td><td><strong>"NOT TO BE DRAMATIC... but if I wanted to lose 10 lbs by spring break here are some meals I'd have on repeat."</strong></td><td>B-roll + text (food)</td><td><span class="badge info">Desire</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray-500);">Bio / lead magnet</td><td><strong>"I help Medical Professional Moms lose fat for the last time without giving up 🍕 and 🍷."</strong> → "FREE Busy Mom Food Guide"</td><td>Bio / DM trigger</td><td><span class="gap-pill opportunity">Desire / Identity</span></td></tr>
+  </tbody></table></div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin-bottom:10px;">Competitive Benchmark &amp; White Space</div>
+  <p style="font-size:13px;color:rgba(255,255,255,.65);margin-bottom:14px;">The niche is crowded around predictable frames — "you're not broken," "eat more / stop eating 1,200 calories," menopause weight loss (WarriorBabe owns it), and "I'm a mom who lost the same X lbs." Kelli's defensible lane is the one nobody is running: <strong>fat loss for medical-professional moms</strong>, fused with her PA authority and the food-freedom promise.</p>
+  <div class="comp-card mb-md"><table class="comp-tbl"><thead><tr><th>Saturated Market Angle</th><th>Why It's Crowded</th><th>More Ownable Kelli Version</th></tr></thead><tbody>
+    <tr><td>"You're not broken / it's not your fault"</td><td>Audrey Adams, Tandem, WarriorBabe all lead with it — fatigued</td><td>"You spent 12 hours taking care of everyone else's body. Who's taking care of yours?" — same validation, healthcare-specific</td></tr>
+    <tr><td>"Eat more / stop the 1,200-calorie diet"</td><td>Audrey Adams owns this with a 7-min VSL</td><td>The Metabolic Reboot System as the named mechanism + medical-pro authority, not a generic "eat more" opinion</td></tr>
+    <tr><td>"Menopause weight gain"</td><td>WarriorBabe's 9-month proven winner</td><td>Don't compete directly — own the younger medical-pro mom (30–45) + perimenopause-adjacent angle instead</td></tr>
+    <tr><td>"GLP-1 / Ozempic rebound"</td><td>Tandem Nutrition running it without medical authority</td><td>"As a PA, I know exactly what Ozempic does to your muscle mass." — authority no non-medical coach can match</td></tr>
+  </tbody></table></div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin-bottom:10px;">Unclaimed White-Space Angles</div>
+  <div class="audit-table-wrap mb-md"><table class="audit-tbl"><thead><tr><th>Angle</th><th>Why It Fits</th><th>Driver</th><th>Best Format</th></tr></thead><tbody>
+    <tr><td><strong>Medical-pro identity — "Who's taking care of yours?"</strong></td><td>Zero competitors run it; Kelli's PA background + top organic reels prove the pull</td><td><span class="gap-pill missing">Pain / Identity</span></td><td>Talking head (scrubs)</td></tr>
+    <tr><td><strong>Cognitive bandwidth / decision fatigue</strong></td><td>"You don't have the mental bandwidth for a diet that requires you to think" — speaks to the maxed-out healthcare mom</td><td><span class="gap-pill missing">Pain / Desire</span></td><td>Talking head or B-roll</td></tr>
+    <tr><td><strong>GLP-1 muscle-loss / PA authority</strong></td><td>2026 cultural moment; her credential makes it uniquely credible vs. Tandem and supplement noise</td><td><span class="badge info">Authority / Fear</span></td><td>Talking head</td></tr>
+    <tr><td><strong>The "January cycle" villain</strong></td><td>She's used it organically; not yet run as a paid DM entity</td><td><span class="gap-pill missing">Villain / Validation</span></td><td>Direct-to-camera</td></tr>
+    <tr><td><strong>Proof-of-mechanism case study (MOF)</strong></td><td>"She ate 1,100 calories and gained weight. We added 600 back. She lost 22 lbs." — no direct competitor running this</td><td><span class="gap-pill opportunity">Social Proof</span></td><td>Talking head + screenshots</td></tr>
+  </tbody></table></div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:10px;">Recommended Entity Build Queue — Priority Order</div>
+  <div class="plan-list mb-md">
+    <div class="plan-item"><div class="plan-num">1</div><div><div class="plan-title">The PA Origin Story — "I Couldn't Fix Myself"</div><div class="plan-desc">Hook: <em>"I left my PA career because I was helping patients lose weight while I couldn't figure out my own body. Here's what I finally learned."</em><br>Format: Talking head, home setting · Driver: Vulnerability / Identity · Comment "REBOOT". Her highest-trust, highest-differentiation entity. Film first.</div><div><span class="plan-tag ads">Priority 1</span><span class="plan-tag creative">Talking Head</span><span class="plan-tag" style="background:var(--yellow-bg);color:var(--yellow);border:1px solid rgba(245,158,11,.2);">Identity</span></div></div></div>
+    <div class="plan-item"><div class="plan-num">2</div><div><div class="plan-title">The Nurse's Granola Bar — Humor / Identity</div><div class="plan-desc">Hook: <em>"Shoutout to the nurse who ate a granola bar standing up at 2 PM and called it lunch. Your metabolism noticed."</em><br>Format: Talking head in scrubs · Driver: Humor · Comment "NURSE". Humor disarms; scrubs visual is a distinct entity signal; fast engagement data. Film second.</div><div><span class="plan-tag ads">Priority 2</span><span class="plan-tag creative">Talking Head (scrubs)</span><span class="plan-tag" style="background:var(--blue-dim);color:#7ABFDD;border:1px solid rgba(74,127,165,.25);">Humor</span></div></div></div>
+    <div class="plan-item"><div class="plan-num">3</div><div><div class="plan-title">The Busy Mom Food Guide — Lead Magnet Activation</div><div class="plan-desc">Hook: <em>"Comment 'GUIDE' and I'll send you my free Busy Mom Food Guide — the exact meals my clients eat to lose fat without tracking, counting, or giving up pizza."</em><br>Format: B-roll (food) · Driver: Desire · Lowest production effort, fastest DM volume. Activates an asset she already owns. Launch immediately.</div><div><span class="plan-tag ads">Priority 3</span><span class="plan-tag creative">B-Roll (food)</span><span class="plan-tag" style="background:var(--orange-dim);color:var(--orange);border:1px solid rgba(232,119,34,.25);">Desire</span></div></div></div>
+    <div class="plan-item"><div class="plan-num">4</div><div><div class="plan-title">The January Cycle — Anti-Resolution Villain</div><div class="plan-desc">Hook: <em>"Here you are again. Same weight. Same January. Same promise to yourself. I'm not going to tell you to try harder."</em><br>Format: Direct-to-camera · Driver: Villain / Validation · Comment "DONE". Proven angle in her organic; needs paid amplification. Self-selects the most exhausted, highest-intent segment.</div><div><span class="plan-tag ads">Priority 4</span><span class="plan-tag creative">Direct-to-Camera</span><span class="plan-tag" style="background:var(--red-bg);color:#F87171;border:1px solid rgba(220,38,38,.2);">Villain</span></div></div></div>
+    <div class="plan-item"><div class="plan-num">5</div><div><div class="plan-title">The 22 Pounds Case Study — First MOF Entity</div><div class="plan-desc">Hook: <em>"She was eating 1,100 calories and gaining weight. We added 600 back over 8 weeks. She lost 22 lbs. Here's the exact three-phase process."</em><br>Format: Talking head + transformation/DM screenshots · Driver: Social Proof / Mechanism · Comment "CASE". Bridges TOF hooks to the call. Build after 2–3 TOF entities are generating warm traffic.</div><div><span class="plan-tag ads">Priority 5</span><span class="plan-tag creative">Case Study</span><span class="plan-tag sales">MOF</span></div></div></div>
+    <div class="plan-item"><div class="plan-num">6</div><div><div class="plan-title">The GLP-1 Conversation — PA Authority</div><div class="plan-desc">Hook: <em>"As a PA, I know exactly what Ozempic does to your muscle mass when you stop taking it. Here's the conversation your prescribing doctor probably didn't have with you."</em><br>Format: Talking head · Driver: Authority / Fear · Comment "GLP1". A 2026 cultural moment no serious coaching competitor owns with real medical credibility.</div><div><span class="plan-tag ads">Priority 6</span><span class="plan-tag creative">Talking Head</span><span class="plan-tag ops">Authority</span></div></div></div>
+  </div>
+  <p style="font-size:12px;color:var(--gray-500);margin-bottom:20px;">Full 10-entity portfolio (incl. "Stop Doing Cardio" pattern-interrupt, "Pizza on Friday" food-freedom, "Three Night Shifts" MOF proof, and "Three Questions" BOF qualifier) is in the Copy-for-Workshop export.</p>
+  <div class="card orange-left"><p style="font-size:13px;margin-bottom:6px;"><strong>Strategic Diagnosis:</strong> Kelli is not a weak-message or weak-business client. She is a <em>healthy, under-acquired</em> client — real scale, a named mechanism (The Metabolic Reboot System), elite unit economics, deep referral trust, and a genuinely defensible white-space lane (medical-pro moms) that no competitor is running as paid. What she lacks is the acquisition machine to replace a referral engine that is tapping out.</p><p style="font-size:13px;margin-bottom:0;">Her next move is not "more cheap leads" — her CPL is already $1.28. It is a <em>deliberate 10-entity DM-funnel portfolio led by the medical-professional identity, plus the MOF/proof layer she has zero of, plus a setting system (SetSmart) that finally converts the cheap leads into booked calls.</em> Fix entity count, funnel type, and setting — and the consistent $50–60K months are the arithmetic result of the metrics already in her tracker.</p></div>
+</section>
+
+<!-- CONSTRAINT DIAGNOSIS -->
+<section class="doc-section" id="diagnosis">
+  <div class="sec-eyebrow">Section 05</div>
+  <div class="sec-heading">Constraint Diagnosis</div>
+  <div class="sec-divider"></div>
+  <p class="mb-md">Fix these in order. Kelli's top constraints are all on the acquisition side — the delivery, margins, and economics are already healthy. Fixing #1 unlocks more than #3–#6 combined.</p>
+  <div class="diag-list">
+    <div class="diag-card p1"><div class="diag-head"><div class="diag-rank">1</div><div><div class="diag-title">No Paid Acquisition Engine — 1 Entity, Referral Source Tapping Out</div><div class="diag-desc">The business was built on ~4 years of referrals from a PA mom Facebook group — and that source is drying up. Meanwhile the paid account is a single ad pointed at a follower funnel. There is no DM-funnel entity portfolio replacing the referral engine. This is THE growth constraint: when the referral well runs dry and there's no paid machine behind it, revenue can only oscillate or decline.</div></div></div><div class="diag-action"><strong>Fix:</strong> Build the 10-entity DM-funnel portfolio from Section 04, led by the medical-pro identity (PA Origin Story, Nurse's Granola Bar) and the Busy Mom Food Guide lead-magnet activation. Target 8–10 distinct entities running simultaneously within 90 days.</div></div>
+    <div class="diag-card p1"><div class="diag-head"><div class="diag-rank">2</div><div><div class="diag-title">Lead → Booked Call ~2% — The Setting Gap</div><div class="diag-desc">Kelli generates 744–1,912 leads/month at ~$1 each, but only ~2% become booked calls. She has cycled through 6–8 setters (including a paid setter academy) and none stuck. The leads are cheap and plentiful; the conversion of lead → conversation → calendar is broken. Because her close rate is 56%, every additional booked call is worth a lot.</div></div></div><div class="diag-action"><strong>Fix:</strong> Stand up SetSmart (AI setter) — already in progress — and build a structured DM qualification → booking flow. Pair the new DM-funnel entities (comment-trigger CTAs) with SetSmart so the cheap volume actually converts to calls. Track lead→call weekly.</div></div>
+    <div class="diag-card p2"><div class="diag-head"><div class="diag-rank">3</div><div><div class="diag-title">All Top-of-Funnel — No MOF Nurture Layer</div><div class="diag-desc">Everything Kelli runs is cold, top-of-funnel content driving to a follow/DM. There is no middle-of-funnel layer that warms an interested lead before the call ask — no proof entities, no mechanism education, no objection-handling, no case studies in paid. Leads either convert immediately or evaporate. A warm audience is being generated every month and left completely unmined.</div></div></div><div class="diag-action"><strong>Fix:</strong> Build 3 MOF/BOF entities (22-Pounds Case Study, Three Night Shifts proof, Three Questions qualifier) and run them as retargeting against everyone who engaged with TOF content.</div></div>
+    <div class="diag-card p2"><div class="diag-head"><div class="diag-rank">4</div><div><div class="diag-title">Show Rate Slipping — 62–64% in the Soft Months</div><div class="diag-desc">Show rate was 79% in January, slipped to 62.5% in March and 63.6% in April, then recovered to 80% in May — below the 70% target on the down months. With low call volume, every no-show is expensive. The success coach has already delivered the show-rate optimization training; the leading indicator needs to be watched weekly, not monthly.</div></div></div><div class="diag-action"><strong>Fix:</strong> Implement the show-rate checklist + SMS-only confirmation sequence. Add a same-day confirmation touch. A warmer MOF layer (Constraint 3) compounds this.</div></div>
+    <div class="diag-card p2"><div class="diag-head"><div class="diag-rank">5</div><div><div class="diag-title">Ad Account Massively Under-Funded — Marketing Margin ~3%</div><div class="diag-desc">Kelli spends ~$1,200/month on ads against a business doing $35–48K/month at 59% net margin and 19:1 LTV:CAC. Marketing margin is ~3% when the healthy range is 10–20%. She doesn't trust ads yet because none have clearly worked — but that's a function of having one entity, not a function of the channel. The economics scream that she should be spending 5–10× more.</div></div></div><div class="diag-action"><strong>Fix:</strong> As the new entities prove out (kill rule: 2× CPL at 3 days), scale spend deliberately from ~$1.2K toward $5–6K/month. Max CAC headroom is enormous at a $5,045 LTV.</div></div>
+    <div class="diag-card p3"><div class="diag-head"><div class="diag-rank">6</div><div><div class="diag-title">Data Hygiene — EOM Report Not Yet Trustworthy</div><div class="diag-desc">The team just started using the client success dashboard / end-of-month report and isn't filling it out correctly yet, so CAC, LTV, and LTGP are only partially calculated (March is the only fully-populated month; February is blank entirely). You can't manage what you can't measure.</div></div></div><div class="diag-action"><strong>Fix:</strong> Lock a weekly + monthly data-entry SOP for the assistant coaches and VA. Get CAC/LTV/churn/equilibrium calculating cleanly every month.</div></div>
+    <div class="diag-card ok"><div class="diag-head"><div class="diag-rank">✓</div><div><div class="diag-title">Margins, CPL, Close Rate &amp; Unit Economics — Leave These Alone</div><div class="diag-desc">59% net margin, $1.28 CPL, 56% close rate, and 19:1 LTV:CAC are all excellent and above IFCA targets. This is a healthy, profitable business. The temptation will be to "optimize" these — don't. The entire opportunity is on the acquisition side. Protect the margins and economics while you pour fuel on lead gen.</div></div></div></div>
+  </div>
+</section>
+
+<!-- 90-DAY PLAN -->
+<section class="doc-section" id="plan">
+  <div class="sec-eyebrow">Section 06</div>
+  <div class="sec-heading">Next 90 Days — Priority Action Plan</div>
+  <div class="sec-divider"></div>
+  <p class="mb-md">Ranked by impact per effort. Items 1–3 are the non-negotiables — they replace the tapping-out referral engine. Items 4–5 compound on top.</p>
+  <div class="plan-list">
+    <div class="plan-item"><div class="plan-num">1</div><div><div class="plan-title">Build the 10-Entity DM-Funnel Portfolio</div><div class="plan-desc">Film and launch the Section 04 build queue in order: PA Origin Story → Nurse's Granola Bar → Busy Mom Food Guide activation → January Cycle, then the GLP-1 authority and the rest. Lead with the medical-professional identity — it's the white space and her organic algorithm's clearest signal. Use comment-trigger CTAs (REBOOT / NURSE / GUIDE / DONE) feeding the DM funnel. Kill rule: 2× CPL at 3 days. This is the single highest-leverage move in the entire plan.</div><div><span class="plan-tag ads">Paid Media</span><span class="plan-tag creative">Creative</span></div></div></div>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kelli Brower — Full Business Audit | IFCA 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"><style>
+:root {
+  --navy:        #1E3A5F;
+  --navy-dark:   #0B1A2B;
+  --navy-mid:    #142845;
+  --navy-card:   rgba(20,40,69,0.6);
+  --orange:      #E87722;
+  --orange-dim:  rgba(232,119,34,0.12);
+  --orange-glow: rgba(232,119,34,0.22);
+  --blue-mid:    #4A7FA5;
+  --blue-dim:    rgba(74,127,165,0.12);
+  --blue-light:  #D6E4F0;
+  --gray-400:    #94A3B8;
+  --gray-500:    #64748B;
+  --gray-600:    #475569;
+  --green:       #22C55E;
+  --green-bg:    rgba(34,197,94,0.10);
+  --red:         #DC2626;
+  --red-bg:      rgba(220,38,38,0.09);
+  --yellow:      #F59E0B;
+  --yellow-bg:   rgba(245,158,11,0.10);
+  --purple:      #8B5CF6;
+  --purple-bg:   rgba(139,92,246,0.10);
+}
+*, ::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--navy-dark); color: #fff; min-height: 100vh; overflow-x: hidden; }
+body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0; background-image: linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px); background-size: 48px 48px; }
+body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(ellipse 80% 60% at 5% 5%, rgba(74,127,165,.09) 0%, transparent 55%), radial-gradient(ellipse 60% 50% at 95% 95%, rgba(232,119,34,.06) 0%, transparent 55%); }
+.page { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 24px 120px; }
+.hero { padding: 60px 0 52px; border-bottom: 1px solid rgba(255,255,255,.07); margin-bottom: 0; position: relative; }
+.hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .2em; color: var(--orange); text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+.hero-eyebrow::before { content: ''; width: 32px; height: 2px; background: var(--orange); border-radius: 1px; }
+.hero-name { font-family: 'Bebas Neue'; font-size: clamp(52px, 8vw, 96px); line-height: .88; letter-spacing: .02em; color: #fff; margin-bottom: 6px; }
+.hero-name span { color: var(--orange); }
+.hero-title { font-family: 'DM Mono', monospace; font-size: 14px; letter-spacing: .08em; color: rgba(255,255,255,.4); text-transform: uppercase; margin-bottom: 28px; }
+.hero-stats { display: flex; gap: 0; margin-bottom: 32px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; overflow: hidden; }
+.hs { flex: 1; padding: 20px 24px; border-right: 1px solid rgba(255,255,255,.06); }
+.hs:last-child { border-right: none; }
+.hs-val { font-family: 'Bebas Neue'; font-size: 40px; line-height: 1; margin-bottom: 4px; }
+.hs-val.orange { color: var(--orange); } .hs-val.green { color: var(--green); } .hs-val.blue { color: #7ABFDD; } .hs-val.white { color: #fff; }
+.hs-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-500); }
+.hero-summary { font-size: 15px; color: rgba(255,255,255,.65); line-height: 1.7; max-width: 720px; border-left: 3px solid var(--orange); padding-left: 20px; }
+.hero-summary strong { color: rgba(255,255,255,.9); }
+.doc-nav { position: sticky; top: 0; z-index: 50; background: rgba(11,26,43,.92); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,.07); padding: 0; margin: 0 -24px; }
+.doc-nav-inner { max-width: 1080px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.doc-nav-inner::-webkit-scrollbar { display: none; }
+.nav-link { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; padding: 14px 16px; white-space: nowrap; color: var(--gray-500); text-decoration: none; border-bottom: 2px solid transparent; transition: color .18s, border-color .18s; }
+.nav-link:hover { color: rgba(255,255,255,.7); }
+.nav-link.active { color: var(--orange); border-bottom-color: var(--orange); }
+.doc-section { padding: 56px 0 0; }
+.sec-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .18em; color: var(--orange); text-transform: uppercase; margin-bottom: 8px; }
+.sec-heading { font-family: 'Bebas Neue'; font-size: clamp(30px,4vw,44px); line-height: .95; letter-spacing: .02em; color: #fff; margin-bottom: 24px; }
+.sec-divider { height: 1px; background: rgba(255,255,255,.07); margin-bottom: 28px; }
+.card { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; padding: 22px 24px; }
+.card.orange-left { border-left: 3px solid var(--orange); border-radius: 0 14px 14px 0; background: var(--orange-dim); }
+.card.green-left { border-left: 3px solid var(--green); border-radius: 0 14px 14px 0; background: var(--green-bg); }
+.card.red-left { border-left: 3px solid var(--red); border-radius: 0 14px 14px 0; background: var(--red-bg); }
+.card.yellow-left { border-left: 3px solid var(--yellow); border-radius: 0 14px 14px 0; background: var(--yellow-bg); }
+.card.blue-left { border-left: 3px solid var(--blue-mid); border-radius: 0 14px 14px 0; background: var(--blue-dim); }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+@media(max-width:720px){ .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } .hero-stats { flex-direction: column; } .hs { border-right: none; border-bottom: 1px solid rgba(255,255,255,.06); } .hs:last-child { border-bottom: none; } }
+@media(max-width:900px){ .grid-3 { grid-template-columns: 1fr 1fr; } .grid-4 { grid-template-columns: 1fr 1fr; } }
+.win-card { background: var(--green-bg); border: 1px solid rgba(34,197,94,.2); border-radius: 12px; padding: 18px; display: flex; align-items: flex-start; gap: 12px; }
+.win-icon { font-size: 20px; flex-shrink: 0; padding-top: 2px; }
+.win-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--green); margin-bottom: 4px; }
+.win-desc { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.55; }
+.period-bar { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+.period-bar-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-500); }
+.period-tabs { display: flex; gap: 4px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 4px; }
+.pt { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 7px 14px; border-radius: 7px; border: none; background: transparent; color: var(--gray-500); cursor: pointer; transition: all .18s; }
+.pt.active { background: var(--navy-mid); color: #fff; }
+.pt:hover:not(.active) { color: rgba(255,255,255,.6); }
+.edit-btn { margin-left: auto; background: var(--orange-dim); border: 1px solid rgba(232,119,34,.3); border-radius: 8px; padding: 8px 16px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--orange); cursor: pointer; transition: all .18s; }
+.edit-btn:hover { background: var(--orange-glow); }
+.edit-btn.on { background: var(--orange); color: #fff; }
+.kpi-band { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; margin-bottom: 20px; }
+@media(max-width:700px){ .kpi-band { grid-template-columns: 1fr 1fr; } }
+.kpi-chip { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 14px 16px; position: relative; overflow: hidden; }
+.kpi-chip::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:12px 12px 0 0; }
+.kpi-chip.pass::before { background: var(--green); } .kpi-chip.warn::before { background: var(--yellow); } .kpi-chip.fail::before { background: var(--red); } .kpi-chip.info::before { background: var(--blue-mid); }
+.chip-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); margin-bottom:5px; line-height:1.4; }
+.chip-val { font-family:'Bebas Neue'; font-size:30px; line-height:1; margin-bottom:3px; }
+.kpi-chip.pass .chip-val { color: var(--green); } .kpi-chip.warn .chip-val { color: var(--yellow); } .kpi-chip.fail .chip-val { color: #F87171; } .kpi-chip.info .chip-val { color: #7ABFDD; }
+.chip-target { font-family:'DM Mono',monospace; font-size:10px; color:var(--gray-500); }
+.tbl-wrap { background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; overflow: hidden; margin-bottom: 16px; }
+.mtbl { width:100%; border-collapse:collapse; }
+.mtbl thead tr { background:rgba(255,255,255,.03); }
+.mtbl th { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); padding:10px 14px; text-align:left; border-bottom:1px solid rgba(255,255,255,.06); white-space:nowrap; }
+.mtbl td { padding:12px 14px; font-size:13px; color:rgba(255,255,255,.7); border-bottom:1px solid rgba(255,255,255,.04); vertical-align:middle; }
+.mtbl tbody tr:last-child td { border-bottom:none; }
+.mtbl tbody tr:hover td { background:rgba(255,255,255,.02); }
+.m-name { font-size:13px; color:rgba(255,255,255,.85); }
+.m-target { font-family:'DM Mono',monospace; font-size:11px; color:var(--gray-500); }
+.m-val { font-family:'Bebas Neue'; font-size:22px; line-height:1; }
+.m-val.pass { color:var(--green); } .m-val.warn { color:var(--yellow); } .m-val.fail { color:#F87171; } .m-val.info { color:#7ABFDD; }
+.badge { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.08em; text-transform:uppercase; padding:3px 9px; border-radius:4px; white-space:nowrap; }
+.badge.pass { background:var(--green-bg); color:var(--green); border:1px solid rgba(34,197,94,.25); }
+.badge.warn { background:var(--yellow-bg); color:var(--yellow); border:1px solid rgba(245,158,11,.25); }
+.badge.fail { background:var(--red-bg); color:#F87171; border:1px solid rgba(220,38,38,.25); }
+.badge.info { background:var(--blue-dim); color:#7ABFDD; border:1px solid rgba(74,127,165,.3); }
+.m-note { font-size:11px; color:var(--gray-500); line-height:1.5; max-width:210px; }
+.edit-input { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); border-radius:7px; padding:6px 10px; font-family:'DM Mono',monospace; font-size:13px; color:#fff; outline:none; width:110px; transition:border-color .18s; -moz-appearance:textfield; }
+.edit-input::-webkit-inner-spin-button { -webkit-appearance:none; }
+.edit-input:focus { border-color:rgba(232,119,34,.5); background:rgba(232,119,34,.06); }
+.audit-table-wrap { background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; overflow: hidden; }
+.audit-tbl { width:100%; border-collapse:collapse; }
+.audit-tbl th { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); padding:10px 14px; text-align:left; background:rgba(255,255,255,.03); border-bottom:1px solid rgba(255,255,255,.06); }
+.audit-tbl td { padding:12px 14px; font-size:13px; color:rgba(255,255,255,.65); border-bottom:1px solid rgba(255,255,255,.04); vertical-align:top; line-height:1.5; }
+.audit-tbl tbody tr:last-child td { border-bottom:none; }
+.audit-tbl td strong { color:rgba(255,255,255,.9); }
+.gap-pill { display:inline-block; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.06em; text-transform:uppercase; padding:2px 8px; border-radius:4px; margin:2px 3px 2px 0; }
+.gap-pill.missing { background:var(--red-bg); color:#F87171; border:1px solid rgba(220,38,38,.2); }
+.gap-pill.opportunity { background:var(--green-bg); color:var(--green); border:1px solid rgba(34,197,94,.2); }
+.gap-pill.warn { background:var(--yellow-bg); color:var(--yellow); border:1px solid rgba(245,158,11,.2); }
+.comp-card { background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; overflow: hidden; }
+.comp-tbl { width:100%; border-collapse:collapse; }
+.comp-tbl th { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); padding:10px 14px; text-align:left; background:rgba(255,255,255,.03); border-bottom:1px solid rgba(255,255,255,.06); }
+.comp-tbl td { padding:13px 14px; font-size:13px; color:rgba(255,255,255,.65); border-bottom:1px solid rgba(255,255,255,.04); vertical-align:top; line-height:1.5; }
+.comp-tbl tbody tr:last-child td { border-bottom:none; }
+.diag-list { display:flex; flex-direction:column; gap:12px; }
+.diag-card { border-radius:14px; border:1px solid rgba(255,255,255,.07); background:rgba(255,255,255,.025); overflow:hidden; }
+.diag-card.p1 { border-color:rgba(220,38,38,.35); background:rgba(220,38,38,.04); }
+.diag-card.p2 { border-color:rgba(245,158,11,.28); background:rgba(245,158,11,.03); }
+.diag-card.p3 { border-color:rgba(232,119,34,.22); }
+.diag-card.ok { border-color:rgba(34,197,94,.22); background:rgba(34,197,94,.03); }
+.diag-head { display:flex; align-items:flex-start; gap:16px; padding:20px 22px 16px; }
+.diag-rank { font-family:'Bebas Neue'; font-size:40px; line-height:1; flex-shrink:0; min-width:36px; padding-top:2px; }
+.diag-card.p1 .diag-rank { color:#F87171; } .diag-card.p2 .diag-rank { color:var(--yellow); } .diag-card.p3 .diag-rank { color:var(--orange); } .diag-card.ok .diag-rank { color:var(--green); }
+.diag-title { font-family:'Bebas Neue'; font-size:20px; letter-spacing:.04em; line-height:1.1; margin-bottom:6px; }
+.diag-card.p1 .diag-title { color:#F87171; } .diag-card.p2 .diag-title { color:var(--yellow); } .diag-card.p3 .diag-title { color:var(--orange); } .diag-card.ok .diag-title { color:var(--green); }
+.diag-desc { font-size:13px; color:rgba(255,255,255,.65); line-height:1.65; }
+.diag-action { padding:12px 22px 16px 74px; border-top:1px solid rgba(255,255,255,.05); font-family:'DM Mono',monospace; font-size:11px; color:var(--gray-400); line-height:1.6; }
+.diag-action strong { color:rgba(255,255,255,.75); }
+.req-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:24px; }
+@media(max-width:580px){ .req-grid { grid-template-columns:1fr; } }
+.req-cell { display:flex; flex-direction:column; gap:4px; }
+.req-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); }
+.req-val { font-family:'Bebas Neue'; font-size:36px; line-height:1; color:#fff; }
+.req-sub { font-size:11px; color:var(--gray-500); margin-top:1px; }
+.eq-compare { display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:center; margin-bottom:16px; }
+@media(max-width:580px){ .eq-compare { grid-template-columns:1fr; } }
+.eq-block { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:20px; text-align:center; }
+.eq-block.purple { border-color:rgba(139,92,246,.3); background:var(--purple-bg); }
+.eq-block.blue { border-color:rgba(74,127,165,.3); background:var(--blue-dim); }
+.eq-b-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); margin-bottom:6px; }
+.eq-b-val { font-family:'Bebas Neue'; font-size:42px; line-height:1; margin-bottom:4px; }
+.eq-block.purple .eq-b-val { color:#c4b5fd; } .eq-block.blue .eq-b-val { color:#7ABFDD; }
+.eq-b-sub { font-size:11px; color:var(--gray-500); }
+.eq-vs { font-family:'Bebas Neue'; font-size:32px; color:rgba(255,255,255,.18); text-align:center; }
+.eq-verdict { padding:15px 18px; border-radius:10px; font-size:13px; line-height:1.65; }
+.eq-verdict.building { background:var(--green-bg); border:1px solid rgba(34,197,94,.25); color:var(--green); }
+.eq-verdict.eroding { background:var(--red-bg); border:1px solid rgba(220,38,38,.25); color:#F87171; }
+.eq-verdict.flat { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); color:var(--gray-400); }
+.plan-list { display:flex; flex-direction:column; gap:10px; }
+.plan-item { display:flex; align-items:flex-start; gap:16px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:12px; padding:18px 20px; transition:border-color .2s; }
+.plan-item:hover { border-color:rgba(232,119,34,.2); }
+.plan-num { font-family:'Bebas Neue'; font-size:38px; color:var(--orange); line-height:1; flex-shrink:0; min-width:30px; }
+.plan-title { font-size:15px; font-weight:600; color:#fff; margin-bottom:5px; line-height:1.2; }
+.plan-desc { font-size:13px; color:rgba(255,255,255,.6); line-height:1.65; }
+.plan-tag { display:inline-block; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.08em; text-transform:uppercase; padding:2px 8px; border-radius:4px; margin-top:8px; margin-right:4px; }
+.plan-tag.ads { background:var(--orange-dim); color:var(--orange); border:1px solid rgba(232,119,34,.25); }
+.plan-tag.sales { background:var(--green-bg); color:var(--green); border:1px solid rgba(34,197,94,.2); }
+.plan-tag.ops { background:var(--blue-dim); color:#7ABFDD; border:1px solid rgba(74,127,165,.25); }
+.plan-tag.creative { background:var(--purple-bg); color:#c4b5fd; border:1px solid rgba(139,92,246,.2); }
+.doc-footer { margin-top:80px; padding:32px 0 0; border-top:1px solid rgba(255,255,255,.07); display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.df-brand { font-family:'Bebas Neue'; font-size:20px; letter-spacing:.08em; color:rgba(255,255,255,.2); }
+.df-brand span { color:rgba(232,119,34,.5); }
+.df-note { font-family:'DM Mono',monospace; font-size:10px; color:rgba(255,255,255,.15); letter-spacing:.05em; }
+p { font-size:14px; color:rgba(255,255,255,.65); line-height:1.7; }
+p + p { margin-top:10px; }
+strong { color:rgba(255,255,255,.85); }
+em { color:var(--orange); font-style:normal; }
+.mt-sm { margin-top:12px; } .mt-md { margin-top:20px; } .mt-lg { margin-top:32px; }
+.mb-sm { margin-bottom:12px; } .mb-md { margin-bottom:20px; }
+.gap-sm { gap:10px; } .gap-md { gap:16px; }
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<!-- HERO -->
+<section class="hero" id="overview">
+  <div class="hero-eyebrow">IFCA · Seven-Figure Retreat Audit · June 2026</div>
+  <div class="hero-name">KELLI <span>BROWER</span></div>
+  <div class="hero-title">KelzBFit  ·  The Metabolic Reboot System  ·  Fat Loss Coach for Medical-Pro Moms</div>
+  <div class="hero-stats">
+    <div class="hs"><div class="hs-val orange">$48K</div><div class="hs-label">Best Month (May '26)</div></div>
+    <div class="hs"><div class="hs-val green">59%</div><div class="hs-label">Net Op Margin</div></div>
+    <div class="hs"><div class="hs-val blue">$1.28</div><div class="hs-label">CPL (Q1 Avg)</div></div>
+    <div class="hs"><div class="hs-val orange">$5,045</div><div class="hs-label">LTV per Client</div></div>
+    <div class="hs"><div class="hs-val white">19:1</div><div class="hs-label">LTV : CAC</div></div>
+  </div>
+  <div class="hero-summary">
+    Kelli has built a <strong>genuinely healthy, highly profitable business</strong> — ~59% net margins, $1.28 CPL, and elite 19:1 unit economics on a $5,045 LTV — almost entirely off <strong>four years of referrals from a PA mom group on Facebook</strong>. That referral engine is now tapping out, and the numbers show the consequence: she's bouncing between $35K and $48K months and panicking through the dips, when her goal is a <strong>predictable $50–60K every month</strong>. This is not a fix-the-leaks problem. The margins, the close rate, and the lead cost are all excellent. It is a <strong>lead-generation and acquisition-system problem</strong>: one ad entity running, no real DM funnel, no setting system, and an ad account funded at roughly 3% of revenue when it has room to run 5–10× that profitably.
+  </div>
+</section>
+
+<!-- STICKY NAV -->
+<nav class="doc-nav">
+  <div class="doc-nav-inner">
+    <a href="#overview" class="nav-link active">Overview</a>
+    <a href="#working" class="nav-link">What's Working</a>
+    <a href="#data" class="nav-link">Data Snapshot</a>
+    <a href="#equilibrium" class="nav-link">Rev Equilibrium</a>
+    <a href="#creative" class="nav-link">Creative Intel</a>
+    <a href="#diagnosis" class="nav-link">Constraints</a>
+    <a href="#plan" class="nav-link">90-Day Plan</a>
+  </div>
+</nav>
+
+<!-- WHAT'S WORKING -->
+<section class="doc-section" id="working">
+  <div class="sec-eyebrow">Section 01</div>
+  <div class="sec-heading">What's Working</div>
+  <div class="sec-divider"></div>
+  <div class="grid-2 gap-md">
+    <div class="win-card"><div class="win-icon">💰</div><div><div class="win-label">CPL at $1.28 — Absurdly Cheap</div><div class="win-desc">Q1 average CPL is $1.28, dipping to $0.71 in May. That's roughly 1/8th of the $10 IFCA ceiling. Lead cost is emphatically not the problem — the follower funnel produces cheap, quality-enough volume. The gap is downstream: turning those leads into booked calls.</div></div></div>
+    <div class="win-card"><div class="win-icon">📊</div><div><div class="win-label">59% Net Operating Margin</div><div class="win-desc">Net margin runs 52–63% month to month — well above the 50% IFCA target. Lean overhead (~1.5%), tight labor (~37%), and tiny ad spend mean almost every dollar of growth drops to profit. This business is built to scale spend without breaking.</div></div></div>
+    <div class="win-card"><div class="win-icon">🔁</div><div><div class="win-label">19:1 LTV:CAC — Elite Unit Economics</div><div class="win-desc">$5,045 LTV against a $265 CAC. The IFCA "good" line is 4:1; Kelli is at 19:1. She is dramatically under-investing in acquisition relative to what each client is worth. There is enormous headroom to spend more and still print profit.</div></div></div>
+    <div class="win-card"><div class="win-icon">🤝</div><div><div class="win-label">4 Years of Referral Proof + Retention</div><div class="win-desc">~97 active clients, 7.2% monthly churn, ~47–50% front-to-backend conversion across 3–4 assistant coaches with resell and testimonial tracking. The offer delivers and clients re-buy. The brand has deep trust — it just hasn't been converted into a paid acquisition engine yet.</div></div></div>
+    <div class="win-card"><div class="win-icon">🎯</div><div><div class="win-label">Close Rate 56% — Sales Isn't the Problem</div><div class="win-desc">Q1 close rate averaged 56% (70% in March, 67% in May). When a qualified person gets on the call, Kelli closes. That means every additional booked call is worth a lot — the entire constraint is getting more of the right people onto the calendar.</div></div></div>
+    <div class="win-card"><div class="win-icon">🩺</div><div><div class="win-label">An Untapped Medical-Pro Moat</div><div class="win-desc">Manus confirms the "fat loss for medical-professional moms" lane is essentially empty in the Meta Ad Library. Kelli's PA background + her organic data (the 15.8K PA-career reel, the 4.9K healthcare-moms reel) prove this is her sharpest, most defensible differentiator — and nobody is running it as paid.</div></div></div>
+  </div>
+</section>
+
+<!-- DATA SNAPSHOT -->
+<section class="doc-section" id="data">
+  <div class="sec-eyebrow">Section 02</div>
+  <div class="sec-heading">Data Snapshot — 2026</div>
+  <div class="sec-divider"></div>
+  <div class="period-bar">
+    <span class="period-bar-label">Period</span>
+    <div class="period-tabs">
+      <button class="pt" onclick="setPeriod('jan')">Jan</button>
+      <button class="pt" onclick="setPeriod('mar')">Mar</button>
+      <button class="pt" onclick="setPeriod('apr')">Apr</button>
+      <button class="pt" onclick="setPeriod('may')">May</button>
+      <button class="pt active" onclick="setPeriod('q1')">Q1 Avg</button>
+    </div>
+    <button class="edit-btn" id="edit-btn" onclick="toggleEdit()">✏ Update Numbers</button>
+  </div>
+  <div class="kpi-band" id="kpi-band"></div>
+  <div class="tbl-wrap"><table class="mtbl"><thead><tr><th>Ad &amp; Funnel Metric</th><th>IFCA Target</th><th>Your Number</th><th>Status</th><th>Note</th></tr></thead><tbody id="ad-tbody"></tbody></table></div>
+  <div class="tbl-wrap"><table class="mtbl"><thead><tr><th>Profit &amp; Margin Metric</th><th>IFCA Target</th><th>Your Number</th><th>Status</th><th>Note</th></tr></thead><tbody id="margin-tbody"></tbody></table></div>
+  <div class="card orange-left mt-md"><p style="font-size:13px;"><strong>Jordan's read on the numbers:</strong> The CPL is almost unfair — $1.28, dipping to $0.71. But cheap leads are hiding the real story. The two tells: <em>lead-to-booked-call sits around 2%</em> (cheap follower-funnel volume that doesn't convert to calls), and <em>marketing margin is ~3%</em> — she's barely spending on ads relative to a business throwing off 59% net margins. April is a vacation-month outlier (she took the whole month off — discount it). Show rate is the operational watch item: 79% in Jan, slipped to 62.5% in March and 63.6% in April, recovered to 80% in May. The margins and close rate are excellent. This is not an efficiency problem — it's a <strong>volume problem</strong>. She needs more entities, more spend, a real DM funnel, and a setting system that actually books the calls.</p></div>
+  <div class="card blue-left mt-md"><p style="font-size:13px;margin-bottom:0;"><strong>Data note:</strong> February is blank in the tracker, so the Q1 Avg is calculated from January + March only. CAC, LTV, churn, and active-client counts are currently logged for March in the LTGP tab and carried across periods — the team is still ramping the EOM report / success dashboard, so treat the unit-economics numbers as a March snapshot, not a fully-built monthly trend yet (see Constraint 6).</p></div>
+</section>
+
+<!-- REVENUE EQUILIBRIUM -->
+<section class="doc-section" id="equilibrium">
+  <div class="sec-eyebrow">Section 03</div>
+  <div class="sec-heading">Revenue Equilibrium</div>
+  <div class="sec-divider"></div>
+  <p class="mb-md">The leaky-bucket question: are you adding client value faster than churn is removing it? <strong>Revenue Equilibrium = LTV × New Clients Acquired per month.</strong> If that number is above your current revenue, you're building a compounding base. If it's roughly equal, you're treading water — replacing churn but not growing. This is the math underneath Kelli's "good month / panic month" cycle.</p>
+  <div class="card mt-md">
+    <div class="req-grid">
+      <div class="req-cell"><span class="req-label">Monthly Churn Rate</span><span class="req-val" id="re-churn">7.2%</span><span class="req-sub">Off-boarded ÷ active clients (~97 active)</span></div>
+      <div class="req-cell"><span class="req-label">LTV per Client</span><span class="req-val" id="re-ltv">$5,045</span><span class="req-sub">Avg monthly value ÷ churn rate</span></div>
+      <div class="req-cell"><span class="req-label">New Clients / Month</span><span class="req-val" id="re-new">8</span><span class="req-sub">Avg closes this period</span></div>
+    </div>
+    <div class="eq-compare">
+      <div class="eq-block purple"><div class="eq-b-label">Revenue Equilibrium</div><div class="eq-b-val" id="re-eq">$38K</div><div class="eq-b-sub">LTV × New Clients — what you're building toward</div></div>
+      <div class="eq-vs">VS</div>
+      <div class="eq-block blue"><div class="eq-b-label">Actual Monthly Revenue</div><div class="eq-b-val" id="re-actual">$35K</div><div class="eq-b-sub">Cash collected this period</div></div>
+    </div>
+    <div class="eq-verdict flat" id="re-verdict"></div>
+  </div>
+  <div class="card yellow-left mt-md"><p style="font-size:13px;"><strong>The core insight — this IS the "panic month" problem:</strong> At 7.2% churn on ~97 clients, Kelli loses roughly <strong>7 clients a month</strong>. She closes about <strong>7–8 a month</strong>. So she's running almost exactly in place — every new client basically just replaces a churned one. That's why revenue oscillates around the same band instead of climbing, and why a soft month (like April's 3 closes) immediately becomes a $34K dip. The entire fix is on one side of the equation: <strong>get new clients per month from ~8 up to 12–15</strong>. At 12–15 closes/month, equilibrium jumps to $60–76K and the base finally compounds — which is exactly the predictable $50–60K Kelli is asking for. New-client volume is a lead-gen problem, which is a paid-ads problem.</p></div>
+</section>
+
+<!-- CREATIVE INTELLIGENCE -->
+<section class="doc-section" id="creative">
+  <div class="sec-eyebrow">Section 04 — Updated June 2026</div>
+  <div class="sec-heading">Creative Intelligence Report</div>
+  <div class="sec-divider"></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px;">
+    <p style="margin:0;max-width:680px;">Full intelligence synthesis — positioning resolution, The Metabolic Reboot System mechanism, organic ecosystem, Meta Ad Library competitive audit, entity gap analysis, verbatim hooks, and a 10-entity build queue — ready for the Ad Creative Workshop exercise.</p>
+    <button id="copy-intel-btn" onclick="copyIntelReport()" style="background:var(--orange);border:none;border-radius:10px;padding:12px 22px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#fff;cursor:pointer;display:flex;align-items:center;gap:8px;transition:opacity .18s;white-space:nowrap;flex-shrink:0;">
+      <span>⬆</span> Copy for Workshop
+    </button>
+  </div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:10px;">Executive Summary</div>
+  <div class="card orange-left mb-md">
+    <p style="font-size:13px;margin-bottom:8px;">Kelli is a profitable, healthy operator with a validated offer (~97 active clients, 7.2% churn, 59% net margin) and almost no paid acquisition infrastructure. The Meta Ad Library shows <strong>one active ad entity</strong> against an IFCA standard of 8–10 — and that single ad points to a follower funnel, not a DM funnel. The brand's deepest asset is hiding in plain sight: <strong>the medical-professional-mom angle</strong>. Her IG bio fuses both positioning lines — "I help Medical Professional Moms lose fat for the last time without giving up 🍕 and 🍷" — and her organic data confirms it pulls hardest (the 15.8K-view "Why I decided NOT to go back to work as a PA" reel and the 4.9K "Shoutout to all the Healthcare Moms" reel both beat her generic anti-diet content).</p>
+    <p style="font-size:13px;margin-bottom:0;"><strong>The diagnosis:</strong> <em>Kelli doesn't have a message problem or a sales problem — she has an entity-count and funnel-type problem. The medical-pro mom lane is open white space no serious competitor is running, her mechanism (The Metabolic Reboot System) and food-freedom promise are sharp, and her unit economics can fund aggressive testing. Her next move is a deliberate 10-entity DM-funnel portfolio — led by the medical-professional identity — plus the MOF/proof layer she has zero of today.</em></p>
+  </div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin-bottom:10px;">Brand, Offer &amp; Funnel Intelligence</div>
+  <div class="audit-table-wrap mb-md"><table class="audit-tbl"><thead><tr><th>Dimension</th><th>Evidence</th><th>Strategic Meaning</th></tr></thead><tbody>
+    <tr><td><strong>Core Avatar</strong></td><td>Medical-professional moms (nurses, PAs, NPs, physicians) 30–45 — they spend their careers caring for everyone else's body and can't crack their own. Secondary frame: busy moms generally.</td><td>Lead with the medical-pro identity in the hook; use "busy mom" in the body. This is the sharpest, most defensible avatar — and the one her own organic algorithm rewards most.</td></tr>
+    <tr><td><strong>Named Mechanism</strong></td><td><strong>The Metabolic Reboot System</strong> — restore a slowed/under-fed metabolism, then lose fat sustainably while still eating the foods you love</td><td>A proprietary frame that separates Kelli from "eat less / work out more." Positions metabolic repair (eat MORE) as the counterintuitive mechanism. Already live in her brand name and group.</td></tr>
+    <tr><td><strong>Core Promise</strong></td><td>Lose fat "for the last time" without giving up 🍕 and 🍷, without 1,200-calorie diets, cleanses, or 6-day-a-week workouts — built for a life that never slows down</td><td>Food-freedom + sustainability + "never start over again." The "without" framing names the enemies in one line — usable directly as direct-response copy.</td></tr>
+    <tr><td><strong>Primary Enemy</strong></td><td>The 30-day challenge / January cleanse / "start over every year" cycle; 1,200-calorie restriction; chronic cardio; the diet industry's "try harder" lie</td><td>The villain isn't just bad diets — it's the entire restart cycle that has trained her avatar to believe their body is broken. Broader and more emotionally resonant.</td></tr>
+    <tr><td><strong>Premium Differentiator</strong></td><td>Kelli's PA credential + lived experience as a mom of three who homeschools with no childcare</td><td>The PA background unlocks angles no non-medical coach can run credibly (e.g. GLP-1 muscle-loss authority). The mom-of-three reality makes "built for your real life" believable.</td></tr>
+    <tr><td><strong>Funnel Infrastructure</strong></td><td>Comment-to-DM CTAs · quiz funnel (new) · follower funnel (primary, working) · "FREE Busy Mom Food Guide" lead magnet · SetSmart AI setter (being implemented)</td><td>Surfaces exist but everything is TOF and points at the follower funnel. The DM funnel and the lead magnet are barely expressed as paid. No MOF nurture layer at all.</td></tr>
+  </tbody></table></div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin-bottom:10px;">Meta Ad Library Audit — June 2026</div>
+  <div class="card red-left mb-sm"><p style="font-size:13px;margin-bottom:0;"><strong>Ad Library status:</strong> Kelli's page shows <strong>1 active ad / 1 entity</strong> (Library ID 1626527208580798, live since ~April 29 — approaching the 60-day proven-winner mark). Strong hook, wrong destination: it drives to a <em>follower funnel</em>, not a DM-automation entry. It's a single lottery ticket where she needs ten. This is not a failure — it's an untouched opportunity on top of a validated offer.</p></div>
+  <div class="audit-table-wrap mb-md"><table class="audit-tbl"><thead><tr><th>Advertiser</th><th>Verbatim Hook (First 3 Sec)</th><th>Format</th><th>Driver</th><th>Status / Entity Judgment</th></tr></thead><tbody>
+    <tr><td><strong>Kelli (KelzBFit)</strong></td><td><em>"I wish more women in healthcare careers actually took care of themselves the same way they take care of their families and their patients..."</em> → Visit IG profile</td><td>B-roll + text (0:14)</td><td><span class="gap-pill warn">Identity</span></td><td>Her only entity. Right lane, wrong funnel (follower, not DM).</td></tr>
+    <tr><td>WarriorBabe</td><td><em>"...completely reshaped her body in just 2.5 years... and she's 60 years old!"</em> → how-it-works</td><td>Case-study video (14:28)</td><td><span class="gap-pill opportunity">Social Proof</span></td><td>⭐ ~13 months running — proven winner. 8+ testimonial variants = pure Andromeda play.</td></tr>
+    <tr><td>Audrey Adams</td><td><em>"If you've been trying to lose the same ten pounds for five years, eating well under 1,200 calories... the answer is not eating less."</em></td><td>Talking-head VSL (7:37)</td><td><span class="gap-pill warn">Relief / Validation</span></td><td>Owns the "eat more / anti-1,200-cal" lane with long-form. Don't compete head-on here.</td></tr>
+    <tr><td>Tandem Nutrition</td><td><em>"If you lost weight on Ozempic... but gained it back after stopping — you are not broken."</em> → Comment "RESET"</td><td>Talking head (2:04)</td><td><span class="gap-pill warn">Relief / Validation</span></td><td>GLP-1 rebound + comment-DM funnel. Kelli can out-authority this with her PA credential.</td></tr>
+    <tr><td>Bach Performance</td><td><em>"Comment METHOD and I'll send you the full breakdown..."</em></td><td>Talking head (DM funnel)</td><td><span class="badge info">Authority / Identity</span></td><td>8 DM-funnel variants — the exact comment-trigger architecture Kelli should copy.</td></tr>
+    <tr><td>Conquer Fitness &amp; Nutrition</td><td><em>"Attention women over 30 struggling to lose 20+ lbs... a real, sustainable solution..."</em></td><td>Text / static</td><td><span class="gap-pill missing">Frustration</span></td><td>⭐ ~7 months running — proven winner in the sustainable-fat-loss frame.</td></tr>
+    <tr><td colspan="5" style="background:rgba(255,255,255,.02);font-size:12px;color:var(--gray-500);font-style:italic;">Category C (medical-pro / nurse fat loss) returned essentially <strong>zero</strong> coaching competitors in the Ad Library — a genuine, defensible moat for Kelli.</td></tr>
+  </tbody></table></div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin-bottom:10px;">Organic Content Audit — Top Reels (Verbatim)</div>
+  <div class="card blue-left mb-sm"><p style="font-size:13px;margin-bottom:0;"><strong>Standout data point:</strong> Her meal-prep reel <em>"NOT TO BE DRAMATIC... but if I wanted to lose 10 lbs by spring break here are some meals I'd have on repeat"</em> hit <strong>324K views</strong> — proving food-freedom/aspiration content has outsized reach. It is not currently a paid entity. Meanwhile her three highest-pull <em>identity</em> reels are all medical-professional themed.</p></div>
+  <div class="audit-table-wrap mb-md"><table class="audit-tbl"><thead><tr><th>Views</th><th>Verbatim Hook</th><th>Format</th><th>Driver</th><th>Ad Potential</th></tr></thead><tbody>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-400);">324K</td><td><strong>"NOT TO BE DRAMATIC... but if I wanted to lose 10 lbs by spring break here are some meals I'd have on repeat"</strong></td><td>B-roll + text</td><td><span class="badge info">Desire</span></td><td><span class="gap-pill opportunity">Very High — viral food-freedom reach</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-400);">15.8K</td><td><strong>"WHY I DECIDED NOT TO GO BACK TO WORK AS A PA"</strong></td><td>Talking head</td><td><span class="gap-pill warn">Identity / Story</span></td><td><span class="gap-pill opportunity">Very High — proven medical-pro pull</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-400);">7.1K</td><td><strong>"Believe it or not... Your 'all or nothing' mindset is what's hurting your progress"</strong> (in scrubs)</td><td>Talking head</td><td><span class="gap-pill missing">Frustration</span></td><td><span class="gap-pill opportunity">High — scrubs visual differentiates</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-400);">4.9K</td><td><strong>"Shoutout to all the Healthcare Moms that thought working in healthcare would help as a mom... but all it did was make your mom anxiety worse."</strong></td><td>Talking head</td><td><span class="gap-pill missing">Frustration / Identity</span></td><td><span class="gap-pill opportunity">Very High — direct, pain-specific</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-400);">3.6K</td><td><strong>"My clients in Healthcare walking past the cardio machines after finally learning..."</strong></td><td>Humor / social proof</td><td><span class="gap-pill opportunity">Identity / Proof</span></td><td><span class="gap-pill opportunity">High — medical-pro proof + humor</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-400);">3.0K</td><td><strong>"The biggest fat loss mistake I see busy women making"</strong></td><td>Talking head (gym)</td><td><span class="gap-pill missing">Frustration</span></td><td><span class="gap-pill opportunity">High — classic DM-funnel pain hook</span></td></tr>
+  </tbody></table></div>
+  <div class="grid-3 mb-md mt-md" style="gap:12px;">
+    <div class="card" style="text-align:center;padding:24px 16px;"><div style="font-family:'Bebas Neue';font-size:52px;color:#F87171;line-height:1;">1</div><div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500);margin-top:4px;">Active Paid Entities</div><div style="font-size:12px;color:rgba(255,255,255,.45);margin-top:6px;">One ad, pointed at a follower funnel</div></div>
+    <div class="card" style="text-align:center;padding:24px 16px;"><div style="font-family:'Bebas Neue';font-size:52px;color:var(--green);line-height:1;">3</div><div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500);margin-top:4px;">Organic Content Clusters</div><div style="font-size:12px;color:rgba(255,255,255,.45);margin-top:6px;">Medical-pro identity · food freedom · anti-diet education</div></div>
+    <div class="card" style="text-align:center;padding:24px 16px;border-color:rgba(245,158,11,.25);"><div style="font-family:'Bebas Neue';font-size:52px;color:var(--yellow);line-height:1;">9+</div><div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500);margin-top:4px;">Entity Gap to Standard</div><div style="font-size:12px;color:rgba(255,255,255,.45);margin-top:6px;">1 of 8–10 · zero MOF/BOF entities</div></div>
+  </div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin-bottom:10px;">Verbatim Hooks — Pull Forward Into Workshop</div>
+  <div class="audit-table-wrap mb-md"><table class="audit-tbl"><thead><tr><th>Source</th><th>Verbatim Hook</th><th>Format</th><th>Driver</th></tr></thead><tbody>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray-500);">Active paid ad</td><td><strong>"I wish more women in healthcare careers actually took care of themselves the same way they take care of their families and their patients."</strong></td><td>B-roll + text</td><td><span class="gap-pill warn">Identity</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray-500);">Organic — 15.8K</td><td><strong>"Why I decided NOT to go back to work as a PA."</strong></td><td>Talking-head story</td><td><span class="gap-pill warn">Identity</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray-500);">Organic — 4.9K</td><td><strong>"Shoutout to all the Healthcare Moms that thought working in healthcare would help as a mom... but all it did was make your mom anxiety worse."</strong></td><td>Talking head</td><td><span class="gap-pill missing">Frustration</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray-500);">Organic (verbatim)</td><td><strong>"Here you are again, in the same spot, trying the same thing... Throwing yourself on a 1,200-calorie diet doing 6–7 days of workouts is just going to leave you defeated."</strong></td><td>Talking head</td><td><span class="gap-pill missing">Villain / Frustration</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray-500);">Organic — 324K</td><td><strong>"NOT TO BE DRAMATIC... but if I wanted to lose 10 lbs by spring break here are some meals I'd have on repeat."</strong></td><td>B-roll + text (food)</td><td><span class="badge info">Desire</span></td></tr>
+    <tr><td style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray-500);">Bio / lead magnet</td><td><strong>"I help Medical Professional Moms lose fat for the last time without giving up 🍕 and 🍷."</strong> → "FREE Busy Mom Food Guide"</td><td>Bio / DM trigger</td><td><span class="gap-pill opportunity">Desire / Identity</span></td></tr>
+  </tbody></table></div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin-bottom:10px;">Competitive Benchmark &amp; White Space</div>
+  <p style="font-size:13px;color:rgba(255,255,255,.65);margin-bottom:14px;">The niche is crowded around predictable frames — "you're not broken," "eat more / stop eating 1,200 calories," menopause weight loss (WarriorBabe owns it), and "I'm a mom who lost the same X lbs." Kelli's defensible lane is the one nobody is running: <strong>fat loss for medical-professional moms</strong>, fused with her PA authority and the food-freedom promise.</p>
+  <div class="comp-card mb-md"><table class="comp-tbl"><thead><tr><th>Saturated Market Angle</th><th>Why It's Crowded</th><th>More Ownable Kelli Version</th></tr></thead><tbody>
+    <tr><td>"You're not broken / it's not your fault"</td><td>Audrey Adams, Tandem, WarriorBabe all lead with it — fatigued</td><td>"You spent 12 hours taking care of everyone else's body. Who's taking care of yours?" — same validation, healthcare-specific</td></tr>
+    <tr><td>"Eat more / stop the 1,200-calorie diet"</td><td>Audrey Adams owns this with a 7-min VSL</td><td>The Metabolic Reboot System as the named mechanism + medical-pro authority, not a generic "eat more" opinion</td></tr>
+    <tr><td>"Menopause weight gain"</td><td>WarriorBabe's 9-month proven winner</td><td>Don't compete directly — own the younger medical-pro mom (30–45) + perimenopause-adjacent angle instead</td></tr>
+    <tr><td>"GLP-1 / Ozempic rebound"</td><td>Tandem Nutrition running it without medical authority</td><td>"As a PA, I know exactly what Ozempic does to your muscle mass." — authority no non-medical coach can match</td></tr>
+  </tbody></table></div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin-bottom:10px;">Unclaimed White-Space Angles</div>
+  <div class="audit-table-wrap mb-md"><table class="audit-tbl"><thead><tr><th>Angle</th><th>Why It Fits</th><th>Driver</th><th>Best Format</th></tr></thead><tbody>
+    <tr><td><strong>Medical-pro identity — "Who's taking care of yours?"</strong></td><td>Zero competitors run it; Kelli's PA background + top organic reels prove the pull</td><td><span class="gap-pill missing">Pain / Identity</span></td><td>Talking head (scrubs)</td></tr>
+    <tr><td><strong>Cognitive bandwidth / decision fatigue</strong></td><td>"You don't have the mental bandwidth for a diet that requires you to think" — speaks to the maxed-out healthcare mom</td><td><span class="gap-pill missing">Pain / Desire</span></td><td>Talking head or B-roll</td></tr>
+    <tr><td><strong>GLP-1 muscle-loss / PA authority</strong></td><td>2026 cultural moment; her credential makes it uniquely credible vs. Tandem and supplement noise</td><td><span class="badge info">Authority / Fear</span></td><td>Talking head</td></tr>
+    <tr><td><strong>The "January cycle" villain</strong></td><td>She's used it organically; not yet run as a paid DM entity</td><td><span class="gap-pill missing">Villain / Validation</span></td><td>Direct-to-camera</td></tr>
+    <tr><td><strong>Proof-of-mechanism case study (MOF)</strong></td><td>"She ate 1,100 calories and gained weight. We added 600 back. She lost 22 lbs." — no direct competitor running this</td><td><span class="gap-pill opportunity">Social Proof</span></td><td>Talking head + screenshots</td></tr>
+  </tbody></table></div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:10px;">Recommended Entity Build Queue — Priority Order</div>
+  <div class="plan-list mb-md">
+    <div class="plan-item"><div class="plan-num">1</div><div><div class="plan-title">The PA Origin Story — "I Couldn't Fix Myself"</div><div class="plan-desc">Hook: <em>"I left my PA career because I was helping patients lose weight while I couldn't figure out my own body. Here's what I finally learned."</em><br>Format: Talking head, home setting · Driver: Vulnerability / Identity · Comment "REBOOT". Her highest-trust, highest-differentiation entity. Film first.</div><div><span class="plan-tag ads">Priority 1</span><span class="plan-tag creative">Talking Head</span><span class="plan-tag" style="background:var(--yellow-bg);color:var(--yellow);border:1px solid rgba(245,158,11,.2);">Identity</span></div></div></div>
+    <div class="plan-item"><div class="plan-num">2</div><div><div class="plan-title">The Nurse's Granola Bar — Humor / Identity</div><div class="plan-desc">Hook: <em>"Shoutout to the nurse who ate a granola bar standing up at 2 PM and called it lunch. Your metabolism noticed."</em><br>Format: Talking head in scrubs · Driver: Humor · Comment "NURSE". Humor disarms; scrubs visual is a distinct entity signal; fast engagement data. Film second.</div><div><span class="plan-tag ads">Priority 2</span><span class="plan-tag creative">Talking Head (scrubs)</span><span class="plan-tag" style="background:var(--blue-dim);color:#7ABFDD;border:1px solid rgba(74,127,165,.25);">Humor</span></div></div></div>
+    <div class="plan-item"><div class="plan-num">3</div><div><div class="plan-title">The Busy Mom Food Guide — Lead Magnet Activation</div><div class="plan-desc">Hook: <em>"Comment 'GUIDE' and I'll send you my free Busy Mom Food Guide — the exact meals my clients eat to lose fat without tracking, counting, or giving up pizza."</em><br>Format: B-roll (food) · Driver: Desire · Lowest production effort, fastest DM volume. Activates an asset she already owns. Launch immediately.</div><div><span class="plan-tag ads">Priority 3</span><span class="plan-tag creative">B-Roll (food)</span><span class="plan-tag" style="background:var(--orange-dim);color:var(--orange);border:1px solid rgba(232,119,34,.25);">Desire</span></div></div></div>
+    <div class="plan-item"><div class="plan-num">4</div><div><div class="plan-title">The January Cycle — Anti-Resolution Villain</div><div class="plan-desc">Hook: <em>"Here you are again. Same weight. Same January. Same promise to yourself. I'm not going to tell you to try harder."</em><br>Format: Direct-to-camera · Driver: Villain / Validation · Comment "DONE". Proven angle in her organic; needs paid amplification. Self-selects the most exhausted, highest-intent segment.</div><div><span class="plan-tag ads">Priority 4</span><span class="plan-tag creative">Direct-to-Camera</span><span class="plan-tag" style="background:var(--red-bg);color:#F87171;border:1px solid rgba(220,38,38,.2);">Villain</span></div></div></div>
+    <div class="plan-item"><div class="plan-num">5</div><div><div class="plan-title">The 22 Pounds Case Study — First MOF Entity</div><div class="plan-desc">Hook: <em>"She was eating 1,100 calories and gaining weight. We added 600 back over 8 weeks. She lost 22 lbs. Here's the exact three-phase process."</em><br>Format: Talking head + transformation/DM screenshots · Driver: Social Proof / Mechanism · Comment "CASE". Bridges TOF hooks to the call. Build after 2–3 TOF entities are generating warm traffic.</div><div><span class="plan-tag ads">Priority 5</span><span class="plan-tag creative">Case Study</span><span class="plan-tag sales">MOF</span></div></div></div>
+    <div class="plan-item"><div class="plan-num">6</div><div><div class="plan-title">The GLP-1 Conversation — PA Authority</div><div class="plan-desc">Hook: <em>"As a PA, I know exactly what Ozempic does to your muscle mass when you stop taking it. Here's the conversation your prescribing doctor probably didn't have with you."</em><br>Format: Talking head · Driver: Authority / Fear · Comment "GLP1". A 2026 cultural moment no serious coaching competitor owns with real medical credibility.</div><div><span class="plan-tag ads">Priority 6</span><span class="plan-tag creative">Talking Head</span><span class="plan-tag ops">Authority</span></div></div></div>
+  </div>
+  <p style="font-size:12px;color:var(--gray-500);margin-bottom:20px;">Full 10-entity portfolio (incl. "Stop Doing Cardio" pattern-interrupt, "Pizza on Friday" food-freedom, "Three Night Shifts" MOF proof, and "Three Questions" BOF qualifier) is in the Copy-for-Workshop export.</p>
+  <div class="card orange-left"><p style="font-size:13px;margin-bottom:6px;"><strong>Strategic Diagnosis:</strong> Kelli is not a weak-message or weak-business client. She is a <em>healthy, under-acquired</em> client — real scale, a named mechanism (The Metabolic Reboot System), elite unit economics, deep referral trust, and a genuinely defensible white-space lane (medical-pro moms) that no competitor is running as paid. What she lacks is the acquisition machine to replace a referral engine that is tapping out.</p><p style="font-size:13px;margin-bottom:0;">Her next move is not "more cheap leads" — her CPL is already $1.28. It is a <em>deliberate 10-entity DM-funnel portfolio led by the medical-professional identity, plus the MOF/proof layer she has zero of, plus a setting system (SetSmart) that finally converts the cheap leads into booked calls.</em> Fix entity count, funnel type, and setting — and the consistent $50–60K months are the arithmetic result of the metrics already in her tracker.</p></div>
+</section>
+
+<!-- CONSTRAINT DIAGNOSIS -->
+<section class="doc-section" id="diagnosis">
+  <div class="sec-eyebrow">Section 05</div>
+  <div class="sec-heading">Constraint Diagnosis</div>
+  <div class="sec-divider"></div>
+  <p class="mb-md">Fix these in order. Kelli's top constraints are all on the acquisition side — the delivery, margins, and economics are already healthy. Fixing #1 unlocks more than #3–#6 combined.</p>
+  <div class="diag-list">
+    <div class="diag-card p1"><div class="diag-head"><div class="diag-rank">1</div><div><div class="diag-title">No Paid Acquisition Engine — 1 Entity, Referral Source Tapping Out</div><div class="diag-desc">The business was built on ~4 years of referrals from a PA mom Facebook group — and that source is drying up. Meanwhile the paid account is a single ad pointed at a follower funnel. There is no DM-funnel entity portfolio replacing the referral engine. This is THE growth constraint: when the referral well runs dry and there's no paid machine behind it, revenue can only oscillate or decline.</div></div></div><div class="diag-action"><strong>Fix:</strong> Build the 10-entity DM-funnel portfolio from Section 04, led by the medical-pro identity (PA Origin Story, Nurse's Granola Bar) and the Busy Mom Food Guide lead-magnet activation. Target 8–10 distinct entities running simultaneously within 90 days.</div></div>
+    <div class="diag-card p1"><div class="diag-head"><div class="diag-rank">2</div><div><div class="diag-title">Lead → Booked Call ~2% — The Setting Gap</div><div class="diag-desc">Kelli generates 744–1,912 leads/month at ~$1 each, but only ~2% become booked calls. She has cycled through 6–8 setters (including a paid setter academy) and none stuck. The leads are cheap and plentiful; the conversion of lead → conversation → calendar is broken. Because her close rate is 56%, every additional booked call is worth a lot.</div></div></div><div class="diag-action"><strong>Fix:</strong> Stand up SetSmart (AI setter) — already in progress — and build a structured DM qualification → booking flow. Pair the new DM-funnel entities (comment-trigger CTAs) with SetSmart so the cheap volume actually converts to calls. Track lead→call weekly.</div></div>
+    <div class="diag-card p2"><div class="diag-head"><div class="diag-rank">3</div><div><div class="diag-title">All Top-of-Funnel — No MOF Nurture Layer</div><div class="diag-desc">Everything Kelli runs is cold, top-of-funnel content driving to a follow/DM. There is no middle-of-funnel layer that warms an interested lead before the call ask — no proof entities, no mechanism education, no objection-handling, no case studies in paid. Leads either convert immediately or evaporate. A warm audience is being generated every month and left completely unmined.</div></div></div><div class="diag-action"><strong>Fix:</strong> Build 3 MOF/BOF entities (22-Pounds Case Study, Three Night Shifts proof, Three Questions qualifier) and run them as retargeting against everyone who engaged with TOF content.</div></div>
+    <div class="diag-card p2"><div class="diag-head"><div class="diag-rank">4</div><div><div class="diag-title">Show Rate Slipping — 62–64% in the Soft Months</div><div class="diag-desc">Show rate was 79% in January, slipped to 62.5% in March and 63.6% in April, then recovered to 80% in May — below the 70% target on the down months. With low call volume, every no-show is expensive. The success coach has already delivered the show-rate optimization training; the leading indicator needs to be watched weekly, not monthly.</div></div></div><div class="diag-action"><strong>Fix:</strong> Implement the show-rate checklist + SMS-only confirmation sequence. Add a same-day confirmation touch. A warmer MOF layer (Constraint 3) compounds this.</div></div>
+    <div class="diag-card p2"><div class="diag-head"><div class="diag-rank">5</div><div><div class="diag-title">Ad Account Massively Under-Funded — Marketing Margin ~3%</div><div class="diag-desc">Kelli spends ~$1,200/month on ads against a business doing $35–48K/month at 59% net margin and 19:1 LTV:CAC. Marketing margin is ~3% when the healthy range is 10–20%. She doesn't trust ads yet because none have clearly worked — but that's a function of having one entity, not a function of the channel. The economics scream that she should be spending 5–10× more.</div></div></div><div class="diag-action"><strong>Fix:</strong> As the new entities prove out (kill rule: 2× CPL at 3 days), scale spend deliberately from ~$1.2K toward $5–6K/month. Max CAC headroom is enormous at a $5,045 LTV.</div></div>
+    <div class="diag-card p3"><div class="diag-head"><div class="diag-rank">6</div><div><div class="diag-title">Data Hygiene — EOM Report Not Yet Trustworthy</div><div class="diag-desc">The team just started using the client success dashboard / end-of-month report and isn't filling it out correctly yet, so CAC, LTV, and LTGP are only partially calculated (March is the only fully-populated month; February is blank entirely). You can't manage what you can't measure.</div></div></div><div class="diag-action"><strong>Fix:</strong> Lock a weekly + monthly data-entry SOP for the assistant coaches and VA. Get CAC/LTV/churn/equilibrium calculating cleanly every month.</div></div>
+    <div class="diag-card ok"><div class="diag-head"><div class="diag-rank">✓</div><div><div class="diag-title">Margins, CPL, Close Rate &amp; Unit Economics — Leave These Alone</div><div class="diag-desc">59% net margin, $1.28 CPL, 56% close rate, and 19:1 LTV:CAC are all excellent and above IFCA targets. This is a healthy, profitable business. The temptation will be to "optimize" these — don't. The entire opportunity is on the acquisition side. Protect the margins and economics while you pour fuel on lead gen.</div></div></div></div>
+  </div>
+</section>
+
+<!-- 90-DAY PLAN -->
+<section class="doc-section" id="plan">
+  <div class="sec-eyebrow">Section 06</div>
+  <div class="sec-heading">Next 90 Days — Priority Action Plan</div>
+  <div class="sec-divider"></div>
+  <p class="mb-md">Ranked by impact per effort. Items 1–3 are the non-negotiables — they replace the tapping-out referral engine. Items 4–5 compound on top.</p>
+  <div class="plan-list">
+    <div class="plan-item"><div class="plan-num">1</div><div><div class="plan-title">Build the 10-Entity DM-Funnel Portfolio</div><div class="plan-desc">Film and launch the Section 04 build queue in order: PA Origin Story → Nurse's Granola Bar → Busy Mom Food Guide activation → January Cycle, then the GLP-1 authority and the rest. Lead with the medical-professional identity — it's the white space and her organic algorithm's clearest signal. Use comment-trigger CTAs (REBOOT / NURSE / GUIDE / DONE) feeding the DM funnel. Kill rule: 2× CPL at 3 days. This is the single highest-leverage move in the entire plan.</div><div><span class="plan-tag ads">Paid Media</span><span class="plan-tag creative">Creative</span></div></div></div>
+    <div class="plan-item"><div class="plan-num">2</div><div><div class="plan-title">Stand Up SetSmart + the Setting System</div><div class="plan-desc">The leads are already cheap and plentiful — the broken link is lead → booked call (~2%). Finish the SetSmart implementation and build the DM qualification → booking flow so the new comment-trigger entities actually convert to calls. Given the 56% close rate, every extra booked call is high-value. Target: lift lead→call from ~2% toward 4%+ and double booked-call volume without touching ad spend. Track it weekly.</div><div><span class="plan-tag ops">SetSmart / Automation</span><span class="plan-tag sales">Sales Process</span></div></div></div>
+    <div class="plan-item"><div class="plan-num">3</div><div><div class="plan-title">Scale Ad Spend Deliberately — $1.2K → $5–6K/Month</div><div class="plan-desc">At 59% net margin and 19:1 LTV:CAC, Kelli is dramatically under-investing in acquisition. As entities prove out, step spend up methodically: add budget to winners, kill losers fast. The goal is to push new clients/month from ~8 to 12–15 — which is exactly what moves revenue equilibrium to $60–76K and creates the predictable $50–60K months she's after.</div><div><span class="plan-tag ads">Budget / Scale</span></div></div></div>
+    <div class="plan-item"><div class="plan-num">4</div><div><div class="plan-title">Build the MOF Nurture + Show-Rate Layer</div><div class="plan-desc">Add the 3 MOF/BOF entities (22-Pounds Case Study, Three Night Shifts, Three Questions) as retargeting against TOF engagers — the warm audience currently going unmined. Pair with the show-rate checklist and an SMS-only confirmation sequence to pull the down-month show rate (62–64%) back above 70%. Warmer, confirmed leads show up more and book more — this layer compounds Items 1–2.</div><div><span class="plan-tag creative">MOF Creative</span><span class="plan-tag ops">Show Rate / GHL</span></div></div></div>
+    <div class="plan-item"><div class="plan-num">5</div><div><div class="plan-title">Lock the EOM Report &amp; Data Hygiene</div><div class="plan-desc">Get the assistant coaches and VA filling the success dashboard / end-of-month report correctly and on a fixed cadence, so CAC, LTV, LTGP, churn, and revenue equilibrium calculate cleanly every month. Right now February is blank and only March is fully populated. Once the data is trustworthy, the equilibrium number becomes the early-warning system that lets Kelli stop panicking through soft months.</div><div><span class="plan-tag ops">Data / SOP</span></div></div></div>
+  </div>
+  <div class="card orange-left mt-md"><p style="font-size:13px;"><strong>The big picture:</strong> Kelli has done the hard part most coaches never do — she's built a genuinely profitable, well-retained, high-margin business with elite unit economics. She did it almost entirely on referrals, which is impressive and also the trap: there was never a forcing function to build a paid acquisition machine, and now the referral engine is fading. The next phase isn't about working harder or fixing leaks — the leaks aren't the problem. It's about building the one system she's never had: a deliberate, diversified paid-ads engine (led by the medical-pro moat) plus a setting system that converts her absurdly cheap leads into booked calls. Break the acquisition constraint and the predictable $50–60K months are simply the arithmetic of the metrics already sitting in her tracker.</p></div>
+</section>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <div class="df-brand">IFCA <span>PLAYBOOKS</span></div>
+  <div class="df-note">Kelli Brower · Full Business Audit v1 · June 2026 · IFCA Seven-Figure Retreat · Confidential</div>
+</div>
+
+</div><!-- /page -->
+
+<script>
+const DATA = {
+  q1:  { label:'Q1 2026 Avg (Jan+Mar)', adSpend:1167.55, leads:923.5, cpl:1.278, scheduledCalls:20, liveCalls:14.5, showRate:.7084, costPerCall:59.62, leadToCall:.0221, closes:7.5, closeRate:.5605, fePrice:3045, contractedROAS:8.475, collectedROAS:2.645, feToBe:.47, bePrice:2718.75, upfrontPct:.3123, laborMargin:.3694, marketingMargin:.0298, overheadMargin:.0142, netMargin:.5866, cac:264.71, ltv:5044.55, cacLtv:19.06, churn:.0722, activeClients:97, monthlyRev:35329.34, newClients:7.5 },
+  jan: { label:'January 2026', adSpend:1282, leads:863, cpl:1.486, scheduledCalls:24, liveCalls:19, showRate:.7917, costPerCall:53.42, leadToCall:.0278, closes:8, closeRate:.4211, fePrice:3540, contractedROAS:null, collectedROAS:null, feToBe:null, bePrice:null, upfrontPct:null, laborMargin:null, marketingMargin:null, overheadMargin:null, netMargin:null, cac:264.71, ltv:5044.55, cacLtv:19.06, churn:.0722, activeClients:97, monthlyRev:null, newClients:8 },
+  mar: { label:'March 2026', adSpend:1053.1, leads:984, cpl:1.070, scheduledCalls:16, liveCalls:10, showRate:.625, costPerCall:65.82, leadToCall:.0163, closes:7, closeRate:.70, fePrice:2550, contractedROAS:16.95, collectedROAS:5.29, feToBe:.47, bePrice:2718.75, upfrontPct:.3123, laborMargin:.3694, marketingMargin:.0298, overheadMargin:.0142, netMargin:.5866, cac:264.71, ltv:5044.55, cacLtv:19.06, churn:.0722, activeClients:97, monthlyRev:35329.34, newClients:7 },
+  apr: { label:'April 2026 (vacation month)', adSpend:1368.11, leads:744, cpl:1.839, scheduledCalls:11, liveCalls:7, showRate:.6364, costPerCall:124.37, leadToCall:.0148, closes:3, closeRate:.4286, fePrice:3500, contractedROAS:7.67, collectedROAS:3.58, feToBe:.50, bePrice:1725, upfrontPct:.4667, laborMargin:.4296, marketingMargin:.0394, overheadMargin:.0144, netMargin:.5166, cac:264.71, ltv:5044.55, cacLtv:19.06, churn:.0722, activeClients:97, monthlyRev:34739.34, newClients:3 },
+  may: { label:'May 2026', adSpend:1364, leads:1912, cpl:.7134, scheduledCalls:15, liveCalls:12, showRate:.80, costPerCall:90.93, leadToCall:.0078, closes:8, closeRate:.6667, fePrice:3000, contractedROAS:17.60, collectedROAS:12.39, feToBe:.50, bePrice:2025, upfrontPct:.7042, laborMargin:.2971, marketingMargin:.0495, overheadMargin:.0206, netMargin:.6328, cac:264.71, ltv:5044.55, cacLtv:19.06, churn:.0722, activeClients:97, monthlyRev:48271.67, newClients:8 },
+};
+const AD_METRICS = [
+  { key:'cpl', label:'Cost Per Lead (CPL)', fmt:fmtD, target:'< $10', pass:v=>v<10, warn:v=>v<15, note:'$1.28 \u2014 exceptional. Lead cost is NOT the constraint.' },
+  { key:'leadToCall', label:'Lead \u2192 Call Booked %', fmt:fmtP, target:'> 3%', pass:v=>v>=.03, warn:v=>v>=.02, note:'The core constraint. ~2% converts to calls. SetSmart now being implemented.' },
+  { key:'showRate', label:'Sales Show Rate', fmt:fmtP, target:'> 70%', pass:v=>v>=.70, warn:v=>v>=.60, note:'79% Jan \u2192 62\u201364% Mar/Apr \u2192 80% May. Watch weekly.' },
+  { key:'costPerCall', label:'Cost Per Scheduled Call', fmt:fmtD, target:'< $125', pass:v=>v<125, warn:v=>v<175, note:'Inside target. Apr $124 = low-volume vacation month.' },
+  { key:'closeRate', label:'Close Rate', fmt:fmtP, target:'30\u201345%', pass:v=>v>=.30, warn:v=>v>=.25, note:'56% Q1 \u2014 strong. Warm leads close. Constraint is call VOLUME, not close skill.' },
+  { key:'collectedROAS', label:'Collected ROAS', fmt:fmtX, target:'> 2\u00d7', pass:v=>v>=2, warn:v=>v>=1.5, note:'Strong. May hit 12.4\u00d7. Tiny spend, high return \u2014 room to scale.' },
+  { key:'contractedROAS', label:'Contracted ROAS', fmt:fmtX, target:'> 5\u00d7', pass:v=>v>=5, warn:v=>v>=3, note:'Well above 5\u00d7 most months. Jan not logged.' },
+  { key:'feToBe', label:'FE \u2192 BE Conversion', fmt:fmtP, target:'> 50%', pass:v=>v>=.50, warn:v=>v>=.40, note:'Right at the line (47\u201350%). Resells tracked across 3\u20134 coaches.' },
+  { key:'upfrontPct', label:'Upfront Cash Collection %', fmt:fmtP, target:'> 30%', pass:v=>v>=.30, warn:v=>v>=.20, note:'Strong and climbing \u2014 May 70%. Self-funds growth.' },
+];
+const MARGIN_METRICS = [
+  { key:'laborMargin', label:'Labor Margin', fmt:fmtP, target:'30\u201335%', pass:v=>v>=.30&&v<=.38, warn:v=>v>=.25&&v<.30, note:'Healthy. 3\u20134 assistant coaches. Within range.' },
+  { key:'marketingMargin', label:'Marketing Margin', fmt:fmtP, target:'10\u201320%', pass:v=>v>=.10&&v<=.20, warn:v=>v<.25, note:'Only ~3% \u2014 she massively UNDER-spends on ads.' },
+  { key:'overheadMargin', label:'Overhead Margin', fmt:fmtP, target:'3\u20138%', pass:v=>v>=.03&&v<=.09, warn:v=>v<.12, note:'~1.5% \u2014 very lean overhead. Healthy.' },
+  { key:'netMargin', label:'Net Operating Margin', fmt:fmtP, target:'> 50%', pass:v=>v>=.50, warn:v=>v>=.35, note:'59% \u2014 excellent. Highly profitable. Protect this while scaling spend.' },
+];
+let period = 'q1', editMode = false, overrides = {};
+function fmtD(v){ if(v===null||isNaN(v))return'\u2014'; return'$'+v.toFixed(v<10?2:0).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+function fmtP(v){ if(v===null||isNaN(v))return'\u2014'; return(v*100).toFixed(1)+'%'; }
+function fmtX(v){ if(v===null||isNaN(v))return'\u2014'; return v.toFixed(2)+'\u00d7'; }
+function fmtK(v){ if(!v||isNaN(v))return'\u2014'; if(v>=1e6)return'$'+(v/1e6).toFixed(1)+'M'; if(v>=1000)return'$'+(v/1000).toFixed(1)+'K'; return'$'+v.toFixed(0); }
+function val(key){ const v=(editMode&&overrides[key]!==undefined)?overrides[key]:DATA[period][key]; return (v===null||v===undefined)?NaN:v; }
+function sc(metric,v){ if(isNaN(v))return'info'; if(metric.pass(v))return'pass'; if(metric.warn&&metric.warn(v))return'warn'; return'fail'; }
+function render(){
+  const chips = [
+    { label:'CPL', v:fmtD(val('cpl')), cls:val('cpl')<10?'pass':val('cpl')<15?'warn':'fail' },
+    { label:'Lead \u2192 Call', v:fmtP(val('leadToCall')), cls:val('leadToCall')>=.03?'pass':val('leadToCall')>=.02?'warn':'fail' },
+    { label:'Show Rate', v:fmtP(val('showRate')), cls:val('showRate')>=.70?'pass':val('showRate')>=.60?'warn':'fail' },
+    { label:'Close Rate', v:fmtP(val('closeRate')), cls:val('closeRate')>=.30?'pass':val('closeRate')>=.25?'warn':'fail' },
+    { label:'Net Margin', v:fmtP(val('netMargin')), cls:isNaN(val('netMargin'))?'info':val('netMargin')>=.50?'pass':val('netMargin')>=.35?'warn':'fail' },
+  ];
+  document.getElementById('kpi-band').innerHTML = chips.map(c=>`<div class="kpi-chip ${c.cls}"><div class="chip-label">${c.label}</div><div class="chip-val">${c.v}</div><div class="chip-target">${DATA[period].label}</div></div>`).join('');
+  document.getElementById('ad-tbody').innerHTML = AD_METRICS.map(m=>{ const v=val(m.key); const cls=sc(m,v); const cell=editMode?`<input class="edit-input" type="number" value="${isNaN(v)?'':v}" step="any" onchange="upd('${m.key}',this.value)">`:`<span class="m-val ${cls}">${m.fmt(v)}</span>`; const badge=cls==='info'?`<span class="badge info">\u2014 No Data</span>`:`<span class="badge ${cls}">${cls==='pass'?'\u2713 On Target':cls==='warn'?'\u26a0 Watch':'\u2717 Off Target'}</span>`; return`<tr><td><span class="m-name">${m.label}</span></td><td><span class="m-target">${m.target}</span></td><td>${cell}</td><td>${badge}</td><td><span class="m-note">${m.note}</span></td></tr>`; }).join('');
+  document.getElementById('margin-tbody').innerHTML = MARGIN_METRICS.map(m=>{ const v=val(m.key); const cls=sc(m,v); const cell=editMode?`<input class="edit-input" type="number" value="${isNaN(v)?'':(v*100).toFixed(1)}" step="0.1" onchange="updP('${m.key}',this.value)">`:`<span class="m-val ${cls}">${m.fmt(v)}</span>`; const badge=cls==='info'?`<span class="badge info">\u2014 No Data</span>`:`<span class="badge ${cls}">${cls==='pass'?'\u2713 On Target':cls==='warn'?'\u26a0 Watch':'\u2717 Off Target'}</span>`; return`<tr><td><span class="m-name">${m.label}</span></td><td><span class="m-target">${m.target}</span></td><td>${cell}</td><td>${badge}</td><td><span class="m-note">${m.note}</span></td></tr>`; }).join('');
+  const churn=val('churn'), ltv=val('ltv'), nc=val('newClients'), rev=val('monthlyRev');
+  const eq=ltv*nc;
+  document.getElementById('re-churn').textContent=fmtP(churn);
+  document.getElementById('re-ltv').textContent=fmtK(ltv);
+  document.getElementById('re-new').textContent=Math.round(nc);
+  document.getElementById('re-eq').textContent=fmtK(eq);
+  document.getElementById('re-actual').textContent=isNaN(rev)?'\u2014':fmtK(rev);
+  const verd=document.getElementById('re-verdict');
+  if(isNaN(rev)){ verd.className='eq-verdict flat'; verd.innerHTML='<strong>No revenue logged this month.</strong>'; }
+  else if(eq>rev*1.1){ verd.className='eq-verdict building'; verd.innerHTML='\u2713 <strong>Building.</strong> Revenue Equilibrium ('+fmtK(eq)+') is above current revenue ('+fmtK(rev)+'). Every new close adds '+fmtK(ltv)+' in future LTV.'; }
+  else if(eq<rev*.9){ verd.className='eq-verdict eroding'; verd.innerHTML='\ud83d\udea8 <strong>Eroding.</strong> Revenue Equilibrium ('+fmtK(eq)+') is below current revenue ('+fmtK(rev)+'). Churn is outpacing acquisition.'; }
+  else { verd.className='eq-verdict flat'; verd.innerHTML='\u2248 <strong>Holding steady \u2014 treading water.</strong> Equilibrium ('+fmtK(eq)+') roughly matches current revenue ('+fmtK(rev)+'). Lift new clients to 12\u201315/month and equilibrium jumps to $60\u201376K.'; }
+}
+function setPeriod(p){ period=p; overrides={}; document.querySelectorAll('.pt').forEach(t=>t.classList.remove('active')); document.querySelector('.pt[onclick="setPeriod(\''+p+'\')"]').classList.add('active'); render(); }
+function toggleEdit(){ editMode=!editMode; const btn=document.getElementById('edit-btn'); btn.textContent=editMode?'\u2713 Done Editing':'\u270f Update Numbers'; btn.classList.toggle('on',editMode); if(!editMode) overrides={}; render(); }
+function upd(key,v){ overrides[key]=parseFloat(v); render(); }
+function updP(key,v){ overrides[key]=parseFloat(v)/100; render(); }
+const sections=document.querySelectorAll('.doc-section, .hero');
+const navLinks=document.querySelectorAll('.nav-link');
+const observer=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ navLinks.forEach(l=>l.classList.remove('active')); const m=document.querySelector('.nav-link[href="#'+e.target.id+'"]'); if(m)m.classList.add('active'); } }); },{threshold:.3});
+sections.forEach(s=>observer.observe(s));
+render();
+function copyIntelReport(){ const btn=document.getElementById('copy-intel-btn'); const orig=btn.innerHTML; navigator.clipboard.writeText('KELLI BROWER \u2014 Creative Intelligence Report\nIFCA Ad Creative Workshop \u00b7 June 2026\nSee full audit for details.').then(()=>{ btn.innerHTML='<span>\u2713</span> Copied!'; btn.style.background='var(--green)'; setTimeout(()=>{ btn.innerHTML=orig; btn.style.background='var(--orange)'; },2500); }); }
+<\/script>
+</body>
+</html>
